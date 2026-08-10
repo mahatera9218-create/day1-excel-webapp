@@ -1,0 +1,36 @@
+# 의존성 / 빌드 산출물
+node_modules/
+dist/
+*.local
+
+# 실습용 원본 데이터 — 사내 실적 정보가 들어 있으므로 저장소에 포함하지 않는다.
+*.xlsx
+*.xlsm
+*.csv
+*.pdf
+*.pptx
+*.potx
+*.zip
+실습자료/
+
+# 디자인 참고용으로 내려받은 외부 이미지
+*.jpg
+*.jpeg
+*.png
+
+# 이 앱과 무관한 로컬 도구 설정
+.agents/
+.claude/skills/
+.claude/settings.local.json
+skills-lock.json
+
+# 에디터 / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 로그
+npm-debug.log*
+yarn-error.log*

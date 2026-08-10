@@ -1,0 +1,516 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0b1424;
+  --bg-panel: #101c30;
+  --bg-card: #131f36;
+  --border: #1f2c47;
+  --text: #e6edf7;
+  --text-dim: #93a3bd;
+  --teal: #2dd4bf;
+  --blue: #38bdf8;
+  --purple: #818cf8;
+  --cyan: #22d3ee;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #0b1424 0%, #0a1120 100%);
+  color: var(--text);
+  font-family: 'Segoe UI', 'Pretendard', 'Malgun Gothic', -apple-system, BlinkMacSystemFont,
+    sans-serif;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(16, 28, 48, 0.7);
+  backdrop-filter: blur(6px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.app-header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.3px;
+}
+
+.app-logo {
+  font-size: 22px;
+}
+
+.app-file-badge {
+  font-size: 12px;
+  color: var(--teal);
+  background: rgba(45, 212, 191, 0.12);
+  border: 1px solid rgba(45, 212, 191, 0.35);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.app-main {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+}
+
+/* Upload */
+.upload-area {
+  background: var(--bg-panel);
+  border: 1.5px dashed var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: border-color 0.2s;
+}
+
+.upload-area:hover {
+  border-color: var(--teal);
+}
+
+.upload-icon {
+  font-size: 40px;
+  flex-shrink: 0;
+}
+
+.upload-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upload-btn {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  background: linear-gradient(135deg, var(--teal), var(--blue));
+  color: #06251f;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.upload-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.upload-hint {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+.upload-filename {
+  margin: 0;
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.upload-error {
+  margin: 0;
+  color: #f87171;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.loading-banner {
+  color: var(--text-dim);
+  font-size: 14px;
+  padding: 8px 4px;
+}
+
+.empty-hint {
+  color: var(--text-dim);
+  text-align: center;
+  padding: 60px 20px;
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+/* KPI cards */
+/* 카드 개수가 파일마다 달라지므로 auto-fit으로 남는 칸 없이 채운다. */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.kpi-card.accent-teal::before {
+  background: var(--teal);
+}
+.kpi-card.accent-blue::before {
+  background: var(--blue);
+}
+.kpi-card.accent-purple::before {
+  background: var(--purple);
+}
+.kpi-card.accent-cyan::before {
+  background: var(--cyan);
+}
+
+.kpi-icon {
+  font-size: 26px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.kpi-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.kpi-label {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.kpi-value {
+  font-size: 22px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-suffix {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dim);
+  margin-left: 4px;
+}
+
+.kpi-sub {
+  font-size: 11.5px;
+  color: var(--text-dim);
+}
+
+.kpi-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kpi-card.accent-amber::before {
+  background: #fbbf24;
+}
+
+/* 업로드 결과 요약 칩 */
+.upload-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.summary-chip {
+  font-size: 11.5px;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+/* Charts */
+/* 차트 개수도 파일에 따라 달라진다. 넓게 봐야 하는 차트만 전폭을 쓴다. */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.chart-card-wide {
+  grid-column: 1 / -1;
+}
+
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  min-width: 0;
+  /* recharts 툴팁 래퍼가 카드 밖으로 밀려나 페이지에 가로 스크롤을 만드는 것을 막는다. */
+  overflow: hidden;
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.chart-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.chart-controls {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chart-select {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 11.5px;
+  outline: none;
+  max-width: 160px;
+}
+
+.chart-select:focus {
+  border-color: var(--teal);
+  color: var(--text);
+}
+
+.chart-empty {
+  color: var(--text-dim);
+  font-size: 13px;
+  padding: 60px 0;
+  text-align: center;
+}
+
+/* Table */
+.table-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.table-title {
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.table-note {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.table-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-input,
+.filter-select {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  outline: none;
+}
+
+.search-input {
+  width: 220px;
+}
+
+.search-input:focus,
+.filter-select:focus {
+  border-color: var(--teal);
+}
+
+.table-scroll {
+  overflow: auto;
+  max-height: 520px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: #16233d;
+  color: var(--text-dim);
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  z-index: 1;
+}
+
+tbody td {
+  padding: 9px 14px;
+  border-bottom: 1px solid rgba(31, 44, 71, 0.6);
+  color: var(--text);
+}
+
+/* 숫자 컬럼은 우측 정렬하고 자릿수를 고정폭으로 맞춰 비교하기 쉽게 한다. */
+th.num,
+td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+tbody tr:hover {
+  background: rgba(45, 212, 191, 0.06);
+}
+
+.table-empty {
+  text-align: center;
+  color: var(--text-dim);
+  padding: 30px 0;
+}
+
+@media (max-width: 900px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+  .charts-grid > *:last-child {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+  .upload-area {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  /* 좁은 화면에서는 제목이 두 줄로 늘어나 sticky 헤더가 본문을 가리므로 고정을 해제한다. */
+  .app-header {
+    position: static;
+  }
+  .app-header-inner {
+    padding: 14px 16px;
+    gap: 8px;
+  }
+  .app-header h1 {
+    font-size: 17px;
+  }
+  .app-file-badge {
+    display: none;
+  }
+  .app-main {
+    padding: 16px;
+    gap: 16px;
+  }
+  .chart-card,
+  .table-section {
+    padding: 14px;
+  }
+  .search-input {
+    width: 100%;
+  }
+  .table-controls {
+    width: 100%;
+  }
+  .filter-select {
+    width: 100%;
+  }
+}
