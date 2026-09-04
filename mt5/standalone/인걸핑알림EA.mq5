@@ -7,7 +7,7 @@
 //|  도구>옵션>전문가 자문에서 https://api.telegram.org 허용 필요.    |
 //+------------------------------------------------------------------+
 #property copyright "Engulf Strategy Indicator Set"
-#property version   "1.10"
+#property version   "1.20"
 #property strict
 
 //--- 전략 입력 ---------------------------------------------------
@@ -25,6 +25,10 @@ input bool   InpAlertPush    = false;  // MetaQuotes 모바일 푸시
 input bool   InpTgEnable     = false;  // 텔레그램 전송 사용
 input string InpTgToken      = "";     // 봇 토큰 (BotFather)
 input string InpTgChatId     = "";     // chat_id (getUpdates)
+//--- 현황 요약 (B안) --------------------------------------------
+input bool   InpStatusEnable = true;   // 현황 요약 주기 전송(텔레그램)
+input int    InpStatusMin    = 60;     // 현황 요약 주기(분)
+input int    InpSessDays     = 5;      // 평균 표본(일간/H4일수)
 //--- 로그 --------------------------------------------------------
 input bool   InpWriteCsv     = true;
 input string InpCsvFile      = "engulf_log.csv";
@@ -304,6 +308,24 @@ string MakeEngulfId(const datetime engTime)
    MqlDateTime t; TimeToStruct(ToKST(engTime,InpServerToKST),t);
    return(StringFormat("%s-%04d%02d%02d-%02d%02d",_Symbol,t.year,t.mon,t.day,t.hour,t.min));
 }
+string SignStr(const double v, const int digits=1)
+{
+   string s=DoubleToString(v,digits);
+   if(v>0.0) s="+"+s;
+   return(s);
+}
+double AvgDirStrengthAbs(const ENUM_TIMEFRAMES tf, const int count, const int startShift=1)
+{
+   double sum=0; int used=0;
+   for(int i=0;i<count;i++)
+   {
+      int sh=startShift+i;
+      double o=iOpen(_Symbol,tf,sh),h=iHigh(_Symbol,tf,sh),l=iLow(_Symbol,tf,sh),c=iClose(_Symbol,tf,sh);
+      if(o==0.0) break;
+      sum+=MathAbs(DirStrength(o,h,l,c,true,true)); used++;
+   }
+   return(used>0? sum/used : 0.0);
+}
 
 //==================================================================//
 //  상태                                                             //
@@ -315,6 +337,7 @@ datetime g_rtStartM15=0;
 int      g_rtBars=0;
 datetime g_lastEngBar=0;
 datetime g_lastM15Bar=0;
+datetime g_lastStatus=0;
 
 //==================================================================//
 //  MT5 이벤트 (EA)                                                  //
@@ -328,8 +351,76 @@ int OnInit()
    return(INIT_SUCCEEDED);
 }
 void OnDeinit(const int reason) { EventKillTimer(); }
-void OnTimer() { CheckEngulf(); TrackRetest(); }
+void OnTimer()
+{
+   CheckEngulf();
+   TrackRetest();
+   // 현황 요약 주기 전송 (B안)
+   if(InpStatusEnable && InpStatusMin>0)
+   {
+      if(g_lastStatus==0 || (TimeCurrent()-g_lastStatus) >= (datetime)InpStatusMin*60)
+      {
+         g_lastStatus=TimeCurrent();
+         SendStatusSummary();
+      }
+   }
+}
 void OnTick()  { CheckEngulf(); TrackRetest(); }
+
+//==================================================================//
+//  현황 요약 (방향강도 + 체결) → 텔레그램                           //
+//==================================================================//
+void SendStatusSummary()
+{
+   double price=CurrentPrice();
+   datetime kstNow=ToKST(TimeCurrent(),InpServerToKST);
+   ENUM_SESSION sess=CurrentSession();
+
+   // H4 완성 방향강도 + 국면
+   double h4dir=DirStrength(iOpen(_Symbol,PERIOD_H4,1),iHigh(_Symbol,PERIOD_H4,1),
+                            iLow(_Symbol,PERIOD_H4,1),iClose(_Symbol,PERIOD_H4,1),true,true);
+   double h4avg=AvgDirStrengthAbs(PERIOD_H4,30,1);
+   string h4phase=(MathAbs(h4dir)>h4avg)?"추세":"횡보";
+
+   // 일간
+   double dOpen=iOpen(_Symbol,PERIOD_D1,0);
+   double dDir=DirStrength(dOpen,iHigh(_Symbol,PERIOD_D1,0),iLow(_Symbol,PERIOD_D1,0),price,true,true);
+   double dChg=(dOpen>0.0)? (price-dOpen)/dOpen*100.0 : 0.0;
+
+   // 주간
+   double wOpen=iOpen(_Symbol,PERIOD_W1,0);
+   double wDir=DirStrength(wOpen,iHigh(_Symbol,PERIOD_W1,0),iLow(_Symbol,PERIOD_W1,0),price,true,true);
+
+   double posPct=RangePosPct();
+
+   // 체결 4H 요약
+   bool useFlag=BrokerProvidesTradeFlags();
+   TickStats ts; AggregateTicks(TimeCurrent()-4*3600, TimeCurrent(), ts, useFlag);
+   double dom=ts.Dominance();
+   string flowSide=(dom>0?"매수":(dom<0?"매도":"중립"));
+   string flowTxt = ts.valid? StringFormat("%s%% %s 우위",SignStr(dom,1),flowSide) : "데이터 없음";
+
+   string msg=StringFormat(
+      "📊 %s 현황 요약  %s KST\n"
+      "━━━━━━━━━━━━━\n"
+      "세션 : %s\n"
+      "현재가: %s\n"
+      "H4   : 방향강도 %s%% (%s)\n"
+      "일간 : %s%% (시가대비 %s%%)\n"
+      "주간 : %s%%\n"
+      "5일 위치: %.0f%%\n"
+      "체결(4H): %s\n"
+      "━━━━━━━━━━━━━\n"
+      "* +상승 / -하락, |값|=강도. 진입은 캔들로 판단.",
+      _Symbol, TimeToString(kstNow,TIME_MINUTES),
+      SessionName(sess), DoubleToString(price,_Digits),
+      SignStr(h4dir,1), h4phase,
+      SignStr(dDir,1), SignStr(dChg,2),
+      SignStr(wDir,1), posPct, flowTxt);
+
+   SendTelegram(msg);   // 현황은 조용히 텔레그램만 (팝업 X)
+   Print(msg);
+}
 
 //==================================================================//
 //  인걸핑 감지                                                      //
