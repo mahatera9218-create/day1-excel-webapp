@@ -316,12 +316,12 @@ function render(d){
       </div>` : `<div class="r"><span class="k">틱 데이터 없음 (휴장/보관량)</span></div>` }
     </div>
     <div class="card wide" style="margin-top:12px">
-      <div class="card-h"><span class="t">${fl.entry.tf} 진입 프레임 · 완성 vs 진행</span></div>
-      <div class="cmp">${flowCol("직전 완성봉", fl.entry.done)}${flowCol("현재 진행봉", fl.entry.now)}</div>
-    </div>
-    <div class="card wide" style="margin-top:12px">
       <div class="card-h"><span class="t">${fl.zone.tf} 자리 프레임 · 완성 vs 진행</span></div>
       <div class="cmp">${flowCol("직전 완성봉", fl.zone.done)}${flowCol("현재 진행봉", fl.zone.now)}</div>
+    </div>
+    <div class="card wide" style="margin-top:12px">
+      <div class="card-h"><span class="t">${fl.entry.tf} 진입 프레임 · 완성 vs 진행</span></div>
+      <div class="cmp">${flowCol("직전 완성봉", fl.entry.done)}${flowCol("현재 진행봉", fl.entry.now)}</div>
     </div>`;
 }
 
