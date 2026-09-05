@@ -1,0 +1,432 @@
+<title>PIPxLOT 현황판</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#eef1f5; --surface:#ffffff; --surface2:#e7ecf2; --inset:#f3f6f9;
+  --ink:#141b26; --muted:#5c6672; --faint:#8a94a1; --line:#d8dfe8;
+  --accent:#0e8f86;
+  --up:#0c7a5b; --up-bg:#dff3ec; --down:#c23b52; --down-bg:#fbe4e8;
+  --flat:#8a7a1f; --flat-bg:#f5efd6;
+  --shadow:0 1px 2px rgba(20,27,38,.06),0 3px 10px rgba(20,27,38,.05);
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1016;--surface:#151a21;--surface2:#1c232c;--inset:#11161d;
+  --ink:#e7edf4;--muted:#93a0af;--faint:#68727f;--line:#2a313b;--accent:#2fd4c2;
+  --up:#3fd6a3;--up-bg:#0f2b23;--down:#f4788a;--down-bg:#31161d;--flat:#e2bd52;--flat-bg:#2c2712;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3);
+}}
+:root[data-theme="dark"]{
+  --bg:#0d1016;--surface:#151a21;--surface2:#1c232c;--inset:#11161d;
+  --ink:#e7edf4;--muted:#93a0af;--faint:#68727f;--line:#2a313b;--accent:#2fd4c2;
+  --up:#3fd6a3;--up-bg:#0f2b23;--down:#f4788a;--down-bg:#31161d;--flat:#e2bd52;--flat-bg:#2c2712;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;margin:0;padding:0 14px 40px;-webkit-text-size-adjust:100%}
+.wrap{max-width:860px;margin:0 auto}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.up{color:var(--up)}.down{color:var(--down)}.flat{color:var(--flat)}
+
+.topbar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.tb-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.sym{font-size:19px;font-weight:700;letter-spacing:.02em}
+.sess{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface2)}
+.price{font-family:var(--mono);font-size:25px;font-weight:600;margin-left:auto;letter-spacing:-.01em}
+.tb-sub{display:flex;align-items:center;gap:8px;margin-top:6px;color:var(--muted);font-size:12px;flex-wrap:wrap}
+.mkt{color:var(--up);font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--faint);display:inline-block}
+.dot.live{background:var(--up)}.dot.sample{background:var(--flat)}
+.gear{margin-left:auto;background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:4px 10px;font:inherit;font-size:12px;cursor:pointer}
+.gear:hover{color:var(--ink);border-color:var(--muted)}
+.banner{background:var(--flat-bg);color:var(--flat);border-radius:10px;padding:8px 12px;font-size:12.5px;font-weight:500;margin-bottom:12px}
+
+/* ── 판단 요약 hero ── */
+.hero{border-radius:16px;padding:14px 15px;margin-bottom:14px;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--surface);border-left:5px solid var(--faint)}
+.hero.up{border-left-color:var(--up)}.hero.down{border-left-color:var(--down)}.hero.flat{border-left-color:var(--flat)}
+.hero-top{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+.bias{display:flex;align-items:center;gap:11px;min-width:0}
+.bias .ar{font-size:32px;line-height:1;font-weight:700}
+.bias .lab b{font-size:20px;font-weight:700;letter-spacing:.01em;display:block}
+.bias .lab span{font-size:11.5px;color:var(--muted);font-weight:500}
+.hero-top .algn{margin-left:auto;text-align:right;flex:none}
+.hero-top .algn b{font-family:var(--mono);font-size:23px;font-weight:600;line-height:1}
+.hero-top .algn span{display:block;font-size:10.5px;color:var(--muted);margin-top:2px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:11px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--surface2);color:var(--muted);display:inline-flex;gap:5px;align-items:center;white-space:nowrap}
+.badge b{font-weight:700;color:var(--ink)}
+.badge.g{background:var(--up-bg);color:var(--up)}.badge.g b{color:var(--up)}
+.badge.r{background:var(--down-bg);color:var(--down)}.badge.r b{color:var(--down)}
+.badge.n{background:var(--flat-bg);color:var(--flat)}.badge.n b{color:var(--flat)}
+.align{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:11px}
+.atile{background:var(--inset);border-radius:10px;padding:8px 3px;text-align:center}
+.atile .al{font-size:10.5px;color:var(--muted);font-weight:600;margin-bottom:1px}
+.atile .av{font-size:19px;font-weight:700;line-height:1.15}
+.atile .as{font-size:9.5px;color:var(--faint);font-family:var(--mono)}
+.guide{font-size:12.5px;line-height:1.55;padding:10px 12px;border-radius:10px;background:var(--inset);color:var(--ink)}
+.guide .ln{display:flex;gap:7px;align-items:flex-start}.guide .ln+.ln{margin-top:5px}
+.guide .ic{flex:none}.guide b{font-weight:700}
+.guide .warn{color:var(--down)}
+
+.sec-h{display:flex;align-items:center;gap:8px;margin:16px 2px 9px}
+.sec-h .n{font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;background:var(--accent);border-radius:6px;padding:1px 7px}
+.sec-h h2{font-size:15px;font-weight:700;margin:0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px 14px;box-shadow:var(--shadow)}
+.card.wide{grid-column:1/-1}
+.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.card-h .t{font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:.03em;text-transform:uppercase}
+.pill{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
+.pill.tr{background:var(--up-bg);color:var(--up)}.pill.rg{background:var(--flat-bg);color:var(--flat)}
+
+.hdln{display:flex;align-items:baseline;gap:8px;margin:2px 0 8px}
+.hdln .v{font-family:var(--mono);font-size:24px;font-weight:600;letter-spacing:-.01em}
+.hdln .avg{font-size:12px;color:var(--muted)}
+
+.rows{display:flex;flex-direction:column;gap:5px}
+.r{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;gap:10px}
+.r .k{color:var(--muted);white-space:nowrap}
+.r .val{font-family:var(--mono);font-weight:500;text-align:right}
+small{font-size:.82em;opacity:.85}
+
+.tv{margin-top:9px}
+.tv .bar{height:6px;background:var(--inset);border-radius:999px;overflow:hidden;margin-top:4px}
+.tv .bar>i{display:block;height:100%;background:var(--accent);border-radius:999px}
+
+.lvl{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.lvl .lh{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-bottom:5px}
+.lvl .pair{display:flex;justify-content:space-between;font-size:12.5px;font-family:var(--mono);margin-bottom:5px}
+.track{position:relative;height:8px;background:var(--inset);border-radius:999px;overflow:hidden}
+.track .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
+.fill{position:absolute;top:0;bottom:0;border-radius:999px}
+.fill.up{background:var(--up)}.fill.down{background:var(--down)}
+.cap{display:flex;justify-content:space-between;font-size:11px;margin-top:4px;color:var(--muted)}
+.cap .rt{font-family:var(--mono);font-weight:600}
+
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+@media(max-width:480px){.cmp{grid-template-columns:1fr}}
+.cmp .col{background:var(--inset);border-radius:10px;padding:10px}
+.cmp .col .h{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.02em}
+.sbar{border-top:1px dashed var(--line);padding-top:9px;margin-top:9px}
+.sbar.first{border-top:0;margin-top:2px;padding-top:0}
+.sbar-h{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap}
+.sbar-h .tag{font-family:var(--mono);font-weight:700;font-size:11px;padding:1px 8px;border-radius:6px;background:var(--surface2);color:var(--muted)}
+.sbar-h .tag.now{background:var(--accent);color:#fff}
+.sbar-h .rng{font-size:11px;color:var(--faint);font-family:var(--mono)}
+.sdom{margin-bottom:6px}
+.srows{display:flex;flex-direction:column;gap:4px}
+
+.note{color:var(--faint);font-size:11.5px;margin-top:16px;text-align:center;line-height:1.6}
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);padding:0;max-width:420px;width:calc(100% - 32px);box-shadow:var(--shadow)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+.sheet{padding:18px}.sheet h3{font-size:15px;margin:0 0 4px}.sheet p{color:var(--muted);font-size:12.5px;margin:0 0 14px}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.field label{font-size:12px;font-weight:600;color:var(--muted)}
+.field input{font:inherit;font-family:var(--mono);font-size:13px;padding:9px 10px;border-radius:9px;border:1px solid var(--line);background:var(--inset);color:var(--ink)}
+.field input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.sheet-actions{display:flex;gap:8px;justify-content:flex-end}
+.btn{font:inherit;font-weight:600;font-size:13px;padding:8px 15px;border-radius:9px;cursor:pointer;border:1px solid var(--line);background:var(--surface2);color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:transparent;color:#fff}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="tb-row">
+      <span class="sym" id="sym">EURUSD</span>
+      <span class="sess" id="sess">런던 본장</span>
+      <span class="price mono" id="price">—</span>
+    </div>
+    <div class="tb-sub">
+      <span class="dot" id="dot"></span><span id="status">—</span>
+      <span class="mkt" id="mkt"></span>
+      <button class="gear" id="gear">⚙ 연결 설정</button>
+    </div>
+  </div>
+
+  <div class="banner" id="banner">샘플 데이터입니다 · ‘연결 설정’에서 데이터 주소를 넣으면 실시간으로 바뀝니다</div>
+
+  <div id="summary"></div>
+
+  <div class="sec-h"><span class="n">1</span><h2>방향강도 터미널</h2></div>
+  <div class="grid" id="dirGrid"></div>
+
+  <div class="sec-h"><span class="n">2</span><h2>체결 터미널</h2></div>
+  <div id="flowWrap"></div>
+
+  <p class="note">추세율 = |방향강도|(시종/고저), 클수록 추세 · 평균보다 크면 ‘추세’ 국면.<br>
+     진입 판단은 캔들(인걸핑)에서. 이 화면은 판단 재료이며 자동매매가 아닙니다.</p>
+</div>
+
+<dialog id="cfg"><form method="dialog" class="sheet">
+  <h3>실시간 연결 설정</h3>
+  <p>EA가 현황을 올리는 데이터 주소(URL). 비우면 샘플로 표시됩니다.</p>
+  <div class="field"><label for="url">데이터 주소 (JSON URL)</label>
+    <input id="url" placeholder="https://getpantry.cloud/apiv1/pantry/…/basket/eurusd" inputmode="url"></div>
+  <div class="field"><label for="ivl">갱신 주기(초)</label>
+    <input id="ivl" type="number" min="10" step="5" value="30"></div>
+  <div class="sheet-actions"><button class="btn" value="cancel">취소</button>
+    <button class="btn primary" id="save" value="default">저장</button></div>
+</form></dialog>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const LS={url:"pipx_url",ivl:"pipx_ivl"};
+
+/* ===== 샘플 (실제 JSON 스키마와 동일) — EURUSD ===== */
+const SAMPLE={
+ sym:"EURUSD", session:"런던 본장", market:"정규장 실시간 연동 중",
+ price:1.08508, cur:"", ptl:"핍", kst:"19:37", sample:true,
+ dir:{
+  session:{open:1.08920,chgpct:-0.38,range_pt:47.0,oc_pt:-41.2,strength:-87.6,trend:87.6,avg:34.4,
+    tickvol_pct:18.3,tickvol_cnt:25136,
+    levels:[
+      {name:"1차 레벨 (50%)",up:1.09070,up_pt:15.0,dn:1.08745,dn_pt:-17.5,reach:234.9,reach_txt:"하단 돌파 −23.7핍 초과",dir:-1},
+      {name:"최종 레벨 (100%)",up:1.09220,up_pt:30.0,dn:1.08570,dn_pt:-35.0,reach:117.7,reach_txt:"하단 돌파 −6.2핍 초과",dir:-1}
+    ]},
+  daily:{open:1.08980,chgpct:-0.43,range_pt:58.0,oc_pt:-47.2,strength:-81.4,trend:81.4,avg:36.8,
+    tickvol_pct:41.4,tickvol_cnt:137557,
+    levels:[{name:"5일 일간 레벨",up:1.09380,up_pt:40.0,dn:1.08480,dn_pt:-50.0,reach:94.0,reach_txt:"하단 잔여 +2.8핍",dir:-1}]},
+  weekly:{open:1.08880,chgpct:-0.34,range_pt:75.0,oc_pt:-37.2,strength:-49.6,trend:49.6,avg:60.2,
+    tickvol_pct:28.9,tickvol_cnt:472187,
+    levels:[{name:"4주 주간 레벨",up:1.10080,up_pt:120.0,dn:1.08280,dn_pt:-60.0,reach:61.7,reach_txt:"하단 잔여 +22.8핍",dir:-1}]},
+  h4:{done:-75,avg:40,now:-18,elapsed_pct:33,h1pos:38}
+ },
+ flow:{ flag:"제공", unit:"핍",
+  h4:{valid:true,total:45820,distort:210,up:22100,down:23720,dom:-3.2,net:-18.5,span:58.0},
+  zone:{tf:"1H", bars:[
+    {tag:"-3",kst:"10:00~11:00",chart:"05:00~06:00",open:1.08760,close:1.08810,lo:1.08740,hi:1.08825,move:5.0,span:8.5,eff:0.59,dom:-0.8,up:1244,down:1263,total:2508},
+    {tag:"-2",kst:"11:00~12:00",chart:"06:00~07:00",open:1.08810,close:1.08730,lo:1.08715,hi:1.08820,move:-8.0,span:10.5,eff:0.76,dom:-1.1,up:1161,down:1187,total:2349},
+    {tag:"-1",kst:"12:00~13:00",chart:"07:00~08:00",open:1.08730,close:1.08600,lo:1.08590,hi:1.08745,move:-13.0,span:15.5,eff:0.84,dom:-3.5,up:9390,down:10082,total:19633},
+    {tag:"진행",kst:"13:00~현재",chart:"08:00 (18분 경과)",open:1.08600,close:1.08508,lo:1.08495,hi:1.08615,move:-9.2,span:12.0,eff:0.77,dom:-5.5,up:1621,down:1813,total:3492}
+  ]},
+  entry:{tf:"5M",
+    done:{total:1479,distort:37,up:665,down:776,dom:-7.5,move:-1.20,swing:3.90,eff:0.31,perTick:-0.00081},
+    now:{total:348,distort:4,up:160,down:183,dom:-6.6,move:0.80,swing:3.10,eff:0.26,perTick:0.00230,elapsed_pct:19.7}}
+ }
+};
+
+/* ===== helpers ===== */
+const cls=v=>v>0?"up":(v<0?"down":"flat");
+const arw=v=>v>0?"▲":(v<0?"▼":"—");
+const sg=(v,d=1)=>v==null?"–":(v>0?"+":"")+Number(v).toFixed(d);
+const f=(v,d=1)=>v==null?"–":Number(v).toFixed(d);
+let CUR="$", PTL="pt";
+const money=v=>v==null?"–":CUR+Number(v).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:5});
+
+function reachMeter(reach,dir){
+  const mag=Math.min(100,Math.abs(reach||0));
+  const c=dir>=0?"up":"down";
+  const over=Math.abs(reach||0)>100;
+  return `<div class="track"><div class="fill ${c}" style="left:0;width:${mag}%;${over?'opacity:1':''}"></div>
+    ${over?'<div class="fill '+c+'" style="right:0;width:6px;opacity:.55"></div>':''}</div>`;
+}
+function domMeter(dom){
+  const r=Math.max(-100,Math.min(100,dom||0)), half=Math.abs(r)/100*50;
+  const side=r>=0?`left:50%;width:${half}%`:`right:50%;width:${half}%`, c=r>=0?"up":"down";
+  return `<div class="track"><div class="mid"></div><div class="fill ${c}" style="${side}"></div></div>`;
+}
+
+function dirCard(title,d){
+  const phase = d.trend>d.avg
+     ?`<span class="pill tr">추세</span>`:`<span class="pill rg">횡보</span>`;
+  const lv = (d.levels||[]).map(L=>`
+    <div class="lvl">
+      <div class="lh">${L.name}</div>
+      <div class="pair"><span class="up">상단 ${money(L.up)} <small>(${sg(L.up_pt,1)}${PTL})</small></span>
+                        <span class="down">하단 ${money(L.dn)} <small>(${sg(L.dn_pt,1)}${PTL})</small></span></div>
+      ${reachMeter(L.reach,L.dir)}
+      <div class="cap"><span>도달률</span><span class="rt">${f(L.reach,1)}% · ${L.reach_txt||""}</span></div>
+    </div>`).join("");
+  return `<div class="card">
+    <div class="card-h"><span class="t">${title}</span>${phase}</div>
+    <div class="hdln"><span class="v ${cls(d.strength)}">${arw(d.strength)} 추세율 ${f(d.trend,1)}%</span>
+      <span class="avg">평균 ${f(d.avg,1)}%</span></div>
+    <div class="rows">
+      <div class="r"><span class="k">시가 (시가대비)</span><span class="val">${money(d.open)} <span class="${cls(d.chgpct)}">(${sg(d.chgpct,2)}%)</span></span></div>
+      <div class="r"><span class="k">변동 고저 / 시종</span><span class="val">${f(d.range_pt,1)}${PTL} / ${sg(d.oc_pt,1)}${PTL}</span></div>
+    </div>
+    <div class="tv"><div class="r"><span class="k">틱볼륨</span><span class="val">${f(d.tickvol_pct,1)}% <small>(${(d.tickvol_cnt||0).toLocaleString()} Ticks)</small></span></div>
+      <div class="bar"><i style="width:${Math.min(100,d.tickvol_pct||0)}%"></i></div></div>
+    ${lv}
+  </div>`;
+}
+function h4Card(h){
+  const phase=Math.abs(h.done)>h.avg?`<span class="pill tr">추세</span>`:`<span class="pill rg">횡보</span>`;
+  return `<div class="card">
+    <div class="card-h"><span class="t">H4 국면 (전략)</span>${phase}</div>
+    <div class="hdln"><span class="v ${cls(h.done)}">${arw(h.done)} ${sg(h.done,0)}%</span><span class="avg">완성 · 평균 ${f(h.avg,0)}%</span></div>
+    <div class="rows">
+      <div class="r"><span class="k">진행 방향강도</span><span class="val ${cls(h.now)}">${sg(h.now,0)}% · 경과 ${f(h.elapsed_pct,0)}%</span></div>
+      <div class="r"><span class="k">H1 위치(5일범위)</span><span class="val">${f(h.h1pos,0)}%</span></div>
+    </div>
+    <div class="tv"><div class="bar"><i style="width:${Math.min(100,h.h1pos||0)}%"></i></div></div>
+  </div>`;
+}
+function flowCol(head,o,unit){
+  if(!o) return `<div class="col"><div class="h">${head}</div><div class="r"><span class="k">데이터 없음</span></div></div>`;
+  const u=unit||"";
+  return `<div class="col"><div class="h">${head}${o.elapsed_pct!=null?` · 경과 ${f(o.elapsed_pct,0)}%`:""}</div>
+    <div style="margin-bottom:6px"><div class="cap" style="margin:0 0 3px"><span>매도</span><span>매수</span></div>${domMeter(o.dom)}
+      <div class="cap"><span>체결 우위</span><span class="rt ${cls(o.dom)}">${sg(o.dom,1)}%</span></div></div>
+    <div class="rows">
+      <div class="r"><span class="k">총틱 (왜곡)</span><span class="val">${(o.total||0).toLocaleString()} <small>(${o.distort||0})</small></span></div>
+      <div class="r"><span class="k">↑ / ↓</span><span class="val"><span class="up">${(o.up||0).toLocaleString()}</span> / <span class="down">${(o.down||0).toLocaleString()}</span></span></div>
+      <div class="r"><span class="k">실이동 / 흔들림</span><span class="val ${cls(o.move)}">${sg(o.move,2)}${u} / ${f(o.swing,2)}${u}</span></div>
+      <div class="r"><span class="k">효율</span><span class="val">${f(o.eff,2)}</span></div>
+      <div class="r"><span class="k">틱당 실이동</span><span class="val ${cls(o.perTick)}">${sg(o.perTick,5)}${u}</span></div>
+    </div></div>`;
+}
+
+let SBFIRST=false;
+function flowSeries(b,unit){
+  const u=unit||""; const first=SBFIRST; SBFIRST=false;
+  return `<div class="sbar${first?' first':''}">
+    <div class="sbar-h"><span class="tag ${b.tag==='진행'?'now':''}">${b.tag}</span>
+      <span class="rng">KST ${b.kst} · 차트 ${b.chart}</span></div>
+    <div class="sdom">${domMeter(b.dom)}</div>
+    <div class="srows">
+      <div class="r"><span class="k">가격</span><span class="val">${money(b.open)}→${money(b.close)} <small>(L ${money(b.lo)} ~ H ${money(b.hi)})</small></span></div>
+      <div class="r"><span class="k">실이동 / 고저폭</span><span class="val ${cls(b.move)}">${sg(b.move,2)}${u} / ${f(b.span,2)}${u} <small>효율 ${f(b.eff,2)}</small></span></div>
+      <div class="r"><span class="k">체결우위</span><span class="val ${cls(b.dom)}">${sg(b.dom,1)}% (↑${(b.up||0).toLocaleString()}/↓${(b.down||0).toLocaleString()} · ${(b.total||0).toLocaleString()}틱)</span></div>
+    </div></div>`;
+}
+/* ===== 판단 요약 (여러 층을 한눈에 정렬) ===== */
+function renderSummary(d){
+  const S=d.dir.session, D=d.dir.daily, W=d.dir.weekly, H=d.dir.h4;
+  const flH=(d.flow&&d.flow.h4&&d.flow.h4.valid)?d.flow.h4:null;
+  const layers=[
+    {k:"세션",v:+S.strength}, {k:"일간",v:+D.strength},
+    {k:"주간",v:+W.strength}, {k:"H4",v:+H.done}
+  ];
+  let up=0,dn=0; layers.forEach(l=>{ if(l.v>0)up++; else if(l.v<0)dn++; });
+  const net=up-dn, dom=net>0?1:(net<0?-1:0);
+  const aligned = dom===0 ? Math.max(up,dn) : (dom>0?up:dn);
+
+  let bias,bcls,bar;
+  if(net>=2){bias="상방 우위";bcls="up";bar="▲";}
+  else if(net<=-2){bias="하방 우위";bcls="down";bar="▼";}
+  else if(net===1){bias="약한 상방";bcls="up";bar="▲";}
+  else if(net===-1){bias="약한 하방";bcls="down";bar="▼";}
+  else {bias="혼조";bcls="flat";bar="↔";}
+
+  // 뱃지
+  const h4tr=Math.abs(H.done)>H.avg, h4cls=cls(H.done);
+  const h4Badge=`<span class="badge ${h4cls==='up'?'g':(h4cls==='down'?'r':'n')}">H4 <b>${h4tr?'추세':'횡보'} ${arw(H.done)}</b></span>`;
+  const alBadge=`<span class="badge ${aligned>=3?'g':(aligned<=2?'n':'')}">다층 정렬 <b>${aligned}/4</b></span>`;
+  const flBadge= flH
+    ? `<span class="badge ${cls(flH.dom)==='up'?'g':(cls(flH.dom)==='down'?'r':'n')}">체결 4H <b>${sg(flH.dom,1)}%</b></span>`
+    : `<span class="badge n">체결 4H <b>데이터 없음</b></span>`;
+  const posExtreme = H.h1pos>=80||H.h1pos<=20;
+  const posBadge=`<span class="badge ${posExtreme?'n':''}">5일 위치 <b>${f(H.h1pos,0)}%</b></span>`;
+  const sessBadge=`<span class="badge">세션 <b>${d.session||'—'}</b></span>`;
+
+  // 정렬 타일
+  const tiles=layers.map(l=>{
+    const c=cls(l.v);
+    return `<div class="atile"><div class="al">${l.k}</div>
+      <div class="av ${c}">${arw(l.v)}</div>
+      <div class="as">${sg(l.v,0)}%</div></div>`;
+  }).join("");
+
+  // 맥락 가이드 (신호가 아닌 재료)
+  const lines=[];
+  if(net===0){
+    lines.push([`↔`,`<b>층별 방향이 엇갈립니다.</b> 정렬이 생길 때까지 관망 우위 — 무리한 진입 자제.`]);
+  } else if(!h4tr){
+    lines.push([`◇`,`<b>H4가 횡보 국면</b>입니다. 되돌림·레인지 성격 — 추세 진입 신뢰도 낮음, 자리 확인 후 신중.`]);
+  } else if(aligned>=3){
+    const dir = dom>0?'상방':'하방';
+    lines.push([bar,`<b>H4 ${dir} 추세 + 다층 정렬(${aligned}/4).</b> 같은 방향 인걸핑 자리를 우선 관찰할 국면.`]);
+  } else {
+    const dir = dom>0?'상방':'하방';
+    lines.push([bar,`<b>H4는 ${dir} 추세</b>지만 하위 층 정렬이 약함(${aligned}/4). 정렬 강화 여부 확인.`]);
+  }
+  // 체결 상충
+  if(flH && dom!==0 && ((dom>0&&flH.dom<-1)||(dom<0&&flH.dom>1))){
+    lines.push([`⚠`,`<span class="warn"><b>체결 흐름이 방향과 반대(${sg(flH.dom,1)}%).</b></span> 진입 서두르지 말 것.`]);
+  }
+  // 과열/극단
+  if(posExtreme){
+    lines.push([`⚠`,`<span class="warn">H1 위치 극단(${f(H.h1pos,0)}%, 5일 범위).</span> 되돌림 가능 구간 — 추격 주의.`]);
+  }
+  lines.push([`•`,`진입 확정은 이 화면이 아니라 <b>캔들(인걸핑) 신호</b>에서. 위는 판단 재료입니다.`]);
+
+  const guide=lines.map(x=>`<div class="ln"><span class="ic">${x[0]}</span><span>${x[1]}</span></div>`).join("");
+
+  $("#summary").innerHTML=`<div class="hero ${bcls}">
+    <div class="hero-top">
+      <div class="bias"><span class="ar ${bcls}">${bar}</span>
+        <span class="lab"><b class="${bcls}">${bias}</b><span>4개 층 방향 종합 (세션·일간·주간·H4)</span></span></div>
+      <div class="algn"><b class="${bcls}">${aligned}/4</b><span>같은 방향 정렬</span></div>
+    </div>
+    <div class="badges">${h4Badge}${alBadge}${flBadge}${posBadge}${sessBadge}</div>
+    <div class="align">${tiles}</div>
+    <div class="guide">${guide}</div>
+  </div>`;
+}
+
+function render(d){
+  CUR=d.cur||""; PTL=d.ptl||"pt"; SBFIRST=true;
+  renderSummary(d);
+  $("#sym").textContent=d.sym||"—";
+  $("#sess").textContent=d.session||"—";
+  $("#price").textContent=d.price!=null?CUR+Number(d.price).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:5}):"—";
+  $("#mkt").textContent=d.market?("· "+d.market):"";
+
+  $("#dirGrid").innerHTML =
+      dirCard("실시간 세션", d.dir.session)
+    + dirCard("당일 일간", d.dir.daily)
+    + dirCard("이번주 주간", d.dir.weekly)
+    + h4Card(d.dir.h4);
+
+  const fl=d.flow, u=fl.unit||"", h=fl.h4;
+  $("#flowWrap").innerHTML=`
+    <div class="card wide">
+      <div class="card-h"><span class="t">최근 4H 체결 역학 요약</span>
+        <span class="pill ${fl.flag==='제공'?'tr':'rg'}">flag ${fl.flag}</span></div>
+      ${ h&&h.valid ? `
+        <div style="margin-bottom:6px"><div class="cap" style="margin:0 0 3px"><span>매도</span><span>매수</span></div>${domMeter(h.dom)}
+          <div class="cap"><span>순 방향성 (↑${(h.up||0).toLocaleString()}/↓${(h.down||0).toLocaleString()})</span><span class="rt ${cls(h.dom)}">${sg(h.dom,1)}%</span></div></div>
+        <div class="rows">
+          <div class="r"><span class="k">누적틱 (왜곡)</span><span class="val">${(h.total||0).toLocaleString()} <small>(${h.distort||0})</small></span></div>
+          <div class="r"><span class="k">순이동 / 고저폭</span><span class="val ${cls(h.net)}">${sg(h.net,1)}${u} / ${f(h.span,1)}${u}</span></div>
+        </div>` : `<div class="r"><span class="k">틱 데이터 없음 (휴장/보관량)</span></div>`}
+    </div>
+    <div class="card wide" style="margin-top:12px">
+      <div class="card-h"><span class="t">${fl.zone.tf} 자리 프레임 · 시간대별 시계열</span></div>
+      ${(fl.zone.bars||[]).map(b=>flowSeries(b,u)).join("")}
+    </div>
+    <div class="card wide" style="margin-top:12px">
+      <div class="card-h"><span class="t">${fl.entry.tf} 진입 프레임 · 완성 vs 진행</span></div>
+      <div class="cmp">${flowCol("직전 완성봉 (-1)",fl.entry.done,u)}${flowCol("현재 진행봉",fl.entry.now,u)}</div>
+    </div>`;
+}
+
+/* ===== live ===== */
+let timer=null;
+function setStatus(kind,msg){$("#dot").className="dot "+(kind||"");$("#status").textContent=msg;$("#banner").style.display=kind==="live"?"none":"block";}
+async function tick(){
+  const url=localStorage.getItem(LS.url);
+  if(!url){render(SAMPLE);setStatus("sample","샘플 데이터");return;}
+  try{
+    const res=await fetch(url,{cache:"no-store"});
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    let data=await res.json(); if(data&&data.payload)data=data.payload;
+    render(data);
+    const t=new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    setStatus("live","실시간 · "+t+" 갱신"+(data.kst?" (봉 "+data.kst+")":""));
+  }catch(e){render(SAMPLE);setStatus("sample","연결 실패 — 샘플 표시 ("+e.message+")");}
+}
+function loop(){if(timer)clearInterval(timer);const ivl=Math.max(10,parseInt(localStorage.getItem(LS.ivl)||"30",10))*1000;tick();if(localStorage.getItem(LS.url))timer=setInterval(tick,ivl);}
+const dlg=$("#cfg");
+$("#gear").onclick=()=>{$("#url").value=localStorage.getItem(LS.url)||"";$("#ivl").value=localStorage.getItem(LS.ivl)||"30";dlg.showModal();};
+$("#save").addEventListener("click",()=>{const u=$("#url").value.trim(),v=$("#ivl").value.trim()||"30";if(u)localStorage.setItem(LS.url,u);else localStorage.removeItem(LS.url);localStorage.setItem(LS.ivl,v);setTimeout(loop,30);});
+try{loop();}catch(e){render(SAMPLE);setStatus("sample","샘플 데이터");}
+</script>
