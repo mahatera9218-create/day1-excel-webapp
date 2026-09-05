@@ -315,7 +315,7 @@ int OnInit()
    InitUnit();
    EventSetTimer(3);
    EnsureCsvHeader();
-   Print("인걸핑알림EA v2.00 — 단위 ",(g_metal?"금($/pt)":"FX(핍)"),
+   Print("인걸핑알림EA v2.10 — 단위 ",(g_metal?"금($/pt)":"FX(핍)"),
          " | 텔레그램 ",(InpTgEnable?"ON":"OFF")," | 대시보드 ",(InpDashEnable?"ON":"OFF")," | 매매안함");
    return(INIT_SUCCEEDED);
 }
