@@ -284,6 +284,7 @@ datetime g_rtStartM15=0;
 int      g_rtBars=0;
 datetime g_lastEngBar=0;
 datetime g_lastM15Bar=0;
+bool     g_rtLeftZone=false;   // 가격이 존을 한 번 벗어났는가(리테스트 전제)
 
 //==================================================================//
 //  MT5 이벤트                                                       //
@@ -359,7 +360,7 @@ void CheckEngulf()
       LogEngulf(id,r,q,rsi,SessionName(sess),h4dir,posPct,wkChg,dom,ts.valid);
 
    g_rtActive=true; g_rtId=id; g_rtEng=r;
-   g_rtStartM15=iTime(_Symbol,InpRetestTF,0); g_rtBars=0;
+   g_rtStartM15=iTime(_Symbol,InpRetestTF,0); g_rtBars=0; g_rtLeftZone=false;
 }
 
 //==================================================================//
@@ -375,7 +376,14 @@ void TrackRetest()
       if(m15>g_rtStartM15) g_rtBars++;
    }
    double price=CurrentPrice();
-   if(PriceInZone(price,g_rtEng,InpWickZone))
+   bool inZone=PriceInZone(price,g_rtEng,InpWickZone);
+
+   // 인걸핑 직후 즉시 알림 방지: 존을 한 번 벗어난 뒤 재진입할 때만 리테스트 인정
+   if(!g_rtLeftZone)
+   {
+      if(!inZone) g_rtLeftZone=true;
+   }
+   else if(inZone)
    {
       double zTop=MathMax(g_rtEng.zoneOpen,g_rtEng.zoneClose);
       double zBot=MathMin(g_rtEng.zoneOpen,g_rtEng.zoneClose);

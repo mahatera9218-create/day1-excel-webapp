@@ -7,7 +7,7 @@
 //|  도구>옵션>전문가 자문에서 https://api.telegram.org 허용 필요.    |
 //+------------------------------------------------------------------+
 #property copyright "Engulf Strategy Indicator Set"
-#property version   "1.20"
+#property version   "1.30"
 #property strict
 
 //--- 전략 입력 ---------------------------------------------------
@@ -338,6 +338,7 @@ int      g_rtBars=0;
 datetime g_lastEngBar=0;
 datetime g_lastM15Bar=0;
 datetime g_lastStatus=0;
+bool     g_rtLeftZone=false;   // 가격이 존을 한 번 벗어났는가(리테스트 전제)
 
 //==================================================================//
 //  MT5 이벤트 (EA)                                                  //
@@ -495,7 +496,7 @@ void CheckEngulf()
    Notify(msg);
 
    g_rtActive=true; g_rtId=id; g_rtEng=r;
-   g_rtStartM15=iTime(_Symbol,InpRetestTF,0); g_rtBars=0;
+   g_rtStartM15=iTime(_Symbol,InpRetestTF,0); g_rtBars=0; g_rtLeftZone=false;
 }
 
 //==================================================================//
@@ -511,7 +512,16 @@ void TrackRetest()
       if(m15>g_rtStartM15) g_rtBars++;
    }
    double price=CurrentPrice();
-   if(PriceInZone(price,g_rtEng,InpWickZone))
+   bool inZone=PriceInZone(price,g_rtEng,InpWickZone);
+
+   // 1) 아직 존을 못 벗어났으면: 벗어나는 것만 확인하고 리테스트는 보류
+   //    (인걸핑 직후엔 가격이 존 안에 있으므로 즉시 알림 방지)
+   if(!g_rtLeftZone)
+   {
+      if(!inZone) g_rtLeftZone=true;   // 존을 한 번 이탈함 → 이제부터 재진입 감시
+   }
+   // 2) 존을 벗어난 뒤 다시 존으로 재진입 → 리테스트 도달
+   else if(inZone)
    {
       double zTop=MathMax(g_rtEng.zoneOpen,g_rtEng.zoneClose);
       double zBot=MathMin(g_rtEng.zoneOpen,g_rtEng.zoneClose);

@@ -48,6 +48,7 @@ struct RetestState
    datetime     startM15;   // 추적 시작(확정 직후) M15 봉시각
    int          barsSeen;   // 지나간 M15 봉 수
    bool         logged;     // 진입여부 로그 갱신됨?
+   bool         leftZone;   // 가격이 존을 한 번 벗어났는가(리테스트 전제)
 };
 RetestState g_rt;
 
@@ -153,6 +154,7 @@ void CheckEngulf()
    g_rt.startM15 = iTime(_Symbol, InpRetestTF, 0);
    g_rt.barsSeen = 0;
    g_rt.logged   = false;
+   g_rt.leftZone = false;
 }
 
 //==================================================================//
@@ -171,9 +173,15 @@ void TrackRetest()
          g_rt.barsSeen++;
    }
 
-   // 현재가 존 재진입 확인
+   // 현재가 존 재진입 확인 — 단, 존을 한 번 벗어난 뒤 재진입해야 인정
+   // (인걸핑 직후엔 가격이 존 안에 있으므로 즉시 알림 방지)
    double price = CurrentPrice();
-   if(PriceInZone(price, g_rt.eng, InpWickZone))
+   bool inZone = PriceInZone(price, g_rt.eng, InpWickZone);
+   if(!g_rt.leftZone)
+   {
+      if(!inZone) g_rt.leftZone = true;
+   }
+   else if(inZone)
    {
       // 진입가 후보(얕은 되돌림=존 경계), 손절(존 시가 밖), 익절(2:1)
       double zTop = MathMax(g_rt.eng.zoneOpen, g_rt.eng.zoneClose);
