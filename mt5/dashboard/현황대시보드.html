@@ -85,6 +85,14 @@ small{font-size:.82em;opacity:.85}
 @media(max-width:480px){.cmp{grid-template-columns:1fr}}
 .cmp .col{background:var(--inset);border-radius:10px;padding:10px}
 .cmp .col .h{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.02em}
+.sbar{border-top:1px dashed var(--line);padding-top:9px;margin-top:9px}
+.sbar.first{border-top:0;margin-top:2px;padding-top:0}
+.sbar-h{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap}
+.sbar-h .tag{font-family:var(--mono);font-weight:700;font-size:11px;padding:1px 8px;border-radius:6px;background:var(--surface2);color:var(--muted)}
+.sbar-h .tag.now{background:var(--accent);color:#fff}
+.sbar-h .rng{font-size:11px;color:var(--faint);font-family:var(--mono)}
+.sdom{margin-bottom:6px}
+.srows{display:flex;flex-direction:column;gap:4px}
 
 .note{color:var(--faint);font-size:11.5px;margin-top:16px;text-align:center;line-height:1.6}
 dialog{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);padding:0;max-width:420px;width:calc(100% - 32px);box-shadow:var(--shadow)}
@@ -163,9 +171,12 @@ const SAMPLE={
  },
  flow:{ flag:"제공", unit:"$",
   h4:{valid:true,total:45820,distort:210,up:23100,down:22720,dom:0.8,net:5.2,span:18.4},
-  zone:{tf:"1H",
-    done:{total:19633,distort:160,up:9390,down:10082,dom:-3.5,move:14.95,swing:25.51,eff:0.59,perTick:0.00076},
-    now:{total:3492,distort:57,up:1621,down:1813,dom:-5.5,move:3.18,swing:6.51,eff:0.49,perTick:0.00091,elapsed_pct:18.3}},
+  zone:{tf:"1H", bars:[
+    {tag:"-3",kst:"10:00~11:00",chart:"05:00~06:00",open:4390.10,close:4402.80,lo:4388.00,hi:4405.10,move:12.70,span:17.10,eff:0.74,dom:-0.8,up:1244,down:1263,total:2508},
+    {tag:"-2",kst:"11:00~12:00",chart:"06:00~07:00",open:4402.80,close:4395.20,lo:4393.00,hi:4409.40,move:-7.60,span:16.40,eff:0.46,dom:-1.1,up:1161,down:1187,total:2349},
+    {tag:"-1",kst:"12:00~13:00",chart:"07:00~08:00",open:4395.20,close:4410.15,lo:4394.10,hi:4419.70,move:14.95,span:25.60,eff:0.58,dom:-3.5,up:9390,down:10082,total:19633},
+    {tag:"진행",kst:"13:00~현재",chart:"08:00 (18분 경과)",open:4410.15,close:4386.50,lo:4384.20,hi:4412.90,move:-23.65,span:28.70,eff:0.82,dom:-5.5,up:1621,down:1813,total:3492}
+  ]},
   entry:{tf:"5M",
     done:{total:1479,distort:37,up:665,down:776,dom:-7.5,move:-0.89,swing:3.90,eff:0.23,perTick:-0.00060},
     now:{total:348,distort:4,up:160,down:183,dom:-6.6,move:2.27,swing:3.09,eff:0.73,perTick:0.00652,elapsed_pct:19.7}}
@@ -244,8 +255,21 @@ function flowCol(head,o,unit){
     </div></div>`;
 }
 
+let SBFIRST=false;
+function flowSeries(b,unit){
+  const u=unit||""; const first=SBFIRST; SBFIRST=false;
+  return `<div class="sbar${first?' first':''}">
+    <div class="sbar-h"><span class="tag ${b.tag==='진행'?'now':''}">${b.tag}</span>
+      <span class="rng">KST ${b.kst} · 차트 ${b.chart}</span></div>
+    <div class="sdom">${domMeter(b.dom)}</div>
+    <div class="srows">
+      <div class="r"><span class="k">가격</span><span class="val">${money(b.open)}→${money(b.close)} <small>(L ${money(b.lo)} ~ H ${money(b.hi)})</small></span></div>
+      <div class="r"><span class="k">실이동 / 고저폭</span><span class="val ${cls(b.move)}">${sg(b.move,2)}${u} / ${f(b.span,2)}${u} <small>효율 ${f(b.eff,2)}</small></span></div>
+      <div class="r"><span class="k">체결우위</span><span class="val ${cls(b.dom)}">${sg(b.dom,1)}% (↑${(b.up||0).toLocaleString()}/↓${(b.down||0).toLocaleString()} · ${(b.total||0).toLocaleString()}틱)</span></div>
+    </div></div>`;
+}
 function render(d){
-  CUR=d.cur||""; PTL=d.ptl||"pt";
+  CUR=d.cur||""; PTL=d.ptl||"pt"; SBFIRST=true;
   $("#sym").textContent=d.sym||"—";
   $("#sess").textContent=d.session||"—";
   $("#price").textContent=d.price!=null?CUR+Number(d.price).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:5}):"—";
@@ -271,8 +295,8 @@ function render(d){
         </div>` : `<div class="r"><span class="k">틱 데이터 없음 (휴장/보관량)</span></div>`}
     </div>
     <div class="card wide" style="margin-top:12px">
-      <div class="card-h"><span class="t">${fl.zone.tf} 자리 프레임 · 완성 vs 진행</span></div>
-      <div class="cmp">${flowCol("직전 완성봉 (-1)",fl.zone.done,u)}${flowCol("현재 진행봉",fl.zone.now,u)}</div>
+      <div class="card-h"><span class="t">${fl.zone.tf} 자리 프레임 · 시간대별 시계열</span></div>
+      ${(fl.zone.bars||[]).map(b=>flowSeries(b,u)).join("")}
     </div>
     <div class="card wide" style="margin-top:12px">
       <div class="card-h"><span class="t">${fl.entry.tf} 진입 프레임 · 완성 vs 진행</span></div>

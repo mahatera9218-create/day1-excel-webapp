@@ -7,7 +7,7 @@
 //|     https://api.telegram.org , https://getpantry.cloud           |
 //+------------------------------------------------------------------+
 #property copyright "Engulf Strategy Indicator Set"
-#property version   "2.00"
+#property version   "2.10"
 #property strict
 
 //--- 전략 입력 ---------------------------------------------------
@@ -27,6 +27,7 @@ input double InpLevelMid       = 0.5;           // 세션 1차레벨 배율
 input double InpLevelFull      = 1.0;           // 세션 최종레벨 배율
 input ENUM_TIMEFRAMES InpFlowEntryTF = PERIOD_M5;  // 체결 진입 프레임
 input ENUM_TIMEFRAMES InpFlowZoneTF  = PERIOD_H1;  // 체결 자리 프레임
+input int    InpZoneBars      = 3;              // 자리 프레임 시계열 과거 봉 수
 //--- 알림 채널 ---------------------------------------------------
 input bool   InpAlertPopup   = true;            // MT5 팝업
 input bool   InpAlertPush    = false;           // MetaQuotes 모바일 푸시
@@ -411,6 +412,23 @@ string TgFlowBar(const string head,const ENUM_TIMEFRAMES tf,const int shift,cons
    s+=StringFormat("  │ 틱당 실이동 %s\n", FmtPerTick(perTick));
    return(s);
 }
+//--- 시간범위 & 시계열 봉(자리 프레임)
+string HM(const datetime t){ return(TimeToString(t,TIME_MINUTES)); }
+string KstRange(const ENUM_TIMEFRAMES tf,const int shift){ datetime o=iTime(_Symbol,tf,shift); if(o==0)return("-"); datetime c=o+PeriodSeconds(tf);
+   if(shift==0) return(HM(ToKST(o,InpServerToKST))+"~현재"); return(HM(ToKST(o,InpServerToKST))+"~"+HM(ToKST(c,InpServerToKST))); }
+string ChartRange(const ENUM_TIMEFRAMES tf,const int shift){ datetime o=iTime(_Symbol,tf,shift); if(o==0)return("-"); datetime c=o+PeriodSeconds(tf);
+   if(shift==0){ int em=(int)((TimeCurrent()-o)/60); return(HM(o)+" ("+IntegerToString(em)+"분 경과)"); } return(HM(o)+"~"+HM(c)); }
+string TgFlowSeries(const ENUM_TIMEFRAMES tf,const int shift,const bool useFlag){
+   double o=iOpen(_Symbol,tf,shift),h=iHigh(_Symbol,tf,shift),l=iLow(_Symbol,tf,shift),c=(shift==0)?CurrentPrice():iClose(_Symbol,tf,shift);
+   if(o<=0.0) return("");
+   double move=c-o,span=h-l,eff=(span>0?MathAbs(move)/span:0);
+   TickStats st; AggregateBarTicks(tf,shift,st,useFlag); double dom=st.Dominance();
+   string tag=(shift==0)?"진행":("-"+IntegerToString(shift)); string note=(shift==1)?" (직전완성)":"";
+   string s=StringFormat("  ┌ [%s %s봉%s] KST %s | 차트 %s\n",tag,TfName(tf),note,KstRange(tf,shift),ChartRange(tf,shift));
+   s+=StringFormat("  │ 가격 %s→%s (L %s ~ H %s)\n",FmtPrice(o),FmtPrice(c),FmtPrice(l),FmtPrice(h));
+   s+=StringFormat("  │ 실이동 %s / 고저폭 %s (효율 %.2f)\n",FmtMove(move),FmtMove(span),eff);
+   s+=StringFormat("  │ 체결우위 %.1f%% %s (↑%s/↓%s | %s틱)\n",dom,(dom>0?"매수":(dom<0?"매도":"중립")),FmtInt(st.up),FmtInt(st.down),FmtInt(st.total));
+   return(s); }
 
 string BuildStatusText()
 {
@@ -453,10 +471,10 @@ string BuildStatusText()
       s+=StringFormat("• 순 방향성 %.1f%% %s (↑%s/↓%s)\n",t4.Dominance(),(t4.Dominance()>0?"매수 우위":(t4.Dominance()<0?"매도 우위":"중립")),FmtInt(t4.up),FmtInt(t4.down)); }
    else s+="• 틱 데이터 없음 (휴장/보관량)\n";
    s+=StringFormat("• 순이동 %s | 고저폭 %s\n",FmtMove(price-o4),FmtMove(span));
-   s+=StringFormat("[2] %s 자리 프레임\n",TfName(InpFlowZoneTF));
-   s+=TgFlowBar("직전 완성봉",InpFlowZoneTF,1,useFlag);
-   s+=TgFlowBar("진행봉",InpFlowZoneTF,0,useFlag);
-   s+=StringFormat("[3] %s 진입 프레임\n",TfName(InpFlowEntryTF));
+   s+=StringFormat("[2] %s 자리 프레임 (시계열)\n",TfName(InpFlowZoneTF));
+   for(int sh=InpZoneBars; sh>=1; sh--) s+=TgFlowSeries(InpFlowZoneTF,sh,useFlag);
+   s+=TgFlowSeries(InpFlowZoneTF,0,useFlag);
+   s+=StringFormat("[3] %s 진입 프레임 (완성 vs 진행)\n",TfName(InpFlowEntryTF));
    s+=TgFlowBar("직전 완성봉",InpFlowEntryTF,1,useFlag);
    s+=TgFlowBar("진행봉",InpFlowEntryTF,0,useFlag);
    s+="─────────────\n* 추세율=|시종|/고저, 평균보다 크면 추세. 진입은 캔들로.";
@@ -490,6 +508,16 @@ string JFlowBar(const ENUM_TIMEFRAMES tf,const int shift,const bool useFlag)
    return(StringFormat("{\"total\":%d,\"distort\":%d,\"up\":%d,\"down\":%d,\"dom\":%s,\"move\":%s,\"swing\":%s,\"eff\":%s,\"perTick\":%s%s}",
       (int)st.total,(int)st.distort,(int)st.up,(int)st.down,JNum(dom,1),JNum(moveU,2),JNum(swingU,2),JNum(eff,2),JNum(ptU,5),el));
 }
+string JFlowSeries(const ENUM_TIMEFRAMES tf,const int shift,const bool useFlag)
+{
+   double o=iOpen(_Symbol,tf,shift),h=iHigh(_Symbol,tf,shift),l=iLow(_Symbol,tf,shift),c=(shift==0)?CurrentPrice():iClose(_Symbol,tf,shift);
+   double move=c-o,span=h-l,eff=(span>0?MathAbs(move)/span:0);
+   TickStats st; AggregateBarTicks(tf,shift,st,useFlag); double dom=st.Dominance();
+   double moveU=g_metal?move:move/OnePip(), spanU=g_metal?span:span/OnePip();
+   string tag=(shift==0)?"진행":("-"+IntegerToString(shift));
+   return(StringFormat("{\"tag\":\"%s\",\"kst\":\"%s\",\"chart\":\"%s\",\"open\":%s,\"close\":%s,\"lo\":%s,\"hi\":%s,\"move\":%s,\"span\":%s,\"eff\":%s,\"dom\":%s,\"up\":%d,\"down\":%d,\"total\":%d}",
+      tag,KstRange(tf,shift),ChartRange(tf,shift),JNum(o,_Digits),JNum(c,_Digits),JNum(l,_Digits),JNum(h,_Digits),JNum(moveU,2),JNum(spanU,2),JNum(eff,2),JNum(dom,1),(int)st.up,(int)st.down,(int)st.total));
+}
 string BuildStatusJson()
 {
    InitUnit();
@@ -520,7 +548,10 @@ string BuildStatusJson()
    j+="\"flow\":{\"flag\":\""+(useFlag?"제공":"추정")+"\",\"unit\":\""+g_unit+"\",";
    j+=StringFormat("\"h4\":{\"valid\":%s,\"total\":%d,\"distort\":%d,\"up\":%d,\"down\":%d,\"dom\":%s,\"net\":%s,\"span\":%s},",
         (t4.valid?"true":"false"),(int)t4.total,(int)t4.distort,(int)t4.up,(int)t4.down,JNum(t4.Dominance(),1),JNum(netU,1),JNum(spanU,1));
-   j+="\"zone\":{\"tf\":\""+TfName(InpFlowZoneTF)+"\",\"done\":"+JFlowBar(InpFlowZoneTF,1,useFlag)+",\"now\":"+JFlowBar(InpFlowZoneTF,0,useFlag)+"},";
+   j+="\"zone\":{\"tf\":\""+TfName(InpFlowZoneTF)+"\",\"bars\":[";
+   for(int sh=InpZoneBars; sh>=1; sh--){ j+=JFlowSeries(InpFlowZoneTF,sh,useFlag); j+=","; }
+   j+=JFlowSeries(InpFlowZoneTF,0,useFlag);
+   j+="]},";
    j+="\"entry\":{\"tf\":\""+TfName(InpFlowEntryTF)+"\",\"done\":"+JFlowBar(InpFlowEntryTF,1,useFlag)+",\"now\":"+JFlowBar(InpFlowEntryTF,0,useFlag)+"}";
    j+="}}";
    return(j);
