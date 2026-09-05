@@ -7,7 +7,7 @@
 //|  도구>옵션>전문가 자문에서 https://api.telegram.org 허용 필요.    |
 //+------------------------------------------------------------------+
 #property copyright "Engulf Strategy Indicator Set"
-#property version   "1.40"
+#property version   "1.41"
 #property strict
 
 //--- 전략 입력 ---------------------------------------------------
@@ -113,7 +113,15 @@ string JsonEscape(string s)
    StringReplace(s,"\n","\\n");
    return(s);
 }
-void SendTelegram(const string text)
+string HtmlEscape(string s)
+{
+   StringReplace(s,"&","&amp;");
+   StringReplace(s,"<","&lt;");
+   StringReplace(s,">","&gt;");
+   return(s);
+}
+// asPre=true → 고정폭(monospace) 표로 표시 (표 정렬 유지)
+void SendTelegram(const string text, const bool asPre=false)
 {
    if(!InpTgEnable) return;
    if(InpTgToken=="" || InpTgChatId=="")
@@ -122,7 +130,11 @@ void SendTelegram(const string text)
       return;
    }
    string url="https://api.telegram.org/bot"+InpTgToken+"/sendMessage";
-   string body="{\"chat_id\":\""+InpTgChatId+"\",\"text\":\""+JsonEscape(text)+"\",\"disable_web_page_preview\":true}";
+   string body;
+   if(asPre)
+      body="{\"chat_id\":\""+InpTgChatId+"\",\"text\":\""+JsonEscape("<pre>"+HtmlEscape(text)+"</pre>")+"\",\"parse_mode\":\"HTML\",\"disable_web_page_preview\":true}";
+   else
+      body="{\"chat_id\":\""+InpTgChatId+"\",\"text\":\""+JsonEscape(text)+"\",\"disable_web_page_preview\":true}";
    char post[]; char result[]; string resHeaders;
    int total=StringToCharArray(body, post, 0, WHOLE_ARRAY, CP_UTF8);
    if(total>0) ArrayResize(post, total-1);   // 마지막 널문자 제거
@@ -508,7 +520,7 @@ void SendStatusSummary()
          _Symbol, TimeToString(kstNow,TIME_MINUTES), SessionName(CurrentSession()), DoubleToString(price,_Digits),
          SignStr(h4d,1), (MathAbs(h4d)>h4a?"추세":"횡보"), SignStr(dD,1),
          (t4.valid? StringFormat("%s%%",SignStr(t4.Dominance(),1)):"없음"));
-      SendTelegram(msgS); Print(msgS);
+      SendTelegram(msgS, true); Print(msgS);
       return;
    }
 
@@ -516,8 +528,8 @@ void SendStatusSummary()
    datetime sessStart;
    ENUM_SESSION sess=CurrentSessionStart(sessStart);
 
-   string msg=StringFormat("📊 %s 현황  %s KST\n", _Symbol, TimeToString(kstNow,TIME_MINUTES));
-   msg+="════ 방향강도 ════\n";
+   string msg=StringFormat("[ %s 현황  %s KST ]\n", _Symbol, TimeToString(kstNow,TIME_MINUTES));
+   msg+="=== (1) 방향강도 터미널 ===\n";
 
    //--- [1] 세션
    msg+=StringFormat("▎세션: %s | 현재가 %s\n", SessionName(sess), DoubleToString(price,_Digits));
@@ -558,7 +570,7 @@ void SendStatusSummary()
    msg+=StringFormat("   H1위치(5일범위) %s%%\n", DoubleToString(RangePosPct(),0));
 
    //--- 체결
-   msg+="════ 체결 ════\n";
+   msg+="=== (2) 체결 터미널 ===\n";
    TickStats t4; AggregateTicks(TimeCurrent()-4*3600, TimeCurrent(), t4, useFlag);
    double open4h=OpenAtTime(TimeCurrent()-4*3600);
    int hh=iHighest(_Symbol,PERIOD_M5,MODE_HIGH,48,0), ll=iLowest(_Symbol,PERIOD_M5,MODE_LOW,48,0);
@@ -573,7 +585,7 @@ void SendStatusSummary()
 
    msg+="─────────────\n* +상승/-하락, |값|=강도. 진입은 캔들로 판단.";
 
-   SendTelegram(msg);
+   SendTelegram(msg, true);   // 고정폭 표로 전송 (정렬 유지)
    Print(msg);
 }
 
