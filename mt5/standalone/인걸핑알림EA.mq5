@@ -7,7 +7,7 @@
 //|  도구>옵션>전문가 자문에서 https://api.telegram.org 허용 필요.    |
 //+------------------------------------------------------------------+
 #property copyright "Engulf Strategy Indicator Set"
-#property version   "1.30"
+#property version   "1.40"
 #property strict
 
 //--- 전략 입력 ---------------------------------------------------
@@ -26,9 +26,15 @@ input bool   InpTgEnable     = false;  // 텔레그램 전송 사용
 input string InpTgToken      = "";     // 봇 토큰 (BotFather)
 input string InpTgChatId     = "";     // chat_id (getUpdates)
 //--- 현황 요약 (B안) --------------------------------------------
-input bool   InpStatusEnable = true;   // 현황 요약 주기 전송(텔레그램)
-input int    InpStatusMin    = 60;     // 현황 요약 주기(분)
-input int    InpSessDays     = 5;      // 평균 표본(일간/H4일수)
+input bool   InpStatusEnable = true;   // 현황 전송 사용(텔레그램)
+input int    InpStatusMin    = 60;     // 현황 전송 주기(분)
+input bool   InpStatusFull   = true;   // true=표 전체 / false=간단요약
+input int    InpSessDays     = 5;      // 세션/일간 평균 일수
+input int    InpWeekWeeks    = 4;      // 주간 평균 주수
+input double InpLevelMid      = 0.5;   // 1차레벨 배율
+input double InpLevelFull     = 1.0;   // 최종레벨 배율
+input ENUM_TIMEFRAMES InpFlowEntryTF = PERIOD_M5;  // 체결 진입 프레임
+input ENUM_TIMEFRAMES InpFlowZoneTF  = PERIOD_H1;  // 체결 자리 프레임
 //--- 로그 --------------------------------------------------------
 input bool   InpWriteCsv     = true;
 input string InpCsvFile      = "engulf_log.csv";
@@ -314,6 +320,7 @@ string SignStr(const double v, const int digits=1)
    if(v>0.0) s="+"+s;
    return(s);
 }
+string PhaseStr(const double absVal, const double avgAbs){ return(absVal>avgAbs?"추세":"횡보"); }
 double AvgDirStrengthAbs(const ENUM_TIMEFRAMES tf, const int count, const int startShift=1)
 {
    double sum=0; int used=0;
@@ -325,6 +332,64 @@ double AvgDirStrengthAbs(const ENUM_TIMEFRAMES tf, const int count, const int st
       sum+=MathAbs(DirStrength(o,h,l,c,true,true)); used++;
    }
    return(used>0? sum/used : 0.0);
+}
+//--- 전체 현황용 추가 헬퍼 --------------------------------------
+datetime ToServer(const datetime kstTime, const int h){ return(kstTime-(datetime)h*3600); }
+double ElapsedRatio(const datetime bo,const datetime now,const int ps){ if(ps<=0)return(0.0); double r=(double)(now-bo)/(double)ps; if(r<0)r=0; if(r>1)r=1; return(r); }
+double ReachPercent(const double price,const double base,const double level){ double d=level-base; if(MathAbs(d)<_Point)return(0.0); return((price-base)/d*100.0); }
+double OpenAtTime(const datetime st){ int sh=iBarShift(_Symbol,PERIOD_M1,st,false); if(sh<0)return(0.0); return(iOpen(_Symbol,PERIOD_M1,sh)); }
+int SessionStartMinute(const ENUM_SESSION s){ switch(s){case SESSION_ASIA:return(540);case SESSION_LONDON:return(960);case SESSION_TRANSIT:return(1140);case SESSION_NY1:return(1290);case SESSION_NY2:return(30);default:return(360);} }
+int SessionEndMinute(const ENUM_SESSION s){ switch(s){case SESSION_ASIA:return(960);case SESSION_LONDON:return(1140);case SESSION_TRANSIT:return(1290);case SESSION_NY1:return(30);case SESSION_NY2:return(360);default:return(540);} }
+ENUM_SESSION CurrentSessionStart(datetime &sessStartServer)
+{
+   datetime kstNow=ToKST(TimeCurrent(),InpServerToKST);
+   int m=MinuteOfDay(kstNow); ENUM_SESSION s=SessionOfMinute(m);
+   MqlDateTime kt; TimeToStruct(kstNow,kt); kt.hour=0;kt.min=0;kt.sec=0;
+   datetime kstMid=StructToTime(kt);
+   datetime kstStart=kstMid+(datetime)SessionStartMinute(s)*60;
+   if(s==SESSION_NY1 && m<30) kstStart-=86400;
+   sessStartServer=ToServer(kstStart,InpServerToKST);
+   return(s);
+}
+double AvgRange(const ENUM_TIMEFRAMES tf,const int count,const int startShift=1)
+{
+   double sum=0; int used=0;
+   for(int i=0;i<count;i++){ int sh=startShift+i; double h=iHigh(_Symbol,tf,sh),l=iLow(_Symbol,tf,sh); if(h==0.0)break; sum+=(h-l); used++; }
+   return(used>0? sum/used : 0.0);
+}
+double AvgTickVolume(const ENUM_TIMEFRAMES tf,const int count,const int startShift=1)
+{
+   long sum=0; int used=0;
+   for(int i=0;i<count;i++){ int sh=startShift+i; if(iTime(_Symbol,tf,sh)==0)break; sum+=iVolume(_Symbol,tf,sh); used++; }
+   return(used>0? (double)sum/used : 0.0);
+}
+void SessionCurrent(const datetime sessStartServer,double &hi,double &lo,long &tv)
+{
+   hi=-DBL_MAX; lo=DBL_MAX; tv=0;
+   int shStart=iBarShift(_Symbol,PERIOD_M5,sessStartServer,false);
+   if(shStart<0){ hi=0; lo=0; return; }
+   for(int sh=shStart; sh>=0; sh--){ double h=iHigh(_Symbol,PERIOD_M5,sh),l=iLow(_Symbol,PERIOD_M5,sh); if(h==0.0)continue; hi=MathMax(hi,h); lo=MathMin(lo,l); tv+=iVolume(_Symbol,PERIOD_M5,sh); }
+   if(hi<lo){ hi=0; lo=0; }
+}
+void SessionHistAvg(const int startMinKST,const int endMinKST,const int h,const int days,double &avgRange,double &avgTicks)
+{
+   avgRange=0; avgTicks=0; int used=0;
+   if(Bars(_Symbol,PERIOD_M5)<=0) return;
+   for(int d=1; d<=days; d++)
+   {
+      double hi=-DBL_MAX,lo=DBL_MAX; long tv=0; bool any=false;
+      datetime kstNow=ToKST(TimeCurrent(),h);
+      MqlDateTime kt; TimeToStruct(kstNow,kt); kt.hour=0;kt.min=0;kt.sec=0;
+      datetime kstMid=StructToTime(kt)-(datetime)d*86400;
+      datetime kstStart=kstMid+(datetime)startMinKST*60;
+      datetime kstEnd=(endMinKST>startMinKST)? kstMid+(datetime)endMinKST*60 : kstMid+86400+(datetime)endMinKST*60;
+      int shStart=iBarShift(_Symbol,PERIOD_M5,ToServer(kstStart,h),false);
+      int shEnd  =iBarShift(_Symbol,PERIOD_M5,ToServer(kstEnd,h),false);
+      if(shStart<0||shEnd<0) continue;
+      for(int sh=shStart; sh>=shEnd; sh--){ double hh=iHigh(_Symbol,PERIOD_M5,sh),ll=iLow(_Symbol,PERIOD_M5,sh); if(hh==0.0)continue; hi=MathMax(hi,hh); lo=MathMin(lo,ll); tv+=iVolume(_Symbol,PERIOD_M5,sh); any=true; }
+      if(any && hi>lo){ avgRange+=(hi-lo); avgTicks+=(double)tv; used++; }
+   }
+   if(used>0){ avgRange/=used; avgTicks/=used; }
 }
 
 //==================================================================//
@@ -371,55 +436,144 @@ void OnTick()  { CheckEngulf(); TrackRetest(); }
 //==================================================================//
 //  현황 요약 (방향강도 + 체결) → 텔레그램                           //
 //==================================================================//
+//--- 일간/주간 블록 텍스트
+string BuildPeriodText(const string title, const ENUM_TIMEFRAMES tf, const int avgN, const double price)
+{
+   double pOpen=iOpen(_Symbol,tf,0), pHigh=iHigh(_Symbol,tf,0), pLow=iLow(_Symbol,tf,0);
+   long pTv=iVolume(_Symbol,tf,0);
+   if(pOpen<=0.0) return(StringFormat("▎%s: (데이터 준비중)\n", title));
+   double chg=(price-pOpen)/pOpen*100.0;
+   double dir=DirStrength(pOpen,pHigh,pLow,price,true,true);
+   double avgDir=AvgDirStrengthAbs(tf,avgN,1);
+   double avgR=AvgRange(tf,avgN,1), avgTk=AvgTickVolume(tf,avgN,1);
+   string s=StringFormat("▎%s  시가 %s (%s%%)\n", title, DoubleToString(pOpen,_Digits), SignStr(chg,2));
+   s+=StringFormat("   고저 %spt | 시종 %spt\n", DoubleToString(ToPips(pHigh-pLow),1), SignStr(ToPips(price-pOpen),1));
+   s+=StringFormat("   방향강도 %s%% (%d평균 %s%% · %s)\n", SignStr(dir,1), avgN, DoubleToString(avgDir,0), PhaseStr(MathAbs(dir),avgDir));
+   if(avgTk>0) s+=StringFormat("   틱볼륨 %s%%\n", DoubleToString((double)pTv/avgTk*100.0,0));
+   if(avgR>0)
+   {
+      double upF=pOpen+avgR*InpLevelFull, dnF=pOpen-avgR*InpLevelFull;
+      s+=StringFormat("   레벨 %s/%s (도달 %s%%)\n", DoubleToString(upF,_Digits), DoubleToString(dnF,_Digits), DoubleToString(ReachPercent(price,pOpen,upF),0));
+   }
+   return(s);
+}
+//--- 체결 프레임(완성봉/진행봉) 텍스트
+string BuildFlowText(const string label, const ENUM_TIMEFRAMES tf, const bool useFlag)
+{
+   string s=StringFormat("▎%s 체결\n", label);
+   for(int k=0;k<2;k++)
+   {
+      int shift=(k==0)?1:0;
+      double o=iOpen(_Symbol,tf,shift), h=iHigh(_Symbol,tf,shift), l=iLow(_Symbol,tf,shift);
+      double c=(shift==0)? CurrentPrice() : iClose(_Symbol,tf,shift);
+      if(o<=0.0){ s+="   (데이터 준비중)\n"; continue; }
+      double move=ToPips(c-o), swing=ToPips(h-l);
+      double eff=DirStrength(o,h,l,c,false,false);
+      TickStats st; AggregateBarTicks(tf,shift,st,useFlag);
+      double dom=st.Dominance();
+      double perTick=(st.total>0)? move/(double)st.total : 0.0;
+      string head=(shift==1)?"완성":"진행";
+      if(shift==0)
+      {
+         datetime bt=iTime(_Symbol,tf,0);
+         int esec=(int)(TimeCurrent()-bt);
+         head=StringFormat("진행 %dm/%dm(%s%%)", esec/60, PeriodSeconds(tf)/60,
+                           DoubleToString(ElapsedRatio(bt,TimeCurrent(),PeriodSeconds(tf))*100,0));
+      }
+      s+=StringFormat("  [%s] 틱%d 방향성%s%%(↑%d/↓%d)\n", head, (int)st.total, SignStr(dom,1), (int)st.up, (int)st.down);
+      s+=StringFormat("       실이동%s 흔들림%s 효율%s\n", SignStr(move,1), DoubleToString(swing,1), DoubleToString(eff,2));
+   }
+   return(s);
+}
+
+//==================================================================//
+//  현황 전송 → 텔레그램 (표 전체 or 간단요약)                       //
+//==================================================================//
 void SendStatusSummary()
 {
    double price=CurrentPrice();
    datetime kstNow=ToKST(TimeCurrent(),InpServerToKST);
-   ENUM_SESSION sess=CurrentSession();
-
-   // H4 완성 방향강도 + 국면
-   double h4dir=DirStrength(iOpen(_Symbol,PERIOD_H4,1),iHigh(_Symbol,PERIOD_H4,1),
-                            iLow(_Symbol,PERIOD_H4,1),iClose(_Symbol,PERIOD_H4,1),true,true);
-   double h4avg=AvgDirStrengthAbs(PERIOD_H4,30,1);
-   string h4phase=(MathAbs(h4dir)>h4avg)?"추세":"횡보";
-
-   // 일간
-   double dOpen=iOpen(_Symbol,PERIOD_D1,0);
-   double dDir=DirStrength(dOpen,iHigh(_Symbol,PERIOD_D1,0),iLow(_Symbol,PERIOD_D1,0),price,true,true);
-   double dChg=(dOpen>0.0)? (price-dOpen)/dOpen*100.0 : 0.0;
-
-   // 주간
-   double wOpen=iOpen(_Symbol,PERIOD_W1,0);
-   double wDir=DirStrength(wOpen,iHigh(_Symbol,PERIOD_W1,0),iLow(_Symbol,PERIOD_W1,0),price,true,true);
-
-   double posPct=RangePosPct();
-
-   // 체결 4H 요약
    bool useFlag=BrokerProvidesTradeFlags();
-   TickStats ts; AggregateTicks(TimeCurrent()-4*3600, TimeCurrent(), ts, useFlag);
-   double dom=ts.Dominance();
-   string flowSide=(dom>0?"매수":(dom<0?"매도":"중립"));
-   string flowTxt = ts.valid? StringFormat("%s%% %s 우위",SignStr(dom,1),flowSide) : "데이터 없음";
 
-   string msg=StringFormat(
-      "📊 %s 현황 요약  %s KST\n"
-      "━━━━━━━━━━━━━\n"
-      "세션 : %s\n"
-      "현재가: %s\n"
-      "H4   : 방향강도 %s%% (%s)\n"
-      "일간 : %s%% (시가대비 %s%%)\n"
-      "주간 : %s%%\n"
-      "5일 위치: %.0f%%\n"
-      "체결(4H): %s\n"
-      "━━━━━━━━━━━━━\n"
-      "* +상승 / -하락, |값|=강도. 진입은 캔들로 판단.",
-      _Symbol, TimeToString(kstNow,TIME_MINUTES),
-      SessionName(sess), DoubleToString(price,_Digits),
-      SignStr(h4dir,1), h4phase,
-      SignStr(dDir,1), SignStr(dChg,2),
-      SignStr(wDir,1), posPct, flowTxt);
+   //--- 간단 요약 모드
+   if(!InpStatusFull)
+   {
+      double h4d=DirStrength(iOpen(_Symbol,PERIOD_H4,1),iHigh(_Symbol,PERIOD_H4,1),iLow(_Symbol,PERIOD_H4,1),iClose(_Symbol,PERIOD_H4,1),true,true);
+      double h4a=AvgDirStrengthAbs(PERIOD_H4,30,1);
+      double dO=iOpen(_Symbol,PERIOD_D1,0);
+      double dD=DirStrength(dO,iHigh(_Symbol,PERIOD_D1,0),iLow(_Symbol,PERIOD_D1,0),price,true,true);
+      TickStats t4; AggregateTicks(TimeCurrent()-4*3600,TimeCurrent(),t4,useFlag);
+      string msgS=StringFormat(
+         "📊 %s 요약 %s KST\n세션 %s | 현재가 %s\nH4 %s%%(%s) | 일간 %s%%\n체결4H %s",
+         _Symbol, TimeToString(kstNow,TIME_MINUTES), SessionName(CurrentSession()), DoubleToString(price,_Digits),
+         SignStr(h4d,1), (MathAbs(h4d)>h4a?"추세":"횡보"), SignStr(dD,1),
+         (t4.valid? StringFormat("%s%%",SignStr(t4.Dominance(),1)):"없음"));
+      SendTelegram(msgS); Print(msgS);
+      return;
+   }
 
-   SendTelegram(msg);   // 현황은 조용히 텔레그램만 (팝업 X)
+   //--- 전체 표 모드
+   datetime sessStart;
+   ENUM_SESSION sess=CurrentSessionStart(sessStart);
+
+   string msg=StringFormat("📊 %s 현황  %s KST\n", _Symbol, TimeToString(kstNow,TIME_MINUTES));
+   msg+="════ 방향강도 ════\n";
+
+   //--- [1] 세션
+   msg+=StringFormat("▎세션: %s | 현재가 %s\n", SessionName(sess), DoubleToString(price,_Digits));
+   if(sess!=SESSION_NONE)
+   {
+      double sOpen=OpenAtTime(sessStart);
+      double shi,slo; long stv; SessionCurrent(sessStart,shi,slo,stv);
+      if(sOpen>0.0 && shi>0.0)
+      {
+         double sChg=(price-sOpen)/sOpen*100.0;
+         double sDir=DirStrength(sOpen,shi,slo,price,true,true);
+         double avgR,avgTk; SessionHistAvg(SessionStartMinute(sess),SessionEndMinute(sess),InpServerToKST,InpSessDays,avgR,avgTk);
+         msg+=StringFormat("   시가 %s (%s%%)\n", DoubleToString(sOpen,_Digits), SignStr(sChg,2));
+         msg+=StringFormat("   고저 %spt | 시종 %spt | 방향강도 %s%%\n", DoubleToString(ToPips(shi-slo),1), SignStr(ToPips(price-sOpen),1), SignStr(sDir,1));
+         if(avgTk>0) msg+=StringFormat("   틱볼륨 %s%%\n", DoubleToString((double)stv/avgTk*100.0,0));
+         if(avgR>0)
+         {
+            double up1=sOpen+avgR*InpLevelMid, dn1=sOpen-avgR*InpLevelMid;
+            double upF=sOpen+avgR*InpLevelFull, dnF=sOpen-avgR*InpLevelFull;
+            msg+=StringFormat("   1차 %s/%s (도달 %s%%)\n", DoubleToString(up1,_Digits),DoubleToString(dn1,_Digits),DoubleToString(ReachPercent(price,sOpen,up1),0));
+            msg+=StringFormat("   최종 %s/%s (도달 %s%%)\n", DoubleToString(upF,_Digits),DoubleToString(dnF,_Digits),DoubleToString(ReachPercent(price,sOpen,upF),0));
+         }
+      }
+   }
+
+   //--- [2][3] 일간/주간
+   msg+=BuildPeriodText("당일 일간", PERIOD_D1, InpSessDays, price);
+   msg+=BuildPeriodText("이번주 주간", PERIOD_W1, InpWeekWeeks, price);
+
+   //--- [4] H4 국면
+   double h4dir=DirStrength(iOpen(_Symbol,PERIOD_H4,1),iHigh(_Symbol,PERIOD_H4,1),iLow(_Symbol,PERIOD_H4,1),iClose(_Symbol,PERIOD_H4,1),true,true);
+   double h4avg=AvgDirStrengthAbs(PERIOD_H4,30,1);
+   double h4dirNow=DirStrength(iOpen(_Symbol,PERIOD_H4,0),iHigh(_Symbol,PERIOD_H4,0),iLow(_Symbol,PERIOD_H4,0),price,true,true);
+   datetime h4bt=iTime(_Symbol,PERIOD_H4,0);
+   int h4min=(int)((TimeCurrent()-h4bt)/60);
+   msg+=StringFormat("▎H4 완성 %s%% (평균 %s · %s)\n", SignStr(h4dir,1), DoubleToString(h4avg,0), PhaseStr(MathAbs(h4dir),h4avg));
+   msg+=StringFormat("   진행 %s%% 경과 %dH%dm/4H | 방향 %s\n", SignStr(h4dirNow,1), h4min/60, h4min%60, (h4dir>0?"상승↑":(h4dir<0?"하락↓":"-")));
+   msg+=StringFormat("   H1위치(5일범위) %s%%\n", DoubleToString(RangePosPct(),0));
+
+   //--- 체결
+   msg+="════ 체결 ════\n";
+   TickStats t4; AggregateTicks(TimeCurrent()-4*3600, TimeCurrent(), t4, useFlag);
+   double open4h=OpenAtTime(TimeCurrent()-4*3600);
+   int hh=iHighest(_Symbol,PERIOD_M5,MODE_HIGH,48,0), ll=iLowest(_Symbol,PERIOD_M5,MODE_LOW,48,0);
+   double span=(hh>=0&&ll>=0)? ToPips(iHigh(_Symbol,PERIOD_M5,hh)-iLow(_Symbol,PERIOD_M5,ll)) : 0;
+   if(t4.valid)
+      msg+=StringFormat("▎4H 틱%d(왜곡%d) 순방향성%s%%(↑%d/↓%d)\n", (int)t4.total,(int)t4.distort, SignStr(t4.Dominance(),1),(int)t4.up,(int)t4.down);
+   else
+      msg+="▎4H (틱 데이터 없음 · 휴장/보관량)\n";
+   msg+=StringFormat("   순이동 %s핍 | 고저폭 %s핍\n", SignStr(ToPips(price-open4h),1), DoubleToString(span,1));
+   msg+=BuildFlowText(TfName(InpFlowEntryTF), InpFlowEntryTF, useFlag);
+   msg+=BuildFlowText(TfName(InpFlowZoneTF),  InpFlowZoneTF,  useFlag);
+
+   msg+="─────────────\n* +상승/-하락, |값|=강도. 진입은 캔들로 판단.";
+
+   SendTelegram(msg);
    Print(msg);
 }
 
