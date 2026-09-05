@@ -44,6 +44,33 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14p
 .gear:hover{color:var(--ink);border-color:var(--muted)}
 .banner{background:var(--flat-bg);color:var(--flat);border-radius:10px;padding:8px 12px;font-size:12.5px;font-weight:500;margin-bottom:12px}
 
+/* ── 판단 요약 hero ── */
+.hero{border-radius:16px;padding:14px 15px;margin-bottom:14px;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--surface);border-left:5px solid var(--faint)}
+.hero.up{border-left-color:var(--up)}.hero.down{border-left-color:var(--down)}.hero.flat{border-left-color:var(--flat)}
+.hero-top{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+.bias{display:flex;align-items:center;gap:11px;min-width:0}
+.bias .ar{font-size:32px;line-height:1;font-weight:700}
+.bias .lab b{font-size:20px;font-weight:700;letter-spacing:.01em;display:block}
+.bias .lab span{font-size:11.5px;color:var(--muted);font-weight:500}
+.hero-top .algn{margin-left:auto;text-align:right;flex:none}
+.hero-top .algn b{font-family:var(--mono);font-size:23px;font-weight:600;line-height:1}
+.hero-top .algn span{display:block;font-size:10.5px;color:var(--muted);margin-top:2px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:11px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--surface2);color:var(--muted);display:inline-flex;gap:5px;align-items:center;white-space:nowrap}
+.badge b{font-weight:700;color:var(--ink)}
+.badge.g{background:var(--up-bg);color:var(--up)}.badge.g b{color:var(--up)}
+.badge.r{background:var(--down-bg);color:var(--down)}.badge.r b{color:var(--down)}
+.badge.n{background:var(--flat-bg);color:var(--flat)}.badge.n b{color:var(--flat)}
+.align{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:11px}
+.atile{background:var(--inset);border-radius:10px;padding:8px 3px;text-align:center}
+.atile .al{font-size:10.5px;color:var(--muted);font-weight:600;margin-bottom:1px}
+.atile .av{font-size:19px;font-weight:700;line-height:1.15}
+.atile .as{font-size:9.5px;color:var(--faint);font-family:var(--mono)}
+.guide{font-size:12.5px;line-height:1.55;padding:10px 12px;border-radius:10px;background:var(--inset);color:var(--ink)}
+.guide .ln{display:flex;gap:7px;align-items:flex-start}.guide .ln+.ln{margin-top:5px}
+.guide .ic{flex:none}.guide b{font-weight:700}
+.guide .warn{color:var(--down)}
+
 .sec-h{display:flex;align-items:center;gap:8px;margin:16px 2px 9px}
 .sec-h .n{font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;background:var(--accent);border-radius:6px;padding:1px 7px}
 .sec-h h2{font-size:15px;font-weight:700;margin:0}
@@ -123,6 +150,8 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   </div>
 
   <div class="banner" id="banner">샘플 데이터입니다 · ‘연결 설정’에서 데이터 주소를 넣으면 실시간으로 바뀝니다</div>
+
+  <div id="summary"></div>
 
   <div class="sec-h"><span class="n">1</span><h2>방향강도 터미널</h2></div>
   <div class="grid" id="dirGrid"></div>
@@ -268,8 +297,84 @@ function flowSeries(b,unit){
       <div class="r"><span class="k">체결우위</span><span class="val ${cls(b.dom)}">${sg(b.dom,1)}% (↑${(b.up||0).toLocaleString()}/↓${(b.down||0).toLocaleString()} · ${(b.total||0).toLocaleString()}틱)</span></div>
     </div></div>`;
 }
+/* ===== 판단 요약 (여러 층을 한눈에 정렬) ===== */
+function renderSummary(d){
+  const S=d.dir.session, D=d.dir.daily, W=d.dir.weekly, H=d.dir.h4;
+  const flH=(d.flow&&d.flow.h4&&d.flow.h4.valid)?d.flow.h4:null;
+  const layers=[
+    {k:"세션",v:+S.strength}, {k:"일간",v:+D.strength},
+    {k:"주간",v:+W.strength}, {k:"H4",v:+H.done}
+  ];
+  let up=0,dn=0; layers.forEach(l=>{ if(l.v>0)up++; else if(l.v<0)dn++; });
+  const net=up-dn, dom=net>0?1:(net<0?-1:0);
+  const aligned = dom===0 ? Math.max(up,dn) : (dom>0?up:dn);
+
+  let bias,bcls,bar;
+  if(net>=2){bias="상방 우위";bcls="up";bar="▲";}
+  else if(net<=-2){bias="하방 우위";bcls="down";bar="▼";}
+  else if(net===1){bias="약한 상방";bcls="up";bar="▲";}
+  else if(net===-1){bias="약한 하방";bcls="down";bar="▼";}
+  else {bias="혼조";bcls="flat";bar="↔";}
+
+  // 뱃지
+  const h4tr=Math.abs(H.done)>H.avg, h4cls=cls(H.done);
+  const h4Badge=`<span class="badge ${h4cls==='up'?'g':(h4cls==='down'?'r':'n')}">H4 <b>${h4tr?'추세':'횡보'} ${arw(H.done)}</b></span>`;
+  const alBadge=`<span class="badge ${aligned>=3?'g':(aligned<=2?'n':'')}">다층 정렬 <b>${aligned}/4</b></span>`;
+  const flBadge= flH
+    ? `<span class="badge ${cls(flH.dom)==='up'?'g':(cls(flH.dom)==='down'?'r':'n')}">체결 4H <b>${sg(flH.dom,1)}%</b></span>`
+    : `<span class="badge n">체결 4H <b>데이터 없음</b></span>`;
+  const posExtreme = H.h1pos>=80||H.h1pos<=20;
+  const posBadge=`<span class="badge ${posExtreme?'n':''}">5일 위치 <b>${f(H.h1pos,0)}%</b></span>`;
+  const sessBadge=`<span class="badge">세션 <b>${d.session||'—'}</b></span>`;
+
+  // 정렬 타일
+  const tiles=layers.map(l=>{
+    const c=cls(l.v);
+    return `<div class="atile"><div class="al">${l.k}</div>
+      <div class="av ${c}">${arw(l.v)}</div>
+      <div class="as">${sg(l.v,0)}%</div></div>`;
+  }).join("");
+
+  // 맥락 가이드 (신호가 아닌 재료)
+  const lines=[];
+  if(net===0){
+    lines.push([`↔`,`<b>층별 방향이 엇갈립니다.</b> 정렬이 생길 때까지 관망 우위 — 무리한 진입 자제.`]);
+  } else if(!h4tr){
+    lines.push([`◇`,`<b>H4가 횡보 국면</b>입니다. 되돌림·레인지 성격 — 추세 진입 신뢰도 낮음, 자리 확인 후 신중.`]);
+  } else if(aligned>=3){
+    const dir = dom>0?'상방':'하방';
+    lines.push([bar,`<b>H4 ${dir} 추세 + 다층 정렬(${aligned}/4).</b> 같은 방향 인걸핑 자리를 우선 관찰할 국면.`]);
+  } else {
+    const dir = dom>0?'상방':'하방';
+    lines.push([bar,`<b>H4는 ${dir} 추세</b>지만 하위 층 정렬이 약함(${aligned}/4). 정렬 강화 여부 확인.`]);
+  }
+  // 체결 상충
+  if(flH && dom!==0 && ((dom>0&&flH.dom<-1)||(dom<0&&flH.dom>1))){
+    lines.push([`⚠`,`<span class="warn"><b>체결 흐름이 방향과 반대(${sg(flH.dom,1)}%).</b></span> 진입 서두르지 말 것.`]);
+  }
+  // 과열/극단
+  if(posExtreme){
+    lines.push([`⚠`,`<span class="warn">H1 위치 극단(${f(H.h1pos,0)}%, 5일 범위).</span> 되돌림 가능 구간 — 추격 주의.`]);
+  }
+  lines.push([`•`,`진입 확정은 이 화면이 아니라 <b>캔들(인걸핑) 신호</b>에서. 위는 판단 재료입니다.`]);
+
+  const guide=lines.map(x=>`<div class="ln"><span class="ic">${x[0]}</span><span>${x[1]}</span></div>`).join("");
+
+  $("#summary").innerHTML=`<div class="hero ${bcls}">
+    <div class="hero-top">
+      <div class="bias"><span class="ar ${bcls}">${bar}</span>
+        <span class="lab"><b class="${bcls}">${bias}</b><span>4개 층 방향 종합 (세션·일간·주간·H4)</span></span></div>
+      <div class="algn"><b class="${bcls}">${aligned}/4</b><span>같은 방향 정렬</span></div>
+    </div>
+    <div class="badges">${h4Badge}${alBadge}${flBadge}${posBadge}${sessBadge}</div>
+    <div class="align">${tiles}</div>
+    <div class="guide">${guide}</div>
+  </div>`;
+}
+
 function render(d){
   CUR=d.cur||""; PTL=d.ptl||"pt"; SBFIRST=true;
+  renderSummary(d);
   $("#sym").textContent=d.sym||"—";
   $("#sess").textContent=d.session||"—";
   $("#price").textContent=d.price!=null?CUR+Number(d.price).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:5}):"—";
