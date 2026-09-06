@@ -76,7 +76,7 @@ datetime ToKST(const datetime t,const int h){ return(t+(datetime)h*3600); }
 datetime ToServer(const datetime k,const int h){ return(k-(datetime)h*3600); }
 int MinuteOfDay(const datetime kst){ MqlDateTime t; TimeToStruct(kst,t); return(t.hour*60+t.min); }
 double ElapsedRatio(const datetime bo,const datetime now,const int ps){ if(ps<=0)return(0.0); double r=(double)(now-bo)/(double)ps; if(r<0)r=0; if(r>1)r=1; return(r); }
-double CurrentPrice(){ MqlTick t; if(SymbolInfoTick(_Symbol,t)) return((t.bid+t.ask)/2.0); return(iClose(_Symbol,PERIOD_M1,0)); }
+double CurrentPrice(){ MqlTick t; if(SymbolInfoTick(_Symbol,t)) return(t.bid); return(iClose(_Symbol,PERIOD_M1,0)); }
 
 enum ENUM_SESSION { SESSION_NONE=0, SESSION_ASIA, SESSION_LONDON, SESSION_TRANSIT, SESSION_NY1, SESSION_NY2 };
 string SessionName(const ENUM_SESSION s)
