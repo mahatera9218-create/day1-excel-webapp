@@ -119,7 +119,18 @@ small{font-size:.82em;opacity:.85}
 .cap{display:flex;justify-content:space-between;font-size:11px;margin-top:4px;color:var(--muted)}
 .cap .rt{font-family:var(--mono);font-weight:600}
 
-/* 자리 range bars */
+/* 자리 레벨 축 그래프 */
+.axis-wrap{display:flex;gap:12px;align-items:center}
+.axis-wrap svg{flex:none}
+.axis-side{flex:1;display:flex;flex-direction:column;gap:9px;min-width:0}
+.lgrow{display:flex;align-items:center;gap:7px;font-size:11.5px}
+.lgrow .dot{width:11px;height:11px;border-radius:3px;flex:none}
+.lgrow .nm{color:var(--muted);font-weight:700;width:26px;flex:none}
+.lgrow .rg{font-family:var(--mono);font-size:10.5px;color:var(--ink);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lgrow .rr{font-family:var(--mono);font-weight:700;flex:none}
+.axis-note{font-size:10.5px;color:var(--faint);margin-top:9px;line-height:1.5}
+
+/* 자리 range bars (미사용 폴백) */
 .rb+.rb{margin-top:11px}
 .rb-h{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;margin-bottom:4px}
 .rb-h .k{color:var(--muted);font-weight:600}
@@ -377,23 +388,51 @@ function h4Card(h){
     <div class="tv"><div class="bar"><i style="width:${Math.min(100,h.h1pos||0)}%"></i></div></div></div>`;
 }
 
-/* ===== 블록2: 자리 range bars ===== */
+/* ===== 블록2: 자리 — 레벨 축 그래프(가로줄) ===== */
 function spotCard(d,c){
-  const price=d.price, sets=[["세션",d.dir.session],["일간",d.dir.daily],["주간",d.dir.weekly]];
-  const bars=sets.map(([k,r])=>{
-    if(!r.levels||!r.levels.length) return "";
-    const L=r.levels[r.levels.length-1], dn=L.dn, up=L.up;
-    let pct=(price-dn)/(up-dn)*100, over="";
-    if(pct<0){over=`<span class="rb-over down" style="left:3px">◀ 돌파</span>`; pct=0;}
-    else if(pct>100){over=`<span class="rb-over up" style="right:3px">돌파 ▶</span>`; pct=100;}
-    const rc=L.dir<0?"down":(L.dir>0?"up":"flat");
-    return `<div class="rb">
-      <div class="rb-h"><span class="k">${k} <small>${L.name.replace(/ ?\(.*\)/,"")}</small></span><span class="r ${rc}">도달 ${f(L.reach,0)}% · ${L.reach_txt||""}</span></div>
-      <div class="rb-track">${over}<span class="rb-dot" style="left:${pct}%"></span></div>
-      <div class="rb-cap"><span>하단 ${money(dn)} (${sg(L.dn_pt,0)}${PTL})</span><span>현재 ${money(price)}</span><span>상단 ${money(up)} (${sg(L.up_pt,0)}${PTL})</span></div>
-    </div>`;
-  }).join("");
-  return `<div class="card">${readBox(c.spotTone,c.spotRead)}${bars}</div>`;
+  const price=d.price;
+  const sets=[["세션",d.dir.session,"var(--accent)"],["일간",d.dir.daily,"var(--up)"],["주간",d.dir.weekly,"var(--flat)"]];
+  const items=sets.filter(([,r])=>r.levels&&r.levels.length).map(([k,r,col])=>{
+    const L=r.levels[r.levels.length-1];
+    return {k,col,up:L.up,dn:L.dn,reach:L.reach,rdir:L.dir,txt:L.reach_txt||""};
+  });
+  if(!items.length) return `<div class="card">${readBox(c.spotTone,c.spotRead)}</div>`;
+
+  const vals=[price]; items.forEach(i=>vals.push(i.up,i.dn));
+  const min=Math.min(...vals), max=Math.max(...vals), span=(max-min)||1;
+  const W=182,H=300,padT=16,padB=16,X0=46,xT=138;
+  const y=v=>padT+(max-v)/span*(H-padT-padB);
+
+  let lines="";
+  items.forEach(i=>{
+    [["상",i.up],["하",i.dn]].forEach(([s,val])=>{
+      lines+=`<line x1="${X0}" y1="${y(val).toFixed(1)}" x2="${xT}" y2="${y(val).toFixed(1)}" stroke="${i.col}" stroke-width="2" stroke-dasharray="${s==='상'?'0':'4 3'}" opacity=".82"/>`;
+    });
+  });
+  let labs=[]; items.forEach(i=>{labs.push({t:i.k[0]+"상",v:i.up,c:i.col});labs.push({t:i.k[0]+"하",v:i.dn,c:i.col});});
+  labs=labs.map(o=>({...o,yy:y(o.v)})).sort((a,b)=>a.yy-b.yy);
+  for(let j=1;j<labs.length;j++){ if(labs[j].yy-labs[j-1].yy<11.5) labs[j].yy=labs[j-1].yy+11.5; }
+  const labSvg=labs.map(o=>`<text x="${xT+4}" y="${(o.yy+3.5).toFixed(1)}" font-size="10" font-family="var(--mono)" fill="${o.c}" font-weight="600">${o.t}</text>`).join("");
+
+  const py=y(price);
+  const priceMark=`<line x1="${X0}" y1="${py.toFixed(1)}" x2="${xT}" y2="${py.toFixed(1)}" stroke="var(--ink)" stroke-width="2.5"/>
+    <circle cx="${xT}" cy="${py.toFixed(1)}" r="4" fill="var(--ink)"/>
+    <text x="${X0-4}" y="${(py+3.5).toFixed(1)}" text-anchor="end" font-size="9.5" font-family="var(--mono)" fill="var(--ink)" font-weight="700">${money(price)}</text>`;
+
+  const legend=items.map(i=>{const rc=i.rdir<0?"down":(i.rdir>0?"up":"flat");
+    return `<div class="lgrow"><span class="dot" style="background:${i.col}"></span><span class="nm">${i.k}</span>
+      <span class="rg">${money(i.dn)}~${money(i.up)}</span><span class="rr ${rc}">${f(i.reach,0)}%</span></div>`;}).join("");
+
+  return `<div class="card">${readBox(c.spotTone,c.spotRead)}
+    <div class="axis-wrap">
+      <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="레벨 대비 현재가 위치">
+        <line x1="${X0}" y1="${padT-6}" x2="${X0}" y2="${H-padB+6}" stroke="var(--line)" stroke-width="1.5"/>
+        ${lines}${labSvg}${priceMark}
+      </svg>
+      <div class="axis-side">${legend}
+        <div class="axis-note">실선=상단 · 점선=하단 · 굵은선=현재가. 우측 %=해당 방향 도달률.</div>
+      </div>
+    </div></div>`;
 }
 
 /* ===== 블록3: 힘 요약 + 상세 ===== */
