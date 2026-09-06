@@ -384,6 +384,8 @@ function h4Card(h){
 /* ===== 자리 레벨 축 ===== */
 function spotCard(d,c){
   const price=d.price;
+  const S0=d.dir.session, pipSize=(S0&&S0.levels&&S0.levels[0]&&S0.levels[0].up_pt)?((S0.levels[0].up-S0.open)/S0.levels[0].up_pt):0.0001;
+  const gp=v=>sg((v-price)/pipSize,0);
   const sets=[["세션",d.dir.session,"var(--accent)"],["일간",d.dir.daily,"var(--accent2)"],["주간",d.dir.weekly,"var(--muted)"]];
   const items=sets.filter(([,r])=>r.levels&&r.levels.length).map(([k,r,col])=>{
     const L=r.levels[r.levels.length-1];
@@ -392,7 +394,7 @@ function spotCard(d,c){
   if(!items.length) return `<div class="card">${readBox(c.spotTone,c.spotRead)}</div>`;
   const vals=[price]; items.forEach(i=>vals.push(i.up,i.dn));
   const min=Math.min(...vals), max=Math.max(...vals), span=(max-min)||1;
-  const W=182,H=300,padT=16,padB=16,X0=46,xT=138;
+  const W=214,H=300,padT=16,padB=16,X0=48,xT=126;
   const y=v=>padT+(max-v)/span*(H-padT-padB);
   let g="";
   for(let i=0;i<=4;i++){const yy=padT+i/4*(H-padT-padB);g+=`<line x1="${X0}" y1="${yy.toFixed(1)}" x2="${xT}" y2="${yy.toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`;}
@@ -402,7 +404,7 @@ function spotCard(d,c){
       lines+=`<line x1="${X0}" y1="${y(val).toFixed(1)}" x2="${xT}" y2="${y(val).toFixed(1)}" stroke="${i.col}" stroke-width="1.6" stroke-dasharray="${s==='상'?'0':'3 3'}" opacity=".9"/>`;
     });
   });
-  let labs=[]; items.forEach(i=>{labs.push({t:i.k[0]+"상",v:i.up,c:i.col});labs.push({t:i.k[0]+"하",v:i.dn,c:i.col});});
+  let labs=[]; items.forEach(i=>{labs.push({t:i.k[0]+"상 "+gp(i.up),v:i.up,c:i.col});labs.push({t:i.k[0]+"하 "+gp(i.dn),v:i.dn,c:i.col});});
   labs=labs.map(o=>({...o,yy:y(o.v)})).sort((a,b)=>a.yy-b.yy);
   for(let j=1;j<labs.length;j++){ if(labs[j].yy-labs[j-1].yy<11.5) labs[j].yy=labs[j-1].yy+11.5; }
   const labSvg=labs.map(o=>`<text x="${xT+4}" y="${(o.yy+3.5).toFixed(1)}" font-size="9.5" font-family="var(--mono)" fill="${o.c}" font-weight="600">${o.t}</text>`).join("");
@@ -420,7 +422,7 @@ function spotCard(d,c){
         ${lines}${labSvg}${priceMark}
       </svg>
       <div class="axis-side">${legend}
-        <div class="axis-note">실선=상단 · 점선=하단 · 흰선=현재가 · 우측 %=도달률</div>
+        <div class="axis-note">선 옆 숫자 = 현재가와의 갭(핍, +위/−아래) · 실선=상단·점선=하단 · 흰선=현재가 · 우측 %=도달률</div>
       </div>
     </div></div>`;
 }
