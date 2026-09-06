@@ -161,6 +161,14 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .sheet-actions{display:flex;gap:8px;justify-content:flex-end}
 .btn{font:inherit;font-weight:600;font-size:13px;padding:8px 15px;border-radius:9px;cursor:pointer;border:1px solid var(--line);background:var(--surface2);color:var(--ink)}
 .btn.primary{background:var(--accent);border-color:transparent;color:#fff}
+details.det{margin-bottom:12px}
+details.det>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--accent);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 13px;box-shadow:var(--shadow)}
+details.det>summary::-webkit-details-marker{display:none}
+details.det>summary .chev{margin-left:auto;color:var(--muted);transition:transform .15s}
+details.det[open]>summary .chev{transform:rotate(180deg)}
+details.det[open]>summary{border-radius:12px 12px 0 0}
+.det-body{border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;background:var(--inset);padding:11px;box-shadow:var(--shadow)}
+.det-body .grid,.det-body .card:last-child{margin-bottom:0}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -443,20 +451,23 @@ function render(d){
   let html = heroBlock(d,c);
   html += `<div class="sec-h"><span class="n">1</span><h2>정렬 — 층이 한 방향인가</h2><span class="hint">방향강도 4층</span></div>`;
   html += matrixCard(d,c);
-  html += `<div class="grid">${dirCard("실시간 세션",d.dir.session)}${dirCard("당일 일간",d.dir.daily)}${dirCard("이번주 주간",d.dir.weekly)}${h4Card(d.dir.h4)}</div>`;
+  html += `<details class="det"><summary>방향강도 상세 — 세션·일간·주간·H4 수치 <span class="chev">▾</span></summary>
+    <div class="det-body"><div class="grid">${dirCard("실시간 세션",d.dir.session)}${dirCard("당일 일간",d.dir.daily)}${dirCard("이번주 주간",d.dir.weekly)}${h4Card(d.dir.h4)}</div></div></details>`;
 
   html += `<div class="sec-h"><span class="n">2</span><h2>자리 — 레벨 대비 위치</h2><span class="hint">● 현재가</span></div>`;
   html += spotCard(d,c);
 
   html += `<div class="sec-h"><span class="n">3</span><h2>힘 — 체결 흐름</h2><span class="hint">최근 4H</span></div>`;
   html += forceSummary(d,c);
+  let det="";
   if(fl&&fl.zone){
-    html += `<div class="card"><div class="card-h"><span class="t">${fl.zone.tf} 자리 프레임 · 시간대별 시계열</span></div>${(fl.zone.bars||[]).map(b=>flowSeries(b,u)).join("")}</div>`;
+    det += `<div class="card"><div class="card-h"><span class="t">${fl.zone.tf} 자리 프레임 · 시간대별 시계열</span></div>${(fl.zone.bars||[]).map(b=>flowSeries(b,u)).join("")}</div>`;
   }
   if(fl&&fl.entry){
-    html += `<div class="card"><div class="card-h"><span class="t">${fl.entry.tf} 진입 프레임 · 완성 vs 진행</span></div>
+    det += `<div class="card"><div class="card-h"><span class="t">${fl.entry.tf} 진입 프레임 · 완성 vs 진행</span></div>
       <div class="cmp">${flowCol("직전 완성봉 (-1)",fl.entry.done,u)}${flowCol("현재 진행봉",fl.entry.now,u)}</div></div>`;
   }
+  if(det) html += `<details class="det"><summary>체결 상세 — 1H 시계열 · 완성 vs 진행 <span class="chev">▾</span></summary><div class="det-body">${det}</div></details>`;
   $("#app").innerHTML = html;
 }
 
