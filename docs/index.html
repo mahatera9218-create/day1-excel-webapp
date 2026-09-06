@@ -38,9 +38,10 @@
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;margin:0;padding:0 13px 44px;-webkit-text-size-adjust:100%}
-.wrap{max-width:520px;margin:0 auto}
+.wrap{max-width:560px;margin:0 auto}
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .up{color:var(--up)}.down{color:var(--down)}.flat{color:var(--flat)}
+small{font-size:.82em;opacity:.85}
 
 .topbar{position:sticky;top:0;z-index:5;background:var(--bg);padding:11px 0 9px;border-bottom:1px solid var(--line);margin-bottom:12px}
 .tb-row{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
@@ -51,7 +52,6 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14p
 .dot{width:8px;height:8px;border-radius:50%;background:var(--faint);display:inline-block}
 .dot.live{background:var(--up)}.dot.sample{background:var(--flat)}
 .gear{margin-left:auto;background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:4px 10px;font:inherit;font-size:11.5px;cursor:pointer}
-.gear:hover{color:var(--ink);border-color:var(--muted)}
 
 /* 판정 hero */
 .hero{border-radius:16px;padding:14px 15px;margin-bottom:14px;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--surface);border-left:6px solid var(--faint)}
@@ -65,48 +65,71 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14p
 .hero .algn span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
 .hero .guide{font-size:12.5px;line-height:1.5;color:var(--ink);background:var(--inset);border-radius:10px;padding:9px 11px}
 
-/* section card */
-.card{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:13px 14px;box-shadow:var(--shadow);margin-bottom:13px}
-.c-h{display:flex;align-items:center;gap:8px;margin-bottom:9px}
-.c-h .n{font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:1px 7px}
-.c-h h2{font-size:14.5px;font-weight:700;margin:0}
-.c-h .hint{margin-left:auto;font-size:10.5px;color:var(--faint)}
+/* section head */
+.sec-h{display:flex;align-items:center;gap:8px;margin:18px 2px 10px}
+.sec-h .n{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:1px 7px}
+.sec-h h2{font-size:15px;font-weight:700;margin:0}
+.sec-h .hint{margin-left:auto;font-size:10.5px;color:var(--faint)}
 
 /* 읽기 callout */
-.read{display:flex;gap:8px;font-size:12.5px;line-height:1.5;border-radius:10px;padding:9px 11px;margin-bottom:11px;background:var(--surface2)}
+.read{display:flex;gap:8px;font-size:12.5px;line-height:1.5;border-radius:11px;padding:9px 11px;margin-bottom:11px;background:var(--surface2)}
 .read.up{background:var(--up-bg)}.read.down{background:var(--down-bg)}.read.flat{background:var(--flat-bg)}
 .read .rk{font-weight:700;flex:none}
 .read.up .rk{color:var(--up)}.read.down .rk{color:var(--down)}.read.flat .rk{color:var(--flat)}
 .read b{font-weight:700}
 
-/* 정렬 matrix */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px 14px;box-shadow:var(--shadow);margin-bottom:12px}
+.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.card-h .t{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.03em;text-transform:uppercase}
+.pill{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
+.pill.tr{background:var(--up-bg);color:var(--up)}.pill.rg{background:var(--flat-bg);color:var(--flat)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+.card.wide{grid-column:1/-1}
+
+/* 비교 매트릭스 */
 .mtx{width:100%;border-collapse:separate;border-spacing:3px;font-family:var(--mono)}
 .mtx th{font-family:var(--sans);font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.02em;padding:1px 4px;text-align:center;white-space:nowrap}
 .mtx th:first-child{text-align:left}
-.mtx td{font-size:13px;font-weight:600;text-align:center;padding:8px 4px;border-radius:8px;background:var(--inset);color:var(--ink)}
+.mtx td{font-size:13px;font-weight:600;text-align:center;padding:7px 4px;border-radius:8px;background:var(--inset);color:var(--ink)}
 .mtx td.k{font-family:var(--sans);font-weight:700;text-align:left;background:transparent;white-space:nowrap;font-size:12.5px}
 .mtx td .sub{display:block;font-family:var(--sans);font-size:9px;font-weight:600;opacity:.72;margin-top:1px}
 .mtx td.empty{color:var(--faint);background:transparent;font-weight:400}
 .legend{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:8px;font-size:10px;color:var(--muted)}
 .legend .sw{height:9px;width:26px;border-radius:3px}
 
+/* dir 상세 카드 */
+.hdln{display:flex;align-items:baseline;gap:8px;margin:2px 0 8px}
+.hdln .v{font-family:var(--mono);font-size:21px;font-weight:600;letter-spacing:-.01em}
+.hdln .avg{font-size:12px;color:var(--muted)}
+.rows{display:flex;flex-direction:column;gap:5px}
+.r{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;gap:10px}
+.r .k{color:var(--muted);white-space:nowrap}
+.r .val{font-family:var(--mono);font-weight:500;text-align:right}
+.tv{margin-top:9px}
+.tv .bar{height:6px;background:var(--inset);border-radius:999px;overflow:hidden;margin-top:4px}
+.tv .bar>i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.lvl{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.lvl .lh{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-bottom:5px}
+.lvl .pair{display:flex;justify-content:space-between;font-size:12px;font-family:var(--mono);margin-bottom:5px;gap:8px}
+.track{position:relative;height:8px;background:var(--inset);border-radius:999px;overflow:hidden}
+.track .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
+.fill{position:absolute;top:0;bottom:0;border-radius:999px}
+.fill.up{background:var(--up)}.fill.down{background:var(--down)}
+.cap{display:flex;justify-content:space-between;font-size:11px;margin-top:4px;color:var(--muted)}
+.cap .rt{font-family:var(--mono);font-weight:600}
+
 /* 자리 range bars */
-.rb+.rb{margin-top:10px}
-.rb-h{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;margin-bottom:4px}
+.rb+.rb{margin-top:11px}
+.rb-h{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;margin-bottom:4px}
 .rb-h .k{color:var(--muted);font-weight:600}
 .rb-h .r{font-family:var(--mono);font-weight:600}
 .rb-track{position:relative;height:13px;background:var(--inset);border-radius:7px;border:1px solid var(--line)}
 .rb-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:var(--ink);border:2px solid var(--surface);box-shadow:0 0 0 1px var(--line)}
 .rb-over{position:absolute;top:50%;transform:translateY(-50%);font-size:10px;font-weight:700}
-.rb-cap{display:flex;justify-content:space-between;font-size:9.5px;color:var(--faint);font-family:var(--mono);margin-top:2px}
+.rb-cap{display:flex;justify-content:space-between;font-size:9.5px;color:var(--faint);font-family:var(--mono);margin-top:3px}
 
 /* 힘 */
-.track{position:relative;height:9px;background:var(--inset);border-radius:999px;overflow:hidden;margin:4px 0}
-.track .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
-.fill{position:absolute;top:0;bottom:0}
-.fill.up{background:var(--up)}.fill.down{background:var(--down)}
-.cap{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted)}
-.cap .rt{font-family:var(--mono);font-weight:600}
 .spark-wrap{margin-top:11px;border-top:1px dashed var(--line);padding-top:10px}
 .spark-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
 .spark-h .t{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.02em}
@@ -115,11 +138,17 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14p
 .spark .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:3px}
 .spark .bar{width:100%;border-radius:4px 4px 2px 2px}
 .spark .lb{font-family:var(--mono);font-size:9px;color:var(--faint)}
-.cmp2{display:grid;grid-template-columns:1fr auto 1fr;gap:4px 8px;margin-top:11px;border-top:1px dashed var(--line);padding-top:10px;font-size:12px;align-items:center}
-.cmp2 .k{grid-column:1/-1;font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.02em;margin-bottom:-2px}
-.cmp2 .a{font-family:var(--mono);color:var(--faint);text-align:right}
-.cmp2 .ar{color:var(--faint);text-align:center;font-size:11px}
-.cmp2 .b{font-family:var(--mono);font-weight:600}
+.sbar{border-top:1px dashed var(--line);padding-top:9px;margin-top:9px}
+.sbar.first{border-top:0;margin-top:2px;padding-top:0}
+.sbar-h{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap}
+.sbar-h .tag{font-family:var(--mono);font-weight:700;font-size:11px;padding:1px 8px;border-radius:6px;background:var(--surface2);color:var(--muted)}
+.sbar-h .tag.now{background:var(--accent);color:#fff}
+.sbar-h .rng{font-size:11px;color:var(--faint);font-family:var(--mono)}
+.srows{display:flex;flex-direction:column;gap:4px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+@media(max-width:480px){.cmp{grid-template-columns:1fr}}
+.cmp .col{background:var(--inset);border-radius:10px;padding:10px}
+.cmp .col .h{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.02em}
 
 .banner{background:var(--flat-bg);color:var(--flat);border-radius:10px;padding:8px 12px;font-size:12px;font-weight:500;margin-bottom:12px}
 .note{color:var(--faint);font-size:11px;margin-top:14px;text-align:center;line-height:1.6}
@@ -152,8 +181,8 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 
   <div id="app"></div>
 
-  <p class="note">각 블록의 <b>‘읽기’</b>는 현재 값을 자동 해석한 문장이에요. 실시간 연결 시 실제 값으로 바뀝니다.<br>
-     진입 확정은 이 화면이 아니라 캔들(인걸핑)에서 · 자동매매 아님.</p>
+  <p class="note">각 블록 상단 <b>‘읽기’</b> = 현재 값 자동 해석 · 아래는 상세 수치 전부.<br>
+     진입 확정은 캔들(인걸핑)에서 · 자동매매 아님.</p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -186,24 +215,26 @@ const SAMPLE={
  dir:{
   session:{open:1.08920,chgpct:-0.38,range_pt:47.0,oc_pt:-41.2,strength:-87.6,trend:87.6,avg:34.4,tickvol_pct:18.3,tickvol_cnt:25136,
     levels:[
-      {name:"1차 레벨 (50%)",up:1.09070,up_pt:15.0,dn:1.08745,dn_pt:-17.5,reach:234.9,reach_txt:"하단 돌파",dir:-1},
-      {name:"최종 레벨 (100%)",up:1.09220,up_pt:30.0,dn:1.08570,dn_pt:-35.0,reach:117.7,reach_txt:"하단 돌파",dir:-1}
+      {name:"1차 레벨 (50%)",up:1.09070,up_pt:15.0,dn:1.08745,dn_pt:-17.5,reach:234.9,reach_txt:"하단 돌파 −23.7핍 초과",dir:-1},
+      {name:"최종 레벨 (100%)",up:1.09220,up_pt:30.0,dn:1.08570,dn_pt:-35.0,reach:117.7,reach_txt:"하단 돌파 −6.2핍 초과",dir:-1}
     ]},
   daily:{open:1.08980,chgpct:-0.43,range_pt:58.0,oc_pt:-47.2,strength:-81.4,trend:81.4,avg:36.8,tickvol_pct:41.4,tickvol_cnt:137557,
-    levels:[{name:"5일 일간 레벨",up:1.09380,up_pt:40.0,dn:1.08480,dn_pt:-50.0,reach:94.0,reach_txt:"하단 근접",dir:-1}]},
+    levels:[{name:"5일 일간 레벨",up:1.09380,up_pt:40.0,dn:1.08480,dn_pt:-50.0,reach:94.0,reach_txt:"하단 잔여 +2.8핍",dir:-1}]},
   weekly:{open:1.08880,chgpct:-0.34,range_pt:75.0,oc_pt:-37.2,strength:-49.6,trend:49.6,avg:60.2,tickvol_pct:28.9,tickvol_cnt:472187,
-    levels:[{name:"4주 주간 레벨",up:1.10080,up_pt:120.0,dn:1.08280,dn_pt:-60.0,reach:61.7,reach_txt:"하단 진행",dir:-1}]},
+    levels:[{name:"4주 주간 레벨",up:1.10080,up_pt:120.0,dn:1.08280,dn_pt:-60.0,reach:61.7,reach_txt:"하단 잔여 +22.8핍",dir:-1}]},
   h4:{done:-75,avg:40,now:-18,elapsed_pct:33,h1pos:38}
  },
  flow:{ flag:"제공", unit:"핍",
   h4:{valid:true,total:45820,distort:210,up:22100,down:23720,dom:-3.2,net:-18.5,span:58.0},
   zone:{tf:"1H", bars:[
-    {tag:"-3",dom:-0.8,eff:0.59,move:5.0},{tag:"-2",dom:-1.1,eff:0.76,move:-8.0},
-    {tag:"-1",dom:-3.5,eff:0.84,move:-13.0},{tag:"진행",dom:-5.5,eff:0.77,move:-9.2}
+    {tag:"-3",kst:"10:00~11:00",chart:"05:00~06:00",open:1.08760,close:1.08810,lo:1.08740,hi:1.08825,move:5.0,span:8.5,eff:0.59,dom:-0.8,up:1244,down:1263,total:2508},
+    {tag:"-2",kst:"11:00~12:00",chart:"06:00~07:00",open:1.08810,close:1.08730,lo:1.08715,hi:1.08820,move:-8.0,span:10.5,eff:0.76,dom:-1.1,up:1161,down:1187,total:2349},
+    {tag:"-1",kst:"12:00~13:00",chart:"07:00~08:00",open:1.08730,close:1.08600,lo:1.08590,hi:1.08745,move:-13.0,span:15.5,eff:0.84,dom:-3.5,up:9390,down:10082,total:19633},
+    {tag:"진행",kst:"13:00~현재",chart:"08:00 (18분 경과)",open:1.08600,close:1.08508,lo:1.08495,hi:1.08615,move:-9.2,span:12.0,eff:0.77,dom:-5.5,up:1621,down:1813,total:3492}
   ]},
   entry:{tf:"5M",
-    done:{dom:-3.5,eff:0.84,move:-13.0,total:19633},
-    now:{dom:-5.5,eff:0.77,move:-9.2,total:3492}}
+    done:{total:1479,distort:37,up:665,down:776,dom:-7.5,move:-1.20,swing:3.90,eff:0.31,perTick:-0.00081},
+    now:{total:348,distort:4,up:160,down:183,dom:-6.6,move:0.80,swing:3.10,eff:0.26,perTick:0.00230,elapsed_pct:19.7}}
  }
 };
 
@@ -216,13 +247,11 @@ function ctxOf(d){
   const align=dir===0?Math.max(up,dn):(dir>0?up:dn);
   const h4trend=Math.abs(H.done)>H.avg;
   const dirWord=dir<0?"하방":"상방";
-
   let verd,vtone;
   if(dir===0){verd="관망";vtone="flat";}
   else if(h4trend&&align>=3){verd=dir<0?"숏 대기":"롱 대기";vtone=dir<0?"down":"up";}
   else{verd="관망";vtone="flat";}
   const biasWord=dir<0?"하방 우위":(dir>0?"상방 우위":"혼조");
-
   let guide;
   if(dir===0) guide="세션·일간·주간·H4 방향이 엇갈립니다. 정렬될 때까지 관망 우위 — 무리한 진입 자제.";
   else if(!h4trend) guide="H4가 횡보 국면. 되돌림·레인지 성격 — 추세 진입 신뢰도 낮음, 신중.";
@@ -247,40 +276,47 @@ function ctxOf(d){
   const spotTone = dir===0?"flat":(overCnt>=2?"flat":(dir<0?"down":"up"));
 
   const fl=d.flow, valid=fl&&fl.h4&&fl.h4.valid;
-  let forceRead="체결 데이터 없음(휴장/보관량).", forceTone="flat", forceAgree=null, dom=null, trend="";
+  let forceRead="체결 데이터 없음(휴장/보관량).", forceTone="flat";
   if(valid){
-    dom=fl.h4.dom;
-    const bars=(fl.zone&&fl.zone.bars)||[];
+    const dom=fl.h4.dom, bars=(fl.zone&&fl.zone.bars)||[];
     const first=bars.length?bars[0].dom:dom, last=bars.length?bars[bars.length-1].dom:dom;
-    trend = last<first-0.3?"점점 강해짐":(last>first+0.3?"약해짐":"유지");
-    forceAgree = dir!==0 && Math.sign(dom)===dir;
-    const conc2 = dir===0?"" : (forceAgree?"방향과 같은 쪽 — 힘 실림.":"⚠ 방향과 반대 — 진입 서두르지 말 것.");
+    const trend = last<first-0.3?"점점 강해짐":(last>first+0.3?"약해짐":"유지");
+    const agree = dir!==0 && Math.sign(dom)===dir;
+    const conc2 = dir===0?"" : (agree?"방향과 같은 쪽 — 힘 실림.":"⚠ 방향과 반대 — 진입 서두르지 말 것.");
     forceRead=`<b>${dom<0?"매도":"매수"} 우위 ${sg(dom,1)}%</b> (${trend}). ${conc2}`;
-    forceTone = dir===0?"flat":(forceAgree?(dir<0?"down":"up"):"flat");
+    forceTone = dir===0?"flat":(agree?(dir<0?"down":"up"):"flat");
   }
   return {dir,align,h4trend,verd,vtone,biasWord,guide,alignRead,alignTone,spotRead,spotTone,forceRead,forceTone};
 }
-
-/* ===== 블록 빌더 ===== */
-function heatStr(v){ if(v==null)return "var(--inset)"; return mix(v>0?"var(--up)":"var(--down)", Math.min(1,Math.abs(v)/100)*58+10); }
-function heatReach(r){ if(r==null)return "var(--inset)"; if(r>100)return mix("var(--down)",Math.min(1,(r-100)/100)*52+16); return mix("var(--accent)",(r/100)*42+8); }
-function heatTv(t){ if(t==null)return "var(--inset)"; return mix("var(--accent)",Math.min(1,t/100)*48+8); }
-
 function readBox(tone,html){return `<div class="read ${tone}"><span class="rk">읽기</span><span>${html}</span></div>`;}
 
+/* ===== 히트 ===== */
+function heatStr(v){ if(v==null)return "var(--inset)"; return mix(v>0?"var(--up)":"var(--down)", Math.min(1,Math.abs(v)/100)*56+10); }
+function heatReach(r){ if(r==null)return "var(--inset)"; if(r>100)return mix("var(--down)",Math.min(1,(r-100)/100)*50+16); return mix("var(--accent)",(r/100)*40+8); }
+function heatTv(t){ if(t==null)return "var(--inset)"; return mix("var(--accent)",Math.min(1,t/100)*46+8); }
+function reachMeter(reach,dir){
+  const mag=Math.min(100,Math.abs(reach||0)), c=dir>=0?"up":"down", over=Math.abs(reach||0)>100;
+  return `<div class="track"><div class="fill ${c}" style="left:0;width:${mag}%"></div>
+    ${over?'<div class="fill '+c+'" style="right:0;width:6px;opacity:.55"></div>':''}</div>`;
+}
+function domMeter(dom,scale){
+  const r=Math.max(-100,Math.min(100,(dom||0)*(scale||1))), half=Math.abs(r)/100*50;
+  const side=r>=0?`left:50%;width:${half}%`:`right:50%;width:${half}%`, cc=r>=0?"up":"down";
+  return `<div class="track"><div class="mid"></div><div class="fill ${cc}" style="${side}"></div></div>`;
+}
+
+/* ===== 블록: 판정 ===== */
 function heroBlock(d,c){
   const ar=c.dir<0?"▼":(c.dir>0?"▲":"↔");
   return `<div class="hero ${c.vtone}">
-    <div class="hero-top">
-      <span class="ar ${c.vtone}">${ar}</span>
+    <div class="hero-top"><span class="ar ${c.vtone}">${ar}</span>
       <span><span class="verd ${c.vtone}">${c.verd}</span><span class="binfo">편향 ${c.biasWord} · 세션·일간·주간·H4 종합</span></span>
-      <span class="algn"><b class="${c.vtone}">${c.align}/4</b><span>정렬</span></span>
-    </div>
-    <div class="guide">${c.guide}</div>
-  </div>`;
+      <span class="algn"><b class="${c.vtone}">${c.align}/4</b><span>정렬</span></span></div>
+    <div class="guide">${c.guide}</div></div>`;
 }
 
-function alignBlock(d,c){
+/* ===== 블록1: 정렬 요약(매트릭스) ===== */
+function matrixCard(d,c){
   const rows=[["세션",d.dir.session],["일간",d.dir.daily],["주간",d.dir.weekly]];
   let body=rows.map(([k,r])=>{
     const trend=Math.abs(r.strength)>r.avg;
@@ -294,75 +330,134 @@ function alignBlock(d,c){
   body+=`<tr><td class="k">H4</td>
     <td style="background:${heatStr(H.done)}">${arw(H.done)} ${f(Math.abs(H.done),0)}<span class="sub">${h4t?"추세":"횡보"}</span></td>
     <td class="empty">위치 ${f(H.h1pos,0)}%</td><td class="empty">–</td></tr>`;
-  return `<div class="card"><div class="c-h"><span class="n">1</span><h2>정렬 — 층이 한 방향인가</h2></div>
-    ${readBox(c.alignTone,c.alignRead)}
-    <table class="mtx"><thead><tr><th></th><th>방향강도</th><th>도달률</th><th>틱볼륨</th></tr></thead><tbody>${body}</tbody></table>
+  return `<div class="card">${readBox(c.alignTone,c.alignRead)}
+    <table class="mtx"><thead><tr><th>비교</th><th>방향강도</th><th>도달률</th><th>틱볼륨</th></tr></thead><tbody>${body}</tbody></table>
     <div class="legend"><span class="down">하락</span>
-      <span class="sw" style="background:linear-gradient(90deg,${mix('var(--down)',60)},var(--surface),${mix('var(--up)',60)})"></span>
-      <span class="up">상승</span><span style="margin-left:5px">· 진할수록 강함</span></div>
-  </div>`;
+      <span class="sw" style="background:linear-gradient(90deg,${mix('var(--down)',58)},var(--surface),${mix('var(--up)',58)})"></span>
+      <span class="up">상승</span><span style="margin-left:5px">· 진할수록 강함</span></div></div>`;
 }
 
-function spotBlock(d,c){
-  const price=d.price;
-  const sets=[["세션",d.dir.session],["일간",d.dir.daily],["주간",d.dir.weekly]];
+/* ===== dir 상세 카드 (수치 전부) ===== */
+function dirCard(title,d){
+  const phase = d.trend>d.avg?`<span class="pill tr">추세</span>`:`<span class="pill rg">횡보</span>`;
+  const lv=(d.levels||[]).map(L=>`
+    <div class="lvl"><div class="lh">${L.name}</div>
+      <div class="pair"><span class="up">상단 ${money(L.up)} <small>(${sg(L.up_pt,1)}${PTL})</small></span>
+        <span class="down">하단 ${money(L.dn)} <small>(${sg(L.dn_pt,1)}${PTL})</small></span></div>
+      ${reachMeter(L.reach,L.dir)}
+      <div class="cap"><span>도달률</span><span class="rt">${f(L.reach,1)}% · ${L.reach_txt||""}</span></div></div>`).join("");
+  return `<div class="card">
+    <div class="card-h"><span class="t">${title}</span>${phase}</div>
+    <div class="hdln"><span class="v ${cls(d.strength)}">${arw(d.strength)} 추세율 ${f(d.trend,1)}%</span><span class="avg">평균 ${f(d.avg,1)}%</span></div>
+    <div class="rows">
+      <div class="r"><span class="k">시가 (시가대비)</span><span class="val">${money(d.open)} <span class="${cls(d.chgpct)}">(${sg(d.chgpct,2)}%)</span></span></div>
+      <div class="r"><span class="k">변동 고저 / 시종</span><span class="val">${f(d.range_pt,1)}${PTL} / ${sg(d.oc_pt,1)}${PTL}</span></div>
+    </div>
+    <div class="tv"><div class="r"><span class="k">틱볼륨</span><span class="val">${f(d.tickvol_pct,1)}% <small>(${(d.tickvol_cnt||0).toLocaleString()} Ticks)</small></span></div>
+      <div class="bar"><i style="width:${Math.min(100,d.tickvol_pct||0)}%"></i></div></div>
+    ${lv}</div>`;
+}
+function h4Card(h){
+  const phase=Math.abs(h.done)>h.avg?`<span class="pill tr">추세</span>`:`<span class="pill rg">횡보</span>`;
+  return `<div class="card">
+    <div class="card-h"><span class="t">H4 국면 (전략)</span>${phase}</div>
+    <div class="hdln"><span class="v ${cls(h.done)}">${arw(h.done)} ${sg(h.done,0)}%</span><span class="avg">완성 · 평균 ${f(h.avg,0)}%</span></div>
+    <div class="rows">
+      <div class="r"><span class="k">진행 방향강도</span><span class="val ${cls(h.now)}">${sg(h.now,0)}% · 경과 ${f(h.elapsed_pct,0)}%</span></div>
+      <div class="r"><span class="k">H1 위치 (5일범위)</span><span class="val">${f(h.h1pos,0)}%</span></div>
+    </div>
+    <div class="tv"><div class="bar"><i style="width:${Math.min(100,h.h1pos||0)}%"></i></div></div></div>`;
+}
+
+/* ===== 블록2: 자리 range bars ===== */
+function spotCard(d,c){
+  const price=d.price, sets=[["세션",d.dir.session],["일간",d.dir.daily],["주간",d.dir.weekly]];
   const bars=sets.map(([k,r])=>{
     if(!r.levels||!r.levels.length) return "";
-    const L=r.levels[r.levels.length-1];
-    const dn=L.dn, up=L.up, reach=L.reach, rdir=L.dir;
-    let pct=(price-dn)/(up-dn)*100;
-    let over="";
-    if(pct<0){over=`<span class="rb-over down" style="left:2px">◀ 돌파</span>`; pct=0;}
-    else if(pct>100){over=`<span class="rb-over up" style="right:2px">돌파 ▶</span>`; pct=100;}
-    const rc=rdir<0?"down":(rdir>0?"up":"flat");
+    const L=r.levels[r.levels.length-1], dn=L.dn, up=L.up;
+    let pct=(price-dn)/(up-dn)*100, over="";
+    if(pct<0){over=`<span class="rb-over down" style="left:3px">◀ 돌파</span>`; pct=0;}
+    else if(pct>100){over=`<span class="rb-over up" style="right:3px">돌파 ▶</span>`; pct=100;}
+    const rc=L.dir<0?"down":(L.dir>0?"up":"flat");
     return `<div class="rb">
-      <div class="rb-h"><span class="k">${k}</span><span class="r ${rc}">도달 ${f(reach,0)}%</span></div>
+      <div class="rb-h"><span class="k">${k} <small>${L.name.replace(/ ?\(.*\)/,"")}</small></span><span class="r ${rc}">도달 ${f(L.reach,0)}% · ${L.reach_txt||""}</span></div>
       <div class="rb-track">${over}<span class="rb-dot" style="left:${pct}%"></span></div>
-      <div class="rb-cap"><span>하단 ${money(dn)}</span><span>현재 ${money(price)}</span><span>상단 ${money(up)}</span></div>
+      <div class="rb-cap"><span>하단 ${money(dn)} (${sg(L.dn_pt,0)}${PTL})</span><span>현재 ${money(price)}</span><span>상단 ${money(up)} (${sg(L.up_pt,0)}${PTL})</span></div>
     </div>`;
   }).join("");
-  return `<div class="card"><div class="c-h"><span class="n">2</span><h2>자리 — 레벨 대비 위치</h2><span class="hint">● 현재가</span></div>
-    ${readBox(c.spotTone,c.spotRead)}${bars}</div>`;
+  return `<div class="card">${readBox(c.spotTone,c.spotRead)}${bars}</div>`;
 }
 
-function domMeter(dom){
-  const r=Math.max(-100,Math.min(100,(dom||0)*10)), half=Math.abs(r)/100*50;
-  const side=r>=0?`left:50%;width:${half}%`:`right:50%;width:${half}%`, cc=r>=0?"up":"down";
-  return `<div class="track"><div class="mid"></div><div class="fill ${cc}" style="${side}"></div></div>`;
-}
-function forceBlock(d,c){
-  const fl=d.flow, h=fl&&fl.h4;
-  if(!h||!h.valid) return `<div class="card"><div class="c-h"><span class="n">3</span><h2>힘 — 체결 흐름</h2></div>${readBox("flat",c.forceRead)}</div>`;
-  const bars=(fl.zone&&fl.zone.bars)||[];
-  const maxD=Math.max(...bars.map(b=>Math.abs(b.dom)),0.1);
-  const spark=bars.map(b=>{
-    const ht=Math.max(8,Math.abs(b.dom)/maxD*100), cc=b.dom<0?"var(--down)":"var(--up)";
-    return `<div class="col"><div class="bar" style="height:${ht}%;background:${cc}"></div><div class="lb">${b.tag}</div></div>`;
-  }).join("");
-  const trendTxt = bars.length? (bars[bars.length-1].dom<bars[0].dom?"매도 강해짐 ▼":(bars[bars.length-1].dom>bars[0].dom?"매수 강해짐 ▲":"유지")) : "";
-  const e=fl.entry, dn=e&&e.done, nw=e&&e.now;
-  const cmp = (dn&&nw)?`<div class="cmp2">
-      <span class="k">완성(-1) → 진행 (${e.tf})</span>
-      <span class="a">체결 ${sg(dn.dom,1)}%</span><span class="ar">→</span><span class="b ${cls(nw.dom)}">${sg(nw.dom,1)}%</span>
-      <span class="a">효율 ${f(dn.eff,2)}</span><span class="ar">→</span><span class="b">${f(nw.eff,2)}</span>
-      <span class="a">실이동 ${sg(dn.move,1)}</span><span class="ar">→</span><span class="b ${cls(nw.move)}">${sg(nw.move,1)}${d.ptl||""}</span>
-    </div>`:"";
-  return `<div class="card"><div class="c-h"><span class="n">3</span><h2>힘 — 체결 흐름</h2><span class="hint">최근 4H</span></div>
-    ${readBox(c.forceTone,c.forceRead)}
-    <div class="cap"><span>매도</span><span>매수</span></div>${domMeter(h.dom)}
+/* ===== 블록3: 힘 요약 + 상세 ===== */
+function forceSummary(d,c){
+  const fl=d.flow, h=fl&&fl.h4, u=fl&&fl.unit||"";
+  if(!h||!h.valid) return `<div class="card">${readBox("flat",c.forceRead)}<div class="r"><span class="k">틱 데이터 없음</span></div></div>`;
+  const bars=(fl.zone&&fl.zone.bars)||[], maxD=Math.max(...bars.map(b=>Math.abs(b.dom)),0.1);
+  const spark=bars.map(b=>{const ht=Math.max(8,Math.abs(b.dom)/maxD*100),cc=b.dom<0?"var(--down)":"var(--up)";
+    return `<div class="col"><div class="bar" style="height:${ht}%;background:${cc}"></div><div class="lb">${b.tag}</div></div>`;}).join("");
+  const trendTxt = bars.length?(bars[bars.length-1].dom<bars[0].dom?"매도 강해짐 ▼":(bars[bars.length-1].dom>bars[0].dom?"매수 강해짐 ▲":"유지")):"";
+  return `<div class="card">${readBox(c.forceTone,c.forceRead)}
+    <div class="cap" style="margin:0 0 3px"><span>매도</span><span>매수</span></div>${domMeter(h.dom,10)}
     <div class="cap"><span>순 방향성 (↑${(h.up||0).toLocaleString()}/↓${(h.down||0).toLocaleString()})</span><span class="rt ${cls(h.dom)}">${sg(h.dom,1)}%</span></div>
+    <div class="rows" style="margin-top:8px">
+      <div class="r"><span class="k">누적틱 (왜곡)</span><span class="val">${(h.total||0).toLocaleString()} <small>(${h.distort||0})</small></span></div>
+      <div class="r"><span class="k">순이동 / 고저폭</span><span class="val ${cls(h.net)}">${sg(h.net,1)}${u} / ${f(h.span,1)}${u}</span></div>
+    </div>
     <div class="spark-wrap"><div class="spark-h"><span class="t">체결 우위 추세 (${fl.zone.tf})</span><span class="c ${cls(bars.length?bars[bars.length-1].dom:0)}">${trendTxt}</span></div>
-      <div class="spark">${spark}</div></div>
-    ${cmp}</div>`;
+      <div class="spark">${spark}</div></div></div>`;
+}
+let SBFIRST=false;
+function flowSeries(b,u){
+  const first=SBFIRST; SBFIRST=false;
+  return `<div class="sbar${first?' first':''}">
+    <div class="sbar-h"><span class="tag ${b.tag==='진행'?'now':''}">${b.tag}</span><span class="rng">KST ${b.kst} · 차트 ${b.chart}</span></div>
+    ${domMeter(b.dom,10)}
+    <div class="srows" style="margin-top:5px">
+      <div class="r"><span class="k">가격</span><span class="val">${money(b.open)}→${money(b.close)} <small>(L ${money(b.lo)}~H ${money(b.hi)})</small></span></div>
+      <div class="r"><span class="k">실이동 / 고저폭</span><span class="val ${cls(b.move)}">${sg(b.move,2)}${u} / ${f(b.span,2)}${u} <small>효율 ${f(b.eff,2)}</small></span></div>
+      <div class="r"><span class="k">체결우위</span><span class="val ${cls(b.dom)}">${sg(b.dom,1)}% (↑${(b.up||0).toLocaleString()}/↓${(b.down||0).toLocaleString()} · ${(b.total||0).toLocaleString()}틱)</span></div>
+    </div></div>`;
+}
+function flowCol(head,o,u){
+  if(!o) return `<div class="col"><div class="h">${head}</div><div class="r"><span class="k">데이터 없음</span></div></div>`;
+  return `<div class="col"><div class="h">${head}${o.elapsed_pct!=null?` · 경과 ${f(o.elapsed_pct,0)}%`:""}</div>
+    <div style="margin-bottom:6px">${domMeter(o.dom,10)}
+      <div class="cap"><span>체결 우위</span><span class="rt ${cls(o.dom)}">${sg(o.dom,1)}%</span></div></div>
+    <div class="rows">
+      <div class="r"><span class="k">총틱 (왜곡)</span><span class="val">${(o.total||0).toLocaleString()} <small>(${o.distort||0})</small></span></div>
+      <div class="r"><span class="k">↑ / ↓</span><span class="val"><span class="up">${(o.up||0).toLocaleString()}</span> / <span class="down">${(o.down||0).toLocaleString()}</span></span></div>
+      <div class="r"><span class="k">실이동 / 흔들림</span><span class="val ${cls(o.move)}">${sg(o.move,2)}${u} / ${f(o.swing,2)}${u}</span></div>
+      <div class="r"><span class="k">효율</span><span class="val">${f(o.eff,2)}</span></div>
+      <div class="r"><span class="k">틱당 실이동</span><span class="val ${cls(o.perTick)}">${sg(o.perTick,5)}${u}</span></div>
+    </div></div>`;
 }
 
+/* ===== render ===== */
 function render(d){
-  CUR=d.cur||""; PTL=d.ptl||"핍";
+  CUR=d.cur||""; PTL=d.ptl||"핍"; SBFIRST=true;
   $("#sym").textContent=d.sym||"—";
   $("#sess").textContent=d.session||"—";
   $("#price").textContent=d.price!=null?money(d.price):"—";
-  const c=ctxOf(d);
-  $("#app").innerHTML = heroBlock(d,c)+alignBlock(d,c)+spotBlock(d,c)+forceBlock(d,c);
+  const c=ctxOf(d), fl=d.flow, u=fl&&fl.unit||"";
+
+  let html = heroBlock(d,c);
+  html += `<div class="sec-h"><span class="n">1</span><h2>정렬 — 층이 한 방향인가</h2><span class="hint">방향강도 4층</span></div>`;
+  html += matrixCard(d,c);
+  html += `<div class="grid">${dirCard("실시간 세션",d.dir.session)}${dirCard("당일 일간",d.dir.daily)}${dirCard("이번주 주간",d.dir.weekly)}${h4Card(d.dir.h4)}</div>`;
+
+  html += `<div class="sec-h"><span class="n">2</span><h2>자리 — 레벨 대비 위치</h2><span class="hint">● 현재가</span></div>`;
+  html += spotCard(d,c);
+
+  html += `<div class="sec-h"><span class="n">3</span><h2>힘 — 체결 흐름</h2><span class="hint">최근 4H</span></div>`;
+  html += forceSummary(d,c);
+  if(fl&&fl.zone){
+    html += `<div class="card"><div class="card-h"><span class="t">${fl.zone.tf} 자리 프레임 · 시간대별 시계열</span></div>${(fl.zone.bars||[]).map(b=>flowSeries(b,u)).join("")}</div>`;
+  }
+  if(fl&&fl.entry){
+    html += `<div class="card"><div class="card-h"><span class="t">${fl.entry.tf} 진입 프레임 · 완성 vs 진행</span></div>
+      <div class="cmp">${flowCol("직전 완성봉 (-1)",fl.entry.done,u)}${flowCol("현재 진행봉",fl.entry.now,u)}</div></div>`;
+  }
+  $("#app").innerHTML = html;
 }
 
 /* ===== live ===== */
