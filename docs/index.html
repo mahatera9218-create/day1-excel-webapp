@@ -156,6 +156,11 @@ small{font-size:.82em;color:var(--faint)}
 .cmp .col .h{font-size:9.5px;font-weight:700;color:var(--muted);margin-bottom:7px;text-transform:uppercase;letter-spacing:.05em;font-family:var(--mono)}
 
 .banner{background:var(--flat-bg);color:var(--accent);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:4px;padding:8px 11px;font-size:11px;font-weight:500;margin-bottom:12px;font-family:var(--mono);letter-spacing:.01em}
+.dq{font-family:var(--mono);font-size:10.5px;line-height:1.5;padding:8px 11px;border-radius:4px;margin-bottom:12px;border:1px solid var(--line);border-left-width:3px;letter-spacing:.01em}
+.dq.ok{color:var(--muted);border-left-color:var(--up);background:var(--inset)}
+.dq.warn{color:var(--accent);border-left-color:var(--accent);background:var(--flat-bg)}
+.dq.bad{color:#1a1200;border-left-color:var(--accent);background:var(--accent);font-weight:700}
+.dq b{font-weight:700}
 .note{color:var(--faint);font-size:10px;margin-top:16px;text-align:center;line-height:1.7;letter-spacing:.02em;font-family:var(--mono)}
 dialog{border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);padding:0;max-width:420px;width:calc(100% - 32px)}
 dialog::backdrop{background:rgba(0,0,0,.6)}
@@ -192,6 +197,8 @@ details.det[open]>summary{border-radius:6px 6px 0 0}
   </div>
 
   <div class="banner" id="banner">SAMPLE DATA · ‘CONNECT’에서 데이터 주소를 넣으면 실시간으로 전환됩니다</div>
+
+  <div id="dq" class="dq" hidden></div>
 
   <div id="app"></div>
 
@@ -303,6 +310,44 @@ function ctxOf(d){
   return {dir,align,h4trend,verd,vtone,biasWord,guide,alignRead,alignTone,spotRead,spotTone,forceRead,forceTone};
 }
 function readBox(tone,html){return `<div class="read ${tone}"><span class="rk">읽기</span><span>${html}</span></div>`;}
+
+/* ===== 값 무결성 점검 (들어온 JSON을 화면에 쓰기 전에 검사) ===== */
+const fin=v=>typeof v==="number"&&isFinite(v);
+function validate(d){
+  const bad=[], warn=[];
+  if(!d||typeof d!=="object"){return {status:"bad",issues:["데이터 없음/형식 오류"]};}
+  if(!fin(d.price)||d.price<=0) bad.push("현재가 이상");
+  const D=d.dir;
+  if(!D||!D.session||!D.daily||!D.weekly||!D.h4){ bad.push("방향강도 데이터 누락"); }
+  else{
+    [["세션",D.session],["일간",D.daily],["주간",D.weekly]].forEach(([k,r])=>{
+      if(!fin(r.strength)||Math.abs(r.strength)>105) warn.push(k+" 방향강도 이상");
+      if(!fin(r.avg)||r.avg<0) warn.push(k+" 평균 이상");
+      (r.levels||[]).forEach(L=>{ if(!fin(L.up)||!fin(L.dn)||L.up<=L.dn) warn.push(k+" 레벨 역전/이상"); });
+    });
+    if(!fin(D.h4.done)||Math.abs(D.h4.done)>105) warn.push("H4 방향강도 이상");
+    if(!fin(D.h4.h1pos)||D.h4.h1pos<-1||D.h4.h1pos>101) warn.push("H1 위치 이상");
+  }
+  const fl=d.flow;
+  if(fl&&fl.h4&&fl.h4.valid){
+    const h=fl.h4;
+    if(!fin(h.dom)||Math.abs(h.dom)>100) warn.push("체결 우위 이상");
+    if(!fin(h.total)||h.total<0) warn.push("체결 틱수 이상");
+  }
+  const status = bad.length?"bad":(warn.length?"warn":"ok");
+  return {status, issues:bad.concat(warn)};
+}
+function renderDq(d){
+  const el=$("#dq"); if(!el) return;
+  const v=validate(d);
+  el.className="dq "+v.status; el.hidden=false;
+  if(v.status==="ok"){ el.innerHTML=`🟢 데이터 정상 · 필드·범위·레벨 점검 통과`; }
+  else{
+    const icon=v.status==="bad"?"🔴":"🟡";
+    const head=v.status==="bad"?"데이터 이상 — 값 신뢰 불가":"데이터 점검 "+v.issues.length+"건";
+    el.innerHTML=`${icon} <b>${head}</b> · ${v.issues.slice(0,4).join(" · ")}${v.issues.length>4?" 외":""}`;
+  }
+}
 function secH(n,title,hint){return `<div class="sec-h"><span class="n">${n}</span><h2>${title}</h2><span class="ln"></span>${hint?`<span class="hint">${hint}</span>`:""}</div>`;}
 
 /* ===== 모노크롬 히트 (밝음=상승 / 어두움=하락) ===== */
@@ -480,6 +525,7 @@ function render(d){
   $("#sym").textContent=d.sym||"—";
   $("#sess").textContent=d.session||"—";
   $("#price").textContent=d.price!=null?money(d.price):"—";
+  renderDq(d);
   const c=ctxOf(d), fl=d.flow, u=fl&&fl.unit||"";
 
   let html = heroBlock(d,c);
