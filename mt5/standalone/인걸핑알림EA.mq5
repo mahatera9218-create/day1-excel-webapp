@@ -322,6 +322,7 @@ int OnInit()
 void OnDeinit(const int reason){ EventKillTimer(); }
 void OnTimer()
 {
+   DataQualityCheck();
    CheckEngulf(); TrackRetest();
    if(InpStatusEnable && InpStatusMin>0 && (g_lastStatus==0 || (TimeCurrent()-g_lastStatus)>=(datetime)InpStatusMin*60))
    { g_lastStatus=TimeCurrent(); SendTelegram(BuildStatusText(), true); }
@@ -627,5 +628,48 @@ void UpdateEngulfRetest(const string id,const int rb)
    if(!InpWriteCsv)return; int h=FileOpen(InpCsvFile,FILE_READ|FILE_WRITE|FILE_CSV|FILE_ANSI,','); if(h==INVALID_HANDLE)return; FileSeek(h,0,SEEK_END);
    FileWrite(h,id,"RETEST_UPDATE",_Symbol,"","","","","","","","","","","","","","","",AccountTag(),(rb<0?"무효":IntegerToString(rb)),"");
    FileClose(h);
+}
+
+//==================================================================//
+//  자가진단: MT5에서 값이 제대로 불러와졌는지 · 계산값 이상 없는지   //
+//  결과를 '전문가(Experts)' 로그에 1줄로 출력 (도배 방지 스로틀)      //
+//==================================================================//
+void DataQualityCheck()
+{
+   static datetime lastPrint=0; static string lastMsg="";
+   string w="";
+
+   // 1) 틱 수신 & 신선도 (마지막 틱이 몇 초 전인지) — 휴장 중엔 STALE 정상
+   MqlTick tk; bool tok=SymbolInfoTick(_Symbol,tk);
+   long age = tok ? (long)(TimeCurrent()-tk.time) : -1;
+   bool sessionOn = (CurrentSession()!=SESSION_NONE);
+   if(!tok) w+="틱수신실패; ";
+   else if(age>90 && sessionOn) w+=StringFormat("틱STALE %ds; ",(int)age);
+
+   // 2) 히스토리 봉 수가 계산에 충분한지 (부족하면 값이 왜곡됨)
+   if(Bars(_Symbol,PERIOD_M5) < 200)               w+="M5봉부족; ";
+   if(Bars(_Symbol,PERIOD_H1) < 100)               w+="H1봉부족; ";
+   if(Bars(_Symbol,PERIOD_H4) < 60)                w+="H4봉부족; ";
+   if(Bars(_Symbol,PERIOD_D1) < InpSessDays+2)     w+="D1봉부족; ";
+   if(Bars(_Symbol,PERIOD_W1) < InpWeekWeeks+2)    w+="W1봉부족; ";
+
+   // 3) 핵심 계산값 유효성 (유한수 + 상식 범위)
+   double h4=DirStrength(iOpen(_Symbol,PERIOD_H4,1),iHigh(_Symbol,PERIOD_H4,1),
+                         iLow(_Symbol,PERIOD_H4,1),iClose(_Symbol,PERIOD_H4,1),true,true);
+   double rp=RangePosPct();
+   if(!MathIsValidNumber(h4) || MathAbs(h4)>105) w+="H4값이상; ";
+   if(!MathIsValidNumber(rp) || rp<-1 || rp>101) w+="H1위치이상; ";
+   if(CurrentPrice()<=0)                         w+="현재가이상; ";
+
+   // 판정: 치명(BAD) vs 경고(WARN) vs 정상(OK)
+   string status="OK";
+   if(StringLen(w)>0)
+      status=( StringFind(w,"틱수신실패")>=0 || StringFind(w,"현재가이상")>=0 || StringFind(w,"봉부족")>=0 )
+             ? "BAD" : "WARN";
+   string msg="[DQ] "+status+(StringLen(w)>0? ": "+w : "");
+
+   // 상태가 바뀌거나 60초마다 1회만 출력 (OnTimer가 3초마다 도니 로그 도배 방지)
+   if(msg!=lastMsg || (TimeCurrent()-lastPrint)>=60)
+   { Print(msg); lastMsg=msg; lastPrint=TimeCurrent(); }
 }
 //+------------------------------------------------------------------+
