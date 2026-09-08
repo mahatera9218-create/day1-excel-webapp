@@ -270,7 +270,7 @@ details.det[open]>summary{border-radius:6px 6px 0 0}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-08 · 자리=TP·본절 목표 사다리</span></p>
+     <span style="opacity:.6">build 2026-09-08b · 힘=캔들×체결 조합</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -651,11 +651,27 @@ function forceViz(d){
   const spark=bars.map(b=>{const ht=Math.max(8,Math.abs(b.dom)/maxD*100),cc=b.dom<0?"var(--down)":"var(--up)";
     return `<div class="col"><div class="bar" style="height:${ht}%;background:${cc}"></div><div class="lb">${b.tag}</div></div>`;}).join("");
   const u=d.flow.unit||"";
-  return `<div class="cap" style="margin:0 0 7px"><span>가격 4H 실이동</span><span class="rt ${cls(h.net)}">${sg(h.net,1)}${u} ${h.net<0?'▼':(h.net>0?'▲':'—')}</span></div>
-    <div class="cap" style="margin:0 0 3px"><span>매도 ← 체결 → 매수</span><span></span></div>${domMeter(h.dom,10)}
-    <div class="cap"><span>체결 우위 (↑${(h.up||0).toLocaleString()}/↓${(h.down||0).toLocaleString()})</span><span class="rt ${cls(h.dom)}">${sg(h.dom,1)}%</span></div>
+  // 캔들 방향(실가격 이동) × 체결 우위(주문 흐름) 조합 = 이 카드의 핵심
+  const netFlat=Math.abs(h.net)<0.1, balanced=Math.abs(h.dom)<0.5;
+  const candUp=h.net>0&&!netFlat, candDn=h.net<0&&!netFlat;
+  const cand = netFlat?{t:"보합",a:"—",c:"flat"}:(candUp?{t:"양봉",a:"▲",c:"up"}:{t:"음봉",a:"▼",c:"down"});
+  const flow = balanced?{t:"체결 균형",a:"",c:"flat"}:(h.dom>0?{t:"매수 우위",a:"",c:"up"}:{t:"매도 우위",a:"",c:"down"});
+  const agree = !netFlat&&!balanced&&(Math.sign(h.net)===Math.sign(h.dom));
+  let verdict,vc;
+  if(netFlat||balanced){verdict="관망 — 방향/체결이 뚜렷하지 않음";vc="flat";}
+  else if(agree){verdict=candUp?"추세 확인 · 상승에 매수 체결이 실림":"추세 확인 · 하락에 매도 체결이 실림";vc="ok";}
+  else{verdict=candUp?"⚠ 다이버전스 · 가격은 올랐지만 매도 우위 (상승 약화)":"⚠ 다이버전스 · 가격은 내렸지만 매수 우위 (반등 주의)";vc="warn";}
+  const chip=o=>`<span style="font-family:var(--mono);font-weight:700;font-size:12.5px;padding:3px 10px;border-radius:4px;border:1px solid var(--line);background:var(--${o.c==='up'?'up-bg':(o.c==='down'?'down-bg':'surface2')});color:var(--${o.c==='flat'?'muted':o.c})">${o.t}${o.a?' '+o.a:''}</span>`;
+  const vcol = vc==='warn'?'var(--accent)':(vc==='ok'?'var(--ink)':'var(--muted)');
+  return `<div style="display:flex;align-items:center;gap:8px;margin:0 0 8px">
+      ${chip(cand)}<span style="color:var(--faint);font-size:12px">×</span>${chip(flow)}
+    </div>
+    <div style="font-family:var(--mono);font-size:11.5px;font-weight:600;color:${vcol};margin:0 0 11px;line-height:1.35">${verdict}</div>
+    <div class="cap" style="margin:0 0 6px"><span>가격 4H 실이동 (캔들)</span><span class="rt ${cls(h.net)}">${sg(h.net,1)}${u} ${cand.a}</span></div>
+    <div class="cap" style="margin:0 0 3px"><span>매도 ← 체결 → 매수</span><span class="rt ${cls(h.dom)}">${sg(h.dom,1)}%</span></div>${domMeter(h.dom,10)}
+    <div class="cap"><span>체결량 (↑${(h.up||0).toLocaleString()} / ↓${(h.down||0).toLocaleString()})</span><span></span></div>
     <div class="spark" style="margin-top:10px">${spark}</div>
-    <div class="cap" style="margin-top:4px"><span>↑ 막대=체결 우위(주문 흐름) · 가격과 다를 수 있음</span></div>`;
+    <div class="cap" style="margin-top:4px"><span>↑ 체결 추세 (4H 구간별 매수/매도 우위)</span></div>`;
 }
 function axisGraph(d){
   const price=d.price, ps=pipSizeOf(d), gp=v=>sg((v-price)/ps,0);
@@ -738,13 +754,15 @@ function render(d){
   // ③ 힘
   SBFIRST=true;
   const fl=d.flow,h=fl&&fl.h4, valid=h&&h.valid;
-  let f3trend="–",f3agree="–";
+  let f3trend="–",f3agree="–",f3st="데이터 없음";
   if(valid){const bars=(fl.zone&&fl.zone.bars)||[];const first=bars.length?bars[0].dom:h.dom,last=bars.length?bars[bars.length-1].dom:h.dom,dv=last-first;
     const dm=h.dom<0?"▼":"▲";
     f3trend=Math.abs(dv)<=0.3?"유지":(Math.sign(dv)===Math.sign(last)?"강해짐 "+dm:"약해짐 "+dm);
-    f3agree=(dir!==0&&Math.sign(h.dom)===dir)?"✓":(dir!==0?"✗":"—");}
-  const card3=stdCard({title:"힘",sub:"체결 흐름 4H",stTone:c.forceTone,
-    stTxt: valid?`${h.dom<0?"매도 ▼":"매수 ▲"}`:"데이터 없음",
+    f3agree=(dir!==0&&Math.sign(h.dom)===dir)?"✓":(dir!==0?"✗":"—");
+    const nf=Math.abs(h.net)<0.1,bl=Math.abs(h.dom)<0.5,ag=!nf&&!bl&&Math.sign(h.net)===Math.sign(h.dom);
+    f3st=(nf||bl)?"관망":(ag?"추세 확인":"⚠ 다이버전스");}
+  const card3=stdCard({title:"힘",sub:"캔들 vs 체결 4H",stTone:c.forceTone,
+    stTxt: f3st,
     read:c.forceRead, viz:forceViz(d),
     stats: valid?[{k:"체결우위",v:sg(h.dom,1)+"%",cls:cls(h.dom)},{k:"추세",v:f3trend,cls:cls(h.dom)},{k:"방향 일치",v:f3agree,cls:f3agree==="✓"?(dir<0?"down":"up"):"flat"}]
                 :[{k:"체결우위",v:"–"},{k:"추세",v:"–"},{k:"방향 일치",v:"–"}],
