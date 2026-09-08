@@ -27,6 +27,7 @@ input double InpLevelMid       = 0.5;           // 세션 1차레벨 배율
 input double InpLevelFull      = 1.0;           // 세션 최종레벨 배율
 input ENUM_TIMEFRAMES InpFlowEntryTF = PERIOD_M5;  // 체결 진입 프레임
 input ENUM_TIMEFRAMES InpFlowZoneTF  = PERIOD_H1;  // 체결 자리 프레임
+input ENUM_TIMEFRAMES InpFlowZoneTF2 = PERIOD_M30; // 체결 하위프레임(상위봉 분해)
 input int    InpZoneBars      = 3;              // 자리 프레임 시계열 과거 봉 수
 //--- 알림 채널 ---------------------------------------------------
 input bool   InpAlertPopup   = true;            // MT5 팝업
@@ -552,6 +553,12 @@ string BuildStatusJson()
    j+="\"zone\":{\"tf\":\""+TfName(InpFlowZoneTF)+"\",\"bars\":[";
    for(int sh=InpZoneBars; sh>=1; sh--){ j+=JFlowSeries(InpFlowZoneTF,sh,useFlag); j+=","; }
    j+=JFlowSeries(InpFlowZoneTF,0,useFlag);
+   j+="]},";
+   int per2=(int)(PeriodSeconds(InpFlowZoneTF)/PeriodSeconds(InpFlowZoneTF2)); if(per2<1)per2=1;
+   int n2=(InpZoneBars+1)*per2;
+   j+="\"zone2\":{\"tf\":\""+TfName(InpFlowZoneTF2)+"\",\"per\":"+IntegerToString(per2)+",\"bars\":[";
+   for(int sh=n2-1; sh>=1; sh--){ j+=JFlowSeries(InpFlowZoneTF2,sh,useFlag); j+=","; }
+   j+=JFlowSeries(InpFlowZoneTF2,0,useFlag);
    j+="]},";
    j+="\"entry\":{\"tf\":\""+TfName(InpFlowEntryTF)+"\",\"done\":"+JFlowBar(InpFlowEntryTF,1,useFlag)+",\"now\":"+JFlowBar(InpFlowEntryTF,0,useFlag)+"}";
    j+="}}";

@@ -270,7 +270,7 @@ details.det[open]>summary{border-radius:6px 6px 0 0}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-08c · 힘=구간별 캔들vs체결</span></p>
+     <span style="opacity:.6">build 2026-09-08d · 힘=H1+M30 분해</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -319,6 +319,12 @@ const SAMPLE={
     {tag:"-2",kst:"11:00~12:00",chart:"06:00~07:00",open:1.08810,close:1.08730,lo:1.08715,hi:1.08820,move:-8.0,span:10.5,eff:0.76,dom:-1.1,up:1161,down:1187,total:2349},
     {tag:"-1",kst:"12:00~13:00",chart:"07:00~08:00",open:1.08730,close:1.08600,lo:1.08590,hi:1.08745,move:-13.0,span:15.5,eff:0.84,dom:-3.5,up:9390,down:10082,total:19633},
     {tag:"진행",kst:"13:00~현재",chart:"08:00 (18분 경과)",open:1.08600,close:1.08508,lo:1.08495,hi:1.08615,move:-9.2,span:12.0,eff:0.77,dom:-5.5,up:1621,down:1813,total:3492}
+  ]},
+  zone2:{tf:"30M", per:2, bars:[
+    {move:2.0,dom:-1.0},{move:3.0,dom:-0.6},
+    {move:-5.0,dom:-1.5},{move:-3.0,dom:-0.7},
+    {move:-6.0,dom:-2.8},{move:-7.0,dom:-4.2},
+    {move:-8.0,dom:-6.5},{move:-1.2,dom:1.8}
   ]},
   entry:{tf:"5M",
     done:{total:1479,distort:37,up:665,down:776,dom:-7.5,move:-1.20,swing:3.90,eff:0.31,perTick:-0.00081},
@@ -661,17 +667,30 @@ function forceViz(d){
   else{verdict=candUp?"⚠ 다이버전스 · 가격은 올랐지만 매도 우위 (상승 약화)":"⚠ 다이버전스 · 가격은 내렸지만 매수 우위 (반등 주의)";vc="warn";}
   const chip=o=>`<span style="font-family:var(--mono);font-weight:700;font-size:12.5px;padding:3px 10px;border-radius:4px;border:1px solid var(--line);background:var(--${o.c==='up'?'up-bg':(o.c==='down'?'down-bg':'surface2')});color:var(--${o.c==='flat'?'muted':o.c})">${o.t}${o.a?' '+o.a:''}</span>`;
   const vcol = vc==='warn'?'var(--accent)':(vc==='ok'?'var(--ink)':'var(--muted)');
-  // 구간별(1H) 캔들 vs 체결: 각 봉의 가격이동(move)과 체결우위(dom)를 나란히, 엇갈리면 ⚠
+  // 구간별 캔들 vs 체결: 각 봉의 가격이동(move)·체결우위(dom)를 나란히, 엇갈리면 ⚠
+  // 상위(H1) 각 봉 아래에 그 봉을 구성하는 하위(M30) 전/후반 봉을 나란히 붙임
   const ar=v=>v>0?'▲':(v<0?'▼':'—');
-  const cell=b=>{const mv=b.move||0,dm=b.dom||0,div=(Math.abs(mv)>=0.1&&Math.abs(dm)>=0.5&&Math.sign(mv)!==Math.sign(dm));
-    return `<div style="flex:1;min-width:0;text-align:center;padding:6px 2px 5px;border-radius:4px;border:1px solid ${div?'var(--accent)':'var(--line)'};background:var(--surface2)">
-      <div style="font-size:9px;color:var(--muted);font-family:var(--mono);margin-bottom:5px">${b.tag}${div?' <span style="color:var(--accent)">⚠</span>':''}</div>
+  const diverg=(mv,dm)=>(Math.abs(mv)>=0.1&&Math.abs(dm)>=0.5&&Math.sign(mv)!==Math.sign(dm));
+  const bigCell=b=>{const mv=b.move||0,dm=b.dom||0,dv=diverg(mv,dm);
+    return `<div style="text-align:center;padding:6px 2px 5px;border-radius:4px;border:1px solid ${dv?'var(--accent)':'var(--line)'};background:var(--surface2)">
+      <div style="font-size:9px;color:var(--muted);font-family:var(--mono);margin-bottom:5px">${b.tag}${dv?' <span style="color:var(--accent)">⚠</span>':''}</div>
       <div class="${cls(mv)}" style="font-size:11.5px;font-weight:700;font-family:var(--mono);line-height:1.2">${ar(mv)}${Math.abs(mv).toFixed(1)}</div>
       <div style="font-size:8px;color:var(--faint);margin:1px 0 4px">캔들</div>
       <div class="${cls(dm)}" style="font-size:11.5px;font-weight:700;font-family:var(--mono);line-height:1.2">${ar(dm)}${Math.abs(dm).toFixed(1)}%</div>
       <div style="font-size:8px;color:var(--faint);margin-top:1px">체결</div>
     </div>`;};
-  const grid = bars.length?`<div style="display:flex;gap:5px;margin-top:11px">${bars.map(cell).join("")}</div>`:"";
+  const subCell=(b,half)=>{ if(!b) return `<div style="flex:1"></div>`;
+    const mv=b.move||0,dm=b.dom||0,dv=diverg(mv,dm);
+    return `<div style="flex:1;min-width:0;text-align:center;padding:3px 1px;border-radius:3px;border:1px solid ${dv?'var(--accent)':'var(--grid)'};background:var(--inset)">
+      <div style="font-size:7px;color:var(--faint);font-family:var(--mono);line-height:1.1">${half}${dv?'⚠':''}</div>
+      <div class="${cls(mv)}" style="font-size:9px;font-weight:700;font-family:var(--mono);line-height:1.3">${ar(mv)}${Math.abs(mv).toFixed(1)}</div>
+      <div class="${cls(dm)}" style="font-size:9px;font-weight:700;font-family:var(--mono);line-height:1.3">${ar(dm)}${Math.abs(dm).toFixed(0)}%</div>
+    </div>`;};
+  const z2=fl.zone2, per=(z2&&z2.per)||2, b2=(z2&&z2.bars)||[];
+  const col=i=>{const sub=b2.length?`<div style="display:flex;gap:3px;margin-top:3px">${subCell(b2[i*per],"전")}${subCell(b2[i*per+1],"후")}</div>`:"";
+    return `<div style="flex:1;min-width:0;display:flex;flex-direction:column">${bigCell(bars[i])}${sub}</div>`;};
+  const grid = bars.length?`<div style="display:flex;gap:5px;margin-top:11px">${bars.map((_,i)=>col(i)).join("")}</div>`:"";
+  const subLbl = b2.length?` · 아래=${(z2&&z2.tf)||"M30"} 전/후반`:"";
   return `<div style="display:flex;align-items:center;gap:8px;margin:0 0 8px">
       ${chip(cand)}<span style="color:var(--faint);font-size:12px">×</span>${chip(flow)}
     </div>
@@ -679,8 +698,8 @@ function forceViz(d){
     <div class="cap" style="margin:0 0 6px"><span>가격 4H 실이동 (캔들)</span><span class="rt ${cls(h.net)}">${sg(h.net,1)}${u} ${cand.a}</span></div>
     <div class="cap" style="margin:0 0 3px"><span>매도 ← 체결 → 매수</span><span class="rt ${cls(h.dom)}">${sg(h.dom,1)}%</span></div>${domMeter(h.dom,10)}
     <div class="cap" style="margin-bottom:2px"><span>체결량 (↑${(h.up||0).toLocaleString()} / ↓${(h.down||0).toLocaleString()})</span><span></span></div>
-    <div class="cap" style="margin-top:12px;color:var(--faint)"><span>구간별 (${(fl.zone&&fl.zone.tf)||"1H"}) · 캔들 vs 체결</span><span></span></div>${grid}
-    <div class="cap" style="margin-top:5px"><span>캔들=가격이동(${u||"pt"}) · 체결=주문 우위(%) · ⚠=엇갈림(다이버전스)</span></div>`;
+    <div class="cap" style="margin-top:12px;color:var(--faint)"><span>구간별 · 위=${(fl.zone&&fl.zone.tf)||"H1"}${subLbl}</span><span></span></div>${grid}
+    <div class="cap" style="margin-top:5px"><span>위 큰칸=상위봉 · 아래 2칸=그 봉을 만든 하위봉 · ⚠=캔들↔체결 엇갈림</span></div>`;
 }
 function axisGraph(d){
   const price=d.price, ps=pipSizeOf(d), gp=v=>sg((v-price)/ps,0);
