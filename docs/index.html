@@ -180,6 +180,59 @@ details.det[open]>summary .chev{transform:rotate(180deg)}
 details.det[open]>summary{border-radius:6px 6px 0 0}
 .det-body{border:1px solid var(--line);border-top:0;border-radius:0 0 6px 6px;background:var(--panel2);padding:12px}
 .det-body .grid,.det-body .card:last-child{margin-bottom:0}
+/* ===== 결론 + 퍼널 + 표준카드 ===== */
+.verdict{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:6px;background:linear-gradient(180deg,var(--surface),var(--bg));padding:14px 15px;margin-bottom:6px}
+.verdict.up{border-left-color:var(--up)}.verdict.down{border-left-color:var(--down)}.verdict.flat{border-left-color:var(--accent)}
+.vtop{display:flex;align-items:center;gap:13px}
+.vbadge{width:48px;height:48px;flex:none;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;border:1px solid var(--line);background:var(--surface2)}
+.vbadge.up{border-color:var(--up);color:var(--up);background:var(--up-bg)}.vbadge.down{border-color:var(--down);color:var(--down);background:var(--down-bg)}.vbadge.flat{border-color:var(--accent);color:var(--accent);background:var(--flat-bg)}
+.vmid{min-width:0}
+.vmid .lab{font-size:9.5px;color:var(--faint);letter-spacing:.14em;text-transform:uppercase;font-family:var(--mono)}
+.vmid .verd2{font-size:23px;font-weight:700;line-height:1.05}
+.vmid .verd2.up{color:var(--up)}.vmid .verd2.down{color:var(--down)}.vmid .verd2.flat{color:var(--accent)}
+.vmid .binfo{font-size:10.5px;color:var(--muted);font-family:var(--mono)}
+.valn{margin-left:auto;text-align:right;flex:none}
+.valn span{font-size:9.5px;color:var(--muted);letter-spacing:.05em;font-family:var(--mono);text-transform:uppercase}
+.vguide{margin-top:11px;font-size:12px;line-height:1.5;color:var(--ink);background:var(--inset);border:1px solid var(--line);border-radius:5px;padding:9px 11px}
+.because{display:flex;align-items:center;gap:8px;margin:12px 2px 10px;color:var(--faint);font-size:10px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.because .ln{flex:1;height:1px;background:var(--line)}
+.funnel{position:relative}
+.funnel::before{content:"";position:absolute;left:14px;top:16px;bottom:24px;width:2px;background:var(--line)}
+.step{position:relative;display:flex;gap:12px;margin-bottom:12px}
+.step .num{width:30px;height:30px;flex:none;border-radius:50%;background:var(--surface);border:2px solid var(--accent);color:var(--accent);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;z-index:1;margin-top:2px}
+.step .body{flex:1;min-width:0}
+.scard{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.chead{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--grid)}
+.chead .t{font-size:12px;font-weight:700;letter-spacing:.02em}
+.chead .sub{font-size:10px;color:var(--faint);font-family:var(--mono)}
+.chead .st{margin-left:auto;font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;border:1px solid var(--line)}
+.st.up{color:var(--up);background:var(--up-bg)}.st.down{color:var(--down);background:var(--down-bg)}.st.flat{color:var(--accent);background:var(--flat-bg)}
+.cread{display:flex;gap:8px;font-size:12px;line-height:1.5;padding:9px 12px;background:var(--inset)}
+.cread .rk{font-size:9px;font-weight:700;flex:none;text-transform:uppercase;letter-spacing:.1em;padding-top:2px;font-family:var(--mono);color:var(--accent)}
+.cread b{font-weight:700;color:var(--ink)}
+.cviz{padding:11px 12px}
+.cstats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--grid)}
+.cstats .s{padding:9px 10px;border-right:1px solid var(--grid)}
+.cstats .s:last-child{border-right:0}
+.cstats .sk{font-size:9px;color:var(--faint);text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px;font-family:var(--mono)}
+.cstats .sv{font-family:var(--mono);font-size:14px;font-weight:600}
+.scard details>summary.cmore{display:block;padding:8px 12px;border-top:1px solid var(--grid);font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--accent);cursor:pointer;list-style:none;letter-spacing:.03em}
+.scard details>summary.cmore::-webkit-details-marker{display:none}
+.scard details[open]>summary.cmore{border-bottom:1px solid var(--grid)}
+.cdetail{padding:12px;background:var(--panel2)}
+.cdetail .grid,.cdetail .card:last-child{margin-bottom:0}
+.al-row{display:flex;align-items:center;gap:9px;margin:6px 0}
+.al-row .k{width:32px;font-size:11px;color:var(--muted);flex:none}
+.al-bar{flex:1;position:relative;height:9px;background:var(--inset);border:1px solid var(--grid);border-radius:2px}
+.al-bar .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--faint);opacity:.5}
+.al-bar .fill{position:absolute;top:0;bottom:0}
+.al-bar .fill.up{background:var(--up)}.al-bar .fill.down{background:var(--down)}
+.al-row .v{width:56px;text-align:right;font-family:var(--mono);font-size:11.5px;font-weight:600;flex:none}
+.al-row .v .ph{font-family:var(--sans);font-size:8.5px;color:var(--faint);font-weight:500;margin-left:2px}
+.lad .lrow{display:flex;justify-content:space-between;font-size:10.5px;font-family:var(--mono);color:var(--muted);margin-bottom:4px}
+.lad .ltrack{position:relative;height:14px;background:var(--inset);border:1px solid var(--grid);border-radius:3px}
+.lad .ldot{position:absolute;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;border:2px solid var(--surface);box-shadow:0 0 0 1px var(--line)}
+.lad .lcap{display:flex;justify-content:space-between;font-size:9.5px;color:var(--faint);font-family:var(--mono);margin-top:3px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -522,36 +575,145 @@ function flowCol(head,o,u){
     </div></div>`;
 }
 
+/* ===== 표준카드 + 퍼널 빌더 ===== */
+function pipSizeOf(d){ const S=d.dir.session; return (S&&S.levels&&S.levels[0]&&S.levels[0].up_pt)?((S.levels[0].up-S.open)/S.levels[0].up_pt):0.0001; }
+function strongestLayer(d){
+  const a=[["세션",+d.dir.session.strength],["일간",+d.dir.daily.strength],["주간",+d.dir.weekly.strength],["H4",+d.dir.h4.done]];
+  a.sort((x,y)=>Math.abs(y[1])-Math.abs(x[1])); return a[0];
+}
+function alignViz(d){
+  const rows=[["세션",+d.dir.session.strength,d.dir.session.avg],["일간",+d.dir.daily.strength,d.dir.daily.avg],
+              ["주간",+d.dir.weekly.strength,d.dir.weekly.avg],["H4",+d.dir.h4.done,d.dir.h4.avg]];
+  return rows.map(([k,v,avg])=>{
+    const c=cls(v), w=Math.min(50,Math.abs(v)/2), side=v>=0?`left:50%;width:${w}%`:`right:50%;width:${w}%`;
+    const ph=Math.abs(v)>avg?"추세":"횡보";
+    return `<div class="al-row"><span class="k">${k}</span>
+      <div class="al-bar"><div class="mid"></div><div class="fill ${c}" style="${side}"></div></div>
+      <span class="v ${c}">${arw(v)}${f(Math.abs(v),0)}<span class="ph">${ph}</span></span></div>`;
+  }).join("");
+}
+function ladderViz(d){
+  const S=d.dir.session; if(!S.levels||!S.levels.length) return `<div class="r"><span class="k">레벨 데이터 없음</span></div>`;
+  const L=S.levels[S.levels.length-1], price=d.price, ps=pipSizeOf(d), dn=L.dn, up=L.up;
+  let pct=(price-dn)/(up-dn)*100; pct=Math.max(0,Math.min(100,pct));
+  const rc=L.dir<0?"down":(L.dir>0?"up":"flat"), dotc=L.dir<0?"var(--down)":"var(--up)";
+  const gU=sg((up-price)/ps,0), gD=sg((dn-price)/ps,0);
+  return `<div class="lad">
+    <div class="lrow"><span>하단 ${money(dn)}</span><span class="${rc}">현재 ${money(price)}</span><span>상단 ${money(up)}</span></div>
+    <div class="ltrack"><div class="ldot" style="left:${pct}%;background:${dotc}"></div></div>
+    <div class="lcap"><span>${gD}${PTL}</span><span class="${rc}">도달률 ${f(L.reach,0)}%</span><span>${gU}${PTL}</span></div>
+  </div>`;
+}
+function forceViz(d){
+  const fl=d.flow,h=fl&&fl.h4;
+  if(!h||!h.valid) return `<div class="r"><span class="k">틱 데이터 없음 (휴장/보관량)</span></div>`;
+  const bars=(fl.zone&&fl.zone.bars)||[], maxD=Math.max(...bars.map(b=>Math.abs(b.dom)),0.1);
+  const spark=bars.map(b=>{const ht=Math.max(8,Math.abs(b.dom)/maxD*100),cc=b.dom<0?"var(--down)":"var(--up)";
+    return `<div class="col"><div class="bar" style="height:${ht}%;background:${cc}"></div><div class="lb">${b.tag}</div></div>`;}).join("");
+  return `<div class="cap" style="margin:0 0 3px"><span>매도</span><span>매수</span></div>${domMeter(h.dom,10)}
+    <div class="cap"><span>순 방향성 (↑${(h.up||0).toLocaleString()}/↓${(h.down||0).toLocaleString()})</span><span class="rt ${cls(h.dom)}">${sg(h.dom,1)}%</span></div>
+    <div class="spark" style="margin-top:10px">${spark}</div>`;
+}
+function axisGraph(d){
+  const price=d.price, ps=pipSizeOf(d), gp=v=>sg((v-price)/ps,0);
+  const sets=[["세션",d.dir.session,"var(--accent)"],["일간",d.dir.daily,"var(--accent2)"],["주간",d.dir.weekly,"var(--muted)"]];
+  const items=sets.filter(([,r])=>r.levels&&r.levels.length).map(([k,r,col])=>{const L=r.levels[r.levels.length-1];return {k,col,up:L.up,dn:L.dn,reach:L.reach,rdir:L.dir};});
+  if(!items.length) return "";
+  const vals=[price]; items.forEach(i=>vals.push(i.up,i.dn));
+  const min=Math.min(...vals),max=Math.max(...vals),span=(max-min)||1;
+  const W=214,H=300,padT=16,padB=16,X0=48,xT=126, y=v=>padT+(max-v)/span*(H-padT-padB);
+  let g=""; for(let i=0;i<=4;i++){const yy=padT+i/4*(H-padT-padB);g+=`<line x1="${X0}" y1="${yy.toFixed(1)}" x2="${xT}" y2="${yy.toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`;}
+  let lines=""; items.forEach(i=>{[["상",i.up],["하",i.dn]].forEach(([s,val])=>{lines+=`<line x1="${X0}" y1="${y(val).toFixed(1)}" x2="${xT}" y2="${y(val).toFixed(1)}" stroke="${i.col}" stroke-width="1.6" stroke-dasharray="${s==='상'?'0':'3 3'}" opacity=".9"/>`;});});
+  let labs=[]; items.forEach(i=>{labs.push({t:i.k[0]+"상 "+gp(i.up),v:i.up,c:i.col});labs.push({t:i.k[0]+"하 "+gp(i.dn),v:i.dn,c:i.col});});
+  labs=labs.map(o=>({...o,yy:y(o.v)})).sort((a,b)=>a.yy-b.yy); for(let j=1;j<labs.length;j++){if(labs[j].yy-labs[j-1].yy<11.5)labs[j].yy=labs[j-1].yy+11.5;}
+  const labSvg=labs.map(o=>`<text x="${xT+4}" y="${(o.yy+3.5).toFixed(1)}" font-size="9.5" font-family="var(--mono)" fill="${o.c}" font-weight="600">${o.t}</text>`).join("");
+  const py=y(price);
+  const priceMark=`<line x1="${X0}" y1="${py.toFixed(1)}" x2="${xT}" y2="${py.toFixed(1)}" stroke="var(--up)" stroke-width="2.5"/><circle cx="${xT}" cy="${py.toFixed(1)}" r="3.5" fill="var(--up)"/><text x="${X0-4}" y="${(py+3.5).toFixed(1)}" text-anchor="end" font-size="9.5" font-family="var(--mono)" fill="var(--up)" font-weight="700">${money(price)}</text>`;
+  const legend=items.map(i=>{const rc=i.rdir<0?"down":(i.rdir>0?"up":"flat");return `<div class="lgrow"><span class="dot2" style="background:${i.col}"></span><span class="nm">${i.k}</span><span class="rg">${money(i.dn)}~${money(i.up)}</span><span class="rr ${rc}">${f(i.reach,0)}%</span></div>`;}).join("");
+  return `<div class="axis-wrap"><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">${g}<line x1="${X0}" y1="${padT-6}" x2="${X0}" y2="${H-padB+6}" stroke="var(--line)" stroke-width="1.5"/>${lines}${labSvg}${priceMark}</svg><div class="axis-side">${legend}<div class="axis-note">선 옆 숫자=현재가 갭(${PTL},+위/−아래) · 실선=상단·점선=하단 · 흰선=현재가 · 우측 %=도달률</div></div></div>`;
+}
+function detailFlow(d){
+  const fl=d.flow,u=fl&&fl.unit||"",h=fl&&fl.h4; let s="";
+  if(h&&h.valid){
+    s+=`<div class="cap" style="margin:0 0 3px"><span>매도</span><span>매수</span></div>${domMeter(h.dom,10)}
+      <div class="rows" style="margin-top:8px">
+      <div class="r"><span class="k">누적틱 (왜곡)</span><span class="val">${(h.total||0).toLocaleString()} <small>(${h.distort||0})</small></span></div>
+      <div class="r"><span class="k">순이동 / 고저폭</span><span class="val ${cls(h.net)}">${sg(h.net,1)}${u} / ${f(h.span,1)}${u}</span></div></div>`;
+  }
+  if(fl&&fl.zone){ s+=`<div class="card" style="margin-top:10px"><div class="card-h"><span class="t">${fl.zone.tf} 시계열</span></div>${(fl.zone.bars||[]).map(b=>flowSeries(b,u)).join("")}</div>`; }
+  if(fl&&fl.entry){ s+=`<div class="card"><div class="card-h"><span class="t">${fl.entry.tf} 완성 vs 진행</span></div><div class="cmp">${flowCol("직전 완성봉 (-1)",fl.entry.done,u)}${flowCol("현재 진행봉",fl.entry.now,u)}</div></div>`; }
+  return s;
+}
+function stdCard(o){
+  const stats=o.stats.map(s=>`<div class="s"><div class="sk">${s.k}</div><div class="sv ${s.cls||''}">${s.v}</div></div>`).join("");
+  const det=o.detailHtml?`<details><summary class="cmore">${o.detailLabel} ▾</summary><div class="cdetail">${o.detailHtml}</div></details>`:"";
+  return `<div class="scard">
+    <div class="chead"><span class="t">${o.title}</span><span class="sub">${o.sub||""}</span><span class="st ${o.stTone}">${o.stTxt}</span></div>
+    <div class="cread"><span class="rk">읽기</span><span>${o.read}</span></div>
+    <div class="cviz">${o.viz}</div>
+    <div class="cstats">${stats}</div>${det}</div>`;
+}
+function verdictCard(d,c){
+  const ar=c.dir<0?"▼":(c.dir>0?"▲":"↔");
+  const pips=[0,1,2,3].map(i=>`<span class="pip ${i<c.align?'on':''}"></span>`).join("");
+  return `<div class="verdict ${c.vtone}">
+    <div class="vtop"><span class="vbadge ${c.vtone}">${ar}</span>
+      <div class="vmid"><div class="lab">결론</div><div class="verd2 ${c.vtone}">${c.verd}</div><div class="binfo">BIAS ${c.biasWord} · S·D·W·H4 종합</div></div>
+      <div class="valn"><div class="pips">${pips}</div><span>ALIGN ${c.align}/4</span></div></div>
+    <div class="vguide">${c.guide}</div></div>`;
+}
+
 /* ===== render ===== */
 function render(d){
-  CUR=d.cur||""; PTL=d.ptl||"핍"; SBFIRST=true;
+  CUR=d.cur||""; PTL=d.ptl||"pt";
   $("#sym").textContent=d.sym||"—";
   $("#sess").textContent=d.session||"—";
   $("#price").textContent=d.price!=null?money(d.price):"—";
   renderDq(d);
-  const c=ctxOf(d), fl=d.flow, u=fl&&fl.unit||"";
+  const c=ctxOf(d), dir=c.dir, dirWord=dir<0?"하방":(dir>0?"상방":"혼조");
+  const H=d.dir.h4, h4t=Math.abs(H.done)>H.avg, strong=strongestLayer(d);
 
-  let html = heroBlock(d,c);
-  html += secH(1,"정렬 · 층이 한 방향인가","DIR ×4");
-  html += matrixCard(d,c);
-  html += `<details class="det"><summary>방향강도 상세 — 세션·일간·주간·H4 <span class="chev">▾</span></summary>
-    <div class="det-body"><div class="grid">${dirCard("실시간 세션",d.dir.session)}${dirCard("당일 일간",d.dir.daily)}${dirCard("이번주 주간",d.dir.weekly)}${h4Card(d.dir.h4)}</div></div></details>`;
+  // ① 방향
+  SBFIRST=true;
+  const card1=stdCard({title:"방향",sub:"층 정렬 ×4",stTone:c.alignTone,
+    stTxt: dir===0?"↔ 혼조":`${arw(dir)} ${dirWord} ${c.align}/4`,
+    read:c.alignRead, viz:alignViz(d),
+    stats:[{k:"정렬",v:c.align+"/4"},{k:"H4 국면",v:(h4t?"추세":"횡보")+" "+arw(H.done),cls:cls(H.done)},{k:"최강 층",v:strong[0]+" "+f(Math.abs(strong[1]),0),cls:cls(strong[1])}],
+    detailLabel:"자세히 — 세션·일간·주간·H4 전체 수치",
+    detailHtml:`<div class="grid">${dirCard("실시간 세션",d.dir.session)}${dirCard("당일 일간",d.dir.daily)}${dirCard("이번주 주간",d.dir.weekly)}${h4Card(d.dir.h4)}</div>`});
 
-  html += secH(2,"자리 · 레벨 대비 위치","LEVELS");
-  html += spotCard(d,c);
+  // ② 자리
+  const S=d.dir.session, ps=pipSizeOf(d); let sReach=null,gU="–",gD="–";
+  if(S.levels&&S.levels.length){const L=S.levels[S.levels.length-1]; sReach=L.reach; gU=sg((L.up-d.price)/ps,0); gD=sg((L.dn-d.price)/ps,0);}
+  const card2=stdCard({title:"자리",sub:"레벨 대비 위치",stTone:c.spotTone,
+    stTxt: dir===0?"판단 보류":(sReach!=null?(sReach>100?"돌파":(sReach>=85?"근접":"여력 있음")):"–"),
+    read:c.spotRead, viz:ladderViz(d),
+    stats:[{k:"도달률",v:sReach!=null?f(sReach,0)+"%":"–"},{k:"상단 갭",v:gU+PTL,cls:"up"},{k:"하단 갭",v:gD+PTL,cls:"down"}],
+    detailLabel:"자세히 — 세션·일간·주간 레벨 축 그래프",
+    detailHtml:axisGraph(d)});
 
-  html += secH(3,"힘 · 체결 흐름","FLOW 4H");
-  html += forceSummary(d,c);
-  let det="";
-  if(fl&&fl.zone){
-    det += `<div class="card"><div class="card-h"><span class="t">${fl.zone.tf} 자리 프레임 · 시계열</span></div>${(fl.zone.bars||[]).map(b=>flowSeries(b,u)).join("")}</div>`;
-  }
-  if(fl&&fl.entry){
-    det += `<div class="card"><div class="card-h"><span class="t">${fl.entry.tf} 진입 프레임 · 완성 vs 진행</span></div>
-      <div class="cmp">${flowCol("직전 완성봉 (-1)",fl.entry.done,u)}${flowCol("현재 진행봉",fl.entry.now,u)}</div></div>`;
-  }
-  if(det) html += `<details class="det"><summary>체결 상세 — 1H 시계열 · 완성 vs 진행 <span class="chev">▾</span></summary><div class="det-body">${det}</div></details>`;
-  $("#app").innerHTML = html;
+  // ③ 힘
+  SBFIRST=true;
+  const fl=d.flow,h=fl&&fl.h4, valid=h&&h.valid;
+  let f3trend="–",f3agree="–";
+  if(valid){const bars=(fl.zone&&fl.zone.bars)||[];const first=bars.length?bars[0].dom:h.dom,last=bars.length?bars[bars.length-1].dom:h.dom;
+    f3trend=last<first-0.3?"강해짐 ▼":(last>first+0.3?"강해짐 ▲":"유지");
+    f3agree=(dir!==0&&Math.sign(h.dom)===dir)?"✓":(dir!==0?"✗":"—");}
+  const card3=stdCard({title:"힘",sub:"체결 흐름 4H",stTone:c.forceTone,
+    stTxt: valid?`${h.dom<0?"매도 ▼":"매수 ▲"}`:"데이터 없음",
+    read:c.forceRead, viz:forceViz(d),
+    stats: valid?[{k:"체결우위",v:sg(h.dom,1)+"%",cls:cls(h.dom)},{k:"추세",v:f3trend,cls:cls(h.dom)},{k:"방향 일치",v:f3agree,cls:f3agree==="✓"?(dir<0?"down":"up"):"flat"}]
+                :[{k:"체결우위",v:"–"},{k:"추세",v:"–"},{k:"방향 일치",v:"–"}],
+    detailLabel:"자세히 — 1H 시계열 · 5M 완성 vs 진행",
+    detailHtml: valid?detailFlow(d):`<div class="r"><span class="k">휴장/보관량으로 틱 데이터 없음</span></div>`});
+
+  $("#app").innerHTML = verdictCard(d,c)
+    + `<div class="because"><span class="ln"></span>왜 그런가 · 근거 3단계<span class="ln"></span></div>`
+    + `<div class="funnel">`
+    + `<div class="step"><div class="num">1</div><div class="body">${card1}</div></div>`
+    + `<div class="step"><div class="num">2</div><div class="body">${card2}</div></div>`
+    + `<div class="step"><div class="num">3</div><div class="body">${card3}</div></div>`
+    + `</div>`;
 }
 
 /* ===== live ===== */
