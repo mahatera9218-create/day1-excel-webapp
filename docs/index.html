@@ -650,9 +650,12 @@ function forceViz(d){
   const bars=(fl.zone&&fl.zone.bars)||[], maxD=Math.max(...bars.map(b=>Math.abs(b.dom)),0.1);
   const spark=bars.map(b=>{const ht=Math.max(8,Math.abs(b.dom)/maxD*100),cc=b.dom<0?"var(--down)":"var(--up)";
     return `<div class="col"><div class="bar" style="height:${ht}%;background:${cc}"></div><div class="lb">${b.tag}</div></div>`;}).join("");
-  return `<div class="cap" style="margin:0 0 3px"><span>매도</span><span>매수</span></div>${domMeter(h.dom,10)}
-    <div class="cap"><span>순 방향성 (↑${(h.up||0).toLocaleString()}/↓${(h.down||0).toLocaleString()})</span><span class="rt ${cls(h.dom)}">${sg(h.dom,1)}%</span></div>
-    <div class="spark" style="margin-top:10px">${spark}</div>`;
+  const u=d.flow.unit||"";
+  return `<div class="cap" style="margin:0 0 7px"><span>가격 4H 실이동</span><span class="rt ${cls(h.net)}">${sg(h.net,1)}${u} ${h.net<0?'▼':(h.net>0?'▲':'—')}</span></div>
+    <div class="cap" style="margin:0 0 3px"><span>매도 ← 체결 → 매수</span><span></span></div>${domMeter(h.dom,10)}
+    <div class="cap"><span>체결 우위 (↑${(h.up||0).toLocaleString()}/↓${(h.down||0).toLocaleString()})</span><span class="rt ${cls(h.dom)}">${sg(h.dom,1)}%</span></div>
+    <div class="spark" style="margin-top:10px">${spark}</div>
+    <div class="cap" style="margin-top:4px"><span>↑ 막대=체결 우위(주문 흐름) · 가격과 다를 수 있음</span></div>`;
 }
 function axisGraph(d){
   const price=d.price, ps=pipSizeOf(d), gp=v=>sg((v-price)/ps,0);
