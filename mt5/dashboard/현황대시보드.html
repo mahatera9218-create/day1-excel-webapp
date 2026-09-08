@@ -233,6 +233,19 @@ details.det[open]>summary{border-radius:6px 6px 0 0}
 .lad .ltrack{position:relative;height:14px;background:var(--inset);border:1px solid var(--grid);border-radius:3px}
 .lad .ldot{position:absolute;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;border:2px solid var(--surface);box-shadow:0 0 0 1px var(--line)}
 .lad .lcap{display:flex;justify-content:space-between;font-size:9.5px;color:var(--faint);font-family:var(--mono);margin-top:3px}
+/* 목표 사다리 (TP·본절) */
+.tl{font-family:var(--mono)}
+.tl-hd{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 2px 3px;font-family:var(--sans)}
+.tl-hd.up{color:var(--up-dim)}.tl-hd.down{color:var(--down)}
+.tl-row{display:grid;grid-template-columns:40px 1fr auto auto;gap:8px;align-items:baseline;padding:4px 3px;font-size:11.5px;border-radius:3px}
+.tl-row.near{background:var(--inset)}
+.tl-row.brk{opacity:.42}
+.tl-lb{color:var(--muted);font-family:var(--sans);font-weight:600}
+.tl-p{color:var(--ink)}
+.tl-g{font-weight:700;text-align:right}
+.tl-role{font-family:var(--sans);font-size:9px;color:var(--faint);text-align:right;white-space:nowrap}
+.tl-now{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-weight:700;color:var(--accent);font-size:12.5px;padding:7px 8px;margin:5px 0;border:1px solid var(--accent);border-radius:4px;background:var(--flat-bg)}
+.tl-now .lb{font-family:var(--sans);font-size:9px;color:var(--accent);font-weight:700;letter-spacing:.06em}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -606,6 +619,30 @@ function ladderViz(d){
     <div class="lcap"><span>${gD}${PTL}</span><span class="${rc}">도달률 ${f(L.reach,0)}%</span><span>${gU}${PTL}</span></div>
   </div>`;
 }
+function targetLadder(d){
+  const price=d.price, ps=pipSizeOf(d);
+  const S=d.dir.session,Da=d.dir.daily,W=d.dir.weekly;
+  const s1=S.levels&&S.levels[0], s2=S.levels&&S.levels[S.levels.length-1];
+  const dl=Da.levels&&Da.levels[0], wl=W.levels&&W.levels[0];
+  const defs=[];
+  if(s1)defs.push({label:"세션½",role:"50%·본절",up:s1.up,dn:s1.dn});
+  if(s2&&s2!==s1)defs.push({label:"세션",role:"TP·세션",up:s2.up,dn:s2.dn});
+  if(dl)defs.push({label:"일간",role:"TP·일간",up:dl.up,dn:dl.dn});
+  if(wl)defs.push({label:"주간",role:"TP·주간",up:wl.up,dn:wl.dn});
+  if(!defs.length) return `<div class="r"><span class="k">레벨 데이터 없음</span></div>`;
+  const row=(x,isUp,near)=>{
+    const gap=(x.p-price)/ps, gcls=gap>=0?"up":"down", brk=isUp?(x.p<price):(x.p>price);
+    return `<div class="tl-row${brk?' brk':''}${near?' near':''}"><span class="tl-lb">${x.label}</span><span class="tl-p">${money(x.p)}</span><span class="tl-g ${gcls}">${sg(gap,0)}${PTL}${brk?'·돌파':''}</span><span class="tl-role">${x.role}</span></div>`;
+  };
+  const ups=defs.map(x=>({...x,p:x.up})).sort((a,b)=>b.p-a.p);
+  const dns=defs.map(x=>({...x,p:x.dn})).sort((a,b)=>b.p-a.p);
+  const upNear=ups.reduce((m,x)=>(x.p>=price&&(!m||x.p<m.p)?x:m),null);
+  const dnNear=dns.reduce((m,x)=>(x.p<=price&&(!m||x.p>m.p)?x:m),null);
+  return `<div class="tl">
+    <div class="tl-hd up">▲ 위 목표 (롱 TP)</div>${ups.map(x=>row(x,true,x===upNear)).join("")}
+    <div class="tl-now"><span class="lb">현재가</span><span>${money(price)}</span></div>
+    <div class="tl-hd down">▼ 아래 목표 (숏 TP)</div>${dns.map(x=>row(x,false,x===dnNear)).join("")}</div>`;
+}
 function forceViz(d){
   const fl=d.flow,h=fl&&fl.h4;
   if(!h||!h.valid) return `<div class="r"><span class="k">틱 데이터 없음 (휴장/보관량)</span></div>`;
@@ -689,8 +726,8 @@ function render(d){
   if(S.levels&&S.levels.length){const L=S.levels[S.levels.length-1]; sReach=L.reach; gU=sg((L.up-d.price)/ps,0); gD=sg((L.dn-d.price)/ps,0);}
   const card2=stdCard({title:"자리",sub:"레벨 대비 위치",stTone:c.spotTone,
     stTxt: dir===0?"판단 보류":(sReach!=null?(sReach>100?"돌파":(sReach>=85?"근접":"여력 있음")):"–"),
-    read:c.spotRead, viz:ladderViz(d),
-    stats:[{k:"도달률",v:sReach!=null?f(sReach,0)+"%":"–"},{k:"상단 갭",v:gU+PTL,cls:"up"},{k:"하단 갭",v:gD+PTL,cls:"down"}],
+    read:c.spotRead, viz:targetLadder(d),
+    stats:[{k:"세션 도달률",v:sReach!=null?f(sReach,0)+"%":"–"},{k:"상단 갭",v:gU+PTL,cls:"up"},{k:"하단 갭",v:gD+PTL,cls:"down"}],
     detailLabel:"자세히 — 세션·일간·주간 레벨 축 그래프",
     detailHtml:axisGraph(d)});
 
