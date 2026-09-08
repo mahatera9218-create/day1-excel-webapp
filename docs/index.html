@@ -270,7 +270,7 @@ details.det[open]>summary{border-radius:6px 6px 0 0}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-08b · 힘=캔들×체결 조합</span></p>
+     <span style="opacity:.6">build 2026-09-08c · 힘=구간별 캔들vs체결</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -647,11 +647,9 @@ function targetLadder(d){
 function forceViz(d){
   const fl=d.flow,h=fl&&fl.h4;
   if(!h||!h.valid) return `<div class="r"><span class="k">틱 데이터 없음 (휴장/보관량)</span></div>`;
-  const bars=(fl.zone&&fl.zone.bars)||[], maxD=Math.max(...bars.map(b=>Math.abs(b.dom)),0.1);
-  const spark=bars.map(b=>{const ht=Math.max(8,Math.abs(b.dom)/maxD*100),cc=b.dom<0?"var(--down)":"var(--up)";
-    return `<div class="col"><div class="bar" style="height:${ht}%;background:${cc}"></div><div class="lb">${b.tag}</div></div>`;}).join("");
+  const bars=(fl.zone&&fl.zone.bars)||[];
   const u=d.flow.unit||"";
-  // 캔들 방향(실가격 이동) × 체결 우위(주문 흐름) 조합 = 이 카드의 핵심
+  // 4H 종합: 캔들 방향(실가격 이동) × 체결 우위(주문 흐름) 조합
   const netFlat=Math.abs(h.net)<0.1, balanced=Math.abs(h.dom)<0.5;
   const candUp=h.net>0&&!netFlat, candDn=h.net<0&&!netFlat;
   const cand = netFlat?{t:"보합",a:"—",c:"flat"}:(candUp?{t:"양봉",a:"▲",c:"up"}:{t:"음봉",a:"▼",c:"down"});
@@ -663,15 +661,26 @@ function forceViz(d){
   else{verdict=candUp?"⚠ 다이버전스 · 가격은 올랐지만 매도 우위 (상승 약화)":"⚠ 다이버전스 · 가격은 내렸지만 매수 우위 (반등 주의)";vc="warn";}
   const chip=o=>`<span style="font-family:var(--mono);font-weight:700;font-size:12.5px;padding:3px 10px;border-radius:4px;border:1px solid var(--line);background:var(--${o.c==='up'?'up-bg':(o.c==='down'?'down-bg':'surface2')});color:var(--${o.c==='flat'?'muted':o.c})">${o.t}${o.a?' '+o.a:''}</span>`;
   const vcol = vc==='warn'?'var(--accent)':(vc==='ok'?'var(--ink)':'var(--muted)');
+  // 구간별(1H) 캔들 vs 체결: 각 봉의 가격이동(move)과 체결우위(dom)를 나란히, 엇갈리면 ⚠
+  const ar=v=>v>0?'▲':(v<0?'▼':'—');
+  const cell=b=>{const mv=b.move||0,dm=b.dom||0,div=(Math.abs(mv)>=0.1&&Math.abs(dm)>=0.5&&Math.sign(mv)!==Math.sign(dm));
+    return `<div style="flex:1;min-width:0;text-align:center;padding:6px 2px 5px;border-radius:4px;border:1px solid ${div?'var(--accent)':'var(--line)'};background:var(--surface2)">
+      <div style="font-size:9px;color:var(--muted);font-family:var(--mono);margin-bottom:5px">${b.tag}${div?' <span style="color:var(--accent)">⚠</span>':''}</div>
+      <div class="${cls(mv)}" style="font-size:11.5px;font-weight:700;font-family:var(--mono);line-height:1.2">${ar(mv)}${Math.abs(mv).toFixed(1)}</div>
+      <div style="font-size:8px;color:var(--faint);margin:1px 0 4px">캔들</div>
+      <div class="${cls(dm)}" style="font-size:11.5px;font-weight:700;font-family:var(--mono);line-height:1.2">${ar(dm)}${Math.abs(dm).toFixed(1)}%</div>
+      <div style="font-size:8px;color:var(--faint);margin-top:1px">체결</div>
+    </div>`;};
+  const grid = bars.length?`<div style="display:flex;gap:5px;margin-top:11px">${bars.map(cell).join("")}</div>`:"";
   return `<div style="display:flex;align-items:center;gap:8px;margin:0 0 8px">
       ${chip(cand)}<span style="color:var(--faint);font-size:12px">×</span>${chip(flow)}
     </div>
     <div style="font-family:var(--mono);font-size:11.5px;font-weight:600;color:${vcol};margin:0 0 11px;line-height:1.35">${verdict}</div>
     <div class="cap" style="margin:0 0 6px"><span>가격 4H 실이동 (캔들)</span><span class="rt ${cls(h.net)}">${sg(h.net,1)}${u} ${cand.a}</span></div>
     <div class="cap" style="margin:0 0 3px"><span>매도 ← 체결 → 매수</span><span class="rt ${cls(h.dom)}">${sg(h.dom,1)}%</span></div>${domMeter(h.dom,10)}
-    <div class="cap"><span>체결량 (↑${(h.up||0).toLocaleString()} / ↓${(h.down||0).toLocaleString()})</span><span></span></div>
-    <div class="spark" style="margin-top:10px">${spark}</div>
-    <div class="cap" style="margin-top:4px"><span>↑ 체결 추세 (4H 구간별 매수/매도 우위)</span></div>`;
+    <div class="cap" style="margin-bottom:2px"><span>체결량 (↑${(h.up||0).toLocaleString()} / ↓${(h.down||0).toLocaleString()})</span><span></span></div>
+    <div class="cap" style="margin-top:12px;color:var(--faint)"><span>구간별 (${(fl.zone&&fl.zone.tf)||"1H"}) · 캔들 vs 체결</span><span></span></div>${grid}
+    <div class="cap" style="margin-top:5px"><span>캔들=가격이동(${u||"pt"}) · 체결=주문 우위(%) · ⚠=엇갈림(다이버전스)</span></div>`;
 }
 function axisGraph(d){
   const price=d.price, ps=pipSizeOf(d), gp=v=>sg((v-price)/ps,0);
