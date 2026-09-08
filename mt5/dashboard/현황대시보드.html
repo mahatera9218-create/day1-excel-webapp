@@ -776,6 +776,11 @@ function loop(){if(timer)clearInterval(timer);const ivl=Math.max(10,parseInt(loc
 const dlg=$("#cfg");
 $("#gear").onclick=()=>{$("#url").value=localStorage.getItem(LS.url)||"";$("#ivl").value=localStorage.getItem(LS.ivl)||"30";dlg.showModal();};
 $("#save").addEventListener("click",()=>{const u=$("#url").value.trim(),v=$("#ivl").value.trim()||"30";if(u)localStorage.setItem(LS.url,u);else localStorage.removeItem(LS.url);localStorage.setItem(LS.ivl,v);setTimeout(loop,30);});
+/* URL 파라미터(?u=주소&ivl=초)로 연결 주소 주입 — 재설치해도 링크가 주소를 기억 */
+try{ const q=new URLSearchParams(location.search);
+     const qu=q.get('u'); if(qu) localStorage.setItem(LS.url,qu);
+     const qv=q.get('ivl'); if(qv) localStorage.setItem(LS.ivl,qv);
+}catch(e){}
 try{loop();}catch(e){render(SAMPLE);setStatus("sample","SAMPLE");}
 /* 항상 최신 화면을 받아오도록 (네트워크 우선 서비스워커) */
 if('serviceWorker' in navigator){ try{ navigator.serviceWorker.register('sw.js').catch(()=>{}); }catch(e){} }
