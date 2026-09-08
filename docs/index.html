@@ -595,12 +595,14 @@ function alignViz(d){
 function ladderViz(d){
   const S=d.dir.session; if(!S.levels||!S.levels.length) return `<div class="r"><span class="k">레벨 데이터 없음</span></div>`;
   const L=S.levels[S.levels.length-1], price=d.price, ps=pipSizeOf(d), dn=L.dn, up=L.up;
-  let pct=(price-dn)/(up-dn)*100; pct=Math.max(0,Math.min(100,pct));
+  const raw=(price-dn)/(up-dn)*100, pct=Math.max(0,Math.min(100,raw));
   const rc=L.dir<0?"down":(L.dir>0?"up":"flat"), dotc=L.dir<0?"var(--down)":"var(--up)";
   const gU=sg((up-price)/ps,0), gD=sg((dn-price)/ps,0);
+  const over = raw>100?`<span style="position:absolute;right:2px;top:50%;transform:translateY(-50%);font-size:8px;font-weight:700;color:var(--up)">돌파▶</span>`
+             : raw<0?`<span style="position:absolute;left:2px;top:50%;transform:translateY(-50%);font-size:8px;font-weight:700;color:var(--down)">◀돌파</span>`:"";
   return `<div class="lad">
     <div class="lrow"><span>하단 ${money(dn)}</span><span class="${rc}">현재 ${money(price)}</span><span>상단 ${money(up)}</span></div>
-    <div class="ltrack"><div class="ldot" style="left:${pct}%;background:${dotc}"></div></div>
+    <div class="ltrack">${over}<div class="ldot" style="left:${pct}%;background:${dotc}"></div></div>
     <div class="lcap"><span>${gD}${PTL}</span><span class="${rc}">도달률 ${f(L.reach,0)}%</span><span>${gU}${PTL}</span></div>
   </div>`;
 }
