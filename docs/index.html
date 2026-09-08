@@ -323,7 +323,10 @@ function validate(d){
     [["세션",D.session],["일간",D.daily],["주간",D.weekly]].forEach(([k,r])=>{
       if(!fin(r.strength)||Math.abs(r.strength)>105) warn.push(k+" 방향강도 이상");
       if(!fin(r.avg)||r.avg<0) warn.push(k+" 평균 이상");
-      (r.levels||[]).forEach(L=>{ if(!fin(L.up)||!fin(L.dn)||L.up<=L.dn) warn.push(k+" 레벨 역전/이상"); });
+      (r.levels||[]).forEach(L=>{
+        if(!fin(L.up)||!fin(L.dn)||L.up<=L.dn) warn.push(k+" 레벨 역전/이상");
+        if(fin(L.reach)&&Math.abs(L.reach)>400) warn.push(k+" 도달률 비정상("+f(L.reach,0)+"% · 히스토리 부족?)");
+      });
     });
     if(!fin(D.h4.done)||Math.abs(D.h4.done)>105) warn.push("H4 방향강도 이상");
     if(!fin(D.h4.h1pos)||D.h4.h1pos<-1||D.h4.h1pos>101) warn.push("H1 위치 이상");
