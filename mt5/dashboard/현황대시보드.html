@@ -353,8 +353,8 @@ function ctxOf(d){
   let forceRead="체결 데이터 없음(휴장/보관량).", forceTone="flat";
   if(valid){
     const dom=fl.h4.dom, bars=(fl.zone&&fl.zone.bars)||[];
-    const first=bars.length?bars[0].dom:dom, last=bars.length?bars[bars.length-1].dom:dom;
-    const trend = last<first-0.3?"점점 강해짐":(last>first+0.3?"약해짐":"유지");
+    const first=bars.length?bars[0].dom:dom, last=bars.length?bars[bars.length-1].dom:dom, dv=last-first;
+    const trend = Math.abs(dv)<=0.3?"유지":(Math.sign(dv)===Math.sign(last)?"점점 강해짐":"약해짐");
     const agree = dir!==0 && Math.sign(dom)===dir;
     const conc2 = dir===0?"" : (agree?"방향과 같은 쪽 — 힘 실림.":"⚠ 방향과 반대 — 진입 서두르지 말 것.");
     forceRead=`<b>${dom<0?"매도":"매수"} 우위 ${sg(dom,1)}%</b> (${trend}). ${conc2}`;
@@ -696,8 +696,9 @@ function render(d){
   SBFIRST=true;
   const fl=d.flow,h=fl&&fl.h4, valid=h&&h.valid;
   let f3trend="–",f3agree="–";
-  if(valid){const bars=(fl.zone&&fl.zone.bars)||[];const first=bars.length?bars[0].dom:h.dom,last=bars.length?bars[bars.length-1].dom:h.dom;
-    f3trend=last<first-0.3?"강해짐 ▼":(last>first+0.3?"강해짐 ▲":"유지");
+  if(valid){const bars=(fl.zone&&fl.zone.bars)||[];const first=bars.length?bars[0].dom:h.dom,last=bars.length?bars[bars.length-1].dom:h.dom,dv=last-first;
+    const dm=h.dom<0?"▼":"▲";
+    f3trend=Math.abs(dv)<=0.3?"유지":(Math.sign(dv)===Math.sign(last)?"강해짐 "+dm:"약해짐 "+dm);
     f3agree=(dir!==0&&Math.sign(h.dom)===dir)?"✓":(dir!==0?"✗":"—");}
   const card3=stdCard({title:"힘",sub:"체결 흐름 4H",stTone:c.forceTone,
     stTxt: valid?`${h.dom<0?"매도 ▼":"매수 ▲"}`:"데이터 없음",
