@@ -2,14 +2,15 @@
 //|                                              본절가드EA.mq5       |
 //|   수동 진입 포지션의 3단계 자동 관리 (주문은 넣지 않음)          |
 //|   ① 진입→TP1 의 지정% 도달 → SL 을 진입 ± 버퍼로 이동 (본절)     |
-//|   ② TP1 도달 → 지정 비율만 남기고 부분청산                       |
-//|   ③ 남은 러너는 TP2(=진입+TP1거리×배수)까지 보유, SL 은 본절     |
-//|   ※ 50% 도달 전엔 TP 를 건드리지 않음 → 초반엔 TP 자유 수정 가능  |
-//|   ※ 50% 도달 순간의 TP 를 TP1 으로 확정하고 자동관리 시작        |
+//|   ② TP1 직전 도달 → 지정 비율만 남기고 부분청산                  |
+//|   ③ 그때 남은 러너만 TP2(=진입+TP1거리×배수)로, SL 은 본절       |
+//|   ※ 전량 포지션의 TP 는 절대 안 옮김. 브로커 TP=TP1 그대로 유지.  |
+//|   ※ 75% 청산 후 남은 25% 러너에만 TP2 를 설정.                    |
+//|   ※ 50% 도달 전엔 TP 자유 수정 가능(TP1 확정은 50% 도달 시).      |
 //|   ※ Algo Trading(자동매매) 켜져 있어야 동작.                     |
 //+------------------------------------------------------------------+
 #property copyright "PIPxLOT — Position Guard"
-#property version   "1.20"
+#property version   "1.30"
 #property strict
 
 //--- 입력 --------------------------------------------------------
@@ -18,6 +19,7 @@ input double InpBEProfitPt     = 5.0;   // 본절 버퍼 (진입 ± 이만큼, �
 input bool   InpUseRunner      = true;  // 러너 사용 (TP1 부분청산 + TP2 보유)
 input double InpRunnerPct      = 25.0;  // TP1에서 남길 러너 비율(%)
 input double InpTP2Mult        = 2.0;   // TP2 = 진입 + (TP1거리 × 이 배수)
+input double InpTP1LeadPt      = 0.3;   // TP1 이만큼 앞에서 부분청산(레이스 방지, 금 pt=$1)
 input bool   InpThisSymbolOnly = true;  // 이 차트 심볼만 관리
 input long   InpMagic          = -1;    // 관리할 매직넘버 (-1=전체, 수동 포함)
 input bool   InpAlertOn        = true;  // 발동 시 MT5 팝업
@@ -34,7 +36,7 @@ int OnInit()
 {
    InitUnit();
    EventSetTimer(1);
-   PrintFormat("본절가드EA v1.20 — 본절 %.0f%%·버퍼 %.2f | 러너 %s(%.0f%%,TP2×%.1f) | 대상 %s",
+   PrintFormat("본절가드EA v1.30 — 본절 %.0f%%·버퍼 %.2f | 러너 %s(%.0f%%,TP2×%.1f) | 대상 %s",
       InpTriggerRatio*100, InpBEProfitPt*g_ptSize,
       (InpUseRunner?"ON":"OFF"), InpRunnerPct, InpTP2Mult,
       (InpThisSymbolOnly? _Symbol : "전체"));
@@ -128,7 +130,7 @@ void ManageAll()
             continue;
          }
          if(!tradeOK){ info+="• "+sym+" #"+(string)tk+" : 50% 도달했으나 자동매매 OFF → 대기\n"; continue; }
-         // ── 여기서 TP1 확정(arm): 현재 TP를 TP1으로 고정 ──
+         // ── TP1 확정(arm): 브로커 TP 는 안 건드림(TP1 유지). 러너 가능여부만 판단 ──
          double tp1c=tp; GlobalVariableSet(kT,tp1c);
          bool run=false;
          if(InpUseRunner)
@@ -136,17 +138,11 @@ void ManageAll()
             double closeVol=NormLot(sym, vol*(1.0-InpRunnerPct/100.0));
             double runVol  =NormLot(sym, vol-closeVol);
             double mn      =SymbolInfoDouble(sym,SYMBOL_VOLUME_MIN);
-            if(closeVol>=mn-1e-8 && runVol>=mn-1e-8 && closeVol>0.0)
-            {
-               double tp2 = isBuy? entry+(tp1c-entry)*InpTP2Mult : entry-(entry-tp1c)*InpTP2Mult;
-               tp2=NormalizeDouble(tp2,_Digits);
-               if(ModifySLTP(tk,sym,sl,tp2)){ run=true;
-                  Print(sym," #",(string)tk," TP1 확정 ",DoubleToString(tp1c,_Digits)," · 러너 TP2 ",DoubleToString(tp2,_Digits)); }
-            }
+            run = (closeVol>=mn-1e-8 && runVol>=mn-1e-8 && closeVol>0.0);
          }
          GlobalVariableSet(kR, run?1.0:0.0);
          GlobalVariableSet(kP, 0.0);
-         PositionSelectByTicket(tk); sl=PositionGetDouble(POSITION_SL); tp=PositionGetDouble(POSITION_TP);
+         Print(sym," #",(string)tk," TP1 확정 ",DoubleToString(tp1c,_Digits),(run?" · 러너 대기(TP1 직전 부분청산 예정)":" · 러너 불가(단일랏)"));
       }
 
       // ── 무장(arm) 후: 저장된 TP1 기준으로 관리 ──
@@ -168,18 +164,23 @@ void ManageAll()
          else stage="본절 실패 err"+(string)GetLastError()+" ";
       }
 
-      // ── ② TP1 부분청산 (러너 모드) ──
+      // ── ② TP1 직전 부분청산 → 남은 러너에만 TP2 설정 (러너 모드) ──
       if(runner && !parted)
       {
-         bool tp1hit = isBuy? (cur>=tp1) : (cur<=tp1);
-         if(tp1hit)
+         double lead = InpTP1LeadPt*g_ptSize;
+         bool tp1near = isBuy? (cur>=tp1-lead) : (cur<=tp1+lead);
+         if(tp1near)
          {
             if(!tradeOK) stage+="부분청산 대기(자동매매 OFF)";
             else{
                double closeVol=NormLot(sym, vol*(1.0-InpRunnerPct/100.0));
                if(closeVol>0.0 && ClosePartial(tk,sym,type,closeVol)){
-                  GlobalVariableSet(kP,1.0); stage+="✅TP1 부분청산 "+DoubleToString(closeVol,2)+"lot→러너 보유";
-                  Msg(sym+" TP1 도달 → "+DoubleToString(closeVol,2)+"lot 청산, 러너 TP2까지 보유");
+                  GlobalVariableSet(kP,1.0);
+                  double tp2=NormalizeDouble(isBuy? entry+(tp1-entry)*InpTP2Mult : entry-(entry-tp1)*InpTP2Mult, _Digits);
+                  double rsl=sl; if(PositionSelectByTicket(tk)) rsl=PositionGetDouble(POSITION_SL);
+                  if(ModifySLTP(tk,sym,rsl,tp2)) tp=tp2;
+                  stage+="✅TP1 "+DoubleToString(closeVol,2)+"lot 청산 → 러너 TP2 "+DoubleToString(tp2,_Digits);
+                  Msg(sym+" TP1 도달 → "+DoubleToString(closeVol,2)+"lot 청산, 러너 TP2 "+DoubleToString(tp2,_Digits));
                } else stage+="부분청산 실패 err"+(string)GetLastError();
             }
          }
@@ -190,7 +191,7 @@ void ManageAll()
       info += "• "+sym+" #"+(string)tk+" "+(isBuy?"매수":"매도")+" "+DoubleToString(vol,2)+"lot"
             + " | 진입 "+DoubleToString(entry,_Digits)
             + " · TP1 "+DoubleToString(tp1,_Digits)
-            + (runner? " · TP2 "+DoubleToString(tp,_Digits) : "")
+            + (parted? " · TP2 "+DoubleToString(tp,_Digits) : "")
             + " · 현재 "+DoubleToString(cur,_Digits)
             + " | SL "+(sl>0?DoubleToString(sl,_Digits):"없음")
             + " | "+stage+"\n";
