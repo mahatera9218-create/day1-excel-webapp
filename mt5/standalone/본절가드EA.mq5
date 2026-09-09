@@ -4,11 +4,12 @@
 //|   ① 진입→TP1 의 지정% 도달 → SL 을 진입 ± 버퍼로 이동 (본절)     |
 //|   ② TP1 도달 → 지정 비율만 남기고 부분청산                       |
 //|   ③ 남은 러너는 TP2(=진입+TP1거리×배수)까지 보유, SL 은 본절     |
-//|   ※ 러너 모드면 브로커 TP 를 TP2 로 바꿔 TP1 전량청산을 막음     |
+//|   ※ 50% 도달 전엔 TP 를 건드리지 않음 → 초반엔 TP 자유 수정 가능  |
+//|   ※ 50% 도달 순간의 TP 를 TP1 으로 확정하고 자동관리 시작        |
 //|   ※ Algo Trading(자동매매) 켜져 있어야 동작.                     |
 //+------------------------------------------------------------------+
 #property copyright "PIPxLOT — Position Guard"
-#property version   "1.10"
+#property version   "1.20"
 #property strict
 
 //--- 입력 --------------------------------------------------------
@@ -33,7 +34,7 @@ int OnInit()
 {
    InitUnit();
    EventSetTimer(1);
-   PrintFormat("본절가드EA v1.10 — 본절 %.0f%%·버퍼 %.2f | 러너 %s(%.0f%%,TP2×%.1f) | 대상 %s",
+   PrintFormat("본절가드EA v1.20 — 본절 %.0f%%·버퍼 %.2f | 러너 %s(%.0f%%,TP2×%.1f) | 대상 %s",
       InpTriggerRatio*100, InpBEProfitPt*g_ptSize,
       (InpUseRunner?"ON":"OFF"), InpRunnerPct, InpTP2Mult,
       (InpThisSymbolOnly? _Symbol : "전체"));
@@ -104,14 +105,31 @@ void ManageAll()
       double vol   = PositionGetDouble(POSITION_VOLUME);
       double sl    = PositionGetDouble(POSITION_SL);
       double tp    = PositionGetDouble(POSITION_TP);
+      double pt      = SymbolInfoDouble(sym,SYMBOL_POINT);
+      double minDist = (double)SymbolInfoInteger(sym,SYMBOL_TRADE_STOPS_LEVEL)*pt;
+      double cur     = isBuy? SymbolInfoDouble(sym,SYMBOL_BID) : SymbolInfoDouble(sym,SYMBOL_ASK);
 
       string kT="BEG_"+(string)tk+"_TP1", kR="BEG_"+(string)tk+"_RUN", kP="BEG_"+(string)tk+"_PART";
 
-      // ── 최초 인식: TP1 저장 + (러너 가능하면) 브로커 TP를 TP2로 변경 ──
+      // ── 무장(arm) 전: 50% 도달 전까지는 아무것도 안 건드림 → TP 자유 수정 가능 ──
       if(!GlobalVariableCheck(kT))
       {
          if(tp<=0.0){ info+="• "+sym+" #"+(string)tk+" ("+(isBuy?"매수":"매도")+") : TP 미설정 → 대기\n"; continue; }
-         double tp1=tp; GlobalVariableSet(kT,tp1);
+         double beTrigL = isBuy? entry+(tp-entry)*InpTriggerRatio : entry-(entry-tp)*InpTriggerRatio;
+         bool reachedL  = isBuy? (cur>=beTrigL) : (cur<=beTrigL);
+         if(!reachedL)
+         {
+            info += "• "+sym+" #"+(string)tk+" "+(isBuy?"매수":"매도")+" "+DoubleToString(vol,2)+"lot"
+                  + " | 진입 "+DoubleToString(entry,_Digits)
+                  + " · TP1(예정) "+DoubleToString(tp,_Digits)
+                  + " · 발동 "+DoubleToString(beTrigL,_Digits)
+                  + " · 현재 "+DoubleToString(cur,_Digits)
+                  + " | 50% 전 — TP 조정 가능\n";
+            continue;
+         }
+         if(!tradeOK){ info+="• "+sym+" #"+(string)tk+" : 50% 도달했으나 자동매매 OFF → 대기\n"; continue; }
+         // ── 여기서 TP1 확정(arm): 현재 TP를 TP1으로 고정 ──
+         double tp1c=tp; GlobalVariableSet(kT,tp1c);
          bool run=false;
          if(InpUseRunner)
          {
@@ -120,10 +138,10 @@ void ManageAll()
             double mn      =SymbolInfoDouble(sym,SYMBOL_VOLUME_MIN);
             if(closeVol>=mn-1e-8 && runVol>=mn-1e-8 && closeVol>0.0)
             {
-               double tp2 = isBuy? entry+(tp1-entry)*InpTP2Mult : entry-(entry-tp1)*InpTP2Mult;
+               double tp2 = isBuy? entry+(tp1c-entry)*InpTP2Mult : entry-(entry-tp1c)*InpTP2Mult;
                tp2=NormalizeDouble(tp2,_Digits);
-               if(tradeOK && ModifySLTP(tk,sym,sl,tp2)){ run=true; tp=tp2;
-                  Print(sym," #",(string)tk," 러너 모드 — TP2 ",DoubleToString(tp2,_Digits)," 설정 (TP1 ",DoubleToString(tp1,_Digits),")"); }
+               if(ModifySLTP(tk,sym,sl,tp2)){ run=true;
+                  Print(sym," #",(string)tk," TP1 확정 ",DoubleToString(tp1c,_Digits)," · 러너 TP2 ",DoubleToString(tp2,_Digits)); }
             }
          }
          GlobalVariableSet(kR, run?1.0:0.0);
@@ -131,21 +149,16 @@ void ManageAll()
          PositionSelectByTicket(tk); sl=PositionGetDouble(POSITION_SL); tp=PositionGetDouble(POSITION_TP);
       }
 
+      // ── 무장(arm) 후: 저장된 TP1 기준으로 관리 ──
       double tp1    = GlobalVariableGet(kT);
       bool   runner = (GlobalVariableGet(kR)>0.5);
       bool   parted = (GlobalVariableGet(kP)>0.5);
-      double pt      = SymbolInfoDouble(sym,SYMBOL_POINT);
-      double minDist = (double)SymbolInfoInteger(sym,SYMBOL_TRADE_STOPS_LEVEL)*pt;
-      double cur     = isBuy? SymbolInfoDouble(sym,SYMBOL_BID) : SymbolInfoDouble(sym,SYMBOL_ASK);
-
       string stage="";
 
-      // ── ① 본절: 진입→TP1 의 InpTriggerRatio 지점 도달 시 SL 이동 ──
-      double beTrig = isBuy? entry+(tp1-entry)*InpTriggerRatio : entry-(entry-tp1)*InpTriggerRatio;
+      // ── ① 본절: SL 을 진입 ± 버퍼로 (아직 아니면 이동, idempotent) ──
       double newSL  = NormalizeDouble(isBuy? entry+bufPrice : entry-bufPrice, _Digits);
-      bool beReached= isBuy? (cur>=beTrig) : (cur<=beTrig);
       bool beBetter = isBuy? (sl==0.0||newSL>sl+pt/2.0) : (sl==0.0||newSL<sl-pt/2.0);
-      if(beReached && beBetter)
+      if(beBetter)
       {
          bool room = isBuy? (newSL<=cur-minDist) : (newSL>=cur+minDist);
          if(!room)         stage="본절 스킵(버퍼 큼) ";
@@ -172,7 +185,7 @@ void ManageAll()
          }
       }
 
-      if(stage=="") stage = beReached? (runner? "러너 보유중(TP2 대기)":"본절 완료·TP1 대기") : "도달 전";
+      if(stage=="") stage = (runner? (parted?"러너 보유중(TP2 대기)":"본절 완료·TP1 대기") : "본절 완료·TP1 대기");
 
       info += "• "+sym+" #"+(string)tk+" "+(isBuy?"매수":"매도")+" "+DoubleToString(vol,2)+"lot"
             + " | 진입 "+DoubleToString(entry,_Digits)
