@@ -16,7 +16,7 @@ input ENUM_TIMEFRAMES InpRetestTF = PERIOD_M15; // 리테스트 프레임
 input int    InpRetestBars   = 4;               // 리테스트 유효 봉 수
 input int    InpMaxLegs      = 3;               // 멀티캔들 최대 leg
 input bool   InpWickZone     = false;           // 존을 꼬리까지 확장
-input int    InpServerToKST  = 7;               // 서버→KST 시차(시간)
+input int    InpServerToKST  = 6;               // 서버→KST 시차(시간)
 input double InpMinScore     = 0;               // 이 점수 미만은 알림 안 함
 //--- 단위 --------------------------------------------------------
 input double InpPtOverride   = 0;               // pt 크기 수동(0=자동: 금 1.0 / FX 1핍)
