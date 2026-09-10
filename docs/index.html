@@ -270,7 +270,7 @@ details.det[open]>summary{border-radius:6px 6px 0 0}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-10b · 자리=기준선+시가→레벨 거리</span></p>
+     <span style="opacity:.6">build 2026-09-10c · 과열 게이지 추가</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -757,6 +757,36 @@ function verdictCard(d,c){
     <div class="vguide">${c.guide}</div></div>`;
 }
 
+/* ===== 과열 게이지 (계산값만: 도달률 × 틱볼륨 × 체결 다이버전스) ===== */
+function heatGauge(d){
+  const S=d.dir&&d.dir.session; const L=S&&S.levels&&S.levels[S.levels.length-1];
+  const reach = L&&L.reach!=null? Math.abs(L.reach) : null;
+  const tv = S&&S.tickvol_pct!=null? S.tickvol_pct : null;
+  const fl=d.flow, h=fl&&fl.h4;
+  const div = !!(h&&h.valid && Math.abs(h.net)>=0.1 && Math.abs(h.dom)>=0.5 && Math.sign(h.net)!==Math.sign(h.dom));
+  let label,icon,col,reason;
+  if(reach==null || reach>400){ icon="—"; label="데이터 부족"; col="var(--faint)"; reason="히스토리/레벨 부족 → 판단 보류"; }
+  else{
+    const rHot=reach>=90, rMid=reach>=70, vHot=(tv!=null&&tv>=120), vLow=(tv!=null&&tv<60);
+    if(rHot && div){ icon="🔴"; label="소진·반전 경계"; col="var(--accent)"; reason="레벨 거의 도달 + 체결 엇갈림 → 추격 금지, 익절 관점"; }
+    else if(rHot){ icon="🟠"; label="과열 주의"; col="var(--accent)"; reason="레벨 거의/이미 도달 → 추격 자제, 되돌림 대기"; }
+    else if(rMid && vHot){ icon="🟠"; label="과열 주의"; col="var(--accent)"; reason="많이 왔는데 활동 급증 → 소진 초입 가능"; }
+    else if(rMid && vLow){ icon="🟡"; label="얇은 이동"; col="var(--accent)"; reason="많이 왔는데 활동 적음 → 되돌림 쉬움"; }
+    else if(vHot){ icon="🟢"; label="추세 진행"; col="var(--up-dim)"; reason="활동 활발 + 자리 여력 남음 → 아직 과열 아님"; }
+    else{ icon="·"; label="정상 범위"; col="var(--muted)"; reason="과열 신호 없음"; }
+  }
+  const rTxt = reach!=null&&reach<=400? f(reach,0)+"%":"–";
+  const vTxt = tv!=null? f(tv,0)+"%":"–";
+  return `<div style="background:var(--surface);border:1px solid var(--line);border-left:3px solid ${col};border-radius:6px;padding:9px 12px;margin:0 0 10px">
+    <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
+      <span style="font-size:10px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono)">과열</span>
+      <span style="font-size:13px;font-weight:700;color:${col};font-family:var(--mono)">${icon} ${label}</span>
+      <span style="font-size:10px;color:var(--muted);font-family:var(--mono);margin-left:auto">도달 ${rTxt} · 틱볼륨 ${vTxt} · 체결 ${div?'엇갈림':'일치'}</span>
+    </div>
+    <div style="font-size:11.5px;color:var(--ink);margin-top:5px;font-family:var(--sans)">${reason}</div>
+    <div style="font-size:9.5px;color:var(--faint);margin-top:4px;font-family:var(--sans)">※ 참고용 · 틱볼륨은 세션 초반 낮게·도달률은 히스토리 부족 시 왜곡 · 진입 확정 신호 아님</div>
+  </div>`;
+}
 /* ===== render ===== */
 function render(d){
   CUR=d.cur||""; PTL=d.ptl||"pt";
@@ -805,6 +835,7 @@ function render(d){
     detailHtml: valid?detailFlow(d):`<div class="r"><span class="k">휴장/보관량으로 틱 데이터 없음</span></div>`});
 
   $("#app").innerHTML = verdictCard(d,c)
+    + heatGauge(d)
     + `<div class="because"><span class="ln"></span>왜 그런가 · 근거 3단계<span class="ln"></span></div>`
     + `<div class="funnel">`
     + `<div class="step"><div class="num">1</div><div class="body">${card1}</div></div>`
