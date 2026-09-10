@@ -270,7 +270,7 @@ details.det[open]>summary{border-radius:6px 6px 0 0}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-10c · 과열 게이지 추가</span></p>
+     <span style="opacity:.6">build 2026-09-10d · 과열 게이지 + 기준 설명</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -785,6 +785,22 @@ function heatGauge(d){
     </div>
     <div style="font-size:11.5px;color:var(--ink);margin-top:5px;font-family:var(--sans)">${reason}</div>
     <div style="font-size:9.5px;color:var(--faint);margin-top:4px;font-family:var(--sans)">※ 참고용 · 틱볼륨은 세션 초반 낮게·도달률은 히스토리 부족 시 왜곡 · 진입 확정 신호 아님</div>
+    <details style="margin-top:7px">
+      <summary style="font-size:10px;color:var(--muted);cursor:pointer;font-family:var(--mono);letter-spacing:.03em">판정 기준·뜻 보기 ▾</summary>
+      <div style="margin-top:7px;font-size:10.5px;line-height:1.5;font-family:var(--sans);color:var(--ink)">
+        <div style="color:var(--faint);font-size:9.5px;margin-bottom:6px;line-height:1.45">
+          · <b>도달률</b> = 세션 시가→최종레벨 대비 현재 위치 (100%=레벨 도달, 초과=돌파)<br>
+          · <b>틱볼륨</b> = 활동량, 평소 대비 % (높을수록 붐빔)<br>
+          · <b>체결</b> = 캔들 방향 vs 체결우위 (엇갈림=다이버전스=힘 안 실림)
+        </div>
+        <div style="margin:3px 0"><b style="color:var(--up-dim)">🟢 추세 진행</b> <span style="color:var(--faint)">틱볼륨≥120% + 도달<70%</span> → 붐비는데 자리 여력 남음, 아직 과열 아님</div>
+        <div style="margin:3px 0"><b style="color:var(--muted)">· 정상 범위</b> <span style="color:var(--faint)">특이 신호 없음</span> → 평범, 다른 지표로 판단</div>
+        <div style="margin:3px 0"><b style="color:var(--accent)">🟡 얇은 이동</b> <span style="color:var(--faint)">도달≥70% + 틱볼륨<60%</span> → 활동 적게 많이 옴, 되돌림 쉬움</div>
+        <div style="margin:3px 0"><b style="color:var(--accent)">🟠 과열 주의</b> <span style="color:var(--faint)">도달≥90% (또는 도달≥70%+틱볼륨≥120%)</span> → 소진 초입, 추격 자제·되돌림 대기</div>
+        <div style="margin:3px 0"><b style="color:var(--accent)">🔴 소진·반전 경계</b> <span style="color:var(--faint)">도달≥90% + 체결 엇갈림</span> → 반전 임박, 신규 금지·익절 관점</div>
+        <div style="margin:3px 0"><b style="color:var(--faint)">— 데이터 부족</b> <span style="color:var(--faint)">도달률 없음/400%↑</span> → 히스토리 부족, 판단 보류</div>
+      </div>
+    </details>
   </div>`;
 }
 /* ===== render ===== */
