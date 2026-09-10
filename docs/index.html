@@ -219,6 +219,10 @@ details.det[open]>summary{border-radius:6px 6px 0 0}
 .scard details>summary.cmore{display:block;padding:8px 12px;border-top:1px solid var(--grid);font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--accent);cursor:pointer;list-style:none;letter-spacing:.03em}
 .scard details>summary.cmore::-webkit-details-marker{display:none}
 .scard details[open]>summary.cmore{border-bottom:1px solid var(--grid)}
+.heat-sum{list-style:none}
+.heat-sum::-webkit-details-marker{display:none}
+.heat-sum::after{content:" ▾ 펼치기";color:var(--faint)}
+details[open]>.heat-sum::after{content:" ▴ 접기";color:var(--accent)}
 .cdetail{padding:12px;background:var(--panel2)}
 .cdetail .grid,.cdetail .card:last-child{margin-bottom:0}
 .al-row{display:flex;align-items:center;gap:9px;margin:6px 0}
@@ -270,7 +274,7 @@ details.det[open]>summary{border-radius:6px 6px 0 0}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-10d · 과열 게이지 + 기준 설명</span></p>
+     <span style="opacity:.6">build 2026-09-10e · 과열 게이지 접기 토글</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -786,7 +790,7 @@ function heatGauge(d){
     <div style="font-size:11.5px;color:var(--ink);margin-top:5px;font-family:var(--sans)">${reason}</div>
     <div style="font-size:9.5px;color:var(--faint);margin-top:4px;font-family:var(--sans)">※ 참고용 · 틱볼륨은 세션 초반 낮게·도달률은 히스토리 부족 시 왜곡 · 진입 확정 신호 아님</div>
     <details style="margin-top:7px">
-      <summary style="font-size:10px;color:var(--muted);cursor:pointer;font-family:var(--mono);letter-spacing:.03em">판정 기준·뜻 보기 ▾</summary>
+      <summary class="heat-sum" style="font-size:10px;color:var(--muted);cursor:pointer;font-family:var(--mono);letter-spacing:.03em">판정 기준·뜻</summary>
       <div style="margin-top:7px;font-size:10.5px;line-height:1.5;font-family:var(--sans);color:var(--ink)">
         <div style="color:var(--faint);font-size:9.5px;margin-bottom:6px;line-height:1.45">
           · <b>도달률</b> = 세션 시가→최종레벨 대비 현재 위치 (100%=레벨 도달, 초과=돌파)<br>
