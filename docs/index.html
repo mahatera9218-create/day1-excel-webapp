@@ -270,7 +270,7 @@ details.det[open]>summary{border-radius:6px 6px 0 0}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-10 · 자리=기간시가 기준선 추가</span></p>
+     <span style="opacity:.6">build 2026-09-10b · 자리=기준선+시가→레벨 거리</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -717,10 +717,14 @@ function axisGraph(d){
   // 기간별 시가(기준선) — 절대값 가는 점선. 현재가와 무관하게 고정
   const bases=[["세기",d.dir.session,"var(--accent)"],["일기",d.dir.daily,"var(--accent2)"],["주기",d.dir.weekly,"var(--muted)"]].filter(a=>a[1]&&a[1].open>0);
   const baseSvg=bases.map(a=>{const yy=y(a[1].open);return `<line x1="${X0}" y1="${yy.toFixed(1)}" x2="${xT}" y2="${yy.toFixed(1)}" stroke="${a[2]}" stroke-width="1" stroke-dasharray="1 3" opacity=".55"/><text x="${(X0+3)}" y="${(yy-2).toFixed(1)}" font-size="8" font-family="var(--mono)" fill="${a[2]}" opacity=".85">${a[0]}</text>`;}).join("");
+  // 세로축 좌측: 각 기준선(시가)에서 상단/하단 레벨까지 거리(pt) — 고정 폭
+  let bl=bases.map(a=>{const r=a[1],L=r.levels[r.levels.length-1];return {yy:y(r.open),t:"+"+Math.round((L.up-r.open)/ps)+"/−"+Math.round((r.open-L.dn)/ps),c:a[2]};});
+  bl.sort((a,b)=>a.yy-b.yy); for(let j=1;j<bl.length;j++){if(bl[j].yy-bl[j-1].yy<10)bl[j].yy=bl[j-1].yy+10;}
+  const blSvg=bl.map(o=>`<text x="${X0-4}" y="${(o.yy+3).toFixed(1)}" text-anchor="end" font-size="7.5" font-family="var(--mono)" fill="${o.c}" opacity=".9">${o.t}</text>`).join("");
   const py=y(price);
   const priceMark=`<line x1="${X0}" y1="${py.toFixed(1)}" x2="${xT}" y2="${py.toFixed(1)}" stroke="var(--up)" stroke-width="2.5"/><circle cx="${xT}" cy="${py.toFixed(1)}" r="3.5" fill="var(--up)"/><text x="${X0-4}" y="${(py+3.5).toFixed(1)}" text-anchor="end" font-size="9.5" font-family="var(--mono)" fill="var(--up)" font-weight="700">${money(price)}</text>`;
   const legend=items.map(i=>{const rc=i.rdir<0?"down":(i.rdir>0?"up":"flat");return `<div class="lgrow"><span class="dot2" style="background:${i.col}"></span><span class="nm">${i.k}</span><span class="rg">${money(i.dn)}~${money(i.up)}</span><span class="rr ${rc}">${f(i.reach,0)}%</span></div>`;}).join("");
-  return `<div class="axis-wrap"><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">${g}<line x1="${X0}" y1="${padT-6}" x2="${X0}" y2="${H-padB+6}" stroke="var(--line)" stroke-width="1.5"/>${lines}${baseSvg}${labSvg}${priceMark}</svg><div class="axis-side">${legend}<div class="axis-note">선 옆 숫자=현재가 갭(${PTL},+위/−아래) · 실선=상단·점선=하단 · 가는점선=기간 시가(세기/일기/주기) · 흰선=현재가 · 우측 %=도달률</div></div></div>`;
+  return `<div class="axis-wrap"><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">${g}<line x1="${X0}" y1="${padT-6}" x2="${X0}" y2="${H-padB+6}" stroke="var(--line)" stroke-width="1.5"/>${lines}${baseSvg}${blSvg}${labSvg}${priceMark}</svg><div class="axis-side">${legend}<div class="axis-note">우측 숫자=현재가 갭(${PTL}) · 좌측 숫자=시가→레벨 거리(+상/−하) · 실선=상단·점선=하단 · 가는점선=기간 시가(세기/일기/주기) · 흰선=현재가 · 우측 %=도달률</div></div></div>`;
 }
 function detailFlow(d){
   const fl=d.flow,u=fl&&fl.unit||"",h=fl&&fl.h4; let s="";
