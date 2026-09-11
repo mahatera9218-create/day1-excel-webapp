@@ -7,15 +7,19 @@
 //|     https://api.telegram.org , https://getpantry.cloud           |
 //+------------------------------------------------------------------+
 #property copyright "Engulf Strategy Indicator Set"
-#property version   "2.10"
+#property version   "2.20"
 #property strict
 
 //--- 전략 입력 ---------------------------------------------------
-input ENUM_TIMEFRAMES InpEngulfTF = PERIOD_H1;  // 인걸핑 감지 프레임
+input ENUM_TIMEFRAMES InpEngulfTF = PERIOD_H4;  // 인걸핑 감지 프레임
 input ENUM_TIMEFRAMES InpRetestTF = PERIOD_M15; // 리테스트 프레임
 input int    InpRetestBars   = 4;               // 리테스트 유효 봉 수
 input int    InpMaxLegs      = 3;               // 멀티캔들 최대 leg
 input bool   InpWickZone     = false;           // 존을 꼬리까지 확장
+//--- 인걸핑 수치 정의 --------------------------------------------
+input double InpEngulfCoverPct = 100.0;         // 장악도 최소(%): 직전 몸통 덮은 비율(100=완전삼킴)
+input double InpEngulfSizePct  = 60.0;          // 상대크기 최소(%): 최근N H4 평균 고저폭 대비
+input int    InpEngulfSizeN    = 20;            // 상대크기 기준 H4 봉 수
 input int    InpServerToKST  = 6;               // 서버→KST 시차(시간)
 input double InpMinScore     = 0;               // 이 점수 미만은 알림 안 함
 //--- 단위 --------------------------------------------------------
@@ -170,22 +174,33 @@ bool AggregateBarTicks(const ENUM_TIMEFRAMES tf,const int shift,TickStats &o,con
 //  인걸핑 + 품질                                                    //
 //==================================================================//
 enum ENUM_ENGULF_DIR { ENGULF_NONE=0, ENGULF_BULL=+1, ENGULF_BEAR=-1 };
-struct EngulfResult{ ENUM_ENGULF_DIR dir; int legs; double zoneOpen,zoneClose,engHigh,engLow; datetime time;
-   void Reset(){dir=ENGULF_NONE;legs=0;zoneOpen=zoneClose=engHigh=engLow=0.0;time=0;} };
+struct EngulfResult{ ENUM_ENGULF_DIR dir; int legs; double zoneOpen,zoneClose,engHigh,engLow,prevHigh,prevLow,cover,relsz; datetime time;
+   void Reset(){dir=ENGULF_NONE;legs=0;zoneOpen=zoneClose=engHigh=engLow=prevHigh=prevLow=cover=relsz=0.0;time=0;} };
+// 최근 count개 봉의 평균 고저폭(범위) — 상대크기 기준
+double AvgRange(const ENUM_TIMEFRAMES tf,const int count)
+{ double s=0; int u=0; for(int i=1;i<=count;i++){ if(iTime(_Symbol,tf,i)==0)break; double h=iHigh(_Symbol,tf,i),l=iLow(_Symbol,tf,i); if(h<=0)continue; s+=(h-l); u++; } return(u>0?s/u:0.0); }
+// 인걸핑 수치 정의: ① 장악도(직전 몸통 덮은 %) ≥ InpEngulfCoverPct
+//                    ② 상대크기(H4 N개 평균 고저폭 대비 %) ≥ InpEngulfSizePct
 bool DetectEngulf(const ENUM_TIMEFRAMES tf,const int cs,EngulfResult &r,const int maxLegs)
 {
    r.Reset();
    double cO=iOpen(_Symbol,tf,cs),cC=iClose(_Symbol,tf,cs),cH=iHigh(_Symbol,tf,cs),cL=iLow(_Symbol,tf,cs);
    if(cO==0.0||cC==0.0)return(false);
    int cur=(cC>cO)?+1:(cC<cO?-1:0); if(cur==0)return(false);
+   double avgH4=AvgRange(PERIOD_H4,InpEngulfSizeN);
+   double relsz=(avgH4>0.0)?(cH-cL)/avgH4*100.0:0.0;
+   if(relsz<InpEngulfSizePct)return(false);
    double cT=MathMax(cO,cC),cB=MathMin(cO,cC),pT=-DBL_MAX,pB=DBL_MAX,pH=-DBL_MAX,pL=DBL_MAX;
    for(int leg=1;leg<=maxLegs;leg++){
       int sh=cs+leg; double pO=iOpen(_Symbol,tf,sh),pC=iClose(_Symbol,tf,sh),ph=iHigh(_Symbol,tf,sh),pl=iLow(_Symbol,tf,sh);
       if(pO==0.0)break; int pd=(pC>pO)?+1:(pC<pO?-1:0); if(leg>1&&pd==cur)break;
       pT=MathMax(pT,MathMax(pO,pC));pB=MathMin(pB,MathMin(pO,pC));pH=MathMax(pH,ph);pL=MathMin(pL,pl);
-      if(!(cT>=pT&&cB<=pB))continue;
-      bool wick=(cur>0)?(cH>=pH):(cL<=pL); if(!wick)continue;
+      double pbody=pT-pB; if(pbody<=0.0)continue;
+      double ov=MathMin(cT,pT)-MathMax(cB,pB); if(ov<0.0)ov=0.0;
+      double cover=ov/pbody*100.0;
+      if(cover<InpEngulfCoverPct)continue;
       r.dir=(cur>0)?ENGULF_BULL:ENGULF_BEAR; r.legs=leg; r.zoneOpen=cO; r.zoneClose=cC; r.engHigh=cH; r.engLow=cL;
+      r.prevHigh=pH; r.prevLow=pL; r.cover=cover; r.relsz=relsz;
       r.time=iTime(_Symbol,tf,cs); return(true);
    }
    return(false);
@@ -316,7 +331,7 @@ int OnInit()
    InitUnit();
    EventSetTimer(3);
    EnsureCsvHeader();
-   Print("인걸핑알림EA v2.10 — 단위 ",(g_metal?"금($/pt)":"FX(핍)"),
+   Print("인걸핑알림EA v2.20 — 단위 ",(g_metal?"금($/pt)":"FX(핍)"),
          " | 텔레그램 ",(InpTgEnable?"ON":"OFF")," | 대시보드 ",(InpDashEnable?"ON":"OFF")," | 매매안함");
    return(INIT_SUCCEEDED);
 }
@@ -584,8 +599,8 @@ void CheckEngulf()
    g_rtActive=true; g_rtId=id; g_rtEng=r; g_rtStartM15=iTime(_Symbol,InpRetestTF,0); g_rtBars=0; g_rtLeftZone=false;
    if(q.score<InpMinScore) return;
    datetime kstNow=ToKST(TimeCurrent(),InpServerToKST); string dirTxt=(r.dir==ENGULF_BULL?"🟢 상승(롱)":"🔴 하락(숏)");
-   string msg=StringFormat("🔔 %s 인걸핑 발생\n━━━━━━━━━━━━━\n방향   : %s\n시각   : %s KST (%s)\n품질점수: %.0f 점\nRSI    : %.1f\n존(진입범위): %s ~ %s\nH4방향 일치 : %s\n체결 우위 일치: %s\n5일 위치: %.0f%%\n━━━━━━━━━━━━━\n→ M15 %d개 안에 존 재진입 시 리테스트 알림",
-      _Symbol,dirTxt,TimeToString(kstNow,TIME_MINUTES),SessionName(CurrentSession()),q.score,rsi,
+   string msg=StringFormat("🔔 %s 인걸핑 발생\n━━━━━━━━━━━━━\n방향   : %s\n시각   : %s KST (%s)\n장악도/상대크기: %.0f%% / %.0f%%\n품질점수: %.0f 점\nRSI    : %.1f\n존(진입범위): %s ~ %s\nH4방향 일치 : %s\n체결 우위 일치: %s\n5일 위치: %.0f%%\n━━━━━━━━━━━━━\n→ M15 %d개 안에 존 재진입 시 리테스트 알림",
+      _Symbol,dirTxt,TimeToString(kstNow,TIME_MINUTES),SessionName(CurrentSession()),r.cover,r.relsz,q.score,rsi,
       FmtPrice(r.zoneOpen),FmtPrice(r.zoneClose),(htf>0?"✅":"❌"),(flow>0?"✅":(ts.valid?"❌":"—")),pos,InpRetestBars);
    Notify(msg);
 }
@@ -616,7 +631,7 @@ void EnsureCsvHeader()
 {
    if(!InpWriteCsv||FileIsExist(InpCsvFile))return;
    int h=FileOpen(InpCsvFile,FILE_WRITE|FILE_CSV|FILE_ANSI,','); if(h==INVALID_HANDLE){Print("CSV 헤더 실패 ",GetLastError());return;}
-   FileWrite(h,"engulf_id","time_kst","symbol","dir","zone_open","zone_close","score","q_ratio","q_candle","q_levelpip","q_htf","q_flow","rsi","session","h4_dir","pos_pct","wk_chg_pt","flow_dom","account","retest_bar","entered");
+   FileWrite(h,"engulf_id","time_kst","symbol","dir","zone_open","zone_close","cover_pct","relsz_pct","score","q_ratio","q_candle","q_levelpip","q_htf","q_flow","rsi","session","h4_dir","pos_pct","wk_chg_pt","flow_dom","account","retest_bar","entered");
    FileClose(h);
 }
 void LogEngulf(const string id,const EngulfResult &r,const QualityScore &q,const double rsi,const string session,
@@ -625,7 +640,7 @@ void LogEngulf(const string id,const EngulfResult &r,const QualityScore &q,const
    int h=FileOpen(InpCsvFile,FILE_READ|FILE_WRITE|FILE_CSV|FILE_ANSI,','); if(h==INVALID_HANDLE)return; FileSeek(h,0,SEEK_END);
    datetime kst=ToKST(r.time,InpServerToKST);
    FileWrite(h,id,TimeToString(kst,TIME_DATE|TIME_MINUTES),_Symbol,(r.dir==ENGULF_BULL?"상승":"하락"),
-      DoubleToString(r.zoneOpen,_Digits),DoubleToString(r.zoneClose,_Digits),DoubleToString(q.score,1),DoubleToString(q.engulfRatio,2),
+      DoubleToString(r.zoneOpen,_Digits),DoubleToString(r.zoneClose,_Digits),DoubleToString(r.cover,0),DoubleToString(r.relsz,0),DoubleToString(q.score,1),DoubleToString(q.engulfRatio,2),
       DoubleToString(q.candleStrength,3),DoubleToString(q.levelProx,1),DoubleToString(q.htfAlign,0),DoubleToString(q.flowAlign,0),
       DoubleToString(rsi,1),session,DoubleToString(h4,1),DoubleToString(pos,0),DoubleToString(wk,1),(fv?DoubleToString(dom,1):"NA"),AccountTag(),"","N");
    FileClose(h);
