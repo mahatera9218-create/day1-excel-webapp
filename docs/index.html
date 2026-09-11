@@ -274,7 +274,7 @@ details[open]>.heat-sum::after{content:" ▴ 접기";color:var(--accent)}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-10e · 과열 게이지 접기 토글</span></p>
+     <span style="opacity:.6">build 2026-09-11 · 힘 진입프레임 라벨 동적화</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -851,7 +851,7 @@ function render(d){
     read:c.forceRead, viz:forceViz(d),
     stats: valid?[{k:"체결우위",v:sg(h.dom,1)+"%",cls:cls(h.dom)},{k:"추세",v:f3trend,cls:cls(h.dom)},{k:"방향 일치",v:f3agree,cls:f3agree==="✓"?(dir<0?"down":"up"):"flat"}]
                 :[{k:"체결우위",v:"–"},{k:"추세",v:"–"},{k:"방향 일치",v:"–"}],
-    detailLabel:"자세히 — 1H 시계열 · 5M 완성 vs 진행",
+    detailLabel:`자세히 — ${(fl.zone&&fl.zone.tf)||"H1"} 시계열 · ${(fl.entry&&fl.entry.tf)||"M5"} 완성 vs 진행`,
     detailHtml: valid?detailFlow(d):`<div class="r"><span class="k">휴장/보관량으로 틱 데이터 없음</span></div>`});
 
   $("#app").innerHTML = verdictCard(d,c)
