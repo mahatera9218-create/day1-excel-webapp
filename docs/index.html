@@ -250,6 +250,29 @@ details[open]>.heat-sum::after{content:" ▴ 접기";color:var(--accent)}
 .tl-role{font-family:var(--sans);font-size:9px;color:var(--faint);text-align:right;white-space:nowrap}
 .tl-now{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-weight:700;color:var(--accent);font-size:12.5px;padding:7px 8px;margin:5px 0;border:1px solid var(--accent);border-radius:4px;background:var(--flat-bg)}
 .tl-now .lb{font-family:var(--sans);font-size:9px;color:var(--accent);font-weight:700;letter-spacing:.06em}
+/* 자리 — DOM 스타일 가격 사다리 */
+.zl{font-family:var(--mono)}
+.zl-row{display:flex;align-items:center;height:29px;padding:0 8px;border-radius:5px;position:relative}
+.zl-nm{width:64px;font-size:11px;color:var(--muted);flex:0 0 auto}
+.zl-pv{width:80px;font-size:12px;color:var(--ink);flex:0 0 auto}
+.zl-gp{margin-left:auto;font-size:12.5px;font-weight:700}
+.zl-gp.u{color:var(--up-dim)}.zl-gp.d{color:var(--down)}
+.zl-tg{width:44px;font-size:8.5px;color:var(--faint);text-align:right;flex:0 0 auto;margin-left:8px;white-space:nowrap}
+.zl-row.brk{opacity:.38}
+.zl-row.brk .zl-gp{font-weight:500}
+.zl-row.next{background:var(--flat-bg)}
+.zl-row.next .zl-nm{color:var(--accent);font-weight:700}
+.zl-row.next .zl-gp{color:var(--accent)}
+.zl-row.next .zl-tg{color:var(--accent);font-weight:700}
+.zl-row.next::before{content:"";position:absolute;left:0;top:5px;bottom:5px;width:2px;background:var(--accent);border-radius:2px}
+.zl-be{font-size:8px;color:var(--flat);border:1px solid var(--flat);border-radius:3px;padding:0 4px;margin-left:8px;flex:0 0 auto}
+.zl-price{display:flex;align-items:center;height:33px;margin:3px 0;padding:0 8px;border-radius:5px;background:var(--up-bg);border:1px solid rgba(255,255,255,.18);font-family:var(--mono);position:relative}
+.zl-price::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:3px;background:var(--up);border-radius:2px}
+.zl-lbl{width:64px;font-size:9px;color:var(--faint);flex:0 0 auto;padding-left:2px}
+.zl-pp{font-size:15px;font-weight:700;color:var(--up)}
+.zl-rr{margin-left:auto;font-size:10px;color:var(--muted)}
+.zl-cap{font-size:9px;color:var(--muted);font-family:var(--mono);padding:8px 4px 2px;display:flex;gap:12px;flex-wrap:wrap}
+.zl-cap .zl-sw{display:inline-block;width:8px;height:8px;border-radius:2px;vertical-align:-1px;margin-right:3px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -274,7 +297,7 @@ details[open]>.heat-sum::after{content:" ▴ 접기";color:var(--accent)}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-13b · 힘 판정=H1, H4=추세</span></p>
+     <span style="opacity:.6">build 2026-09-13c · 자리=DOM 사다리, 힘 판정=H1</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -631,6 +654,56 @@ function ladderViz(d){
     <div class="lcap"><span>${gD}${PTL}</span><span class="${rc}">도달률 ${f(L.reach,0)}%</span><span>${gU}${PTL}</span></div>
   </div>`;
 }
+// 레벨 행 목록 (세션/일간/주간 상·하 + 세션½=본절)
+function levelRows(d){
+  const S=d.dir.session,Da=d.dir.daily,W=d.dir.weekly;
+  const s1=S.levels&&S.levels[0], s2=S.levels&&S.levels[S.levels.length-1];
+  const dl=Da.levels&&Da.levels[0], wl=W.levels&&W.levels[0];
+  const R=[];
+  if(wl){R.push({nm:"주간 상단",v:wl.up,side:'up'});R.push({nm:"주간 하단",v:wl.dn,side:'dn'});}
+  if(dl){R.push({nm:"일간 상단",v:dl.up,side:'up'});R.push({nm:"일간 하단",v:dl.dn,side:'dn'});}
+  if(s2){R.push({nm:"세션 상단",v:s2.up,side:'up'});R.push({nm:"세션 하단",v:s2.dn,side:'dn'});}
+  if(s1&&s1!==s2){R.push({nm:"세션½",v:s1.up,side:'up',be:1});R.push({nm:"세션½ 하",v:s1.dn,side:'dn',be:1});}
+  return R.filter(r=>fin(r.v));
+}
+function nearest(d){
+  const R=levelRows(d),price=d.price;
+  const above=R.filter(r=>r.v>price).sort((a,b)=>a.v-b.v);
+  const below=R.filter(r=>r.v<price).sort((a,b)=>b.v-a.v);
+  return {nUp:above[0]||null,nDn:below[0]||null};
+}
+// 자리 메인 = DOM 스타일 가격 사다리 (정렬된 레벨 + 현재가 삽입)
+function zoneLadder(d){
+  const price=d.price, ps=pipSizeOf(d), gpip=v=>(v-price)/ps;
+  const R=levelRows(d);
+  if(!R.length) return `<div class="r"><span class="k">레벨 데이터 없음</span></div>`;
+  // 바로 위/아래는 같은 배열에서 계산 (객체 동일성 유지)
+  const above=R.filter(r=>r.v>price).sort((a,b)=>a.v-b.v);
+  const below=R.filter(r=>r.v<price).sort((a,b)=>b.v-a.v);
+  const nUp=above[0]||null, nDn=below[0]||null;
+  const S=d.dir.session, sL=S.levels&&S.levels[S.levels.length-1];
+  const sReach=sL&&sL.reach!=null?sL.reach:null;
+  // 소수 자릿수 통일 (정렬용)
+  const dp=v=>{const s=String(v),i=s.indexOf(".");return i<0?0:s.length-i-1;};
+  const decs=Math.min(5,Math.max(2,...[price,...R.map(r=>r.v)].map(dp)));
+  const fmt=v=>CUR+Number(v).toLocaleString("en-US",{minimumFractionDigits:decs,maximumFractionDigits:decs});
+  const sorted=R.slice().sort((a,b)=>b.v-a.v);
+  const rowHtml=r=>{
+    const g=gpip(r.v), isU=g>=0;
+    const brk=(r.side==='up'&&r.v<price)||(r.side==='dn'&&r.v>price);
+    const isNext=(r===nUp||r===nDn);
+    const c=["zl-row",(brk&&!isNext)?"brk":"",isNext?"next":""].filter(Boolean).join(" ");
+    const tag=isNext?(r===nUp?"▲ 위":"▼ 아래"):(brk?"돌파":"");
+    const be=r.be?`<span class="zl-be">본절</span>`:"";
+    return `<div class="${c}"><span class="zl-nm">${r.nm}</span><span class="zl-pv">${fmt(r.v)}</span>${be}<span class="zl-gp ${isU?'u':'d'}">${sg(g,0)}${PTL}</span><span class="zl-tg">${tag}</span></div>`;
+  };
+  const priceRow=`<div class="zl-price"><span class="zl-lbl">현재가</span><span class="zl-pp">${fmt(price)}</span>${sReach!=null?`<span class="zl-rr">세션 도달 ${f(sReach,0)}%</span>`:''}</div>`;
+  let rows="",placed=false;
+  sorted.forEach(r=>{ if(!placed&&r.v<price){rows+=priceRow;placed=true;} rows+=rowHtml(r); });
+  if(!placed) rows+=priceRow;
+  const cap=`<div class="zl-cap"><span><span class="zl-sw" style="background:var(--up)"></span>현재가</span><span><span class="zl-sw" style="background:var(--accent)"></span>바로 위·아래</span><span style="opacity:.5">흐림=돌파</span></div>`;
+  return `<div class="zl">${rows}</div>${cap}`;
+}
 function targetLadder(d){
   const price=d.price, ps=pipSizeOf(d);
   const S=d.dir.session,Da=d.dir.daily,W=d.dir.weekly;
@@ -872,14 +945,16 @@ function render(d){
     detailHtml:`<div class="grid">${dirCard("실시간 세션",d.dir.session)}${dirCard("당일 일간",d.dir.daily)}${dirCard("이번주 주간",d.dir.weekly)}${h4Card(d.dir.h4)}</div>`});
 
   // ② 자리
-  const S=d.dir.session, ps=pipSizeOf(d); let sReach=null,gU="–",gD="–";
-  if(S.levels&&S.levels.length){const L=S.levels[S.levels.length-1]; sReach=L.reach; gU=sg((L.up-d.price)/ps,0); gD=sg((L.dn-d.price)/ps,0);}
+  const S=d.dir.session, ps=pipSizeOf(d); let sReach=null;
+  if(S.levels&&S.levels.length){sReach=S.levels[S.levels.length-1].reach;}
+  const nr=nearest(d);
+  const gUp=nr.nUp?sg((nr.nUp.v-d.price)/ps,0):"–", gDn=nr.nDn?sg((nr.nDn.v-d.price)/ps,0):"–";
   const card2=stdCard({title:"자리",sub:"레벨 대비 위치",stTone:c.spotTone,
     stTxt: dir===0?"판단 보류":(sReach!=null?(sReach>100?"돌파":(sReach>=85?"근접":"여력 있음")):"–"),
-    read:c.spotRead, viz:targetLadder(d),
-    stats:[{k:"세션 도달률",v:sReach!=null?f(sReach,0)+"%":"–"},{k:"상단 갭",v:gU+PTL,cls:"up"},{k:"하단 갭",v:gD+PTL,cls:"down"}],
-    detailLabel:"자세히 — 세션·일간·주간 레벨 축 그래프",
-    detailHtml:axisGraph(d)});
+    read:c.spotRead, viz:zoneLadder(d),
+    stats:[{k:"세션 도달률",v:sReach!=null?f(sReach,0)+"%":"–",cls:"flat"},{k:"바로 위",v:gUp+PTL,cls:"up"},{k:"바로 아래",v:gDn+PTL,cls:"down"}],
+    detailLabel:"자세히 — 목표 사다리 · 스케일 축 그래프",
+    detailHtml:targetLadder(d)+`<div style="margin-top:12px">${axisGraph(d)}</div>`});
 
   // ③ 힘
   SBFIRST=true;
