@@ -296,7 +296,7 @@ details[open]>.heat-sum::after{content:" ▴ 접기";color:var(--accent)}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-13d · 자리=DOM 사다리(본절선 제외), 힘 판정=H1</span></p>
+     <span style="opacity:.6">build 2026-09-13e · 자리=DOM 사다리(도달%·본절선 제외), 힘 판정=H1</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -679,8 +679,6 @@ function zoneLadder(d){
   const above=R.filter(r=>r.v>price).sort((a,b)=>a.v-b.v);
   const below=R.filter(r=>r.v<price).sort((a,b)=>b.v-a.v);
   const nUp=above[0]||null, nDn=below[0]||null;
-  const S=d.dir.session, sL=S.levels&&S.levels[S.levels.length-1];
-  const sReach=sL&&sL.reach!=null?sL.reach:null;
   // 소수 자릿수 통일 (정렬용)
   const dp=v=>{const s=String(v),i=s.indexOf(".");return i<0?0:s.length-i-1;};
   const decs=Math.min(5,Math.max(2,...[price,...R.map(r=>r.v)].map(dp)));
@@ -694,7 +692,7 @@ function zoneLadder(d){
     const tag=isNext?(r===nUp?"▲ 위":"▼ 아래"):(brk?"돌파":"");
     return `<div class="${c}"><span class="zl-nm">${r.nm}</span><span class="zl-pv">${fmt(r.v)}</span><span class="zl-gp ${isU?'u':'d'}">${sg(g,0)}${PTL}</span><span class="zl-tg">${tag}</span></div>`;
   };
-  const priceRow=`<div class="zl-price"><span class="zl-lbl">현재가</span><span class="zl-pp">${fmt(price)}</span>${sReach!=null?`<span class="zl-rr">세션 도달 ${f(sReach,0)}%</span>`:''}</div>`;
+  const priceRow=`<div class="zl-price"><span class="zl-lbl">현재가</span><span class="zl-pp">${fmt(price)}</span></div>`;
   let rows="",placed=false;
   sorted.forEach(r=>{ if(!placed&&r.v<price){rows+=priceRow;placed=true;} rows+=rowHtml(r); });
   if(!placed) rows+=priceRow;
@@ -949,7 +947,7 @@ function render(d){
   const card2=stdCard({title:"자리",sub:"레벨 대비 위치",stTone:c.spotTone,
     stTxt: dir===0?"판단 보류":(sReach!=null?(sReach>100?"돌파":(sReach>=85?"근접":"여력 있음")):"–"),
     read:c.spotRead, viz:zoneLadder(d),
-    stats:[{k:"세션 도달률",v:sReach!=null?f(sReach,0)+"%":"–",cls:"flat"},{k:"바로 위",v:gUp+PTL,cls:"up"},{k:"바로 아래",v:gDn+PTL,cls:"down"}],
+    stats:[{k:"바로 위",v:gUp+PTL,cls:"up"},{k:"바로 아래",v:gDn+PTL,cls:"down"}],
     detailLabel:"자세히 — 목표 사다리 · 스케일 축 그래프",
     detailHtml:targetLadder(d)+`<div style="margin-top:12px">${axisGraph(d)}</div>`});
 
