@@ -265,7 +265,6 @@ details[open]>.heat-sum::after{content:" ▴ 접기";color:var(--accent)}
 .zl-row.next .zl-gp{color:var(--accent)}
 .zl-row.next .zl-tg{color:var(--accent);font-weight:700}
 .zl-row.next::before{content:"";position:absolute;left:0;top:5px;bottom:5px;width:2px;background:var(--accent);border-radius:2px}
-.zl-be{font-size:8px;color:var(--flat);border:1px solid var(--flat);border-radius:3px;padding:0 4px;margin-left:8px;flex:0 0 auto}
 .zl-price{display:flex;align-items:center;height:33px;margin:3px 0;padding:0 8px;border-radius:5px;background:var(--up-bg);border:1px solid rgba(255,255,255,.18);font-family:var(--mono);position:relative}
 .zl-price::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:3px;background:var(--up);border-radius:2px}
 .zl-lbl{width:64px;font-size:9px;color:var(--faint);flex:0 0 auto;padding-left:2px}
@@ -297,7 +296,7 @@ details[open]>.heat-sum::after{content:" ▴ 접기";color:var(--accent)}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-13c · 자리=DOM 사다리, 힘 판정=H1</span></p>
+     <span style="opacity:.6">build 2026-09-13d · 자리=DOM 사다리(본절선 제외), 힘 판정=H1</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -657,13 +656,12 @@ function ladderViz(d){
 // 레벨 행 목록 (세션/일간/주간 상·하 + 세션½=본절)
 function levelRows(d){
   const S=d.dir.session,Da=d.dir.daily,W=d.dir.weekly;
-  const s1=S.levels&&S.levels[0], s2=S.levels&&S.levels[S.levels.length-1];
+  const s2=S.levels&&S.levels[S.levels.length-1];
   const dl=Da.levels&&Da.levels[0], wl=W.levels&&W.levels[0];
   const R=[];
   if(wl){R.push({nm:"주간 상단",v:wl.up,side:'up'});R.push({nm:"주간 하단",v:wl.dn,side:'dn'});}
   if(dl){R.push({nm:"일간 상단",v:dl.up,side:'up'});R.push({nm:"일간 하단",v:dl.dn,side:'dn'});}
   if(s2){R.push({nm:"세션 상단",v:s2.up,side:'up'});R.push({nm:"세션 하단",v:s2.dn,side:'dn'});}
-  if(s1&&s1!==s2){R.push({nm:"세션½",v:s1.up,side:'up',be:1});R.push({nm:"세션½ 하",v:s1.dn,side:'dn',be:1});}
   return R.filter(r=>fin(r.v));
 }
 function nearest(d){
@@ -694,8 +692,7 @@ function zoneLadder(d){
     const isNext=(r===nUp||r===nDn);
     const c=["zl-row",(brk&&!isNext)?"brk":"",isNext?"next":""].filter(Boolean).join(" ");
     const tag=isNext?(r===nUp?"▲ 위":"▼ 아래"):(brk?"돌파":"");
-    const be=r.be?`<span class="zl-be">본절</span>`:"";
-    return `<div class="${c}"><span class="zl-nm">${r.nm}</span><span class="zl-pv">${fmt(r.v)}</span>${be}<span class="zl-gp ${isU?'u':'d'}">${sg(g,0)}${PTL}</span><span class="zl-tg">${tag}</span></div>`;
+    return `<div class="${c}"><span class="zl-nm">${r.nm}</span><span class="zl-pv">${fmt(r.v)}</span><span class="zl-gp ${isU?'u':'d'}">${sg(g,0)}${PTL}</span><span class="zl-tg">${tag}</span></div>`;
   };
   const priceRow=`<div class="zl-price"><span class="zl-lbl">현재가</span><span class="zl-pp">${fmt(price)}</span>${sReach!=null?`<span class="zl-rr">세션 도달 ${f(sReach,0)}%</span>`:''}</div>`;
   let rows="",placed=false;
