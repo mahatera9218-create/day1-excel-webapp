@@ -296,7 +296,7 @@ details[open]>.heat-sum::after{content:" ▴ 접기";color:var(--accent)}
 
   <p class="note">각 블록 상단 ‘읽기’ = 현재 값 자동 해석 · 아래는 상세 수치 전부<br>
      진입 확정은 캔들(인걸핑)에서 · 자동매매 아님<br>
-     <span style="opacity:.6">build 2026-09-13e · 자리=DOM 사다리(도달%·본절선 제외), 힘 판정=H1</span></p>
+     <span style="opacity:.6">build 2026-09-13f · 자리=DOM 사다리(도달%·본절선 제외), 힘 판정=H1</span></p>
 </div>
 
 <dialog id="cfg"><form method="dialog" class="sheet">
@@ -387,7 +387,7 @@ function ctxOf(d){
   const sReach=(S.levels&&S.levels.length)?S.levels[S.levels.length-1].reach:null;
   const dReach=(Da.levels&&Da.levels.length)?Da.levels[0].reach:null;
   const wReach=(W.levels&&W.levels.length)?W.levels[0].reach:null;
-  const lbl=r=>r==null?"–":(r>100?`돌파 ${f(r,0)}%`:(r>=85?`근접 ${f(r,0)}%`:`진행 ${f(r,0)}%`));
+  const lbl=r=>r==null?"–":(r>100?"돌파":(r>=85?"근접":"진행"));
   const overCnt=[sReach,dReach,wReach].filter(r=>r!=null&&r>100).length;
   let conc = dir===0?"" : (overCnt>=2?`${side} 자리 거의 소진 — 추격보다 되돌림 대기.`
               :([sReach,dReach].every(r=>r!=null&&r<70)?`${side} 여력 남음 — 추세 자리 유효.`:`${side} 자리 진행 중.`));
