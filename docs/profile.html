@@ -95,8 +95,8 @@ tr.live .pr{color:var(--live);font-weight:700}
     <span style="color:var(--accent)">◆ <span id="lgPA">3W</span> POC</span>
     <span style="color:var(--accent2)">◆ <span id="lgPB">1W</span> POC</span>
   </div>
-  <div class="foot">◆ POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:var(--accent)">앰버=장기</b>(큰 벽) / <b style="color:var(--accent2)">파랑=단기</b>(최근 벽) · 얇은 구간 = 빠른 이동 · Δ = 매수−매도 우위
-    <span style="opacity:.6"> · build 2026-09-15k</span></div>
+  <div class="foot">◆ POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:var(--accent)">앰버=장기</b>(큰 벽) / <b style="color:var(--accent2)">파랑=단기</b>(최근 벽) · 막대=숫자에 비례(공통기준), 1D가 1W보다 짧은 건 틱이 적어서 정상 · Δ = 매수−매도 우위
+    <span style="opacity:.6"> · build 2026-09-15l</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -138,9 +138,9 @@ function render(d){
     `<span class="k">SAMPLE</span> ${A} <b>${nf(d.sample?d.sample.w3:0)}</b> · ${B} <b>${nf(d.sample?d.sample.w1:0)}</b> ticks &nbsp; <span class="k">BUCKET</span> $${Number(d.bucket||2).toFixed(0)}`;
   const rows=d.rows||[];
   if(!rows.length){ $("#body").innerHTML=`<tr><td colspan="6"><div class="empty">데이터 없음 — EA 전송/URL 확인</div></td></tr>`; return; }
-  // 칼럼별 스케일: 각 기간 자기 최대 기준 → 숫자 크면 칸도 큼 (기간 간 비교는 숫자로)
-  const max3=Math.max(1,...rows.map(r=>r.t3||0)), max1=Math.max(1,...rows.map(r=>r.t1||0));
-  const bar=(v,mx,cls,poc)=>{const w=Math.max(0,Math.round((v||0)/mx*100));
+  // 공통 스케일: 전체 하나의 최대 기준 → 숫자 크면 막대도 김 (표 전체 일치)
+  const mx=Math.max(1,...rows.map(r=>r.t3||0),...rows.map(r=>r.t1||0));
+  const bar=(v,cls,poc)=>{const w=Math.max(0,Math.round((v||0)/mx*100));
     return `<div class="barwrap"><span class="tk">${nf(v||0)}</span><div class="track"><div class="fill ${cls}${poc?' pocbar':''}" style="width:${w}%"></div></div>${poc?`<span class="pocdot ${cls}">◆</span>`:''}</div>`;};
   const dlc=v=>v>0.05?"p":(v<-0.05?"n":"z");
   // POC = 최다 체결 버킷 (A·B 각각)
@@ -154,8 +154,8 @@ function render(d){
     if(r.mark) rm+=`<span class="rm">← ${r.mark}</span>`;
     return `<tr class="${r.mark==='LIVE'?'live':''}">
       <td class="pr">${hi.toFixed(0)}~${lo.toFixed(0)}</td>
-      <td>${bar(r.t3,max3,"w3",i===p3&&v3>0)}</td>
-      <td>${bar(r.t1,max1,"w1",i===p1&&v1>0)}</td>
+      <td>${bar(r.t3,"w3",i===p3&&v3>0)}</td>
+      <td>${bar(r.t1,"w1",i===p1&&v1>0)}</td>
       <td class="dl ${dlc(r.e3)}">${sg(r.e3||0)}%</td>
       <td class="dl ${dlc(r.e1)}">${sg(r.e1||0)}%</td>
       <td class="rmc">${rm}</td></tr>`;
