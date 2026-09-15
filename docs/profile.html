@@ -50,7 +50,8 @@ body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:14p
 .fill.w1{background:linear-gradient(90deg,#6f96b8,var(--accent2))}
 .dl{text-align:right;font-weight:600;font-size:12px}
 .dl.p{color:var(--up-dim)}.dl.n{color:var(--down)}.dl.z{color:var(--faint)}
-.rm{color:var(--accent);font-size:9.5px;font-weight:600;padding-left:6px}
+.rm{color:var(--accent);font-size:9px;font-weight:700;display:block;line-height:1.4;white-space:nowrap}
+.rmc{white-space:normal}
 tr.live td{background:var(--live-bg)}
 tr.live .pr{color:var(--live);font-weight:700}
 .fill.pocbar.w3{background:linear-gradient(90deg,#ffe0a0,#ffab2e)}
@@ -79,8 +80,8 @@ tr.live .pr{color:var(--live);font-weight:700}
   </div>
   <table class="tbl">
     <thead><tr>
-      <th style="width:72px">PRICE</th><th>3W TICKS</th><th>1W TICKS</th>
-      <th style="text-align:right;width:42px">3W Δ</th><th style="text-align:right;width:42px">1W Δ</th><th style="width:52px"></th>
+      <th style="width:66px">PRICE</th><th>3W TICKS</th><th>1W TICKS</th>
+      <th style="text-align:right;width:40px">3W Δ</th><th style="text-align:right;width:40px">1W Δ</th><th style="width:76px"></th>
     </tr></thead>
     <tbody id="body"></tbody>
   </table>
@@ -91,7 +92,7 @@ tr.live .pr{color:var(--live);font-weight:700}
     <span style="color:var(--accent2)">◆ 1W POC</span>
   </div>
   <div class="foot">◆ POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:var(--accent)">앰버=3주</b>(큰 벽) / <b style="color:var(--accent2)">파랑=1주</b>(최근 벽) · 얇은 구간 = 빠른 이동 · Δ = 매수−매도 우위
-    <span style="opacity:.6"> · build 2026-09-15d</span></div>
+    <span style="opacity:.6"> · build 2026-09-15f</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -132,19 +133,22 @@ function render(d){
   const bar=(v,cls,poc)=>{const w=Math.max(0,Math.round((v||0)/mx*100));
     return `<div class="barwrap"><span class="brk">[</span><div class="track"><div class="fill ${cls}${poc?' pocbar':''}" style="width:${w}%"></div></div><span class="brk">]</span>${poc?`<span class="pocdot ${cls}">◆</span>`:''}</div>`;};
   const dlc=v=>v>0.05?"p":(v<-0.05?"n":"z");
-  const rmk=mk=>mk?`<span class="rm">← ${mk}</span>`:"";
   // POC = 최다 체결 버킷 (3W·1W 각각)
   let p3=0,v3=-1,p1=0,v1=-1;
   rows.forEach((r,i)=>{ if((r.t3||0)>v3){v3=r.t3||0;p3=i;} if((r.t1||0)>v1){v1=r.t1||0;p1=i;} });
   $("#body").innerHTML=rows.map((r,i)=>{
     const hi=Number(r.hi),lo=Number(r.lo);
+    let rm="";
+    if(i===p3&&v3>0) rm+=`<span class="rm" style="color:var(--accent)">◆ 3W POC</span>`;
+    if(i===p1&&v1>0) rm+=`<span class="rm" style="color:var(--accent2)">◆ 1W POC</span>`;
+    if(r.mark) rm+=`<span class="rm">← ${r.mark}</span>`;
     return `<tr class="${r.mark==='LIVE'?'live':''}">
       <td class="pr">${hi.toFixed(0)}~${lo.toFixed(0)}</td>
       <td>${bar(r.t3,"w3",i===p3&&v3>0)}</td>
       <td>${bar(r.t1,"w1",i===p1&&v1>0)}</td>
       <td class="dl ${dlc(r.e3)}">${sg(r.e3||0)}%</td>
       <td class="dl ${dlc(r.e1)}">${sg(r.e1||0)}%</td>
-      <td>${rmk(r.mark)}</td></tr>`;
+      <td class="rmc">${rm}</td></tr>`;
   }).join("");
 }
 function setStamp(t){ $("#stamp").textContent=t; }
