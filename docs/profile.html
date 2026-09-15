@@ -51,8 +51,11 @@ body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:14p
 .dl{text-align:right;font-weight:600;font-size:12px}
 .dl.p{color:var(--up-dim)}.dl.n{color:var(--down)}.dl.z{color:var(--faint)}
 .rm{color:var(--accent);font-size:9.5px;font-weight:600;padding-left:6px}
+.rm.poc{color:#ffd27a}
 tr.live td{background:var(--live-bg)}
 tr.live .pr{color:var(--live);font-weight:700}
+tr.poc .fill.w3{background:linear-gradient(90deg,#ffe0a0,#ffab2e)}
+tr.poc .pr{color:#ffd27a;font-weight:700}
 .foot{font-size:9px;color:var(--faint);margin-top:8px;line-height:1.6;padding:0 2px}
 .lgd{display:flex;gap:14px;margin-top:6px;font-size:9.5px;color:var(--muted)}
 .lgd .sw{display:inline-block;width:16px;height:8px;vertical-align:0;margin-right:4px;border:1px solid var(--grid)}
@@ -76,7 +79,7 @@ tr.live .pr{color:var(--live);font-weight:700}
   <table class="tbl">
     <thead><tr>
       <th style="width:72px">PRICE</th><th>3W TICKS</th><th>1W TICKS</th>
-      <th style="text-align:right;width:44px">3W Δ</th><th style="text-align:right;width:44px">1W Δ</th><th style="width:42px"></th>
+      <th style="text-align:right;width:42px">3W Δ</th><th style="text-align:right;width:42px">1W Δ</th><th style="width:52px"></th>
     </tr></thead>
     <tbody id="body"></tbody>
   </table>
@@ -85,8 +88,8 @@ tr.live .pr{color:var(--live);font-weight:700}
     <span><span class="sw" style="background:var(--accent2)"></span>1W 틱</span>
     <span><span class="sw" style="background:var(--live-bg);border-color:var(--live)"></span>현재가</span>
   </div>
-  <div class="foot">틱 막대 = 그 가격대 체결량 (POC=최다 = 강한 지지/저항) · 얇은 구간 = 빠른 이동 · Δ = 매수−매도 우위 · 3W 느린주기 · 1W 빠른주기
-    <span style="opacity:.6"> · build 2026-09-15b</span></div>
+  <div class="foot">◆ POC = 3W 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · 얇은 구간 = 빠른 이동 · Δ = 매수−매도 우위 · 3W 느린주기 · 1W 빠른주기
+    <span style="opacity:.6"> · build 2026-09-15c</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -128,15 +131,19 @@ function render(d){
     return `<div class="barwrap"><span class="brk">[</span><div class="track"><div class="fill ${cls}" style="width:${w}%"></div></div><span class="brk">]</span></div>`;};
   const dlc=v=>v>0.05?"p":(v<-0.05?"n":"z");
   const rmk=mk=>mk?`<span class="rm">← ${mk}</span>`:"";
-  $("#body").innerHTML=rows.map(r=>{
-    const hi=Number(r.hi),lo=Number(r.lo);
-    return `<tr class="${r.mark==='LIVE'?'live':''}">
+  // POC = 3W 틱 최다 버킷 (제일 긴 막대)
+  let pocI=0,pocV=-1; rows.forEach((r,i)=>{ if((r.t3||0)>pocV){ pocV=r.t3||0; pocI=i; } });
+  $("#body").innerHTML=rows.map((r,i)=>{
+    const hi=Number(r.hi),lo=Number(r.lo), isPoc=(i===pocI&&pocV>0);
+    const cls=[r.mark==='LIVE'?'live':'', isPoc?'poc':''].filter(Boolean).join(' ');
+    const rm=(isPoc?`<span class="rm poc">◆ POC</span>`:'')+rmk(r.mark);
+    return `<tr class="${cls}">
       <td class="pr">${hi.toFixed(0)}~${lo.toFixed(0)}</td>
       <td>${bar(r.t3,"w3")}</td>
       <td>${bar(r.t1,"w1")}</td>
       <td class="dl ${dlc(r.e3)}">${sg(r.e3||0)}%</td>
       <td class="dl ${dlc(r.e1)}">${sg(r.e1||0)}%</td>
-      <td>${rmk(r.mark)}</td></tr>`;
+      <td>${rm}</td></tr>`;
   }).join("");
 }
 function setStamp(t){ $("#stamp").textContent=t; }
