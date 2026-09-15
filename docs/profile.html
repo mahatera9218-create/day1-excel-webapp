@@ -92,7 +92,7 @@ tr.live .pr{color:var(--live);font-weight:700}
     <span style="color:var(--accent2)">◆ 1W POC</span>
   </div>
   <div class="foot">◆ POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:var(--accent)">앰버=3주</b>(큰 벽) / <b style="color:var(--accent2)">파랑=1주</b>(최근 벽) · 얇은 구간 = 빠른 이동 · Δ = 매수−매도 우위
-    <span style="opacity:.6"> · build 2026-09-15f</span></div>
+    <span style="opacity:.6"> · build 2026-09-15g</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -101,21 +101,22 @@ const m2=v=>"$"+Number(v).toFixed(2);
 const nf=v=>Number(v).toLocaleString("en-US");
 const sg=v=>(v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(1);
 
-/* ===== 샘플 (실제 JSON 스키마와 동일) ===== */
+/* ===== 샘플 (실제 JSON 스키마와 동일 · 고정 데모값 = 새로고침해도 불변) ===== */
+const rnd=n=>{const x=Math.sin(n*12.9898)*43758.5453;return x-Math.floor(x);};
 function sample(){
   const D1={open:4298.52,high:4317.37,low:4263.62}, LIVE=4264.96, BID=4264.96, ASK=4265.05, BUCKET=2, HI=4340, LO=4252, peak=4330, sig=13;
-  const rows=[];
-  for(let hi=HI; hi>LO; hi-=BUCKET){
+  const rows=[]; let i=0;
+  for(let hi=HI; hi>LO; hi-=BUCKET,i++){
     const lo=hi-BUCKET, mid=(hi+lo)/2, g=Math.exp(-((mid-peak)**2)/(2*sig*sig));
-    let t3=Math.round(2000+54000*g+(Math.random()*3000-1500)); if(mid<4266)t3=Math.round(t3*0.12);
-    let t1=Math.round(t3*(0.55+0.25*Math.random())); if(mid<4300&&mid>4288)t1=Math.round(t1*1.4);
-    const e3=+(Math.random()*6-3.2).toFixed(1), e1=+(e3+(Math.random()*2-1)).toFixed(1);
+    let t3=Math.round(2000+54000*g+(rnd(i)*3000-1500)); if(mid<4266)t3=Math.round(t3*0.12);
+    let t1=Math.round(t3*(0.55+0.25*rnd(i+100))); if(mid<4300&&mid>4288)t1=Math.round(t1*1.4);
+    const e3=+(rnd(i+200)*6-3.2).toFixed(1), e1=+(e3+(rnd(i+300)*2-1)).toFixed(1);
     let mark=null;
     if(hi>D1.high&&lo<=D1.high)mark="HIGH"; if(hi>LIVE&&lo<=LIVE)mark="LIVE";
     if(hi>D1.low&&lo<=D1.low)mark="LOW"; if(hi>D1.open&&lo<=D1.open)mark="OPEN";
     rows.push({hi,lo,t3,e3,t1,e1,mark});
   }
-  return {sym:"XAUUSD",bid:BID,ask:ASK,live:LIVE,bucket:BUCKET,kst:"샘플",d1:D1,
+  return {sym:"XAUUSD (데모)",bid:BID,ask:ASK,live:LIVE,bucket:BUCKET,kst:"샘플",d1:D1,
     sample:{w3:rows.reduce((s,r)=>s+r.t3,0),w1:rows.reduce((s,r)=>s+r.t1,0)},rows};
 }
 
