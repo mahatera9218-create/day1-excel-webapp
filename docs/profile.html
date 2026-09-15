@@ -93,7 +93,7 @@ tr.live .pr{color:var(--live);font-weight:700}
     <span><span class="sw" style="background:linear-gradient(90deg,#bfe6ff,#5cc8f5)"></span><span id="lgPB">1W</span> POC</span>
   </div>
   <div class="foot">POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:#ffab2e">밝은 색 막대 = 그 기간 POC</b> · 막대=숫자에 비례(공통기준), 1D가 1W보다 짧은 건 틱이 적어서 정상 · Δ = 매수−매도 우위
-    <span style="opacity:.6"> · build 2026-09-15q</span></div>
+    <span style="opacity:.6"> · build 2026-09-15r</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -133,7 +133,7 @@ function render(d){
   $("#meta").innerHTML=
     `<span class="k">D1</span> O <b>${m2(D.open)}</b> · H <b>${m2(D.high)}</b> · L <b>${m2(D.low)}</b><br>`+
     `<span class="k">SAMPLE</span> ${A} <b>${nf(d.sample?d.sample.w3:0)}</b> · ${B} <b>${nf(d.sample?d.sample.w1:0)}</b> ticks &nbsp; <span class="k">BUCKET</span> $${Number(d.bucket||2).toFixed(0)}`;
-  const rows=(d.rows||[]).slice().reverse();  // 저→고 (낮은 가격이 위)
+  const rows=d.rows||[];
   if(!rows.length){ $("#body").innerHTML=`<tr><td colspan="6"><div class="empty">데이터 없음 — EA 전송/URL 확인</div></td></tr>`; return; }
   // 공통 스케일: 전체 하나의 최대 기준 → 숫자 크면 막대도 김 (표 전체 일치)
   const mx=Math.max(1,...rows.map(r=>r.t3||0),...rows.map(r=>r.t1||0));
