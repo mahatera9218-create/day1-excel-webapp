@@ -1,3 +1,10 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="프로파일">
+<link rel="apple-touch-icon" href="icon-profile.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23e79a1e'/%3E%3Crect x='6' y='8' width='11' height='3' rx='1' fill='%23070a0e'/%3E%3Crect x='6' y='13' width='17' height='3' rx='1' fill='%23070a0e'/%3E%3Crect x='6' y='18' width='20' height='3' rx='1' fill='%23070a0e'/%3E%3Crect x='6' y='23' width='9' height='3' rx='1' fill='%23070a0e'/%3E%3C/svg%3E">
 <title>XAUUSD 프로파일</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
 <style>
@@ -12,7 +19,7 @@
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:12px;line-height:1.3;margin:0;padding:0 8px 40px;font-variant-numeric:tabular-nums;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:14px;line-height:1.3;margin:0;padding:0 10px 40px;font-variant-numeric:tabular-nums;-webkit-text-size-adjust:100%}
 .wrap{max-width:560px;margin:0 auto}
 .hd{position:sticky;top:0;background:var(--bg);z-index:5;padding:calc(env(safe-area-inset-top,0px) + 12px) 2px 8px;border-bottom:1px solid var(--line);margin-bottom:6px}
 .hrow{display:flex;align-items:baseline;gap:8px}
@@ -31,17 +38,17 @@ body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:12p
 .cfg button{background:var(--accent);color:#05070a;border:0;font:inherit;font-weight:700;font-size:11px;padding:6px 12px;border-radius:4px;cursor:pointer}
 .cfg label{font-size:9.5px;color:var(--faint)}
 
-.tbl{width:100%;border-collapse:collapse;font-size:10.5px}
-.tbl th{color:var(--faint);font-weight:600;font-size:9px;text-align:left;padding:5px 4px;border-bottom:1px solid var(--line);letter-spacing:.02em;text-transform:uppercase}
-.tbl td{padding:1.5px 4px;border-bottom:1px solid var(--grid);white-space:nowrap}
-.pr{color:var(--muted);font-size:10px}
-.barwrap{display:flex;align-items:center;gap:2px;width:118px}
-.brk{color:var(--faint);font-size:11px}
-.track{flex:1;height:10px;background:var(--inset);border:1px solid var(--grid);position:relative;overflow:hidden}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;table-layout:fixed}
+.tbl th{color:var(--faint);font-weight:600;font-size:10px;text-align:left;padding:6px 4px;border-bottom:1px solid var(--line);letter-spacing:.02em;text-transform:uppercase}
+.tbl td{padding:4px 4px;border-bottom:1px solid var(--grid);white-space:nowrap}
+.pr{color:var(--muted);font-size:11.5px}
+.barwrap{display:flex;align-items:center;gap:2px;width:100%}
+.brk{color:var(--faint);font-size:12px}
+.track{flex:1;height:13px;background:var(--inset);border:1px solid var(--grid);position:relative;overflow:hidden}
 .fill{position:absolute;left:0;top:0;bottom:0}
 .fill.w3{background:linear-gradient(90deg,var(--up-dim),#8b939f)}
 .fill.w1{background:linear-gradient(90deg,#6f96b8,var(--accent2))}
-.dl{text-align:right;width:44px;font-weight:600}
+.dl{text-align:right;font-weight:600;font-size:12px}
 .dl.p{color:var(--up-dim)}.dl.n{color:var(--down)}.dl.z{color:var(--faint)}
 .rm{color:var(--accent);font-size:9.5px;font-weight:600;padding-left:6px}
 tr.live td{background:var(--live-bg)}
@@ -68,8 +75,8 @@ tr.live .pr{color:var(--live);font-weight:700}
   </div>
   <table class="tbl">
     <thead><tr>
-      <th style="width:92px">PRICE</th><th>3W TICKS</th><th>1W TICKS</th>
-      <th style="text-align:right">3W Δ</th><th style="text-align:right">1W Δ</th><th></th>
+      <th style="width:72px">PRICE</th><th>3W TICKS</th><th>1W TICKS</th>
+      <th style="text-align:right;width:44px">3W Δ</th><th style="text-align:right;width:44px">1W Δ</th><th style="width:42px"></th>
     </tr></thead>
     <tbody id="body"></tbody>
   </table>
@@ -79,7 +86,7 @@ tr.live .pr{color:var(--live);font-weight:700}
     <span><span class="sw" style="background:var(--live-bg);border-color:var(--live)"></span>현재가</span>
   </div>
   <div class="foot">틱 막대 = 그 가격대 체결량 (POC=최다 = 강한 지지/저항) · 얇은 구간 = 빠른 이동 · Δ = 매수−매도 우위 · 3W 느린주기 · 1W 빠른주기
-    <span style="opacity:.6"> · build 2026-09-15a</span></div>
+    <span style="opacity:.6"> · build 2026-09-15b</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -115,8 +122,9 @@ function render(d){
     `<span class="k">SAMPLE</span> 3W <b>${nf(d.sample?d.sample.w3:0)}</b> · 1W <b>${nf(d.sample?d.sample.w1:0)}</b> ticks &nbsp; <span class="k">BUCKET</span> $${Number(d.bucket||2).toFixed(0)}`;
   const rows=d.rows||[];
   if(!rows.length){ $("#body").innerHTML=`<tr><td colspan="6"><div class="empty">데이터 없음 — EA 전송/URL 확인</div></td></tr>`; return; }
-  const max3=Math.max(1,...rows.map(r=>r.t3||0)), max1=Math.max(1,...rows.map(r=>r.t1||0));
-  const bar=(v,mx,cls)=>{const w=Math.max(1,Math.round((v||0)/mx*100));
+  // 공통 스케일: 3W·1W 같은 기준 → 1W가 3W 대비 실제 비율로 보임
+  const mx=Math.max(1,...rows.map(r=>r.t3||0),...rows.map(r=>r.t1||0));
+  const bar=(v,cls)=>{const w=Math.max(0,Math.round((v||0)/mx*100));
     return `<div class="barwrap"><span class="brk">[</span><div class="track"><div class="fill ${cls}" style="width:${w}%"></div></div><span class="brk">]</span></div>`;};
   const dlc=v=>v>0.05?"p":(v<-0.05?"n":"z");
   const rmk=mk=>mk?`<span class="rm">← ${mk}</span>`:"";
@@ -124,8 +132,8 @@ function render(d){
     const hi=Number(r.hi),lo=Number(r.lo);
     return `<tr class="${r.mark==='LIVE'?'live':''}">
       <td class="pr">${hi.toFixed(0)}~${lo.toFixed(0)}</td>
-      <td>${bar(r.t3,max3,"w3")}</td>
-      <td>${bar(r.t1,max1,"w1")}</td>
+      <td>${bar(r.t3,"w3")}</td>
+      <td>${bar(r.t1,"w1")}</td>
       <td class="dl ${dlc(r.e3)}">${sg(r.e3||0)}%</td>
       <td class="dl ${dlc(r.e1)}">${sg(r.e1||0)}%</td>
       <td>${rmk(r.mark)}</td></tr>`;
