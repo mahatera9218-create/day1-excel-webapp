@@ -42,13 +42,17 @@ body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:14p
 .tbl th{color:var(--faint);font-weight:600;font-size:10px;text-align:left;padding:6px 4px;border-bottom:1px solid var(--line);letter-spacing:.02em;text-transform:uppercase}
 .tbl td{padding:4px 4px;border-bottom:1px solid var(--grid);white-space:nowrap}
 .pr{color:var(--muted);font-size:11.5px}
-.barwrap{display:flex;align-items:center;gap:2px;width:100%}
-.brk{color:var(--faint);font-size:12px}
+.barwrap{display:flex;align-items:center;gap:4px;width:100%}
+.tk{flex:0 0 auto;width:30px;text-align:right;font-size:8.5px;color:var(--faint);font-weight:500}
 .track{flex:1;height:13px;background:var(--inset);border:1px solid var(--grid);position:relative;overflow:hidden}
 .fill{position:absolute;left:0;top:0;bottom:0}
 .fill.w3{background:linear-gradient(90deg,var(--up-dim),#8b939f)}
 .fill.w1{background:linear-gradient(90deg,#6f96b8,var(--accent2))}
-.dl{text-align:right;font-weight:600;font-size:12px}
+/* 칸(세그먼트) 구분선 — 그라데이션 위에 얹음 */
+.track::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(90deg,transparent 0,transparent 7px,var(--bg) 7px,var(--bg) 8px)}
+.pocdot{font-size:11px;line-height:1;flex:0 0 auto}
+.dl{text-align:right;font-weight:600;font-size:11px}
 .dl.p{color:var(--up-dim)}.dl.n{color:var(--down)}.dl.z{color:var(--faint)}
 .rm{color:var(--accent);font-size:9px;font-weight:700;display:block;line-height:1.4;white-space:nowrap}
 .rmc{white-space:normal}
@@ -80,8 +84,8 @@ tr.live .pr{color:var(--live);font-weight:700}
   </div>
   <table class="tbl">
     <thead><tr>
-      <th style="width:66px">PRICE</th><th>3W TICKS</th><th>1W TICKS</th>
-      <th style="text-align:right;width:40px">3W Δ</th><th style="text-align:right;width:40px">1W Δ</th><th style="width:76px"></th>
+      <th style="width:56px">PRICE</th><th>3W TICKS</th><th>1W TICKS</th>
+      <th style="text-align:right;width:38px">3W Δ</th><th style="text-align:right;width:38px;padding-left:8px">1W Δ</th><th style="width:46px"></th>
     </tr></thead>
     <tbody id="body"></tbody>
   </table>
@@ -92,7 +96,7 @@ tr.live .pr{color:var(--live);font-weight:700}
     <span style="color:var(--accent2)">◆ 1W POC</span>
   </div>
   <div class="foot">◆ POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:var(--accent)">앰버=3주</b>(큰 벽) / <b style="color:var(--accent2)">파랑=1주</b>(최근 벽) · 얇은 구간 = 빠른 이동 · Δ = 매수−매도 우위
-    <span style="opacity:.6"> · build 2026-09-15g</span></div>
+    <span style="opacity:.6"> · build 2026-09-15i</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -131,8 +135,9 @@ function render(d){
   if(!rows.length){ $("#body").innerHTML=`<tr><td colspan="6"><div class="empty">데이터 없음 — EA 전송/URL 확인</div></td></tr>`; return; }
   // 공통 스케일: 3W·1W 같은 기준 → 1W가 3W 대비 실제 비율로 보임
   const mx=Math.max(1,...rows.map(r=>r.t3||0),...rows.map(r=>r.t1||0));
+  const kfmt=v=>{v=v||0; if(v>=10000)return Math.round(v/1000)+"k"; if(v>=1000)return (v/1000).toFixed(1)+"k"; return ""+v;};
   const bar=(v,cls,poc)=>{const w=Math.max(0,Math.round((v||0)/mx*100));
-    return `<div class="barwrap"><span class="brk">[</span><div class="track"><div class="fill ${cls}${poc?' pocbar':''}" style="width:${w}%"></div></div><span class="brk">]</span>${poc?`<span class="pocdot ${cls}">◆</span>`:''}</div>`;};
+    return `<div class="barwrap"><span class="tk">${kfmt(v)}</span><div class="track"><div class="fill ${cls}${poc?' pocbar':''}" style="width:${w}%"></div></div>${poc?`<span class="pocdot ${cls}">◆</span>`:''}</div>`;};
   const dlc=v=>v>0.05?"p":(v<-0.05?"n":"z");
   // POC = 최다 체결 버킷 (3W·1W 각각)
   let p3=0,v3=-1,p1=0,v1=-1;
