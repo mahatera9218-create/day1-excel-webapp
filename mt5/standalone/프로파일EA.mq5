@@ -7,7 +7,7 @@
 //|  매매하지 않음 (관찰 전용)                                         |
 //+------------------------------------------------------------------+
 #property copyright "day1"
-#property version   "1.00"
+#property version   "1.01"
 #property strict
 
 //--- 입력 ---------------------------------------------------------
@@ -73,14 +73,23 @@ bool AccumWindow(const int days, long &tk[], long &up[], long &dn[]){
       MqlTick t[];
       int g=CopyTicksRange(_Symbol,t,COPY_TICKS_ALL,(ulong)c*1000,(ulong)ce*1000+999);
       if(g<=0) continue;
+      double pb=0,pa=0; bool hp=false;   // 직전 bid/ask (틱룰 폴백용)
       for(int i=0;i<g;i++){
-         double px=PriceOf(t[i]); if(px<=0.0) continue;
-         int idx=(int)MathFloor((px-g_base)/InpBucket);
-         if(idx<0||idx>=g_nb) continue;
-         tk[idx]++; total++;
-         uint fl=t[i].flags;
-         if((fl&TICK_FLAG_BUY)!=0)  up[idx]++;
-         else if((fl&TICK_FLAG_SELL)!=0) dn[idx]++;
+         double px=PriceOf(t[i]);
+         int idx=(px>0.0)?(int)MathFloor((px-g_base)/InpBucket):-1;
+         if(px>0.0 && idx>=0 && idx<g_nb){
+            tk[idx]++; total++;
+            uint fl=t[i].flags;
+            bool cl=false;
+            if((fl&TICK_FLAG_BUY)!=0){ up[idx]++; cl=true; }
+            else if((fl&TICK_FLAG_SELL)!=0){ dn[idx]++; cl=true; }
+            if(!cl && hp){   // 플래그 없으면 틱룰: 체결가가 ask쪽=매수, bid쪽=매도
+               double da=MathAbs(px-pa), db=MathAbs(px-pb);
+               if(da<db) up[idx]++; else if(db<da) dn[idx]++;
+            }
+         }
+         if(t[i].bid>0.0){ pb=t[i].bid; hp=true; }
+         if(t[i].ask>0.0) pa=t[i].ask;
       }
    }
    return(total>0);
@@ -141,7 +150,7 @@ void SendPantry(const string json){
 int OnInit(){
    ComputeRange();
    EventSetTimer(InpSendSec>0?InpSendSec:15);
-   Print("프로파일EA v1.00 — 버킷 $",DoubleToString(InpBucket,2),
+   Print("프로파일EA v1.01 — 버킷 $",DoubleToString(InpBucket,2),
          " | 3W ",InpW3Days,"d/",InpW3RefreshSec,"s · 1W ",InpW1Days,"d/",InpW1RefreshSec,"s",
          " | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF")," | 매매안함");
    return(INIT_SUCCEEDED);
