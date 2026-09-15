@@ -7,15 +7,15 @@
 //|  매매하지 않음 (관찰 전용)                                         |
 //+------------------------------------------------------------------+
 #property copyright "day1"
-#property version   "1.01"
+#property version   "1.02"
 #property strict
 
 //--- 입력 ---------------------------------------------------------
 input string  InpDashUrl        = "";      // 팬트리 바스켓 URL (프로파일 전용 · 새로 발급)
 input bool    InpDashEnable     = true;    // 전송 ON
 input double  InpBucket         = 2.0;     // 가격 버킷 크기 ($)
-input int     InpW3Days         = 21;      // 장기 창 (일)
-input int     InpW1Days         = 7;       // 단기 창 (일)
+input int     InpW3Days         = 7;       // 장기 창 (일) — 예:7=1W
+input int     InpW1Days         = 1;       // 단기 창 (일) — 예:1=1D
 input int     InpMaxBuckets     = 60;      // 최대 버킷 수 (초과시 현재가 중심 클램프)
 input int     InpSendSec        = 15;      // 전송 주기 (초) — 현재가 갱신
 input int     InpW1RefreshSec   = 120;     // 1W 재계산 주기 (초)
@@ -97,6 +97,7 @@ bool AccumWindow(const int days, long &tk[], long &up[], long &dn[]){
 
 //--- JSON ---------------------------------------------------------
 double DeltaPct(const long u,const long d){ long s=u+d; return s>0? (double)(u-d)/(double)s*100.0 : 0.0; }
+string PerLabel(const int d){ if(d>=7 && d%7==0) return (string)(d/7)+"W"; return (string)d+"D"; }
 string MarkOf(const double lo,const double hi,const double live,const double o,const double h,const double l){
    if(lo<=live && live<hi) return "LIVE";
    if(lo<=h && h<hi)       return "HIGH";
@@ -114,6 +115,7 @@ string BuildJson(){
    s+="\"sym\":\""+_Symbol+"\",";
    s+="\"bid\":"+JNum(bid,dig)+",\"ask\":"+JNum(ask,dig)+",";
    s+="\"live\":"+JNum(bid,dig)+",\"bucket\":"+JNum(InpBucket,2)+",";
+   s+="\"labA\":\""+PerLabel(InpW3Days)+"\",\"labB\":\""+PerLabel(InpW1Days)+"\",";
    s+="\"kst\":\""+kst+"\",";
    s+="\"d1\":{\"open\":"+JNum(o,dig)+",\"high\":"+JNum(h,dig)+",\"low\":"+JNum(l,dig)+"},";
    s+="\"sample\":{\"w3\":"+(string)s3+",\"w1\":"+(string)s1+"},";
@@ -150,7 +152,7 @@ void SendPantry(const string json){
 int OnInit(){
    ComputeRange();
    EventSetTimer(InpSendSec>0?InpSendSec:15);
-   Print("프로파일EA v1.01 — 버킷 $",DoubleToString(InpBucket,2),
+   Print("프로파일EA v1.02 — 버킷 $",DoubleToString(InpBucket,2),
          " | 3W ",InpW3Days,"d/",InpW3RefreshSec,"s · 1W ",InpW1Days,"d/",InpW1RefreshSec,"s",
          " | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF")," | 매매안함");
    return(INIT_SUCCEEDED);

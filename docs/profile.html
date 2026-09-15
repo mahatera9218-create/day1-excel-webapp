@@ -43,7 +43,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:14p
 .tbl td{padding:4px 4px;border-bottom:1px solid var(--grid);white-space:nowrap}
 .pr{color:var(--muted);font-size:11.5px}
 .barwrap{display:flex;align-items:center;gap:4px;width:100%}
-.tk{flex:0 0 auto;width:30px;text-align:right;font-size:8.5px;color:var(--faint);font-weight:500}
+.tk{flex:0 0 auto;width:46px;text-align:right;font-size:8px;color:var(--faint);font-weight:500}
 .track{flex:1;height:13px;background:var(--inset);border:1px solid var(--grid);position:relative;overflow:hidden}
 .fill{position:absolute;left:0;top:0;bottom:0}
 .fill.w3{background:linear-gradient(90deg,var(--up-dim),#8b939f)}
@@ -70,7 +70,7 @@ tr.live .pr{color:var(--live);font-weight:700}
 <div class="wrap">
   <div class="hd">
     <div class="hrow">
-      <span class="t">[<span id="sym">XAUUSD</span>] <span class="sub">TICK PROFILE · 3W vs 1W</span></span>
+      <span class="t">[<span id="sym">XAUUSD</span>] <span class="sub" id="sub">TICK PROFILE</span></span>
       <span class="live" id="live"></span>
       <button class="gear" id="gear">⚙</button>
     </div>
@@ -84,19 +84,19 @@ tr.live .pr{color:var(--live);font-weight:700}
   </div>
   <table class="tbl">
     <thead><tr>
-      <th style="width:56px">PRICE</th><th>3W TICKS</th><th>1W TICKS</th>
-      <th style="text-align:right;width:38px">3W Δ</th><th style="text-align:right;width:38px;padding-left:8px">1W Δ</th><th style="width:46px"></th>
+      <th style="width:56px">PRICE</th><th id="hA">3W</th><th id="hB">1W</th>
+      <th style="text-align:right;width:38px" id="hdA">3W Δ</th><th style="text-align:right;width:38px;padding-left:8px" id="hdB">1W Δ</th><th style="width:46px"></th>
     </tr></thead>
     <tbody id="body"></tbody>
   </table>
   <div class="lgd">
-    <span><span class="sw" style="background:#8b939f"></span>3W 틱</span>
-    <span><span class="sw" style="background:var(--accent2)"></span>1W 틱</span>
-    <span style="color:var(--accent)">◆ 3W POC</span>
-    <span style="color:var(--accent2)">◆ 1W POC</span>
+    <span><span class="sw" style="background:#8b939f"></span><span id="lgA">3W</span> 틱</span>
+    <span><span class="sw" style="background:var(--accent2)"></span><span id="lgB">1W</span> 틱</span>
+    <span style="color:var(--accent)">◆ <span id="lgPA">3W</span> POC</span>
+    <span style="color:var(--accent2)">◆ <span id="lgPB">1W</span> POC</span>
   </div>
-  <div class="foot">◆ POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:var(--accent)">앰버=3주</b>(큰 벽) / <b style="color:var(--accent2)">파랑=1주</b>(최근 벽) · 얇은 구간 = 빠른 이동 · Δ = 매수−매도 우위
-    <span style="opacity:.6"> · build 2026-09-15i</span></div>
+  <div class="foot">◆ POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:var(--accent)">앰버=장기</b>(큰 벽) / <b style="color:var(--accent2)">파랑=단기</b>(최근 벽) · 얇은 구간 = 빠른 이동 · Δ = 매수−매도 우위
+    <span style="opacity:.6"> · build 2026-09-15j</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -120,33 +120,37 @@ function sample(){
     if(hi>D1.low&&lo<=D1.low)mark="LOW"; if(hi>D1.open&&lo<=D1.open)mark="OPEN";
     rows.push({hi,lo,t3,e3,t1,e1,mark});
   }
-  return {sym:"XAUUSD (데모)",bid:BID,ask:ASK,live:LIVE,bucket:BUCKET,kst:"샘플",d1:D1,
+  return {sym:"XAUUSD (데모)",bid:BID,ask:ASK,live:LIVE,bucket:BUCKET,kst:"샘플",labA:"1W",labB:"1D",d1:D1,
     sample:{w3:rows.reduce((s,r)=>s+r.t3,0),w1:rows.reduce((s,r)=>s+r.t1,0)},rows};
 }
 
 function render(d){
+  const A=d.labA||"3W", B=d.labB||"1W";
   $("#sym").textContent=d.sym||"—";
+  $("#sub").textContent=`TICK PROFILE · ${A} vs ${B}`;
+  $("#hA").textContent=`${A} TICKS`; $("#hB").textContent=`${B} TICKS`;
+  $("#hdA").textContent=`${A} Δ`; $("#hdB").textContent=`${B} Δ`;
+  $("#lgA").textContent=A; $("#lgB").textContent=B; $("#lgPA").textContent=A; $("#lgPB").textContent=B;
   $("#live").innerHTML=`${m2(d.bid)} <span class="a">/ ${Number(d.ask).toFixed(2)}</span>`;
   const D=d.d1||{};
   $("#meta").innerHTML=
     `<span class="k">D1</span> O <b>${m2(D.open)}</b> · H <b>${m2(D.high)}</b> · L <b>${m2(D.low)}</b><br>`+
-    `<span class="k">SAMPLE</span> 3W <b>${nf(d.sample?d.sample.w3:0)}</b> · 1W <b>${nf(d.sample?d.sample.w1:0)}</b> ticks &nbsp; <span class="k">BUCKET</span> $${Number(d.bucket||2).toFixed(0)}`;
+    `<span class="k">SAMPLE</span> ${A} <b>${nf(d.sample?d.sample.w3:0)}</b> · ${B} <b>${nf(d.sample?d.sample.w1:0)}</b> ticks &nbsp; <span class="k">BUCKET</span> $${Number(d.bucket||2).toFixed(0)}`;
   const rows=d.rows||[];
   if(!rows.length){ $("#body").innerHTML=`<tr><td colspan="6"><div class="empty">데이터 없음 — EA 전송/URL 확인</div></td></tr>`; return; }
-  // 공통 스케일: 3W·1W 같은 기준 → 1W가 3W 대비 실제 비율로 보임
+  // 공통 스케일: A·B 같은 기준 → B가 A 대비 실제 비율로 보임
   const mx=Math.max(1,...rows.map(r=>r.t3||0),...rows.map(r=>r.t1||0));
-  const kfmt=v=>{v=v||0; if(v>=10000)return Math.round(v/1000)+"k"; if(v>=1000)return (v/1000).toFixed(1)+"k"; return ""+v;};
   const bar=(v,cls,poc)=>{const w=Math.max(0,Math.round((v||0)/mx*100));
-    return `<div class="barwrap"><span class="tk">${kfmt(v)}</span><div class="track"><div class="fill ${cls}${poc?' pocbar':''}" style="width:${w}%"></div></div>${poc?`<span class="pocdot ${cls}">◆</span>`:''}</div>`;};
+    return `<div class="barwrap"><span class="tk">${nf(v||0)}</span><div class="track"><div class="fill ${cls}${poc?' pocbar':''}" style="width:${w}%"></div></div>${poc?`<span class="pocdot ${cls}">◆</span>`:''}</div>`;};
   const dlc=v=>v>0.05?"p":(v<-0.05?"n":"z");
-  // POC = 최다 체결 버킷 (3W·1W 각각)
+  // POC = 최다 체결 버킷 (A·B 각각)
   let p3=0,v3=-1,p1=0,v1=-1;
   rows.forEach((r,i)=>{ if((r.t3||0)>v3){v3=r.t3||0;p3=i;} if((r.t1||0)>v1){v1=r.t1||0;p1=i;} });
   $("#body").innerHTML=rows.map((r,i)=>{
     const hi=Number(r.hi),lo=Number(r.lo);
     let rm="";
-    if(i===p3&&v3>0) rm+=`<span class="rm" style="color:var(--accent)">◆ 3W POC</span>`;
-    if(i===p1&&v1>0) rm+=`<span class="rm" style="color:var(--accent2)">◆ 1W POC</span>`;
+    if(i===p3&&v3>0) rm+=`<span class="rm" style="color:var(--accent)">◆ ${A} POC</span>`;
+    if(i===p1&&v1>0) rm+=`<span class="rm" style="color:var(--accent2)">◆ ${B} POC</span>`;
     if(r.mark) rm+=`<span class="rm">← ${r.mark}</span>`;
     return `<tr class="${r.mark==='LIVE'?'live':''}">
       <td class="pr">${hi.toFixed(0)}~${lo.toFixed(0)}</td>
