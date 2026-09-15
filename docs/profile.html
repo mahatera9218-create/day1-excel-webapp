@@ -43,7 +43,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:14p
 .tbl td{padding:4px 4px;border-bottom:1px solid var(--grid);white-space:nowrap}
 .pr{color:var(--muted);font-size:11.5px}
 .barwrap{display:flex;align-items:center;gap:4px;width:100%}
-.tk{flex:0 0 auto;width:46px;text-align:right;font-size:8px;color:var(--faint);font-weight:500}
+.tk{flex:0 0 auto;width:42px;text-align:right;font-size:8px;color:var(--faint);font-weight:500}
 .track{flex:1;height:13px;background:var(--inset);border:1px solid var(--grid);position:relative;overflow:hidden}
 .fill{position:absolute;left:0;top:0;bottom:0}
 .fill.w3{background:linear-gradient(90deg,var(--up-dim),#8b939f)}
@@ -51,8 +51,8 @@ body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:14p
 /* 칸(세그먼트) 구분선 — 그라데이션 위에 얹음 */
 .track::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:repeating-linear-gradient(90deg,transparent 0,transparent 7px,var(--bg) 7px,var(--bg) 8px)}
-.pocdot{font-size:11px;line-height:1;flex:0 0 auto}
-.dl{text-align:right;font-weight:600;font-size:11px}
+.pocdot{width:11px;flex:0 0 auto;text-align:center;font-size:11px;line-height:1}
+.dl{text-align:right;font-weight:600;font-size:10.5px}
 .dl.p{color:var(--up-dim)}.dl.n{color:var(--down)}.dl.z{color:var(--faint)}
 .rm{color:var(--accent);font-size:9px;font-weight:700;display:block;line-height:1.4;white-space:nowrap}
 .rmc{white-space:normal}
@@ -60,7 +60,6 @@ tr.live td{background:var(--live-bg)}
 tr.live .pr{color:var(--live);font-weight:700}
 .fill.pocbar.w3{background:linear-gradient(90deg,#ffe0a0,#ffab2e)}
 .fill.pocbar.w1{background:linear-gradient(90deg,#8fd0f2,#46b8e6)}
-.pocdot{font-size:11px;line-height:1;margin-left:1px;flex:0 0 auto}
 .pocdot.w3{color:var(--accent)} .pocdot.w1{color:var(--accent2)}
 .foot{font-size:9px;color:var(--faint);margin-top:8px;line-height:1.6;padding:0 2px}
 .lgd{display:flex;gap:14px;margin-top:6px;font-size:9.5px;color:var(--muted)}
@@ -84,8 +83,8 @@ tr.live .pr{color:var(--live);font-weight:700}
   </div>
   <table class="tbl">
     <thead><tr>
-      <th style="width:56px">PRICE</th><th id="hA">3W</th><th id="hB">1W</th>
-      <th style="text-align:right;width:38px" id="hdA">3W Δ</th><th style="text-align:right;width:38px;padding-left:8px" id="hdB">1W Δ</th><th style="width:46px"></th>
+      <th style="width:52px">PRICE</th><th id="hA">3W</th><th id="hB">1W</th>
+      <th style="text-align:right;width:37px" id="hdA">3W Δ</th><th style="text-align:right;width:37px" id="hdB">1W Δ</th><th style="width:40px"></th>
     </tr></thead>
     <tbody id="body"></tbody>
   </table>
@@ -96,7 +95,7 @@ tr.live .pr{color:var(--live);font-weight:700}
     <span style="color:var(--accent2)">◆ <span id="lgPB">1W</span> POC</span>
   </div>
   <div class="foot">◆ POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:var(--accent)">앰버=장기</b>(큰 벽) / <b style="color:var(--accent2)">파랑=단기</b>(최근 벽) · 막대=숫자에 비례(공통기준), 1D가 1W보다 짧은 건 틱이 적어서 정상 · Δ = 매수−매도 우위
-    <span style="opacity:.6"> · build 2026-09-15l</span></div>
+    <span style="opacity:.6"> · build 2026-09-15o</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -141,7 +140,7 @@ function render(d){
   // 공통 스케일: 전체 하나의 최대 기준 → 숫자 크면 막대도 김 (표 전체 일치)
   const mx=Math.max(1,...rows.map(r=>r.t3||0),...rows.map(r=>r.t1||0));
   const bar=(v,cls,poc)=>{const w=Math.max(0,Math.round((v||0)/mx*100));
-    return `<div class="barwrap"><span class="tk">${nf(v||0)}</span><div class="track"><div class="fill ${cls}${poc?' pocbar':''}" style="width:${w}%"></div></div>${poc?`<span class="pocdot ${cls}">◆</span>`:''}</div>`;};
+    return `<div class="barwrap"><span class="tk">${nf(v||0)}</span><div class="track"><div class="fill ${cls}${poc?' pocbar':''}" style="width:${w}%"></div></div><span class="pocdot ${cls}">${poc?'◆':''}</span></div>`;};
   const dlc=v=>v>0.05?"p":(v<-0.05?"n":"z");
   // POC = 최다 체결 버킷 (A·B 각각)
   let p3=0,v3=-1,p1=0,v1=-1;
