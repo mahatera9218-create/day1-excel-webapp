@@ -92,8 +92,9 @@ tr.live .pr{color:var(--live);font-weight:700}
     <span><span class="sw" style="background:linear-gradient(90deg,#ffe0a0,#ffab2e)"></span><span id="lgPA">3W</span> POC</span>
     <span><span class="sw" style="background:linear-gradient(90deg,#bfe6ff,#5cc8f5)"></span><span id="lgPB">1W</span> POC</span>
   </div>
-  <div class="foot">POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:#ffab2e">밝은 색 막대 = 그 기간 POC</b> · 막대=숫자에 비례(공통기준), 1D가 1W보다 짧은 건 틱이 적어서 정상 · Δ = 매수−매도 우위
-    <span style="opacity:.6"> · build 2026-09-15r</span></div>
+  <div class="foot">POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:#ffab2e">밝은 색 막대 = 그 기간 POC</b> · 막대=숫자에 비례(공통기준), 1D가 1W보다 짧은 건 틱이 적어서 정상 · Δ = 매수−매도 우위<br>
+    <b>밀도</b> = 최근 N초 소모틱 ÷ 순이동($) = 가격 $1 움직이는 데 든 틱수 · <b style="color:#ffab2e">높음=힘들게 감(저항·흡수)</b> · <b style="color:#46b8e6">낮음=쉽게 감(진공)</b> · 자기기준(EMA) 대비 판정
+    <span style="opacity:.6"> · build 2026-09-16a</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -118,6 +119,7 @@ function sample(){
     rows.push({hi,lo,t3,e3,t1,e1,mark});
   }
   return {sym:"XAUUSD (데모)",bid:BID,ask:ASK,live:LIVE,bucket:BUCKET,kst:"샘플",labA:"1W",labB:"1D",d1:D1,
+    dens:38.0,densEma:52.0,densRat:0.73,densMv:1.8,densDir:1,densTk:68,densSec:60,
     sample:{w3:rows.reduce((s,r)=>s+r.t3,0),w1:rows.reduce((s,r)=>s+r.t1,0)},rows};
 }
 
@@ -130,9 +132,20 @@ function render(d){
   $("#lgA").textContent=A; $("#lgB").textContent=B; $("#lgPA").textContent=A; $("#lgPB").textContent=B;
   $("#live").innerHTML=`${m2(d.bid)} <span class="a">/ ${Number(d.ask).toFixed(2)}</span>`;
   const D=d.d1||{};
+  let densLine="";
+  if(d.dens!=null){
+    const rat=Number(d.densRat||1), dir=Number(d.densDir||0);
+    const ar=dir>0?"▲":(dir<0?"▼":"–");
+    let w,c;
+    if(rat>=1.3){ w="높음 · 저항/흡수"; c="var(--accent)"; }
+    else if(rat<=0.7){ w="낮음 · 진공"; c="var(--accent2)"; }
+    else { w="보통"; c="var(--ink)"; }
+    densLine=`<br><span class="k">밀도</span> <b style="font-size:12px">${nf(Math.round(d.dens))}</b> 틱/$1 <b style="color:${c}">${ar} ${w}</b>`+
+      `<span class="k"> · 최근 ${d.densSec||60}s 이동 ${m2(d.densMv||0)}·${nf(d.densTk||0)}틱</span>`;
+  }
   $("#meta").innerHTML=
     `<span class="k">D1</span> O <b>${m2(D.open)}</b> · H <b>${m2(D.high)}</b> · L <b>${m2(D.low)}</b><br>`+
-    `<span class="k">SAMPLE</span> ${A} <b>${nf(d.sample?d.sample.w3:0)}</b> · ${B} <b>${nf(d.sample?d.sample.w1:0)}</b> ticks &nbsp; <span class="k">BUCKET</span> $${Number(d.bucket||2).toFixed(0)}`;
+    `<span class="k">SAMPLE</span> ${A} <b>${nf(d.sample?d.sample.w3:0)}</b> · ${B} <b>${nf(d.sample?d.sample.w1:0)}</b> ticks &nbsp; <span class="k">BUCKET</span> $${Number(d.bucket||2).toFixed(0)}`+densLine;
   const rows=d.rows||[];
   if(!rows.length){ $("#body").innerHTML=`<tr><td colspan="6"><div class="empty">데이터 없음 — EA 전송/URL 확인</div></td></tr>`; return; }
   // 공통 스케일: 전체 하나의 최대 기준 → 숫자 크면 막대도 김 (표 전체 일치)
