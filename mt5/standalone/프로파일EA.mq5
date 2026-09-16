@@ -7,7 +7,7 @@
 //|  매매하지 않음 (관찰 전용)                                         |
 //+------------------------------------------------------------------+
 #property copyright "day1"
-#property version   "1.03"
+#property version   "1.04"
 #property strict
 
 //--- 입력 ---------------------------------------------------------
@@ -21,7 +21,8 @@ input int     InpSendSec        = 15;      // 전송 주기 (초) — 현재가 
 input int     InpW1RefreshSec   = 120;     // 1W 재계산 주기 (초)
 input int     InpW3RefreshSec   = 600;     // 3W 재계산 주기 (초)
 input int     InpServerToKST    = 6;       // 서버→KST 시차 (시간)
-input int     InpDensSec        = 60;      // 밀도 측정 창 (초) — 최근 N초 소모틱÷이동
+input ENUM_TIMEFRAMES InpDensTF  = PERIOD_M15; // 밀도 봉 타임프레임 (M15/H1/H4…)
+input int     InpDensBars       = 6;       // 밀도 표시 봉 수 (진행봉 포함)
 
 //--- 전역 ---------------------------------------------------------
 double  g_base = 0.0;
@@ -30,7 +31,8 @@ long    g_t3[], g_u3[], g_d3[];   // 3W: 틱수/매수/매도
 long    g_t1[], g_u1[], g_d1[];   // 1W
 datetime g_lastW3=0, g_lastW1=0, g_lastSend=0;
 bool    g_ready=false;
-double  g_densEma=0.0; bool g_densInit=false;   // 밀도 자기보정 기준선
+datetime g_dtfBar=0;                             // 현재 밀도-TF 봉 시각 (캐시 무효화 키)
+double  g_bDens[]; long g_bTk[]; int g_bDir[]; double g_bNet[];  // 완료봉 밀도 캐시
 
 //--- 유틸 ---------------------------------------------------------
 double PriceOf(const MqlTick &t){
@@ -107,28 +109,35 @@ string MarkOf(const double lo,const double hi,const double live,const double o,c
    if(lo<=o && o<hi)       return "OPEN";
    return "";
 }
-//--- 실시간 이동 밀도: 최근 N초 소모틱 ÷ 순이동($) = "가격 $1 움직이는 데 든 틱수" -----
-void ComputeDensity(double &dens,double &mv,int &dir,long &tks){
-   dens=0; mv=0; dir=0; tks=0;
-   datetime now=TimeCurrent();
-   datetime c=now-(datetime)InpDensSec;
-   MqlTick t[];
-   int g=CopyTicksRange(_Symbol,t,COPY_TICKS_ALL,(ulong)c*1000,(ulong)now*1000+999);
-   if(g<=0) return;
-   double first=0,last=0; bool hf=false; long cnt=0;
-   for(int i=0;i<g;i++){
-      double px=PriceOf(t[i]);
-      if(px<=0.0) continue;
-      if(!hf){ first=px; hf=true; }
-      last=px; cnt++;
+//--- 봉별 밀도: 그 봉의 소모틱 ÷ 순이동($) = "가격 $1 움직이는 데 든 틱수" -----------
+string TFStr(const ENUM_TIMEFRAMES tf){
+   switch(tf){
+      case PERIOD_M1: return "M1";  case PERIOD_M5: return "M5";  case PERIOD_M15: return "M15";
+      case PERIOD_M30:return "M30"; case PERIOD_H1: return "H1";  case PERIOD_H4:  return "H4";
+      case PERIOD_D1: return "D1";  case PERIOD_W1: return "W1";  case PERIOD_MN1: return "MN";
    }
-   if(cnt<=0 || !hf) return;
-   tks=cnt;
-   double net=last-first;
-   dir=(net>0.0)?1:(net<0.0?-1:0);
-   mv=MathAbs(net);
-   double denom=MathMax(mv,InpBucket*0.1);   // 순이동 0 근처(횡보=흡수)면 바닥값으로 클램프
-   dens=(double)cnt/denom;                    // 틱 / $1
+   return "TF";
+}
+double BarDensity(const datetime bt,const datetime et,const double o,const double c,long &tk){
+   MqlTick t[]; tk=0;
+   int g=CopyTicksRange(_Symbol,t,COPY_TICKS_ALL,(ulong)bt*1000,(ulong)et*1000+999);
+   long cnt=0;
+   if(g>0) for(int i=0;i<g;i++){ if(PriceOf(t[i])>0.0) cnt++; }
+   tk=cnt;
+   double net=MathAbs(c-o);
+   double denom=MathMax(net,InpBucket*0.1);   // 순이동 0 근처(도지=흡수)면 바닥값 클램프
+   return (cnt>0)?(double)cnt/denom:0.0;       // 틱 / $1
+}
+void RefreshDensCache(){                       // 완료봉(1..n-1)만 재계산해 캐시 (진행봉은 매 전송 새로)
+   int n=InpDensBars; if(n<2)n=2;
+   if(ArraySize(g_bDens)!=n){ ArrayResize(g_bDens,n); ArrayResize(g_bTk,n); ArrayResize(g_bDir,n); ArrayResize(g_bNet,n); }
+   int secs=PeriodSeconds(InpDensTF);
+   for(int i=1;i<n;i++){
+      datetime bt=iTime(_Symbol,InpDensTF,i);
+      double o=iOpen(_Symbol,InpDensTF,i), c=iClose(_Symbol,InpDensTF,i);
+      long tk; g_bDens[i]=BarDensity(bt,bt+(datetime)secs,o,c,tk);
+      g_bTk[i]=tk; g_bNet[i]=MathAbs(c-o); g_bDir[i]=(c>o)?1:(c<o?-1:0);
+   }
 }
 
 string BuildJson(){
@@ -143,12 +152,22 @@ string BuildJson(){
    s+="\"live\":"+JNum(bid,dig)+",\"bucket\":"+JNum(InpBucket,2)+",";
    s+="\"labA\":\""+PerLabel(InpW3Days)+"\",\"labB\":\""+PerLabel(InpW1Days)+"\",";
    s+="\"kst\":\""+kst+"\",";
-   double dens,dmv; int ddir; long dtk;
-   ComputeDensity(dens,dmv,ddir,dtk);
-   if(dens>0.0){ if(!g_densInit){ g_densEma=dens; g_densInit=true; } else g_densEma=g_densEma*0.85+dens*0.15; }
-   double drat=(g_densEma>0.0)? dens/g_densEma : 1.0;
-   s+="\"dens\":"+JNum(dens,1)+",\"densEma\":"+JNum(g_densEma,1)+",\"densRat\":"+JNum(drat,2)+",";
-   s+="\"densMv\":"+JNum(dmv,dig)+",\"densDir\":"+(string)ddir+",\"densTk\":"+(string)dtk+",\"densSec\":"+(string)InpDensSec+",";
+   // --- 봉별 밀도 (직전 완료봉들 + 현재 진행봉) ---
+   datetime curBar=iTime(_Symbol,InpDensTF,0);
+   if(curBar!=g_dtfBar){ RefreshDensCache(); g_dtfBar=curBar; }
+   int dn=InpDensBars; if(dn<2)dn=2;
+   double o0=iOpen(_Symbol,InpDensTF,0);
+   long tk0; double d0=BarDensity(curBar,TimeCurrent(),o0,bid,tk0);
+   int dir0=(bid>o0)?1:(bid<o0?-1:0);
+   s+="\"densTF\":\""+TFStr(InpDensTF)+"\",\"dens\":[";
+   bool df=true;
+   for(int i=dn-1;i>=1;i--){                 // 오래된 완료봉 → 최근 완료봉
+      if(!df) s+=","; df=false;
+      s+="{\"d\":"+JNum(g_bDens[i],1)+",\"net\":"+JNum(g_bNet[i],dig)+",\"tk\":"+(string)g_bTk[i]+",\"dir\":"+(string)g_bDir[i]+",\"cur\":false}";
+   }
+   if(!df) s+=",";
+   s+="{\"d\":"+JNum(d0,1)+",\"net\":"+JNum(MathAbs(bid-o0),dig)+",\"tk\":"+(string)tk0+",\"dir\":"+(string)dir0+",\"cur\":true}";
+   s+="],";
    s+="\"d1\":{\"open\":"+JNum(o,dig)+",\"high\":"+JNum(h,dig)+",\"low\":"+JNum(l,dig)+"},";
    s+="\"sample\":{\"w3\":"+(string)s3+",\"w1\":"+(string)s1+"},";
    s+="\"rows\":[";
@@ -184,9 +203,9 @@ void SendPantry(const string json){
 int OnInit(){
    ComputeRange();
    EventSetTimer(InpSendSec>0?InpSendSec:15);
-   Print("프로파일EA v1.03 — 버킷 $",DoubleToString(InpBucket,2),
+   Print("프로파일EA v1.04 — 버킷 $",DoubleToString(InpBucket,2),
          " | 3W ",InpW3Days,"d/",InpW3RefreshSec,"s · 1W ",InpW1Days,"d/",InpW1RefreshSec,"s",
-         " | 밀도창 ",InpDensSec,"s | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF")," | 매매안함");
+         " | 밀도 ",TFStr(InpDensTF),"×",InpDensBars,"봉 | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF")," | 매매안함");
    return(INIT_SUCCEEDED);
 }
 void OnDeinit(const int reason){ EventKillTimer(); }
