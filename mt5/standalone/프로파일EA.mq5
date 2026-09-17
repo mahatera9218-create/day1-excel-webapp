@@ -7,7 +7,7 @@
 //|  매매하지 않음 (관찰 전용)                                         |
 //+------------------------------------------------------------------+
 #property copyright "day1"
-#property version   "1.09"
+#property version   "1.10"
 #property strict
 
 //--- 입력 ---------------------------------------------------------
@@ -123,7 +123,7 @@ string MarkOf(const double lo,const double hi,const double live,const double o,c
    if(lo<=o && o<hi)       return "OPEN";
    return "";
 }
-//--- 봉별 밀도(분당): 소모틱 ÷ 순이동($) ÷ 봉길이(분) = "$1 이동에 든 틱/분" (TF 무관 비교) --
+//--- 봉별 밀도(분당): 소모틱 ÷ 고저폭($) ÷ 봉길이(분) = "혼잡도" (net과 독립·TF 무관 비교) --
 string TFStr(const ENUM_TIMEFRAMES tf){
    switch(tf){
       case PERIOD_M1: return "M1";  case PERIOD_M5: return "M5";  case PERIOD_M15: return "M15";
@@ -132,26 +132,26 @@ string TFStr(const ENUM_TIMEFRAMES tf){
    }
    return "TF";
 }
-double BarRawDens(const datetime bt,const datetime et,const double o,const double c,long &tk){
+double BarRawDens(const datetime bt,const datetime et,const double span,long &tk){
    MqlTick t[]; tk=0;
    int g=CopyTicksRange(_Symbol,t,COPY_TICKS_ALL,(ulong)bt*1000,(ulong)et*1000+999);
    long cnt=0;
    if(g>0) for(int i=0;i<g;i++){ if(PriceOf(t[i])>0.0) cnt++; }
    tk=cnt;
-   double net=MathAbs(c-o);
-   double denom=MathMax(net,InpBucket*0.1);   // 순이동 0 근처(도지=흡수)면 바닥값 클램프
-   return (cnt>0)?(double)cnt/denom:0.0;       // 틱 / $1 (분당 정규화 전)
+   double denom=MathMax(span,InpBucket*0.1);   // 고저폭(실제 이동 범위) 0 근처면 바닥값 클램프
+   return (cnt>0)?(double)cnt/denom:0.0;        // 틱 / $범위 (분당 정규화 전)
 }
 double CompletedDensity(const ENUM_TIMEFRAMES tf,const int slot,long &tk,double &net,int &dir){
    datetime bt=iTime(_Symbol,tf,1);            // 직전(완료) 봉
    if(bt!=g_cBarT[slot]){
       double o=iOpen(_Symbol,tf,1), c=iClose(_Symbol,tf,1);
-      long t; double raw=BarRawDens(bt,bt+(datetime)PeriodSeconds(tf),o,c,t);
+      double hi=iHigh(_Symbol,tf,1), lo=iLow(_Symbol,tf,1);
+      long t; double raw=BarRawDens(bt,bt+(datetime)PeriodSeconds(tf),hi-lo,t);   // 밀도=고저폭 기준
       double mins=PeriodSeconds(tf)/60.0; if(mins<1.0)mins=1.0;
       g_cBarT[slot]=bt; g_cDens[slot]=raw/mins; g_cTk[slot]=t; g_cNet[slot]=MathAbs(c-o); g_cDir[slot]=(c>o)?1:(c<o?-1:0);
    }
-   tk=g_cTk[slot]; net=g_cNet[slot]; dir=g_cDir[slot];
-   return g_cDens[slot];                        // 틱/$·분
+   tk=g_cTk[slot]; net=g_cNet[slot]; dir=g_cDir[slot];   // net=순이동(표시·방향)
+   return g_cDens[slot];                        // 틱/$·분 (혼잡도)
 }
 double FormingDensity(const ENUM_TIMEFRAMES tf,const int slot,const double bid,long &tk,double &net,int &dir){
    datetime bt=iTime(_Symbol,tf,0);            // 현재(진행) 봉
@@ -163,13 +163,14 @@ double FormingDensity(const ENUM_TIMEFRAMES tf,const int slot,const double bid,l
       g_fLastMs[slot]=(ulong)t[g-1].time_msc+1;   // 다음 전송엔 이 다음 틱부터 (중복 방지)
    }
    double o=g_fOpen[slot];
-   net=MathAbs(bid-o);
+   net=MathAbs(bid-o);                          // 순이동(표시·방향용)
    dir=(bid>o)?1:(bid<o?-1:0);
    tk=g_fCnt[slot];
-   double denom=MathMax(net,InpBucket*0.1);
+   double span=iHigh(_Symbol,tf,0)-iLow(_Symbol,tf,0);   // 진행봉 고저폭 → 밀도 기준
+   double denom=MathMax(span,InpBucket*0.1);
    double raw=(g_fCnt[slot]>0)?(double)g_fCnt[slot]/denom:0.0;
    double mins=(double)(TimeCurrent()-bt)/60.0; if(mins<0.5)mins=0.5;  // 봉 시작 직후 과대 방지
-   return raw/mins;                             // 틱/$·분
+   return raw/mins;                             // 틱/$·분 (혼잡도)
 }
 string DensRow(const string lab,const bool cur,const double d,const double net,const long tk,const int dir,const int dig){
    return "{\"lab\":\""+lab+"\",\"cur\":"+(cur?"true":"false")+",\"d\":"+JNum(d,1)+
@@ -305,7 +306,7 @@ void MaybeBrief(const datetime now){
 int OnInit(){
    ComputeRange();
    EventSetTimer(InpSendSec>0?InpSendSec:15);
-   Print("프로파일EA v1.09 — 버킷 $",DoubleToString(InpBucket,2),
+   Print("프로파일EA v1.10 — 버킷 $",DoubleToString(InpBucket,2),
          " | 밀도 ",TFStr(InpDensTF_A),"/",TFStr(InpDensTF_B),"/",TFStr(InpDensTF_C),
          " | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF"),
          " | 브리핑 ",(InpTgEnable?("ON "+(string)InpBriefMin+"분"):"OFF")," | 매매안함");
