@@ -7,7 +7,7 @@
 //|  매매하지 않음 (관찰 전용)                                         |
 //+------------------------------------------------------------------+
 #property copyright "day1"
-#property version   "1.10"
+#property version   "1.11"
 #property strict
 
 //--- 입력 ---------------------------------------------------------
@@ -41,7 +41,7 @@ long    g_t1[], g_u1[], g_d1[];   // 1W
 datetime g_lastW3=0, g_lastW1=0, g_lastSend=0;
 bool    g_ready=false;
 // 완료봉 밀도 캐시 (slot0=A직전, slot1=B직전, slot2=C직전) — 봉이 넘어갈 때만 재계산
-datetime g_cBarT[3]; double g_cDens[3]; long g_cTk[3]; double g_cNet[3]; int g_cDir[3];
+datetime g_cBarT[3]; double g_cDens[3]; long g_cTk[3]; double g_cNet[3]; double g_cSpan[3]; int g_cDir[3];
 // 진행봉 증분 누적 (slot0=B현재, slot1=C현재) — 매 전송 새 틱만 추가
 datetime g_fBarT[2]; ulong g_fLastMs[2]; long g_fCnt[2]; double g_fOpen[2];
 // 브리핑용 밀도 스냅샷 (BuildJson에서 갱신) + 이벤트 상태
@@ -141,19 +141,19 @@ double BarRawDens(const datetime bt,const datetime et,const double span,long &tk
    double denom=MathMax(span,InpBucket*0.1);   // 고저폭(실제 이동 범위) 0 근처면 바닥값 클램프
    return (cnt>0)?(double)cnt/denom:0.0;        // 틱 / $범위 (분당 정규화 전)
 }
-double CompletedDensity(const ENUM_TIMEFRAMES tf,const int slot,long &tk,double &net,int &dir){
+double CompletedDensity(const ENUM_TIMEFRAMES tf,const int slot,long &tk,double &net,int &dir,double &span){
    datetime bt=iTime(_Symbol,tf,1);            // 직전(완료) 봉
    if(bt!=g_cBarT[slot]){
       double o=iOpen(_Symbol,tf,1), c=iClose(_Symbol,tf,1);
       double hi=iHigh(_Symbol,tf,1), lo=iLow(_Symbol,tf,1);
       long t; double raw=BarRawDens(bt,bt+(datetime)PeriodSeconds(tf),hi-lo,t);   // 밀도=고저폭 기준
       double mins=PeriodSeconds(tf)/60.0; if(mins<1.0)mins=1.0;
-      g_cBarT[slot]=bt; g_cDens[slot]=raw/mins; g_cTk[slot]=t; g_cNet[slot]=MathAbs(c-o); g_cDir[slot]=(c>o)?1:(c<o?-1:0);
+      g_cBarT[slot]=bt; g_cDens[slot]=raw/mins; g_cTk[slot]=t; g_cNet[slot]=MathAbs(c-o); g_cSpan[slot]=hi-lo; g_cDir[slot]=(c>o)?1:(c<o?-1:0);
    }
-   tk=g_cTk[slot]; net=g_cNet[slot]; dir=g_cDir[slot];   // net=순이동(표시·방향)
+   tk=g_cTk[slot]; net=g_cNet[slot]; span=g_cSpan[slot]; dir=g_cDir[slot];   // net=순이동, span=고저폭
    return g_cDens[slot];                        // 틱/$·분 (혼잡도)
 }
-double FormingDensity(const ENUM_TIMEFRAMES tf,const int slot,const double bid,long &tk,double &net,int &dir){
+double FormingDensity(const ENUM_TIMEFRAMES tf,const int slot,const double bid,long &tk,double &net,int &dir,double &span){
    datetime bt=iTime(_Symbol,tf,0);            // 현재(진행) 봉
    if(bt!=g_fBarT[slot]){ g_fBarT[slot]=bt; g_fOpen[slot]=iOpen(_Symbol,tf,0); g_fCnt[slot]=0; g_fLastMs[slot]=(ulong)bt*1000; }
    MqlTick t[];
@@ -166,15 +166,15 @@ double FormingDensity(const ENUM_TIMEFRAMES tf,const int slot,const double bid,l
    net=MathAbs(bid-o);                          // 순이동(표시·방향용)
    dir=(bid>o)?1:(bid<o?-1:0);
    tk=g_fCnt[slot];
-   double span=iHigh(_Symbol,tf,0)-iLow(_Symbol,tf,0);   // 진행봉 고저폭 → 밀도 기준
+   span=iHigh(_Symbol,tf,0)-iLow(_Symbol,tf,0);  // 진행봉 고저폭 → 밀도·효율 기준
    double denom=MathMax(span,InpBucket*0.1);
    double raw=(g_fCnt[slot]>0)?(double)g_fCnt[slot]/denom:0.0;
    double mins=(double)(TimeCurrent()-bt)/60.0; if(mins<0.5)mins=0.5;  // 봉 시작 직후 과대 방지
    return raw/mins;                             // 틱/$·분 (혼잡도)
 }
-string DensRow(const string lab,const bool cur,const double d,const double net,const long tk,const int dir,const int dig){
+string DensRow(const string lab,const bool cur,const double d,const double net,const double rng,const long tk,const int dir,const int dig){
    return "{\"lab\":\""+lab+"\",\"cur\":"+(cur?"true":"false")+",\"d\":"+JNum(d,1)+
-          ",\"net\":"+JNum(net,dig)+",\"tk\":"+(string)tk+",\"dir\":"+(string)dir+"}";
+          ",\"net\":"+JNum(net,dig)+",\"rng\":"+JNum(rng,dig)+",\"tk\":"+(string)tk+",\"dir\":"+(string)dir+"}";
 }
 
 //--- 브리핑 (수치 → 한국어 시장판단) --------------------------------
@@ -237,12 +237,12 @@ string BuildJson(){
    s+="\"labA\":\""+PerLabel(InpW3Days)+"\",\"labB\":\""+PerLabel(InpW1Days)+"\",";
    s+="\"kst\":\""+kst+"\",";
    // --- 멀티TF 밀도: 직전 A / 직전 B / 현재 B / 직전 C / 현재 C ---
-   long tkx; double nx; int dix;
-   double dA =CompletedDensity(InpDensTF_A,0,tkx,nx,dix); string rA =DensRow("직전 "+TFStr(InpDensTF_A),false,dA, nx,tkx,dix,dig);
-   double dB =CompletedDensity(InpDensTF_B,1,tkx,nx,dix); string rB =DensRow("직전 "+TFStr(InpDensTF_B),false,dB, nx,tkx,dix,dig);
-   double dB0=FormingDensity(InpDensTF_B,0,bid,tkx,nx,dix); string rB0=DensRow("현재 "+TFStr(InpDensTF_B),true, dB0,nx,tkx,dix,dig);
-   double dC1=CompletedDensity(InpDensTF_C,2,tkx,nx,dix); string rC1=DensRow("직전 "+TFStr(InpDensTF_C),false,dC1,nx,tkx,dix,dig);
-   double dC0=FormingDensity(InpDensTF_C,1,bid,tkx,nx,dix); string rC0=DensRow("현재 "+TFStr(InpDensTF_C),true, dC0,nx,tkx,dix,dig);
+   long tkx; double nx,sx; int dix;
+   double dA =CompletedDensity(InpDensTF_A,0,tkx,nx,dix,sx); string rA =DensRow("직전 "+TFStr(InpDensTF_A),false,dA, nx,sx,tkx,dix,dig);
+   double dB =CompletedDensity(InpDensTF_B,1,tkx,nx,dix,sx); string rB =DensRow("직전 "+TFStr(InpDensTF_B),false,dB, nx,sx,tkx,dix,dig);
+   double dB0=FormingDensity(InpDensTF_B,0,bid,tkx,nx,dix,sx); string rB0=DensRow("현재 "+TFStr(InpDensTF_B),true, dB0,nx,sx,tkx,dix,dig);
+   double dC1=CompletedDensity(InpDensTF_C,2,tkx,nx,dix,sx); string rC1=DensRow("직전 "+TFStr(InpDensTF_C),false,dC1,nx,sx,tkx,dix,dig);
+   double dC0=FormingDensity(InpDensTF_C,1,bid,tkx,nx,dix,sx); string rC0=DensRow("현재 "+TFStr(InpDensTF_C),true, dC0,nx,sx,tkx,dix,dig);
    g_dvA=dA; g_dvB=dB; g_dvB0=dB0; g_dvC1=dC1; g_dvC0=dC0; g_dirC0=dix; g_netC0=nx;   // 브리핑용 스냅샷
    s+="\"dens\":["+rA+","+rB+","+rB0+","+rC1+","+rC0+"],";
    s+="\"d1\":{\"open\":"+JNum(o,dig)+",\"high\":"+JNum(h,dig)+",\"low\":"+JNum(l,dig)+"},";
@@ -306,7 +306,7 @@ void MaybeBrief(const datetime now){
 int OnInit(){
    ComputeRange();
    EventSetTimer(InpSendSec>0?InpSendSec:15);
-   Print("프로파일EA v1.10 — 버킷 $",DoubleToString(InpBucket,2),
+   Print("프로파일EA v1.11 — 버킷 $",DoubleToString(InpBucket,2),
          " | 밀도 ",TFStr(InpDensTF_A),"/",TFStr(InpDensTF_B),"/",TFStr(InpDensTF_C),
          " | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF"),
          " | 브리핑 ",(InpTgEnable?("ON "+(string)InpBriefMin+"분"):"OFF")," | 매매안함");
