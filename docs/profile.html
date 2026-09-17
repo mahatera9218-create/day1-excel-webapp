@@ -106,8 +106,8 @@ tr.live .pr{color:var(--live);font-weight:700}
     <span><span class="sw" style="background:linear-gradient(90deg,#bfe6ff,#5cc8f5)"></span><span id="lgPB">1W</span> POC</span>
   </div>
   <div class="foot">POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:#ffab2e">밝은 색 막대 = 그 기간 POC</b> · 막대=숫자에 비례(공통기준), 1D가 1W보다 짧은 건 틱이 적어서 정상 · Δ = 매수−매도 우위<br>
-    <b>밀도</b> = 봉별 소모틱 ÷ 순이동($) = 가격 $1 움직이는 데 든 틱수 · 직전 4H→직전 1H→현재 1H→현재 15m 순으로 큰 흐름에서 지금으로 · <b style="color:#ffab2e">빡빡=저항·흡수</b> · <b style="color:#46b8e6">술술=진공</b> · ▲▼=봉 방향
-    <span style="opacity:.6"> · build 2026-09-17a</span></div>
+    <b>밀도</b> = 봉별 소모틱 ÷ 순이동($) = 가격 $1 움직이는 데 든 틱수 · 직전 4H→직전 1H→직전 15m→현재 15m 순으로 큰 흐름에서 지금으로 · <b style="color:#ffab2e">빡빡=저항·흡수</b> · <b style="color:#46b8e6">술술=진공</b> · ▲▼=봉 방향
+    <span style="opacity:.6"> · build 2026-09-17b</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -133,10 +133,10 @@ function sample(){
   }
   return {sym:"XAUUSD (데모)",bid:BID,ask:ASK,live:LIVE,bucket:BUCKET,kst:"샘플",labA:"1W",labB:"1D",d1:D1,
     dens:[
-      {lab:"직전 H4",cur:false,d:412,net:9.4,tk:3868,dir:1},
-      {lab:"직전 H1",cur:false,d:262,net:2.1,tk:550,dir:1},
-      {lab:"현재 H1",cur:true, d:455,net:0.9,tk:410,dir:1},
-      {lab:"현재 M15",cur:true,d:181,net:0.4,tk:72, dir:-1}],
+      {lab:"직전 H4", cur:false,d:412,net:9.4,tk:3868,dir:1},
+      {lab:"직전 H1", cur:false,d:262,net:2.1,tk:550, dir:1},
+      {lab:"직전 M15",cur:false,d:205,net:0.8,tk:164, dir:1},
+      {lab:"현재 M15",cur:true, d:142,net:0.6,tk:85,  dir:1}],
     sample:{w3:rows.reduce((s,r)=>s+r.t3,0),w1:rows.reduce((s,r)=>s+r.t1,0)},rows};
 }
 

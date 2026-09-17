@@ -7,7 +7,7 @@
 //|  매매하지 않음 (관찰 전용)                                         |
 //+------------------------------------------------------------------+
 #property copyright "day1"
-#property version   "1.05"
+#property version   "1.06"
 #property strict
 
 //--- 입력 ---------------------------------------------------------
@@ -32,10 +32,10 @@ long    g_t3[], g_u3[], g_d3[];   // 3W: 틱수/매수/매도
 long    g_t1[], g_u1[], g_d1[];   // 1W
 datetime g_lastW3=0, g_lastW1=0, g_lastSend=0;
 bool    g_ready=false;
-// 완료봉 밀도 캐시 (slot0=A직전, slot1=B직전) — 봉이 넘어갈 때만 재계산
-datetime g_cBarT[2]; double g_cDens[2]; long g_cTk[2]; double g_cNet[2]; int g_cDir[2];
-// 진행봉 증분 누적 (slot0=B현재, slot1=C현재) — 매 전송 새 틱만 추가
-datetime g_fBarT[2]; ulong g_fLastMs[2]; long g_fCnt[2]; double g_fOpen[2];
+// 완료봉 밀도 캐시 (slot0=A직전, slot1=B직전, slot2=C직전) — 봉이 넘어갈 때만 재계산
+datetime g_cBarT[3]; double g_cDens[3]; long g_cTk[3]; double g_cNet[3]; int g_cDir[3];
+// 진행봉 증분 누적 (slot0=C현재) — 매 전송 새 틱만 추가
+datetime g_fBarT[1]; ulong g_fLastMs[1]; long g_fCnt[1]; double g_fOpen[1];
 
 //--- 유틸 ---------------------------------------------------------
 double PriceOf(const MqlTick &t){
@@ -174,13 +174,13 @@ string BuildJson(){
    s+="\"live\":"+JNum(bid,dig)+",\"bucket\":"+JNum(InpBucket,2)+",";
    s+="\"labA\":\""+PerLabel(InpW3Days)+"\",\"labB\":\""+PerLabel(InpW1Days)+"\",";
    s+="\"kst\":\""+kst+"\",";
-   // --- 멀티TF 밀도: 직전 A / 직전 B / 현재 B / 현재 C ---
+   // --- 멀티TF 밀도: 직전 A / 직전 B / 직전 C / 현재 C ---
    long tkx; double nx; int dix;
-   double dA =CompletedDensity(InpDensTF_A,0,tkx,nx,dix); string rA=DensRow("직전 "+TFStr(InpDensTF_A),false,dA,nx,tkx,dix,dig);
-   double dB1=CompletedDensity(InpDensTF_B,1,tkx,nx,dix); string rB1=DensRow("직전 "+TFStr(InpDensTF_B),false,dB1,nx,tkx,dix,dig);
-   double dB0=FormingDensity(InpDensTF_B,0,bid,tkx,nx,dix); string rB0=DensRow("현재 "+TFStr(InpDensTF_B),true,dB0,nx,tkx,dix,dig);
-   double dC0=FormingDensity(InpDensTF_C,1,bid,tkx,nx,dix); string rC0=DensRow("현재 "+TFStr(InpDensTF_C),true,dC0,nx,tkx,dix,dig);
-   s+="\"dens\":["+rA+","+rB1+","+rB0+","+rC0+"],";
+   double dA =CompletedDensity(InpDensTF_A,0,tkx,nx,dix); string rA =DensRow("직전 "+TFStr(InpDensTF_A),false,dA, nx,tkx,dix,dig);
+   double dB =CompletedDensity(InpDensTF_B,1,tkx,nx,dix); string rB =DensRow("직전 "+TFStr(InpDensTF_B),false,dB, nx,tkx,dix,dig);
+   double dC1=CompletedDensity(InpDensTF_C,2,tkx,nx,dix); string rC1=DensRow("직전 "+TFStr(InpDensTF_C),false,dC1,nx,tkx,dix,dig);
+   double dC0=FormingDensity(InpDensTF_C,0,bid,tkx,nx,dix); string rC0=DensRow("현재 "+TFStr(InpDensTF_C),true, dC0,nx,tkx,dix,dig);
+   s+="\"dens\":["+rA+","+rB+","+rC1+","+rC0+"],";
    s+="\"d1\":{\"open\":"+JNum(o,dig)+",\"high\":"+JNum(h,dig)+",\"low\":"+JNum(l,dig)+"},";
    s+="\"sample\":{\"w3\":"+(string)s3+",\"w1\":"+(string)s1+"},";
    s+="\"rows\":[";
@@ -216,7 +216,7 @@ void SendPantry(const string json){
 int OnInit(){
    ComputeRange();
    EventSetTimer(InpSendSec>0?InpSendSec:15);
-   Print("프로파일EA v1.05 — 버킷 $",DoubleToString(InpBucket,2),
+   Print("프로파일EA v1.06 — 버킷 $",DoubleToString(InpBucket,2),
          " | 3W ",InpW3Days,"d/",InpW3RefreshSec,"s · 1W ",InpW1Days,"d/",InpW1RefreshSec,"s",
          " | 밀도 ",TFStr(InpDensTF_A),"/",TFStr(InpDensTF_B),"/",TFStr(InpDensTF_C),
          " | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF")," | 매매안함");
