@@ -7,7 +7,7 @@
 //|  매매하지 않음 (관찰 전용)                                         |
 //+------------------------------------------------------------------+
 #property copyright "day1"
-#property version   "1.08"
+#property version   "1.09"
 #property strict
 
 //--- 입력 ---------------------------------------------------------
@@ -42,10 +42,10 @@ datetime g_lastW3=0, g_lastW1=0, g_lastSend=0;
 bool    g_ready=false;
 // 완료봉 밀도 캐시 (slot0=A직전, slot1=B직전, slot2=C직전) — 봉이 넘어갈 때만 재계산
 datetime g_cBarT[3]; double g_cDens[3]; long g_cTk[3]; double g_cNet[3]; int g_cDir[3];
-// 진행봉 증분 누적 (slot0=C현재) — 매 전송 새 틱만 추가
-datetime g_fBarT[1]; ulong g_fLastMs[1]; long g_fCnt[1]; double g_fOpen[1];
+// 진행봉 증분 누적 (slot0=B현재, slot1=C현재) — 매 전송 새 틱만 추가
+datetime g_fBarT[2]; ulong g_fLastMs[2]; long g_fCnt[2]; double g_fOpen[2];
 // 브리핑용 밀도 스냅샷 (BuildJson에서 갱신) + 이벤트 상태
-double g_dvA=0,g_dvB=0,g_dvC1=0,g_dvC0=0,g_netC0=0; int g_dirC0=0;
+double g_dvA=0,g_dvB=0,g_dvB0=0,g_dvC1=0,g_dvC0=0,g_netC0=0; int g_dirC0=0;
 datetime g_lastBrief=0; string g_lastSig="";
 
 //--- 유틸 ---------------------------------------------------------
@@ -218,7 +218,7 @@ string BuildBriefing(){
      +" · 아래매물대 "+(dnW>0?JNum(dnW,dig)+" ("+FmtDiff(dnW-live)+")":"—")+"\n\n";
    s+="② 힘(밀도, 틱/$·분): 현재"+TFStr(InpDensTF_C)+" "+JNum(g_dvC0,1)+" vs 직전 "+JNum(g_dvC1,1)+" → "+den+" "+arr+"\n";
    s+=" · 흐름 "+TFStr(InpDensTF_A)+" "+JNum(g_dvA,1)+" → "+TFStr(InpDensTF_B)+" "+JNum(g_dvB,1)
-     +" → "+TFStr(InpDensTF_C)+" "+JNum(g_dvC1,1)+" → 현재 "+JNum(g_dvC0,1)+"\n\n";
+     +"→현재"+JNum(g_dvB0,1)+" → "+TFStr(InpDensTF_C)+" "+JNum(g_dvC1,1)+"→현재"+JNum(g_dvC0,1)+"\n\n";
    s+="③ 판단: "+judge;
    return s;
 }
@@ -235,14 +235,15 @@ string BuildJson(){
    s+="\"live\":"+JNum(bid,dig)+",\"bucket\":"+JNum(InpBucket,2)+",";
    s+="\"labA\":\""+PerLabel(InpW3Days)+"\",\"labB\":\""+PerLabel(InpW1Days)+"\",";
    s+="\"kst\":\""+kst+"\",";
-   // --- 멀티TF 밀도: 직전 A / 직전 B / 직전 C / 현재 C ---
+   // --- 멀티TF 밀도: 직전 A / 직전 B / 현재 B / 직전 C / 현재 C ---
    long tkx; double nx; int dix;
    double dA =CompletedDensity(InpDensTF_A,0,tkx,nx,dix); string rA =DensRow("직전 "+TFStr(InpDensTF_A),false,dA, nx,tkx,dix,dig);
    double dB =CompletedDensity(InpDensTF_B,1,tkx,nx,dix); string rB =DensRow("직전 "+TFStr(InpDensTF_B),false,dB, nx,tkx,dix,dig);
+   double dB0=FormingDensity(InpDensTF_B,0,bid,tkx,nx,dix); string rB0=DensRow("현재 "+TFStr(InpDensTF_B),true, dB0,nx,tkx,dix,dig);
    double dC1=CompletedDensity(InpDensTF_C,2,tkx,nx,dix); string rC1=DensRow("직전 "+TFStr(InpDensTF_C),false,dC1,nx,tkx,dix,dig);
-   double dC0=FormingDensity(InpDensTF_C,0,bid,tkx,nx,dix); string rC0=DensRow("현재 "+TFStr(InpDensTF_C),true, dC0,nx,tkx,dix,dig);
-   g_dvA=dA; g_dvB=dB; g_dvC1=dC1; g_dvC0=dC0; g_dirC0=dix; g_netC0=nx;   // 브리핑용 스냅샷
-   s+="\"dens\":["+rA+","+rB+","+rC1+","+rC0+"],";
+   double dC0=FormingDensity(InpDensTF_C,1,bid,tkx,nx,dix); string rC0=DensRow("현재 "+TFStr(InpDensTF_C),true, dC0,nx,tkx,dix,dig);
+   g_dvA=dA; g_dvB=dB; g_dvB0=dB0; g_dvC1=dC1; g_dvC0=dC0; g_dirC0=dix; g_netC0=nx;   // 브리핑용 스냅샷
+   s+="\"dens\":["+rA+","+rB+","+rB0+","+rC1+","+rC0+"],";
    s+="\"d1\":{\"open\":"+JNum(o,dig)+",\"high\":"+JNum(h,dig)+",\"low\":"+JNum(l,dig)+"},";
    s+="\"sample\":{\"w3\":"+(string)s3+",\"w1\":"+(string)s1+"},";
    s+="\"rows\":[";
@@ -304,7 +305,7 @@ void MaybeBrief(const datetime now){
 int OnInit(){
    ComputeRange();
    EventSetTimer(InpSendSec>0?InpSendSec:15);
-   Print("프로파일EA v1.08 — 버킷 $",DoubleToString(InpBucket,2),
+   Print("프로파일EA v1.09 — 버킷 $",DoubleToString(InpBucket,2),
          " | 밀도 ",TFStr(InpDensTF_A),"/",TFStr(InpDensTF_B),"/",TFStr(InpDensTF_C),
          " | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF"),
          " | 브리핑 ",(InpTgEnable?("ON "+(string)InpBriefMin+"분"):"OFF")," | 매매안함");
