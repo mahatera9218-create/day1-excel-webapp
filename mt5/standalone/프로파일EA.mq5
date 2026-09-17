@@ -3,11 +3,11 @@
 //|  가격대별 틱 프로파일 (3W vs 1W) → 팬트리 → 웹앱                    |
 //|                                                                  |
 //|  WebRequest 허용 필요: 도구>옵션>전문가 자문                       |
-//|     https://getpantry.cloud                                       |
+//|     https://getpantry.cloud , https://api.telegram.org            |
 //|  매매하지 않음 (관찰 전용)                                         |
 //+------------------------------------------------------------------+
 #property copyright "day1"
-#property version   "1.07"
+#property version   "1.08"
 #property strict
 
 //--- 입력 ---------------------------------------------------------
@@ -23,7 +23,15 @@ input int     InpW3RefreshSec   = 600;     // 3W 재계산 주기 (초)
 input int     InpServerToKST    = 6;       // 서버→KST 시차 (시간)
 input ENUM_TIMEFRAMES InpDensTF_A = PERIOD_H4;  // 밀도 상위 TF (직전봉)
 input ENUM_TIMEFRAMES InpDensTF_B = PERIOD_H1;  // 밀도 중위 TF (직전+현재)
-input ENUM_TIMEFRAMES InpDensTF_C = PERIOD_M15; // 밀도 하위 TF (현재)
+input ENUM_TIMEFRAMES InpDensTF_C = PERIOD_M15; // 밀도 하위 TF (직전+현재)
+input bool    InpTgEnable       = false;   // 텔레그램 브리핑 ON
+input string  InpTgToken        = "";      // 텔레그램 봇 토큰
+input string  InpTgChatId       = "";      // 텔레그램 chat_id
+input int     InpBriefMin       = 30;      // 정기 브리핑 주기(분) — 0=끔
+input bool    InpBriefEvents    = true;    // 이벤트(자리/밀도 전환) 브리핑
+input int     InpEventGapSec    = 300;     // 이벤트 브리핑 최소 간격(초) — 스팸 방지
+input int     InpBriefStartKST  = 9;       // 브리핑 시간대 시작 (KST 시)
+input int     InpBriefEndKST    = 23;      // 브리핑 시간대 끝 (KST 시)
 
 //--- 전역 ---------------------------------------------------------
 double  g_base = 0.0;
@@ -36,6 +44,9 @@ bool    g_ready=false;
 datetime g_cBarT[3]; double g_cDens[3]; long g_cTk[3]; double g_cNet[3]; int g_cDir[3];
 // 진행봉 증분 누적 (slot0=C현재) — 매 전송 새 틱만 추가
 datetime g_fBarT[1]; ulong g_fLastMs[1]; long g_fCnt[1]; double g_fOpen[1];
+// 브리핑용 밀도 스냅샷 (BuildJson에서 갱신) + 이벤트 상태
+double g_dvA=0,g_dvB=0,g_dvC1=0,g_dvC0=0,g_netC0=0; int g_dirC0=0;
+datetime g_lastBrief=0; string g_lastSig="";
 
 //--- 유틸 ---------------------------------------------------------
 double PriceOf(const MqlTick &t){
@@ -165,6 +176,53 @@ string DensRow(const string lab,const bool cur,const double d,const double net,c
           ",\"net\":"+JNum(net,dig)+",\"tk\":"+(string)tk+",\"dir\":"+(string)dir+"}";
 }
 
+//--- 브리핑 (수치 → 한국어 시장판단) --------------------------------
+string FmtDiff(const double d){ return (d>=0?"+":"")+DoubleToString(d,1); }
+void ProfileCtx(double &live,double &poc3,double &poc1,double &upW,double &dnW,double &heavy){
+   live=SymbolInfoDouble(_Symbol,SYMBOL_BID);
+   int p3=-1,p1=-1; long v3=-1,v1=-1;
+   for(int i=0;i<g_nb;i++){ if(g_t3[i]>v3){v3=g_t3[i];p3=i;} if(g_t1[i]>v1){v1=g_t1[i];p1=i;} }
+   poc3=(p3>=0)?g_base+(p3+0.5)*InpBucket:0.0;
+   poc1=(p1>=0)?g_base+(p1+0.5)*InpBucket:0.0;
+   int li=(int)MathFloor((live-g_base)/InpBucket);
+   heavy=(li>=0 && li<g_nb && v3>0)?(double)g_t3[li]/(double)v3:0.0;
+   upW=0; dnW=0;
+   for(int i=0;i<g_nb;i++){
+      if(v3>0 && g_t3[i]>=v3*0.5){ double mid=g_base+(i+0.5)*InpBucket;
+         if(mid>live+InpBucket*0.5){ if(upW==0||mid<upW) upW=mid; }
+         else if(mid<live-InpBucket*0.5){ if(dnW==0||mid>dnW) dnW=mid; } }
+   }
+}
+string ZoneWord(const double heavy){ return heavy>=0.6?"매물대 안(두꺼움)":(heavy>=0.3?"매물대 경계":"진공(얇음)"); }
+string DenWord(){ double rat=(g_dvC1>0)?g_dvC0/g_dvC1:1.0; return rat>=1.25?"빡빡":(rat<=0.75?"술술":"보통"); }
+string StateSig(){ double lv,p3,p1,uw,dw,hv; ProfileCtx(lv,p3,p1,uw,dw,hv); return ZoneWord(hv)+"|"+DenWord(); }
+string BuildBriefing(){
+   double live,poc3,poc1,upW,dnW,heavy; ProfileCtx(live,poc3,poc1,upW,dnW,heavy);
+   int dig=(int)SymbolInfoInteger(_Symbol,SYMBOL_DIGITS);
+   string hm=TimeToString(TimeCurrent()+(datetime)InpServerToKST*3600,TIME_MINUTES);
+   string zone=ZoneWord(heavy), den=DenWord();
+   string arr=(g_dirC0>0?"▲":(g_dirC0<0?"▼":"·"));
+   string judge;
+   if(den=="빡빡"){
+      if(zone=="진공(얇음)") judge="빈 공간인데 안 나감 = 흡수/이상 → 되돌림 경계, 추격 자제.";
+      else                  judge="매물대에서 저항·흡수 중 → 돌파 확인 전 관망. 돌파 시 다음 매물대까지 여지.";
+   } else if(den=="술술"){
+      if(zone=="진공(얇음)") judge="저항 얇고 잘 나감 → 방향("+arr+") 따라가기 유리. 밀도 식으면 이탈 경계.";
+      else                  judge="매물대 소화하며 진행 → 돌파 임박 가능, 방향 확인.";
+   } else judge="특이 신호 없음 → 관망.";
+   string s="📊 XAUUSD 브리핑 · "+hm+" KST\n";
+   s+="현재가 "+JNum(live,dig)+"\n\n";
+   s+="① 자리: "+zone+"\n";
+   s+=" · POC 3D "+JNum(poc3,dig)+" ("+FmtDiff(poc3-live)+") / 1D "+JNum(poc1,dig)+" ("+FmtDiff(poc1-live)+")\n";
+   s+=" · 위매물대 "+(upW>0?JNum(upW,dig)+" ("+FmtDiff(upW-live)+")":"—")
+     +" · 아래매물대 "+(dnW>0?JNum(dnW,dig)+" ("+FmtDiff(dnW-live)+")":"—")+"\n\n";
+   s+="② 힘(밀도, 틱/$·분): 현재"+TFStr(InpDensTF_C)+" "+JNum(g_dvC0,1)+" vs 직전 "+JNum(g_dvC1,1)+" → "+den+" "+arr+"\n";
+   s+=" · 흐름 "+TFStr(InpDensTF_A)+" "+JNum(g_dvA,1)+" → "+TFStr(InpDensTF_B)+" "+JNum(g_dvB,1)
+     +" → "+TFStr(InpDensTF_C)+" "+JNum(g_dvC1,1)+" → 현재 "+JNum(g_dvC0,1)+"\n\n";
+   s+="③ 판단: "+judge;
+   return s;
+}
+
 string BuildJson(){
    double bid=SymbolInfoDouble(_Symbol,SYMBOL_BID), ask=SymbolInfoDouble(_Symbol,SYMBOL_ASK);
    double o=iOpen(_Symbol,PERIOD_D1,0), h=iHigh(_Symbol,PERIOD_D1,0), l=iLow(_Symbol,PERIOD_D1,0);
@@ -183,6 +241,7 @@ string BuildJson(){
    double dB =CompletedDensity(InpDensTF_B,1,tkx,nx,dix); string rB =DensRow("직전 "+TFStr(InpDensTF_B),false,dB, nx,tkx,dix,dig);
    double dC1=CompletedDensity(InpDensTF_C,2,tkx,nx,dix); string rC1=DensRow("직전 "+TFStr(InpDensTF_C),false,dC1,nx,tkx,dix,dig);
    double dC0=FormingDensity(InpDensTF_C,0,bid,tkx,nx,dix); string rC0=DensRow("현재 "+TFStr(InpDensTF_C),true, dC0,nx,tkx,dix,dig);
+   g_dvA=dA; g_dvB=dB; g_dvC1=dC1; g_dvC0=dC0; g_dirC0=dix; g_netC0=nx;   // 브리핑용 스냅샷
    s+="\"dens\":["+rA+","+rB+","+rC1+","+rC0+"],";
    s+="\"d1\":{\"open\":"+JNum(o,dig)+",\"high\":"+JNum(h,dig)+",\"low\":"+JNum(l,dig)+"},";
    s+="\"sample\":{\"w3\":"+(string)s3+",\"w1\":"+(string)s1+"},";
@@ -215,14 +274,40 @@ void SendPantry(const string json){
    else if(r!=200 && r!=201) Print("응답 ",r,": ",CharArrayToString(res,0,WHOLE_ARRAY,CP_UTF8));
 }
 
+//--- 텔레그램 -----------------------------------------------------
+string JsonEscape(string s){ StringReplace(s,"\\","\\\\"); StringReplace(s,"\"","\\\""); StringReplace(s,"\r",""); StringReplace(s,"\n","\\n"); return(s); }
+void SendTelegram(const string text){
+   if(!InpTgEnable) return;
+   if(InpTgToken=="" || InpTgChatId==""){ Print("텔레그램: 토큰/chat_id 비어있음"); return; }
+   string url="https://api.telegram.org/bot"+InpTgToken+"/sendMessage";
+   string body="{\"chat_id\":\""+InpTgChatId+"\",\"text\":\""+JsonEscape(text)+"\",\"disable_web_page_preview\":true}";
+   char post[]; char res[]; string rh; int tot=StringToCharArray(body,post,0,WHOLE_ARRAY,CP_UTF8); if(tot>0)ArrayResize(post,tot-1);
+   ResetLastError();
+   int r=WebRequest("POST",url,"Content-Type: application/json\r\n",5000,post,res,rh);
+   if(r==-1) Print("텔레그램 실패 오류 ",GetLastError()," — api.telegram.org WebRequest 허용 확인");
+   else if(r!=200) Print("텔레그램 응답 ",r,": ",CharArrayToString(res,0,WHOLE_ARRAY,CP_UTF8));
+}
+//--- 브리핑 스케줄 (주기 + 이벤트, 시간대 게이트) ------------------
+void MaybeBrief(const datetime now){
+   if(!InpTgEnable || !g_ready) return;
+   int kh=(int)(((now+(datetime)InpServerToKST*3600)%86400)/3600);
+   if(kh<InpBriefStartKST || kh>=InpBriefEndKST) return;   // 브리핑 시간대 밖
+   string sig=StateSig();
+   bool changed=(sig!=g_lastSig && g_lastSig!="");
+   bool evt=(InpBriefEvents && changed && (g_lastBrief==0 || (now-g_lastBrief)>=(datetime)InpEventGapSec));
+   bool per=(InpBriefMin>0 && (g_lastBrief==0 || (now-g_lastBrief)>=(datetime)InpBriefMin*60));
+   if(evt||per){ SendTelegram(BuildBriefing()); g_lastBrief=now; }
+   g_lastSig=sig;
+}
+
 //--- MT5 이벤트 ---------------------------------------------------
 int OnInit(){
    ComputeRange();
    EventSetTimer(InpSendSec>0?InpSendSec:15);
-   Print("프로파일EA v1.07 — 버킷 $",DoubleToString(InpBucket,2),
-         " | 3W ",InpW3Days,"d/",InpW3RefreshSec,"s · 1W ",InpW1Days,"d/",InpW1RefreshSec,"s",
+   Print("프로파일EA v1.08 — 버킷 $",DoubleToString(InpBucket,2),
          " | 밀도 ",TFStr(InpDensTF_A),"/",TFStr(InpDensTF_B),"/",TFStr(InpDensTF_C),
-         " | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF")," | 매매안함");
+         " | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF"),
+         " | 브리핑 ",(InpTgEnable?("ON "+(string)InpBriefMin+"분"):"OFF")," | 매매안함");
    return(INIT_SUCCEEDED);
 }
 void OnDeinit(const int reason){ EventKillTimer(); }
@@ -241,7 +326,8 @@ void OnTimer(){
    else if(doW1){ AccumWindow(InpW1Days,g_t1,g_u1,g_d1); g_lastW1=now; }
    if(!g_ready) return;
    if(InpSendSec>0 && (g_lastSend==0 || (now-g_lastSend)>=(datetime)InpSendSec)){
-      g_lastSend=now; SendPantry(BuildJson());
+      g_lastSend=now; SendPantry(BuildJson());   // 밀도 스냅샷도 여기서 갱신됨
    }
+   MaybeBrief(now);
 }
 //+------------------------------------------------------------------+
