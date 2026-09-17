@@ -31,20 +31,18 @@ body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:14p
 .meta{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.6}
 .meta b{color:var(--ink);font-weight:600}.meta .k{color:var(--faint)}
 .stamp{font-size:9px;color:var(--faint);margin-top:3px}
-.densbox{margin-top:8px;padding:8px 9px 7px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
-.densbox .dh{font-size:9.5px;color:var(--faint);margin-bottom:6px;letter-spacing:.02em}
-.densbox .dh b{color:var(--muted);font-weight:600}
-.spark{display:flex;align-items:flex-end;gap:4px;height:52px}
-.spark .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;min-width:0}
-.spark .col .dv{font-size:8px;color:var(--faint);line-height:1;margin-bottom:2px;font-weight:600}
-.spark .col.cur .dv{color:var(--ink)}
-.spark .bx{width:100%;border-radius:2px 2px 0 0;min-height:3px}
-.spark .col .ar{font-size:7px;line-height:1.3}
-.spark .col .cl{font-size:7.5px;color:var(--faint);line-height:1}
-.spark .col.cur .cl{color:var(--accent);font-weight:700}
-.densline{font-size:10px;color:var(--muted);margin-top:7px;line-height:1.5}
-.densline b{font-size:12px}
-.densline .k{color:var(--faint)}
+.densbox{margin-top:8px;padding:7px 10px 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.densbox .dh{font-size:9.5px;color:var(--faint);margin-bottom:5px;letter-spacing:.02em}
+.drow{display:flex;align-items:baseline;gap:7px;padding:4px 0;border-top:1px solid var(--grid)}
+.drow:first-of-type{border-top:0}
+.drow.cur{background:linear-gradient(90deg,rgba(255,171,46,.05),transparent)}
+.drow .dl{flex:0 0 60px;color:var(--muted);font-size:11px}
+.drow.cur .dl{color:var(--ink);font-weight:600}
+.drow .dvv{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
+.drow .du{font-size:9px;color:var(--faint)}
+.drow .dar{font-size:10px}
+.drow .dw{margin-left:auto;font-size:10px;color:var(--muted)}
+.drow .dw .k{color:var(--faint)}
 .cfg{display:none;margin-top:8px;padding:8px;border:1px solid var(--line);border-radius:5px;background:var(--surface)}
 .cfg.on{display:block}
 .cfg input{width:100%;background:var(--inset);border:1px solid var(--line);color:var(--ink);font:inherit;font-size:11px;padding:6px 8px;border-radius:4px;margin:3px 0}
@@ -108,8 +106,8 @@ tr.live .pr{color:var(--live);font-weight:700}
     <span><span class="sw" style="background:linear-gradient(90deg,#bfe6ff,#5cc8f5)"></span><span id="lgPB">1W</span> POC</span>
   </div>
   <div class="foot">POC = 그 기간 최다 체결 가격(제일 긴 막대) = 가장 강한 벽·자석 · <b style="color:#ffab2e">밝은 색 막대 = 그 기간 POC</b> · 막대=숫자에 비례(공통기준), 1D가 1W보다 짧은 건 틱이 적어서 정상 · Δ = 매수−매도 우위<br>
-    <b>밀도</b> = 봉별 소모틱 ÷ 순이동($) = 가격 $1 움직이는 데 든 틱수 · 직전 완료봉들과 진행봉을 나란히 비교 · <b style="color:#ffab2e">직전보다 빡빡=저항·흡수</b> · <b style="color:#46b8e6">직전보다 술술=진공</b> · ▲▼=봉 방향
-    <span style="opacity:.6"> · build 2026-09-16b</span></div>
+    <b>밀도</b> = 봉별 소모틱 ÷ 순이동($) = 가격 $1 움직이는 데 든 틱수 · 직전 4H→직전 1H→현재 1H→현재 15m 순으로 큰 흐름에서 지금으로 · <b style="color:#ffab2e">빡빡=저항·흡수</b> · <b style="color:#46b8e6">술술=진공</b> · ▲▼=봉 방향
+    <span style="opacity:.6"> · build 2026-09-17a</span></div>
 </div>
 <script>
 const $=s=>document.querySelector(s);
@@ -134,13 +132,11 @@ function sample(){
     rows.push({hi,lo,t3,e3,t1,e1,mark});
   }
   return {sym:"XAUUSD (데모)",bid:BID,ask:ASK,live:LIVE,bucket:BUCKET,kst:"샘플",labA:"1W",labB:"1D",d1:D1,
-    densTF:"M15",dens:[
-      {d:168,net:1.4,tk:235,dir:1,cur:false},
-      {d:152,net:1.8,tk:274,dir:1,cur:false},
-      {d:206,net:1.1,tk:227,dir:-1,cur:false},
-      {d:248,net:0.9,tk:223,dir:1,cur:false},
-      {d:305,net:0.7,tk:214,dir:-1,cur:false},
-      {d:452,net:0.4,tk:181,dir:1,cur:true}],
+    dens:[
+      {lab:"직전 H4",cur:false,d:412,net:9.4,tk:3868,dir:1},
+      {lab:"직전 H1",cur:false,d:262,net:2.1,tk:550,dir:1},
+      {lab:"현재 H1",cur:true, d:455,net:0.9,tk:410,dir:1},
+      {lab:"현재 M15",cur:true,d:181,net:0.4,tk:72, dir:-1}],
     sample:{w3:rows.reduce((s,r)=>s+r.t3,0),w1:rows.reduce((s,r)=>s+r.t1,0)},rows};
 }
 
@@ -149,34 +145,31 @@ function renderDens(d){
   const arr=Array.isArray(d.dens)?d.dens:null;
   if(!arr||!arr.length){ box.style.display="none"; return; }
   box.style.display="block";
-  const tf=d.densTF||"TF";
-  const mx=Math.max(1,...arr.map(x=>x.d||0));
-  const prior=arr.filter(x=>!x.cur);
-  const cur=arr.find(x=>x.cur)||arr[arr.length-1];
-  const pavg=prior.length?prior.reduce((s,x)=>s+(x.d||0),0)/prior.length:0;
-  let word,col;
-  if(pavg>0){
-    const rat=(cur.d||0)/pavg;
-    if(rat>=1.25){ word="직전보다 빡빡 · 저항/흡수"; col="var(--accent)"; }
-    else if(rat<=0.75){ word="직전보다 술술 · 진공"; col="var(--accent2)"; }
-    else { word="직전과 비슷"; col="var(--ink)"; }
-  } else { word="—"; col="var(--ink)"; }
-  const bars=arr.map((x,i)=>{
-    const h=Math.max(4,Math.round((x.d||0)/mx*100));
-    const isC=!!x.cur;
-    const c=isC?col:"var(--faint)";
-    const ar=(x.dir>0?"▲":x.dir<0?"▼":"·");
-    const arc=(x.dir>0?"var(--up)":x.dir<0?"var(--down)":"var(--faint)");
-    return `<div class="col${isC?' cur':''}"><span class="dv">${nf(Math.round(x.d||0))}</span>`+
-      `<div class="bx" style="height:${h}%;background:${c}"></div>`+
-      `<span class="ar" style="color:${arc}">${ar}</span>`+
-      `<span class="cl">${isC?"진행":i+1}</span></div>`;
+  const tfTok=l=>String(l||"").split(" ").pop();     // "현재 H1" → "H1"
+  const priorMap={};
+  arr.forEach(x=>{ if(!x.cur) priorMap[tfTok(x.lab)]=x.d; });
+  const rows=arr.map(x=>{
+    const ar=x.dir>0?"▲":(x.dir<0?"▼":"·");
+    const arc=x.dir>0?"var(--up)":(x.dir<0?"var(--down)":"var(--faint)");
+    let col="var(--ink)", tag="";
+    if(x.cur){
+      const base=priorMap[tfTok(x.lab)];              // 같은 TF 직전봉과 비교
+      if(base>0){
+        const rat=(x.d||0)/base;
+        if(rat>=1.25){ col="var(--accent)"; tag="빡빡"; }
+        else if(rat<=0.75){ col="var(--accent2)"; tag="술술"; }
+        else { col="var(--ink)"; tag="비슷"; }
+      }
+    }
+    return `<div class="drow${x.cur?' cur':''}">`+
+      `<span class="dl">${x.lab||""}</span>`+
+      `<span class="dvv" style="color:${col}">${nf(Math.round(x.d||0))}</span>`+
+      `<span class="du">틱/$1</span>`+
+      `<span class="dar" style="color:${arc}">${ar}</span>`+
+      `<span class="dw">${tag?`<b style="color:${col}">${tag}</b> `:""}<span class="k">순이동 ${m2(x.net||0)}</span></span>`+
+      `</div>`;
   }).join("");
-  box.innerHTML=
-    `<div class="dh">밀도 <b>${tf}</b> 봉별 · 틱/$1(가격 $1 이동에 든 틱) · 왼쪽 과거 → 오른쪽 현재</div>`+
-    `<div class="spark">${bars}</div>`+
-    `<div class="densline">진행봉 <b style="color:${col}">${nf(Math.round(cur.d||0))}</b> ${cur.dir>0?"▲":cur.dir<0?"▼":""} <b style="color:${col}">${word}</b>`+
-    ` <span class="k">· 직전 ${prior.length}봉 평균 ${nf(Math.round(pavg))} · 진행봉 순이동 ${m2(cur.net||0)}·${nf(cur.tk||0)}틱</span></div>`;
+  box.innerHTML=`<div class="dh">밀도 · 가격 $1 이동에 든 틱수 (낮을수록 술술 · 현재봉=같은 TF 직전봉 대비)</div>${rows}`;
 }
 
 function render(d){
