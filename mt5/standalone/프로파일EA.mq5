@@ -7,7 +7,7 @@
 //|  매매하지 않음 (관찰 전용)                                         |
 //+------------------------------------------------------------------+
 #property copyright "day1"
-#property version   "1.04"
+#property version   "1.05"
 #property strict
 
 //--- 입력 ---------------------------------------------------------
@@ -21,8 +21,9 @@ input int     InpSendSec        = 15;      // 전송 주기 (초) — 현재가 
 input int     InpW1RefreshSec   = 120;     // 1W 재계산 주기 (초)
 input int     InpW3RefreshSec   = 600;     // 3W 재계산 주기 (초)
 input int     InpServerToKST    = 6;       // 서버→KST 시차 (시간)
-input ENUM_TIMEFRAMES InpDensTF  = PERIOD_M15; // 밀도 봉 타임프레임 (M15/H1/H4…)
-input int     InpDensBars       = 6;       // 밀도 표시 봉 수 (진행봉 포함)
+input ENUM_TIMEFRAMES InpDensTF_A = PERIOD_H4;  // 밀도 상위 TF (직전봉)
+input ENUM_TIMEFRAMES InpDensTF_B = PERIOD_H1;  // 밀도 중위 TF (직전+현재)
+input ENUM_TIMEFRAMES InpDensTF_C = PERIOD_M15; // 밀도 하위 TF (현재)
 
 //--- 전역 ---------------------------------------------------------
 double  g_base = 0.0;
@@ -31,8 +32,10 @@ long    g_t3[], g_u3[], g_d3[];   // 3W: 틱수/매수/매도
 long    g_t1[], g_u1[], g_d1[];   // 1W
 datetime g_lastW3=0, g_lastW1=0, g_lastSend=0;
 bool    g_ready=false;
-datetime g_dtfBar=0;                             // 현재 밀도-TF 봉 시각 (캐시 무효화 키)
-double  g_bDens[]; long g_bTk[]; int g_bDir[]; double g_bNet[];  // 완료봉 밀도 캐시
+// 완료봉 밀도 캐시 (slot0=A직전, slot1=B직전) — 봉이 넘어갈 때만 재계산
+datetime g_cBarT[2]; double g_cDens[2]; long g_cTk[2]; double g_cNet[2]; int g_cDir[2];
+// 진행봉 증분 누적 (slot0=B현재, slot1=C현재) — 매 전송 새 틱만 추가
+datetime g_fBarT[2]; ulong g_fLastMs[2]; long g_fCnt[2]; double g_fOpen[2];
 
 //--- 유틸 ---------------------------------------------------------
 double PriceOf(const MqlTick &t){
@@ -128,16 +131,35 @@ double BarDensity(const datetime bt,const datetime et,const double o,const doubl
    double denom=MathMax(net,InpBucket*0.1);   // 순이동 0 근처(도지=흡수)면 바닥값 클램프
    return (cnt>0)?(double)cnt/denom:0.0;       // 틱 / $1
 }
-void RefreshDensCache(){                       // 완료봉(1..n-1)만 재계산해 캐시 (진행봉은 매 전송 새로)
-   int n=InpDensBars; if(n<2)n=2;
-   if(ArraySize(g_bDens)!=n){ ArrayResize(g_bDens,n); ArrayResize(g_bTk,n); ArrayResize(g_bDir,n); ArrayResize(g_bNet,n); }
-   int secs=PeriodSeconds(InpDensTF);
-   for(int i=1;i<n;i++){
-      datetime bt=iTime(_Symbol,InpDensTF,i);
-      double o=iOpen(_Symbol,InpDensTF,i), c=iClose(_Symbol,InpDensTF,i);
-      long tk; g_bDens[i]=BarDensity(bt,bt+(datetime)secs,o,c,tk);
-      g_bTk[i]=tk; g_bNet[i]=MathAbs(c-o); g_bDir[i]=(c>o)?1:(c<o?-1:0);
+double CompletedDensity(const ENUM_TIMEFRAMES tf,const int slot,long &tk,double &net,int &dir){
+   datetime bt=iTime(_Symbol,tf,1);            // 직전(완료) 봉
+   if(bt!=g_cBarT[slot]){
+      double o=iOpen(_Symbol,tf,1), c=iClose(_Symbol,tf,1);
+      long t; double d=BarDensity(bt,bt+(datetime)PeriodSeconds(tf),o,c,t);
+      g_cBarT[slot]=bt; g_cDens[slot]=d; g_cTk[slot]=t; g_cNet[slot]=MathAbs(c-o); g_cDir[slot]=(c>o)?1:(c<o?-1:0);
    }
+   tk=g_cTk[slot]; net=g_cNet[slot]; dir=g_cDir[slot];
+   return g_cDens[slot];
+}
+double FormingDensity(const ENUM_TIMEFRAMES tf,const int slot,const double bid,long &tk,double &net,int &dir){
+   datetime bt=iTime(_Symbol,tf,0);            // 현재(진행) 봉
+   if(bt!=g_fBarT[slot]){ g_fBarT[slot]=bt; g_fOpen[slot]=iOpen(_Symbol,tf,0); g_fCnt[slot]=0; g_fLastMs[slot]=(ulong)bt*1000; }
+   MqlTick t[];
+   int g=CopyTicksRange(_Symbol,t,COPY_TICKS_ALL,g_fLastMs[slot],(ulong)TimeCurrent()*1000+999);
+   if(g>0){
+      for(int i=0;i<g;i++){ if(PriceOf(t[i])>0.0) g_fCnt[slot]++; }
+      g_fLastMs[slot]=(ulong)t[g-1].time_msc+1;   // 다음 전송엔 이 다음 틱부터 (중복 방지)
+   }
+   double o=g_fOpen[slot];
+   net=MathAbs(bid-o);
+   dir=(bid>o)?1:(bid<o?-1:0);
+   tk=g_fCnt[slot];
+   double denom=MathMax(net,InpBucket*0.1);
+   return (g_fCnt[slot]>0)?(double)g_fCnt[slot]/denom:0.0;
+}
+string DensRow(const string lab,const bool cur,const double d,const double net,const long tk,const int dir,const int dig){
+   return "{\"lab\":\""+lab+"\",\"cur\":"+(cur?"true":"false")+",\"d\":"+JNum(d,1)+
+          ",\"net\":"+JNum(net,dig)+",\"tk\":"+(string)tk+",\"dir\":"+(string)dir+"}";
 }
 
 string BuildJson(){
@@ -152,22 +174,13 @@ string BuildJson(){
    s+="\"live\":"+JNum(bid,dig)+",\"bucket\":"+JNum(InpBucket,2)+",";
    s+="\"labA\":\""+PerLabel(InpW3Days)+"\",\"labB\":\""+PerLabel(InpW1Days)+"\",";
    s+="\"kst\":\""+kst+"\",";
-   // --- 봉별 밀도 (직전 완료봉들 + 현재 진행봉) ---
-   datetime curBar=iTime(_Symbol,InpDensTF,0);
-   if(curBar!=g_dtfBar){ RefreshDensCache(); g_dtfBar=curBar; }
-   int dn=InpDensBars; if(dn<2)dn=2;
-   double o0=iOpen(_Symbol,InpDensTF,0);
-   long tk0; double d0=BarDensity(curBar,TimeCurrent(),o0,bid,tk0);
-   int dir0=(bid>o0)?1:(bid<o0?-1:0);
-   s+="\"densTF\":\""+TFStr(InpDensTF)+"\",\"dens\":[";
-   bool df=true;
-   for(int i=dn-1;i>=1;i--){                 // 오래된 완료봉 → 최근 완료봉
-      if(!df) s+=","; df=false;
-      s+="{\"d\":"+JNum(g_bDens[i],1)+",\"net\":"+JNum(g_bNet[i],dig)+",\"tk\":"+(string)g_bTk[i]+",\"dir\":"+(string)g_bDir[i]+",\"cur\":false}";
-   }
-   if(!df) s+=",";
-   s+="{\"d\":"+JNum(d0,1)+",\"net\":"+JNum(MathAbs(bid-o0),dig)+",\"tk\":"+(string)tk0+",\"dir\":"+(string)dir0+",\"cur\":true}";
-   s+="],";
+   // --- 멀티TF 밀도: 직전 A / 직전 B / 현재 B / 현재 C ---
+   long tkx; double nx; int dix;
+   double dA =CompletedDensity(InpDensTF_A,0,tkx,nx,dix); string rA=DensRow("직전 "+TFStr(InpDensTF_A),false,dA,nx,tkx,dix,dig);
+   double dB1=CompletedDensity(InpDensTF_B,1,tkx,nx,dix); string rB1=DensRow("직전 "+TFStr(InpDensTF_B),false,dB1,nx,tkx,dix,dig);
+   double dB0=FormingDensity(InpDensTF_B,0,bid,tkx,nx,dix); string rB0=DensRow("현재 "+TFStr(InpDensTF_B),true,dB0,nx,tkx,dix,dig);
+   double dC0=FormingDensity(InpDensTF_C,1,bid,tkx,nx,dix); string rC0=DensRow("현재 "+TFStr(InpDensTF_C),true,dC0,nx,tkx,dix,dig);
+   s+="\"dens\":["+rA+","+rB1+","+rB0+","+rC0+"],";
    s+="\"d1\":{\"open\":"+JNum(o,dig)+",\"high\":"+JNum(h,dig)+",\"low\":"+JNum(l,dig)+"},";
    s+="\"sample\":{\"w3\":"+(string)s3+",\"w1\":"+(string)s1+"},";
    s+="\"rows\":[";
@@ -203,9 +216,10 @@ void SendPantry(const string json){
 int OnInit(){
    ComputeRange();
    EventSetTimer(InpSendSec>0?InpSendSec:15);
-   Print("프로파일EA v1.04 — 버킷 $",DoubleToString(InpBucket,2),
+   Print("프로파일EA v1.05 — 버킷 $",DoubleToString(InpBucket,2),
          " | 3W ",InpW3Days,"d/",InpW3RefreshSec,"s · 1W ",InpW1Days,"d/",InpW1RefreshSec,"s",
-         " | 밀도 ",TFStr(InpDensTF),"×",InpDensBars,"봉 | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF")," | 매매안함");
+         " | 밀도 ",TFStr(InpDensTF_A),"/",TFStr(InpDensTF_B),"/",TFStr(InpDensTF_C),
+         " | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF")," | 매매안함");
    return(INIT_SUCCEEDED);
 }
 void OnDeinit(const int reason){ EventKillTimer(); }
