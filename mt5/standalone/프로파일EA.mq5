@@ -14,7 +14,7 @@
 input string  InpDashUrl        = "";      // 팬트리 바스켓 URL (프로파일 전용 · 새로 발급)
 input bool    InpDashEnable     = true;    // 전송 ON
 input double  InpBucket         = 2.0;     // 가격 버킷 크기 ($)
-input int     InpW3Days         = 7;       // 장기 창 (일) — 예:7=1W
+input int     InpW3Days         = 3;       // 장기 창 (일) — 브로커 틱보관 3일에 맞춤 (예:3=3D)
 input int     InpW1Days         = 1;       // 단기 창 (일) — 예:1=1D
 input int     InpMaxBuckets     = 60;      // 최대 버킷 수 (초과시 현재가 중심 클램프)
 input int     InpSendSec        = 15;      // 전송 주기 (초) — 현재가 갱신
