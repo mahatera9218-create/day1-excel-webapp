@@ -7,7 +7,7 @@
 //|  매매하지 않음 (관찰 전용)                                         |
 //+------------------------------------------------------------------+
 #property copyright "day1"
-#property version   "1.06"
+#property version   "1.07"
 #property strict
 
 //--- 입력 ---------------------------------------------------------
@@ -112,7 +112,7 @@ string MarkOf(const double lo,const double hi,const double live,const double o,c
    if(lo<=o && o<hi)       return "OPEN";
    return "";
 }
-//--- 봉별 밀도: 그 봉의 소모틱 ÷ 순이동($) = "가격 $1 움직이는 데 든 틱수" -----------
+//--- 봉별 밀도(분당): 소모틱 ÷ 순이동($) ÷ 봉길이(분) = "$1 이동에 든 틱/분" (TF 무관 비교) --
 string TFStr(const ENUM_TIMEFRAMES tf){
    switch(tf){
       case PERIOD_M1: return "M1";  case PERIOD_M5: return "M5";  case PERIOD_M15: return "M15";
@@ -121,7 +121,7 @@ string TFStr(const ENUM_TIMEFRAMES tf){
    }
    return "TF";
 }
-double BarDensity(const datetime bt,const datetime et,const double o,const double c,long &tk){
+double BarRawDens(const datetime bt,const datetime et,const double o,const double c,long &tk){
    MqlTick t[]; tk=0;
    int g=CopyTicksRange(_Symbol,t,COPY_TICKS_ALL,(ulong)bt*1000,(ulong)et*1000+999);
    long cnt=0;
@@ -129,17 +129,18 @@ double BarDensity(const datetime bt,const datetime et,const double o,const doubl
    tk=cnt;
    double net=MathAbs(c-o);
    double denom=MathMax(net,InpBucket*0.1);   // 순이동 0 근처(도지=흡수)면 바닥값 클램프
-   return (cnt>0)?(double)cnt/denom:0.0;       // 틱 / $1
+   return (cnt>0)?(double)cnt/denom:0.0;       // 틱 / $1 (분당 정규화 전)
 }
 double CompletedDensity(const ENUM_TIMEFRAMES tf,const int slot,long &tk,double &net,int &dir){
    datetime bt=iTime(_Symbol,tf,1);            // 직전(완료) 봉
    if(bt!=g_cBarT[slot]){
       double o=iOpen(_Symbol,tf,1), c=iClose(_Symbol,tf,1);
-      long t; double d=BarDensity(bt,bt+(datetime)PeriodSeconds(tf),o,c,t);
-      g_cBarT[slot]=bt; g_cDens[slot]=d; g_cTk[slot]=t; g_cNet[slot]=MathAbs(c-o); g_cDir[slot]=(c>o)?1:(c<o?-1:0);
+      long t; double raw=BarRawDens(bt,bt+(datetime)PeriodSeconds(tf),o,c,t);
+      double mins=PeriodSeconds(tf)/60.0; if(mins<1.0)mins=1.0;
+      g_cBarT[slot]=bt; g_cDens[slot]=raw/mins; g_cTk[slot]=t; g_cNet[slot]=MathAbs(c-o); g_cDir[slot]=(c>o)?1:(c<o?-1:0);
    }
    tk=g_cTk[slot]; net=g_cNet[slot]; dir=g_cDir[slot];
-   return g_cDens[slot];
+   return g_cDens[slot];                        // 틱/$·분
 }
 double FormingDensity(const ENUM_TIMEFRAMES tf,const int slot,const double bid,long &tk,double &net,int &dir){
    datetime bt=iTime(_Symbol,tf,0);            // 현재(진행) 봉
@@ -155,7 +156,9 @@ double FormingDensity(const ENUM_TIMEFRAMES tf,const int slot,const double bid,l
    dir=(bid>o)?1:(bid<o?-1:0);
    tk=g_fCnt[slot];
    double denom=MathMax(net,InpBucket*0.1);
-   return (g_fCnt[slot]>0)?(double)g_fCnt[slot]/denom:0.0;
+   double raw=(g_fCnt[slot]>0)?(double)g_fCnt[slot]/denom:0.0;
+   double mins=(double)(TimeCurrent()-bt)/60.0; if(mins<0.5)mins=0.5;  // 봉 시작 직후 과대 방지
+   return raw/mins;                             // 틱/$·분
 }
 string DensRow(const string lab,const bool cur,const double d,const double net,const long tk,const int dir,const int dig){
    return "{\"lab\":\""+lab+"\",\"cur\":"+(cur?"true":"false")+",\"d\":"+JNum(d,1)+
@@ -216,7 +219,7 @@ void SendPantry(const string json){
 int OnInit(){
    ComputeRange();
    EventSetTimer(InpSendSec>0?InpSendSec:15);
-   Print("프로파일EA v1.06 — 버킷 $",DoubleToString(InpBucket,2),
+   Print("프로파일EA v1.07 — 버킷 $",DoubleToString(InpBucket,2),
          " | 3W ",InpW3Days,"d/",InpW3RefreshSec,"s · 1W ",InpW1Days,"d/",InpW1RefreshSec,"s",
          " | 밀도 ",TFStr(InpDensTF_A),"/",TFStr(InpDensTF_B),"/",TFStr(InpDensTF_C),
          " | 버킷수 ",g_nb," | 전송 ",(InpDashEnable?"ON":"OFF")," | 매매안함");
