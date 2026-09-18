@@ -79,6 +79,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0;font
 .frow.cur .fl{color:var(--ink);font-weight:600}
 .frow .fv{font-size:15px;font-weight:600;min-width:44px;text-align:right;font-variant-numeric:tabular-nums}
 .frow .fu{font-size:9px;color:var(--faint)}
+.frow .dar{font-size:10px}
 .frow .fw{margin-left:auto;font-size:10.5px;color:var(--mut)}
 .frow .hot{color:var(--clay-ink);font-weight:600}
 .frow .cool{color:var(--up);font-weight:600}
@@ -244,8 +245,10 @@ function renderForce(prof){
     let col="var(--ink)", tag="";
     if(x.cur){ const b=prior[tf(x.lab)]; if(b>0){ const r=dv/b;
       if(r>=1.25){col="var(--clay-ink)";tag="정체";} else if(r<=0.75){col="var(--up)";tag="원활";} else {col="var(--ink)";tag="보통";} } }
+    const dir=Number(x.dir)||0, ar=dir>0?"▲":dir<0?"▼":"·", arc=dir>0?"var(--up)":dir<0?"var(--down)":"var(--faint)";
     return `<div class="frow${x.cur?' cur':''}"><span class="fl">${x.lab||""}</span>`+
       `<span class="fv" style="color:${col}">${dv.toFixed(1)}</span><span class="fu">틱/$·분</span>`+
+      `<span class="dar" style="color:${arc}">${ar}</span>`+
       `<span class="fw">${tag?`<b style="color:${col}">${tag}</b> · `:""}효율 ${eff}%</span></div>`;
   }).join("");
 }
@@ -261,11 +264,11 @@ function sample(){
     rows:[{hi:4331,lo:4329,t3:55700,t1:9000},{hi:4309,lo:4307,t3:40000,t1:43100},
           {hi:4325,lo:4323,t3:55500,t1:8000},{hi:4319,lo:4317,t3:30000,t1:20000},
           {hi:4311,lo:4309,t3:26000,t1:22000}],
-    dens:[{lab:"직전 H4",cur:false,d:3.6,net:6.2,rng:15.5},
-          {lab:"직전 H1",cur:false,d:8.1,net:2.4,rng:4.0},
-          {lab:"현재 H1",cur:true,d:11.5,net:1.1,rng:3.7},
-          {lab:"직전 M15",cur:false,d:12.4,net:0.8,rng:2.0},
-          {lab:"현재 M15",cur:true,d:19.2,net:0.5,rng:2.5}] };
+    dens:[{lab:"직전 H4",cur:false,d:3.6,net:6.2,rng:15.5,dir:1},
+          {lab:"직전 H1",cur:false,d:8.1,net:2.4,rng:4.0,dir:1},
+          {lab:"현재 H1",cur:true,d:11.5,net:1.1,rng:3.7,dir:1},
+          {lab:"직전 M15",cur:false,d:12.4,net:0.8,rng:2.0,dir:1},
+          {lab:"현재 M15",cur:true,d:19.2,net:0.5,rng:2.5,dir:-1}] };
   return {dash,prof};
 }
 
@@ -274,12 +277,12 @@ let timer=null;
 async function pull(url){ if(!url) return null; try{ const r=await fetch(url,{cache:"no-store"}); return await r.json(); }catch(e){ return null; } }
 async function tick(){
   const du=localStorage.getItem(LS.d), pu=localStorage.getItem(LS.p);
-  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-18b"; return; }
+  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-18c"; return; }
   const [dash,prof]=await Promise.all([pull(du),pull(pu)]);
   render(dash,prof);
   const t=(prof&&prof.kst)||(dash&&dash.kst)||"";
   const miss=[!du||dash?"":"대시보드✕",!pu||prof?"":"프로파일✕"].filter(Boolean).join(" ");
-  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-18b`;
+  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-18c`;
 }
 function loop(){ if(timer)clearInterval(timer); const s=Math.max(10,parseInt(localStorage.getItem(LS.i)||"30",10)); tick(); if(localStorage.getItem(LS.d)||localStorage.getItem(LS.p))timer=setInterval(tick,s*1000); }
 
