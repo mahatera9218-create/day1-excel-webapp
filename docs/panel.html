@@ -1,0 +1,289 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="셋업">
+<link rel="apple-touch-icon" href="icon-panel.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231f2422'/%3E%3Crect x='6' y='7' width='20' height='2.4' rx='1' fill='%23e0946f'/%3E%3Crect x='6' y='15' width='14' height='2.4' rx='1' fill='%238fb47f'/%3E%3Crect x='6' y='23' width='17' height='2.4' rx='1' fill='%23e0946f'/%3E%3C/svg%3E">
+<title>XAUUSD 셋업 패널</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#1f2422; --panel:#262c2a; --soft:#2a302e; --clayb:#33281f;
+  --ink:#e6eae6; --mut:#97a09b; --faint:#697470; --line:#333c39; --line2:#3f4844;
+  --clay:#e0946f; --clay-ink:#e8a482; --up:#8fb47f; --down:#e0946f;
+  --sans:"IBM Plex Sans KR",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0;font-size:14px;line-height:1.5;-webkit-text-size-adjust:100%}
+.wrap{max-width:460px;margin:0 auto;padding-block:0 34px;padding-left:18px;padding-right:18px}
+
+.mast{position:sticky;top:0;background:var(--bg);z-index:5;padding:calc(env(safe-area-inset-top,0px) + 16px) 0 12px;border-bottom:1px solid var(--line)}
+.mast .top{display:flex;align-items:baseline;gap:8px}
+.mast .ey{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);font-weight:600}
+.mast .gear{margin-left:auto;background:var(--soft);border:1px solid var(--line);color:var(--mut);border-radius:5px;padding:3px 9px;font:inherit;font-size:11px;cursor:pointer}
+.mast .row{display:flex;align-items:baseline;gap:10px;margin-top:4px}
+.mast h1{font-size:22px;font-weight:600;margin:0;letter-spacing:.01em}
+.mast .live{margin-left:auto;text-align:right;font-family:var(--mono)}
+.mast .live .p{font-size:21px;font-weight:600;font-variant-numeric:tabular-nums}
+.mast .live .ba{font-size:10px;color:var(--mut);margin-top:2px}
+.stamp{font-size:10px;color:var(--faint);margin-top:6px}
+
+.cfg{display:none;margin-top:10px;padding:11px;border:1px solid var(--line);border-radius:7px;background:var(--panel)}
+.cfg.on{display:block}
+.cfg label{font-size:10px;color:var(--faint);display:block;margin:6px 0 2px}
+.cfg input{width:100%;background:var(--bg);border:1px solid var(--line2);color:var(--ink);font:inherit;font-size:11px;padding:6px 8px;border-radius:4px}
+.cfg .r2{display:flex;gap:8px;align-items:flex-end;margin-top:8px}
+.cfg button{background:var(--clay);color:#1f2422;border:0;font:inherit;font-weight:700;font-size:11px;padding:7px 14px;border-radius:5px;cursor:pointer}
+.cfg .ivl{width:64px}
+
+.sec{margin-top:26px}
+.shd{display:flex;align-items:baseline;gap:9px;margin-bottom:12px}
+.shd .no{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--clay)}
+.shd h2{font-size:17px;font-weight:600;margin:0}
+.shd .en{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:500}
+.shd .src{margin-left:auto;font-size:10.5px;color:var(--faint);text-align:right;line-height:1.4}
+
+.state{display:flex;align-items:baseline;gap:9px}
+.state .big{font-size:22px;font-weight:600}
+.state .big.up{color:var(--up)} .state .big.dn{color:var(--down)} .state .big.mid{color:var(--ink)}
+.state .meta{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--mut);text-align:right;line-height:1.5}
+.switch{margin-top:12px;padding:11px 13px;background:var(--clayb);border-left:2px solid var(--clay);border-radius:0 4px 4px 0;font-size:12.5px;line-height:1.55}
+.switch b{color:var(--clay-ink);font-weight:600}
+
+.lad{font-family:var(--mono)}
+.colh{display:flex;font-family:var(--sans);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding:0 0 6px;border-bottom:1px solid var(--line)}
+.colh .c1{flex:1} .colh .c3{flex:0 0 92px;text-align:right}
+.row{display:flex;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);gap:8px}
+.row .tags{flex:1;display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.row .price{flex:0 0 62px;text-align:right;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.row .crit{flex:0 0 92px;text-align:right;font-size:11px;color:var(--mut)}
+.tag{font-family:var(--sans);font-size:10.5px;font-weight:600;padding:1px 6px;border-radius:3px}
+.tag.term{color:var(--clay-ink);background:var(--clayb)}
+.tag.prof{color:var(--mut);background:var(--soft)}
+.row.conf{padding-left:9px;border-left:2px solid var(--clay);background:var(--clayb)}
+.row.conf .price{color:var(--clay-ink)}
+.conf-lab{font-family:var(--sans);font-size:9.5px;font-weight:700;color:var(--clay-ink);margin-right:2px}
+.liverow{display:flex;align-items:center;gap:9px;padding:8px 0;border-top:1px solid var(--clay);border-bottom:1px solid var(--clay);margin:2px 0}
+.liverow .lt{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--clay);font-weight:700}
+.liverow .lp{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--clay-ink)}
+.liverow .lz{margin-left:auto;font-size:10.5px;color:var(--mut)}
+.note{font-size:11px;color:var(--faint);margin-top:11px;line-height:1.55}
+.note b{color:var(--mut);font-weight:500}
+
+.frow{display:flex;align-items:baseline;gap:9px;padding:8px 0;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.frow .fl{flex:0 0 76px;font-size:11px;color:var(--mut)}
+.frow.cur .fl{color:var(--ink);font-weight:600}
+.frow .fv{font-size:15px;font-weight:600;min-width:44px;text-align:right;font-variant-numeric:tabular-nums}
+.frow .fu{font-size:9px;color:var(--faint)}
+.frow .fw{margin-left:auto;font-size:10.5px;color:var(--mut)}
+.frow .hot{color:var(--clay-ink);font-weight:600}
+.frow .cool{color:var(--up);font-weight:600}
+.fhint{font-size:11px;color:var(--faint);margin-top:11px;line-height:1.55}
+.empty{color:var(--faint);font-size:11px;padding:8px 0}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:10.5px;color:var(--mut);margin-top:24px;padding-top:14px;border-top:1px solid var(--line)}
+.legend .d{display:inline-block;width:9px;height:9px;border-radius:2px;vertical-align:0;margin-right:5px}
+</style>
+<div class="wrap">
+  <div class="mast">
+    <div class="top"><span class="ey" id="ey">Setup Panel</span><button class="gear" id="gear">⚙</button></div>
+    <div class="row"><h1 id="sym">XAUUSD</h1><div class="live"><div class="p" id="px">—</div><div class="ba" id="ba"></div></div></div>
+    <div class="stamp" id="stamp"></div>
+    <div class="cfg" id="cfg">
+      <label>대시보드 바스켓 URL (방향·자리)</label>
+      <input id="durl" placeholder="https://getpantry.cloud/apiv1/pantry/…/basket/xauusd_dash">
+      <label>프로파일 바스켓 URL (힘·POC)</label>
+      <input id="purl" placeholder="https://getpantry.cloud/apiv1/pantry/…/basket/xauusd_profile">
+      <div class="r2"><div style="flex:1"><label>폴링(초)</label><input class="ivl" id="ivl" value="30"></div><button id="save">저장</button></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="shd"><span class="no">1</span><h2>방향</h2><span class="en">Direction</span><span class="src">터미널 · 방향 카드</span></div>
+    <div class="state"><span class="big mid" id="dirbig">—</span><span class="meta" id="dirmeta"></span></div>
+    <div class="lad" id="dirrows" style="margin-top:12px"></div>
+    <div class="switch" id="switch"></div>
+  </div>
+
+  <div class="sec">
+    <div class="shd"><span class="no">2</span><h2>자리</h2><span class="en">Location</span><span class="src">터미널 레벨 + 프로파일 POC</span></div>
+    <div class="lad"><div class="colh"><span class="c1">레벨 / 합류</span><span class="c3">잔여</span></div><div id="ladrows"></div></div>
+    <div class="note" id="locnote"></div>
+  </div>
+
+  <div class="sec">
+    <div class="shd"><span class="no">3</span><h2>힘</h2><span class="en">Force</span><span class="src">프로파일 · 밀도·효율</span></div>
+    <div class="lad" id="forcerows"></div>
+    <div class="fhint">밀도 = 혼잡도(틱÷고저폭÷분) · 효율 = 방향합의(순이동÷고저폭) · <span style="color:var(--clay-ink)">정체</span>=저항/흡수, <span style="color:var(--up)">원활</span>=진공.</div>
+  </div>
+
+  <div class="legend">
+    <span><span class="d" style="background:var(--clay)"></span>터미널 (방향·레벨)</span>
+    <span><span class="d" style="background:var(--faint)"></span>프로파일 (POC·밀도·효율)</span>
+    <span><span class="conf-lab">합류</span> 레벨+POC ±$3</span>
+  </div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const LS={d:"panel_dash_url",p:"panel_prof_url",i:"panel_ivl"};
+const CONF=3.0;   // 합류 판정 간격 ($)
+const nf=v=>Number(v).toLocaleString("en-US");
+const sg=v=>(v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(1);
+const m2=v=>Number(v).toFixed(2);
+const dg=v=>{const n=Math.abs(Number(v)); return n>=100?n.toFixed(0):n.toFixed(1);};
+
+/* ---------- 파싱 ---------- */
+function trend(v){ const s=Number(v)||0; return {mag:Math.round(Math.abs(s)), dir:s>0?1:s<0?-1:0}; }
+function finalLvl(p){ if(!p||!p.levels||!p.levels.length) return null; return p.levels[p.levels.length-1]; }
+function pocsOf(prof){
+  const rows=(prof&&prof.rows)||[]; let p3=null,p1=null,v3=-1,v1=-1;
+  const arr3=[];
+  rows.forEach(r=>{ const mid=(Number(r.hi)+Number(r.lo))/2, t3=Number(r.t3)||0, t1=Number(r.t1)||0;
+    arr3.push({mid,t3,t1}); if(t3>v3){v3=t3;p3=mid;} if(t1>v1){v1=t1;p1=mid;} });
+  const rk3=arr3.slice().sort((a,b)=>b.t3-a.t3).slice(1,3).map(x=>x.mid);
+  const rk1=arr3.slice().sort((a,b)=>b.t1-a.t1).slice(1,3).map(x=>x.mid);
+  return {p3,p1,rk3,rk1};
+}
+
+/* ---------- 렌더 ---------- */
+function render(dash, prof){
+  const price = prof&&prof.live!=null ? Number(prof.live) : (dash? Number(dash.price) : null);
+  $("#sym").textContent = (prof&&prof.sym) || (dash&&dash.sym) || "XAUUSD";
+  $("#px").textContent = price!=null? m2(price) : "—";
+  if(prof&&prof.bid!=null) $("#ba").textContent = m2(prof.bid)+" / "+m2(prof.ask);
+  else if(dash&&dash.price!=null) $("#ba").textContent = "";
+
+  renderDir(dash);
+  renderLoc(dash, prof, price);
+  renderForce(prof);
+}
+
+function renderDir(dash){
+  const box=$("#dirrows");
+  if(!dash||!dash.dir){ box.innerHTML=`<div class="empty">대시보드 데이터 없음 — ⚙에서 URL 확인</div>`;
+    $("#dirbig").textContent="—"; $("#dirbig").className="big mid"; $("#dirmeta").innerHTML=""; $("#switch").innerHTML=""; return; }
+  const d=dash.dir;
+  const ses=trend(d.session&&d.session.strength), day=trend(d.daily&&d.daily.strength),
+        h4=trend(d.h4&&(d.h4.now!=null?d.h4.now:d.h4.done));
+  const rows=[["세션",ses],["일간",day],["H4",h4]];
+  box.innerHTML=rows.map(([lab,t])=>{
+    const c=t.dir>0?"var(--up)":t.dir<0?"var(--down)":"var(--faint)";
+    const ar=t.dir>0?"▲":t.dir<0?"▼":"·";
+    const w=t.dir>0?"상방 우위":t.dir<0?"하방 우위":"중립";
+    return `<div class="frow"><span class="fl">${lab}</span><span class="fv" style="color:${c}">${ar} ${t.mag}</span><span class="fu">추세율</span><span class="fw">${w}</span></div>`;
+  }).join("");
+  // 종합
+  const dirs=[ses.dir,day.dir,h4.dir], up=dirs.filter(x=>x>0).length, dn=dirs.filter(x=>x<0).length;
+  let verdict,cls,arrow,sw;
+  if(up===3){ verdict="강추세"; cls="up"; arrow="▲"; sw=`<b>강추세</b>: 추세방향(▲) 눌림만 진입, <b>역추세 fade 관망.</b>`; }
+  else if(dn===3){ verdict="강추세"; cls="dn"; arrow="▼"; sw=`<b>강추세</b>: 추세방향(▼) 눌림만 진입, <b>역추세 fade 관망.</b>`; }
+  else if(up>=2){ verdict="약상승"; cls="up"; arrow="▲"; sw=`<b>혼조(상방 우세)</b>: 정렬 아님 → 역추세 fade 신중, 경계 반응 확인.`; }
+  else if(dn>=2){ verdict="약하락"; cls="dn"; arrow="▼"; sw=`<b>혼조(하방 우세)</b>: 정렬 아님 → 역추세 fade 신중, 경계 반응 확인.`; }
+  else{ verdict="혼조"; cls="mid"; arrow=""; sw=`<b>균형/혼조</b>: 방향 미정 → 레인지 경계 fade 가능(양방), 추격 금지.`; }
+  $("#dirbig").textContent=verdict+(arrow?" "+arrow:""); $("#dirbig").className="big "+cls;
+  $("#dirmeta").innerHTML=`세션·일간·H4<br>${up}▲ / ${dn}▼`;
+  $("#switch").innerHTML=`국면 스위치 — ${sw}`;
+}
+
+function renderLoc(dash, prof, price){
+  const box=$("#ladrows"), note=$("#locnote");
+  const dir = dash&&dash.dir;
+  const items=[];
+  if(dir){
+    const sL=finalLvl(dir.session), dL=finalLvl(dir.daily), wL=finalLvl(dir.weekly);
+    const push=(tag,p)=>{ if(p!=null&&isFinite(p)) items.push({tag,price:Number(p),term:true}); };
+    if(sL){ push("세상",sL.up); push("세하",sL.dn); }
+    if(dL){ push("일상",dL.up); push("일하",dL.dn); }
+    if(wL){ push("주상",wL.up); push("주하",wL.dn); }
+  }
+  let pocNote="";
+  if(prof&&prof.rows){
+    const {p3,p1,rk3,rk1}=pocsOf(prof);
+    const pocs=[]; if(p3!=null)pocs.push({tag:"3D POC",price:p3}); if(p1!=null)pocs.push({tag:"1D POC",price:p1});
+    // 합류: 레벨에 POC 부착
+    pocs.forEach(pc=>{
+      let best=null,bd=1e9;
+      items.forEach(it=>{ if(it.term){ const dd=Math.abs(it.price-pc.price); if(dd<=CONF&&dd<bd){bd=dd;best=it;} } });
+      if(best){ best.conf=true; (best.pocs=best.pocs||[]).push(pc.tag); }
+      else items.push({tag:pc.tag,price:pc.price,prof:true});
+    });
+    pocNote=`POC 2·3순위(참고): 3D ${rk3.map(x=>x.toFixed(0)).join("·")||"—"} · 1D ${rk1.map(x=>x.toFixed(0)).join("·")||"—"}`;
+  }
+  if(!items.length){ box.innerHTML=`<div class="empty">레벨 데이터 없음 — ⚙에서 URL 확인</div>`; note.innerHTML=""; return; }
+  items.sort((a,b)=>b.price-a.price);
+  // LIVE 삽입 위치
+  let html="", placed=false;
+  const liveHtml=price!=null?`<div class="liverow"><span class="lt">Live</span><span class="lp">${m2(price)}</span><span class="lz">현재가</span></div>`:"";
+  items.forEach(it=>{
+    if(price!=null && !placed && it.price<price){ html+=liveHtml; placed=true; }
+    const rem = price!=null? sg(it.price-price) : "—";
+    let tags="";
+    if(it.conf){ tags+=`<span class="conf-lab">합류</span>`; tags+=`<span class="tag term">${it.tag}</span>`; (it.pocs||[]).forEach(p=>tags+=`<span class="tag prof">${p}</span>`); }
+    else if(it.prof){ tags+=`<span class="tag prof">${it.tag}</span>`; }
+    else { tags+=`<span class="tag term">${it.tag}</span>`; }
+    html+=`<div class="row${it.conf?' conf':''}"><div class="tags">${tags}</div><div class="price">${it.price.toFixed(it.price>=1000?0:1)}</div><div class="crit">잔여 ${rem}</div></div>`;
+  });
+  if(price!=null && !placed) html+=liveHtml;
+  box.innerHTML=html;
+  note.innerHTML=`<b>합류 = 가장 강한 자리</b> (레벨 + POC ±$${CONF}). 매물대 안=관망, 경계=진입, POC=익절 자석.<br><span style="color:var(--faint)">${pocNote}</span>`;
+}
+
+function renderForce(prof){
+  const box=$("#forcerows");
+  const arr=prof&&Array.isArray(prof.dens)?prof.dens:null;
+  if(!arr||!arr.length){ box.innerHTML=`<div class="empty">프로파일 데이터 없음 — ⚙에서 URL 확인</div>`; return; }
+  const tf=l=>String(l||"").split(" ").pop();
+  const prior={}; arr.forEach(x=>{ if(!x.cur) prior[tf(x.lab)]=Number(x.d); });
+  box.innerHTML=arr.map(x=>{
+    const rng=Number(x.rng)||0, net=Number(x.net)||0, dv=Number(x.d)||0;
+    const eff=rng>0?Math.min(100,Math.round(net/rng*100)):0;
+    let col="var(--ink)", tag="";
+    if(x.cur){ const b=prior[tf(x.lab)]; if(b>0){ const r=dv/b;
+      if(r>=1.25){col="var(--clay-ink)";tag="정체";} else if(r<=0.75){col="var(--up)";tag="원활";} else {col="var(--ink)";tag="보통";} } }
+    return `<div class="frow${x.cur?' cur':''}"><span class="fl">${x.lab||""}</span>`+
+      `<span class="fv" style="color:${col}">${dv.toFixed(1)}</span><span class="fu">틱/$·분</span>`+
+      `<span class="fw">${tag?`<b style="color:${col}">${tag}</b> · `:""}효율 ${eff}%</span></div>`;
+  }).join("");
+}
+
+/* ---------- 샘플 (URL 없을 때) ---------- */
+function sample(){
+  const dash={ sym:"XAUUSD (데모)", price:4297.4,
+    dir:{ session:{strength:72,levels:[{up:4310,dn:4275},{up:4317.9,dn:4263.6}]},
+          daily:{strength:65,levels:[{up:4308,dn:4285}]},
+          weekly:{strength:41,levels:[{up:4330,dn:4257.2}]},
+          h4:{done:60,now:58} } };
+  const prof={ sym:"XAUUSD (데모)", live:4297.4, bid:4297.43, ask:4297.77,
+    rows:[{hi:4331,lo:4329,t3:55700,t1:9000},{hi:4309,lo:4307,t3:40000,t1:43100},
+          {hi:4325,lo:4323,t3:55500,t1:8000},{hi:4319,lo:4317,t3:30000,t1:20000},
+          {hi:4311,lo:4309,t3:26000,t1:22000}],
+    dens:[{lab:"직전 H4",cur:false,d:3.6,net:6.2,rng:15.5},
+          {lab:"직전 H1",cur:false,d:8.1,net:2.4,rng:4.0},
+          {lab:"현재 H1",cur:true,d:11.5,net:1.1,rng:3.7},
+          {lab:"직전 M15",cur:false,d:12.4,net:0.8,rng:2.0},
+          {lab:"현재 M15",cur:true,d:19.2,net:0.5,rng:2.5}] };
+  return {dash,prof};
+}
+
+/* ---------- 로드 ---------- */
+let timer=null;
+async function pull(url){ if(!url) return null; try{ const r=await fetch(url,{cache:"no-store"}); return await r.json(); }catch(e){ return null; } }
+async function tick(){
+  const du=localStorage.getItem(LS.d), pu=localStorage.getItem(LS.p);
+  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-18a"; return; }
+  const [dash,prof]=await Promise.all([pull(du),pull(pu)]);
+  render(dash,prof);
+  const t=(prof&&prof.kst)||(dash&&dash.kst)||"";
+  const miss=[!du||dash?"":"대시보드✕",!pu||prof?"":"프로파일✕"].filter(Boolean).join(" ");
+  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-18a`;
+}
+function loop(){ if(timer)clearInterval(timer); const s=Math.max(10,parseInt(localStorage.getItem(LS.i)||"30",10)); tick(); if(localStorage.getItem(LS.d)||localStorage.getItem(LS.p))timer=setInterval(tick,s*1000); }
+
+$("#gear").onclick=()=>{ $("#cfg").classList.toggle("on"); $("#durl").value=localStorage.getItem(LS.d)||""; $("#purl").value=localStorage.getItem(LS.p)||""; $("#ivl").value=localStorage.getItem(LS.i)||"30"; };
+$("#save").onclick=()=>{ const d=$("#durl").value.trim(),p=$("#purl").value.trim(),i=$("#ivl").value.trim()||"30";
+  d?localStorage.setItem(LS.d,d):localStorage.removeItem(LS.d); p?localStorage.setItem(LS.p,p):localStorage.removeItem(LS.p); localStorage.setItem(LS.i,i);
+  $("#cfg").classList.remove("on"); loop(); };
+loop();
+</script>
