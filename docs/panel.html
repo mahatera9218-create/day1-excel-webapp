@@ -23,6 +23,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0;font
 .mast{position:sticky;top:0;background:var(--bg);z-index:5;padding:calc(env(safe-area-inset-top,0px) + 16px) 0 12px;border-bottom:1px solid var(--line)}
 .mast .top{display:flex;align-items:baseline;gap:8px}
 .mast .ey{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);font-weight:600}
+.mast .sess{font-size:11px;font-weight:600;color:var(--clay-ink);background:var(--clayb);border:1px solid var(--line2);border-radius:5px;padding:2px 9px}
 .mast .gear{margin-left:auto;background:var(--soft);border:1px solid var(--line);color:var(--mut);border-radius:5px;padding:3px 9px;font:inherit;font-size:11px;cursor:pointer}
 .mast .row{display:flex;align-items:baseline;gap:10px;margin-top:4px}
 .mast h1{font-size:22px;font-weight:600;margin:0;letter-spacing:.01em}
@@ -88,7 +89,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0;font
 </style>
 <div class="wrap">
   <div class="mast">
-    <div class="top"><span class="ey" id="ey">Setup Panel</span><button class="gear" id="gear">⚙</button></div>
+    <div class="top"><span class="ey" id="ey">Setup Panel</span><span class="sess" id="sess" hidden></span><button class="gear" id="gear">⚙</button></div>
     <div class="row"><h1 id="sym">XAUUSD</h1><div class="live"><div class="p" id="px">—</div><div class="ba" id="ba"></div></div></div>
     <div class="stamp" id="stamp"></div>
     <div class="cfg" id="cfg">
@@ -151,6 +152,7 @@ function pocsOf(prof){
 function render(dash, prof){
   const price = prof&&prof.live!=null ? Number(prof.live) : (dash? Number(dash.price) : null);
   $("#sym").textContent = (prof&&prof.sym) || (dash&&dash.sym) || "XAUUSD";
+  const se=$("#sess"), ss=(dash&&dash.session)||""; if(ss){ se.textContent=ss+" 세션"; se.hidden=false; } else se.hidden=true;
   $("#px").textContent = price!=null? m2(price) : "—";
   if(prof&&prof.bid!=null) $("#ba").textContent = m2(prof.bid)+" / "+m2(prof.ask);
   else if(dash&&dash.price!=null) $("#ba").textContent = "";
@@ -250,7 +252,7 @@ function renderForce(prof){
 
 /* ---------- 샘플 (URL 없을 때) ---------- */
 function sample(){
-  const dash={ sym:"XAUUSD (데모)", price:4297.4,
+  const dash={ sym:"XAUUSD (데모)", price:4297.4, session:"아시아", kst:"14:00",
     dir:{ session:{strength:72,levels:[{up:4310,dn:4275},{up:4317.9,dn:4263.6}]},
           daily:{strength:65,levels:[{up:4308,dn:4285}]},
           weekly:{strength:41,levels:[{up:4330,dn:4257.2}]},
@@ -272,12 +274,12 @@ let timer=null;
 async function pull(url){ if(!url) return null; try{ const r=await fetch(url,{cache:"no-store"}); return await r.json(); }catch(e){ return null; } }
 async function tick(){
   const du=localStorage.getItem(LS.d), pu=localStorage.getItem(LS.p);
-  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-18a"; return; }
+  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-18b"; return; }
   const [dash,prof]=await Promise.all([pull(du),pull(pu)]);
   render(dash,prof);
   const t=(prof&&prof.kst)||(dash&&dash.kst)||"";
   const miss=[!du||dash?"":"대시보드✕",!pu||prof?"":"프로파일✕"].filter(Boolean).join(" ");
-  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-18a`;
+  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-18b`;
 }
 function loop(){ if(timer)clearInterval(timer); const s=Math.max(10,parseInt(localStorage.getItem(LS.i)||"30",10)); tick(); if(localStorage.getItem(LS.d)||localStorage.getItem(LS.p))timer=setInterval(tick,s*1000); }
 
