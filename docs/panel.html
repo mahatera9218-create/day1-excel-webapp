@@ -174,7 +174,7 @@ function regimeOf(prof){
   const vals=[eff(pick("H4")),eff(pick("H1"))].filter(v=>v!=null);
   if(!vals.length) return null;
   const v=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
-  return v>=45 ? {word:"추세",badge:"trend",val:v} : {word:"횡보",badge:"range",val:v};
+  return v>=50 ? {word:"추세",badge:"trend",val:v} : {word:"횡보",badge:"range",val:v};
 }
 function renderDir(dash, prof){
   const box=$("#dirrows"), rb=$("#rgm");
@@ -298,12 +298,12 @@ let timer=null;
 async function pull(url){ if(!url) return null; try{ const r=await fetch(url,{cache:"no-store"}); return await r.json(); }catch(e){ return null; } }
 async function tick(){
   const du=localStorage.getItem(LS.d), pu=localStorage.getItem(LS.p);
-  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-20b"; return; }
+  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-20c"; return; }
   const [dash,prof]=await Promise.all([pull(du),pull(pu)]);
   render(dash,prof);
   const t=(prof&&prof.kst)||(dash&&dash.kst)||"";
   const miss=[!du||dash?"":"대시보드✕",!pu||prof?"":"프로파일✕"].filter(Boolean).join(" ");
-  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-20b`;
+  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-20c`;
 }
 function loop(){ if(timer)clearInterval(timer); const s=Math.max(10,parseInt(localStorage.getItem(LS.i)||"30",10)); tick(); if(localStorage.getItem(LS.d)||localStorage.getItem(LS.p))timer=setInterval(tick,s*1000); }
 
