@@ -50,6 +50,10 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0;font
 .state{display:flex;align-items:baseline;gap:9px}
 .state .big{font-size:22px;font-weight:600}
 .state .big.up{color:var(--up)} .state .big.dn{color:var(--down)} .state .big.mid{color:var(--ink)}
+.state .rgm{font-size:12px;font-weight:700;padding:2px 10px;border-radius:5px}
+.rgm.trend{color:var(--up);background:rgba(143,180,127,.14);border:1px solid rgba(143,180,127,.4)}
+.rgm.range{color:var(--clay-ink);background:var(--clayb);border:1px solid var(--line2)}
+.rgm.neu{color:var(--mut);background:var(--soft);border:1px solid var(--line)}
 .state .meta{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--mut);text-align:right;line-height:1.5}
 .switch{margin-top:12px;padding:11px 13px;background:var(--clayb);border-left:2px solid var(--clay);border-radius:0 4px 4px 0;font-size:12.5px;line-height:1.55}
 .switch b{color:var(--clay-ink);font-weight:600}
@@ -104,7 +108,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0;font
 
   <div class="sec">
     <div class="shd"><span class="no">1</span><h2>방향</h2><span class="en">Direction</span><span class="src">터미널 · 방향 카드</span></div>
-    <div class="state"><span class="big mid" id="dirbig">—</span><span class="meta" id="dirmeta"></span></div>
+    <div class="state"><span class="big mid" id="dirbig">—</span><span class="rgm" id="rgm" hidden></span><span class="meta" id="dirmeta"></span></div>
     <div class="lad" id="dirrows" style="margin-top:12px"></div>
     <div class="switch" id="switch"></div>
   </div>
@@ -158,15 +162,27 @@ function render(dash, prof){
   if(prof&&prof.bid!=null) $("#ba").textContent = m2(prof.bid)+" / "+m2(prof.ask);
   else if(dash&&dash.price!=null) $("#ba").textContent = "";
 
-  renderDir(dash);
+  renderDir(dash, prof);
   renderLoc(dash, prof, price);
   renderForce(prof);
 }
 
-function renderDir(dash){
-  const box=$("#dirrows");
+function regimeOf(prof){
+  if(!prof||!Array.isArray(prof.dens)) return null;
+  const pick=k=>prof.dens.find(x=>!x.cur && String(x.lab).includes(k));
+  const eff=r=>{ if(!r)return null; const rng=Number(r.rng)||0,net=Number(r.net)||0; return rng>0?net/rng*100:null; };
+  const vals=[eff(pick("H4")),eff(pick("H1"))].filter(v=>v!=null);
+  if(!vals.length) return null;
+  const avg=vals.reduce((a,b)=>a+b,0)/vals.length;
+  if(avg>=55) return {word:"추세",badge:"trend"};
+  if(avg<=35) return {word:"횡보",badge:"range"};
+  return {word:"중립",badge:"neu"};
+}
+function renderDir(dash, prof){
+  const box=$("#dirrows"), rb=$("#rgm");
+  const setBadge=(w,c)=>{ if(w){rb.textContent=w;rb.className="rgm "+c;rb.hidden=false;} else rb.hidden=true; };
   if(!dash||!dash.dir){ box.innerHTML=`<div class="empty">대시보드 데이터 없음 — ⚙에서 URL 확인</div>`;
-    $("#dirbig").textContent="—"; $("#dirbig").className="big mid"; $("#dirmeta").innerHTML=""; $("#switch").innerHTML=""; return; }
+    $("#dirbig").textContent="—"; $("#dirbig").className="big mid"; $("#dirmeta").innerHTML=""; $("#switch").innerHTML=""; setBadge(null); return; }
   const d=dash.dir;
   const ses=trend(d.session&&d.session.strength), day=trend(d.daily&&d.daily.strength),
         h4=trend(d.h4&&(d.h4.now!=null?d.h4.now:d.h4.done));
@@ -177,16 +193,24 @@ function renderDir(dash){
     const w=t.dir>0?"상방 우위":t.dir<0?"하방 우위":"중립";
     return `<div class="frow"><span class="fl">${lab}</span><span class="fv" style="color:${c}">${ar} ${t.mag}</span><span class="fu">추세율</span><span class="fw">${w}</span></div>`;
   }).join("");
-  // 종합
-  const dirs=[ses.dir,day.dir,h4.dir], up=dirs.filter(x=>x>0).length, dn=dirs.filter(x=>x<0).length;
-  let verdict,cls,arrow,sw;
-  if(up===3){ verdict="강추세"; cls="up"; arrow="▲"; sw=`<b>강추세</b>: 추세방향(▲) 눌림만 진입, <b>역추세 fade 관망.</b>`; }
-  else if(dn===3){ verdict="강추세"; cls="dn"; arrow="▼"; sw=`<b>강추세</b>: 추세방향(▼) 눌림만 진입, <b>역추세 fade 관망.</b>`; }
-  else if(up>=2){ verdict="약상승"; cls="up"; arrow="▲"; sw=`<b>혼조(상방 우세)</b>: 정렬 아님 → 역추세 fade 신중, 경계 반응 확인.`; }
-  else if(dn>=2){ verdict="약하락"; cls="dn"; arrow="▼"; sw=`<b>혼조(하방 우세)</b>: 정렬 아님 → 역추세 fade 신중, 경계 반응 확인.`; }
-  else{ verdict="혼조"; cls="mid"; arrow=""; sw=`<b>균형/혼조</b>: 방향 미정 → 레인지 경계 fade 가능(양방), 추격 금지.`; }
-  $("#dirbig").textContent=verdict+(arrow?" "+arrow:""); $("#dirbig").className="big "+cls;
+  // 방향 정렬
+  const up=[ses.dir,day.dir,h4.dir].filter(x=>x>0).length, dn=[ses.dir,day.dir,h4.dir].filter(x=>x<0).length;
+  let dword,dcls,darr;
+  if(up===3){dword="상방 정렬";dcls="up";darr="▲";}
+  else if(dn===3){dword="하방 정렬";dcls="dn";darr="▼";}
+  else if(up>=2){dword="상방 우세";dcls="up";darr="▲";}
+  else if(dn>=2){dword="하방 우세";dcls="dn";darr="▼";}
+  else{dword="혼조";dcls="mid";darr="";}
+  $("#dirbig").textContent=dword+(darr?" "+darr:""); $("#dirbig").className="big "+dcls;
   $("#dirmeta").innerHTML=`세션·일간·H4<br>${up}▲ / ${dn}▼`;
+  // 국면 (효율 기반) + 스위치
+  const rg=regimeOf(prof); setBadge(rg?rg.word:null, rg?rg.badge:"");
+  const dirW = up>dn?"상방":dn>up?"하방":"—";
+  let sw;
+  if(!rg) sw=`효율 데이터 없음 — 국면 판정 불가 (프로파일 URL 확인).`;
+  else if(rg.word==="추세") sw=`<b>추세장</b> — ${dirW} 방향 눌림만 진입, <b>역추세 fade 관망.</b>`;
+  else if(rg.word==="횡보") sw=`<b>횡보장</b> — 박스 경계 fade 가능(양방), <b>추격 금지.</b>`;
+  else sw=`<b>중립</b> — 국면 애매, 확실한 자리만 신중히.`;
   $("#switch").innerHTML=`국면 스위치 — ${sw}`;
 }
 
@@ -264,8 +288,8 @@ function sample(){
     rows:[{hi:4331,lo:4329,t3:55700,t1:9000},{hi:4309,lo:4307,t3:40000,t1:43100},
           {hi:4325,lo:4323,t3:55500,t1:8000},{hi:4319,lo:4317,t3:30000,t1:20000},
           {hi:4311,lo:4309,t3:26000,t1:22000}],
-    dens:[{lab:"직전 H4",cur:false,d:3.6,net:6.2,rng:15.5,dir:1},
-          {lab:"직전 H1",cur:false,d:8.1,net:2.4,rng:4.0,dir:1},
+    dens:[{lab:"직전 H4",cur:false,d:3.6,net:6.2,rng:9.0,dir:1},
+          {lab:"직전 H1",cur:false,d:8.1,net:2.4,rng:3.4,dir:1},
           {lab:"현재 H1",cur:true,d:11.5,net:1.1,rng:3.7,dir:1},
           {lab:"직전 M15",cur:false,d:12.4,net:0.8,rng:2.0,dir:1},
           {lab:"현재 M15",cur:true,d:19.2,net:0.5,rng:2.5,dir:-1}] };
@@ -277,12 +301,12 @@ let timer=null;
 async function pull(url){ if(!url) return null; try{ const r=await fetch(url,{cache:"no-store"}); return await r.json(); }catch(e){ return null; } }
 async function tick(){
   const du=localStorage.getItem(LS.d), pu=localStorage.getItem(LS.p);
-  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-18c"; return; }
+  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-20a"; return; }
   const [dash,prof]=await Promise.all([pull(du),pull(pu)]);
   render(dash,prof);
   const t=(prof&&prof.kst)||(dash&&dash.kst)||"";
   const miss=[!du||dash?"":"대시보드✕",!pu||prof?"":"프로파일✕"].filter(Boolean).join(" ");
-  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-18c`;
+  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-20a`;
 }
 function loop(){ if(timer)clearInterval(timer); const s=Math.max(10,parseInt(localStorage.getItem(LS.i)||"30",10)); tick(); if(localStorage.getItem(LS.d)||localStorage.getItem(LS.p))timer=setInterval(tick,s*1000); }
 
