@@ -173,10 +173,8 @@ function regimeOf(prof){
   const eff=r=>{ if(!r)return null; const rng=Number(r.rng)||0,net=Number(r.net)||0; return rng>0?net/rng*100:null; };
   const vals=[eff(pick("H4")),eff(pick("H1"))].filter(v=>v!=null);
   if(!vals.length) return null;
-  const avg=vals.reduce((a,b)=>a+b,0)/vals.length;
-  if(avg>=55) return {word:"추세",badge:"trend"};
-  if(avg<=35) return {word:"횡보",badge:"range"};
-  return {word:"중립",badge:"neu"};
+  const v=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+  return v>=45 ? {word:"추세",badge:"trend",val:v} : {word:"횡보",badge:"range",val:v};
 }
 function renderDir(dash, prof){
   const box=$("#dirrows"), rb=$("#rgm");
@@ -204,14 +202,13 @@ function renderDir(dash, prof){
   $("#dirbig").textContent=dword+(darr?" "+darr:""); $("#dirbig").className="big "+dcls;
   $("#dirmeta").innerHTML=`세션·일간·H4<br>${up}▲ / ${dn}▼`;
   // 국면 (효율 기반) + 스위치
-  const rg=regimeOf(prof); setBadge(rg?rg.word:null, rg?rg.badge:"");
+  const rg=regimeOf(prof); setBadge(rg?(rg.word+" "+rg.val):null, rg?rg.badge:"");
   const dirW = up>dn?"상방":dn>up?"하방":"—";
   let sw;
   if(!rg) sw=`효율 데이터 없음 — 국면 판정 불가 (프로파일 URL 확인).`;
   else if(rg.word==="추세") sw=`<b>추세장</b> — ${dirW} 방향 눌림만 진입, <b>역추세 fade 관망.</b>`;
-  else if(rg.word==="횡보") sw=`<b>횡보장</b> — 박스 경계 fade 가능(양방), <b>추격 금지.</b>`;
-  else sw=`<b>중립</b> — 국면 애매, 확실한 자리만 신중히.`;
-  $("#switch").innerHTML=`국면 스위치 — ${sw}`;
+  else sw=`<b>횡보장</b> — 박스 경계 fade 가능(양방), <b>추격 금지.</b>`;
+  $("#switch").innerHTML=`국면 스위치 — ${sw} <span style="color:var(--faint)">(효율 ${rg?rg.val:"—"})</span>`;
 }
 
 function renderLoc(dash, prof, price){
@@ -301,12 +298,12 @@ let timer=null;
 async function pull(url){ if(!url) return null; try{ const r=await fetch(url,{cache:"no-store"}); return await r.json(); }catch(e){ return null; } }
 async function tick(){
   const du=localStorage.getItem(LS.d), pu=localStorage.getItem(LS.p);
-  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-20a"; return; }
+  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-20b"; return; }
   const [dash,prof]=await Promise.all([pull(du),pull(pu)]);
   render(dash,prof);
   const t=(prof&&prof.kst)||(dash&&dash.kst)||"";
   const miss=[!du||dash?"":"대시보드✕",!pu||prof?"":"프로파일✕"].filter(Boolean).join(" ");
-  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-20a`;
+  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-20b`;
 }
 function loop(){ if(timer)clearInterval(timer); const s=Math.max(10,parseInt(localStorage.getItem(LS.i)||"30",10)); tick(); if(localStorage.getItem(LS.d)||localStorage.getItem(LS.p))timer=setInterval(tick,s*1000); }
 
