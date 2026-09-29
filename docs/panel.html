@@ -277,15 +277,22 @@ function overRemark(sL,dL,wL,price){
   const conflict=dirs.some(x=>x>0)&&dirs.some(x=>x<0);
   parts.sort((a,b)=>b.w-a.w);
   const tags=parts.map(p=>p.t).join(" · ");
-  let msg;
+  const top=parts[0], lo=parts[parts.length-1];
+  // 과확장의 반대 = 되돌림(평균회귀) 방향 = 편향. 하방 과확장 → 위로, 상방 과확장 → 아래로.
+  const up = top.dir<0;
+  const biasW = up? "상승 우위" : "하락 우위";
+  const biasA = up? "▲" : "▼";
+  const biasC = up? "var(--up)" : "var(--down)";
+  let strength, detail;
   if(conflict){
-    const hi=parts[0], lo=parts[parts.length-1];
-    msg=`<b>프레임 상충</b> — ${hi.t}(상위) + ${lo.t}(하위) → <b>되돌림 초입 경계.</b> 상위 프레임 쪽으로 되돌릴 수 있음.`;
+    strength="약";
+    detail=`상위 ${top.t} vs 하위 ${lo.t} 상충 → <b>${up?"위":"아래"}로 되돌림 초입</b>, ${up?"숏":"롱"} 주의.`;
   } else {
-    const top=parts[0], side=top.dir>0?"상방":"하방", fade=top.dir>0?"매도(하락) fade":"매수(상승) fade";
-    msg=`<b>${side} 과확장</b> — 평균회귀 자리(${fade}) 우호. 단 <b>객관 레벨 근접 + 국면(횡보)</b> 확인 필수.`;
+    strength = parts.length>=2? "강" : "";
+    detail=`${up?"과매도 → 위로":"과매수 → 아래로"} 평균회귀 압력. ${up?"매수(롱)":"매도(숏)"} 우호.`;
   }
-  return `<div class="remark">${msg}<br><span class="lv2">과확장: ${tags} · 투영레벨은 시가±평균폭(실제 고저 아님)</span></div>`;
+  return `<div class="remark"><b style="color:${biasC};font-size:14px">${biasA} ${biasW}${strength?` (${strength})`:""}</b><br>`+
+    `${detail}<br><span class="lv2">과확장: ${tags} · 횡보 국면·객관 레벨서만 fade · 투영레벨=시가±평균폭</span></div>`;
 }
 
 function renderForce(prof){
@@ -332,12 +339,12 @@ let timer=null;
 async function pull(url){ if(!url) return null; try{ const r=await fetch(url,{cache:"no-store"}); return await r.json(); }catch(e){ return null; } }
 async function tick(){
   const du=localStorage.getItem(LS.d), pu=localStorage.getItem(LS.p);
-  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-29a"; return; }
+  if(!du && !pu){ const s=sample(); render(s.dash,s.prof); $("#stamp").textContent="● 샘플 모드 — ⚙에서 URL 설정 · build 2026-09-29b"; return; }
   const [dash,prof]=await Promise.all([pull(du),pull(pu)]);
   render(dash,prof);
   const t=(prof&&prof.kst)||(dash&&dash.kst)||"";
   const miss=[!du||dash?"":"대시보드✕",!pu||prof?"":"프로파일✕"].filter(Boolean).join(" ");
-  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-29a`;
+  $("#stamp").textContent=`● 실시간 ${t} ${miss} · build 2026-09-29b`;
 }
 function loop(){ if(timer)clearInterval(timer); const s=Math.max(10,parseInt(localStorage.getItem(LS.i)||"30",10)); tick(); if(localStorage.getItem(LS.d)||localStorage.getItem(LS.p))timer=setInterval(tick,s*1000); }
 
