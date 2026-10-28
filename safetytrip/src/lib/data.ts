@@ -138,6 +138,15 @@ const fallback = {
       .map((s) => ({ id: s.id, name: s.name, location: toLatLon(s.lat, s.lon) }));
     return computeNearbyStations(loc, stationLikes, limit);
   },
+  // 최근접 역의 좌표(Street View heading 계산용).
+  nearestStationLatLon: (idOrSlug: string): LatLon | null => {
+    const p = seedProps.find((x) => x.id === idOrSlug || x.slug === idOrSlug);
+    if (!p) return null;
+    const near = nearestFor(p);
+    if (!near) return null;
+    const s = seedStations.find((x) => x.id === near.id);
+    return s ? toLatLon(s.lat, s.lon) : null;
+  },
 };
 
 export interface SearchArgs {
@@ -158,6 +167,7 @@ export const data = {
   searchProperties: async (args: SearchArgs) => fallback.searchProperties(args),
   getProperty: async (idOrSlug: string) => fallback.getProperty(idOrSlug),
   nearbyStations: async (idOrSlug: string, limit: number) => fallback.nearbyStations(idOrSlug, limit),
+  nearestStationLatLon: async (idOrSlug: string) => fallback.nearestStationLatLon(idOrSlug),
   compare: async (ids: string[]): Promise<{ items: PropertyDetail[]; skipped: string[] }> => {
     const seen = new Set<string>();
     const items: PropertyDetail[] = [];

@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
+  bearingDegrees,
   classifyMeters,
   computeNearbyStations,
   displayMeters,
@@ -69,6 +70,22 @@ describe("displayMeters", () => {
   });
   it("passes null through (미확인, never 0)", () => {
     expect(displayMeters(null)).toBeNull();
+  });
+});
+
+describe("bearingDegrees", () => {
+  const origin = { lat: 35.69, lon: 139.7 };
+  it("points ~north / east / south / west correctly", () => {
+    expect(bearingDegrees(origin, { lat: 35.70, lon: 139.7 })!).toBeCloseTo(0, 0); // north
+    expect(bearingDegrees(origin, { lat: 35.69, lon: 139.71 })!).toBeGreaterThan(80);
+    expect(bearingDegrees(origin, { lat: 35.69, lon: 139.71 })!).toBeLessThan(100); // ~east
+    expect(bearingDegrees(origin, { lat: 35.68, lon: 139.7 })!).toBeCloseTo(180, 0); // south
+  });
+  it("returns a value in [0,360) and null on invalid", () => {
+    const b = bearingDegrees(origin, { lat: 35.69, lon: 139.69 })!;
+    expect(b).toBeGreaterThanOrEqual(0);
+    expect(b).toBeLessThan(360);
+    expect(bearingDegrees(origin, { lat: 999, lon: 0 })).toBeNull();
   });
 });
 

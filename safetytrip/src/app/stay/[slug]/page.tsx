@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { data } from "@/lib/data";
 import { Disclaimer } from "@/components/Disclaimer";
+import { StreetView } from "@/components/StreetView";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +12,7 @@ export default async function StayDetailPage({ params }: { params: { slug: strin
 
   const near = detail.nearest_station;
   const stations = await data.nearbyStations(params.slug, 3);
+  const stationLoc = await data.nearestStationLatLon(params.slug);
 
   return (
     <article className="space-y-4">
@@ -49,6 +51,9 @@ export default async function StayDetailPage({ params }: { params: { slug: strin
           </ul>
         )}
       </section>
+
+      {/* 실제 거리 모습 (Street View) — 촬영일 명시. 실시간 아님. */}
+      <StreetView location={detail.location} lookAt={stationLoc} />
 
       {/* 지도는 지연 로드 (PRD §FR-05). 지도 실패해도 위 텍스트 정보는 정상. */}
       <section className="rounded-md border bg-white p-4">

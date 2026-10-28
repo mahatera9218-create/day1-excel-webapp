@@ -89,6 +89,22 @@ export function classifyMeters(meters: number | null): Classification | null {
   return "접근성 추가 확인";
 }
 
+/**
+ * A에서 B를 바라보는 초기 방위각(도, 0=북, 시계방향 0~360).
+ * Street View heading 기본값으로 사용(숙소에서 최근접 역 방향을 바라보게).
+ * 좌표가 유효하지 않으면 null.
+ */
+export function bearingDegrees(a: LatLon, b: LatLon): number | null {
+  if (!isValidLatLon(a) || !isValidLatLon(b)) return null;
+  const φ1 = toRad(a.lat);
+  const φ2 = toRad(b.lat);
+  const Δλ = toRad(b.lon - a.lon);
+  const y = Math.sin(Δλ) * Math.cos(φ2);
+  const x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
+  const θ = Math.atan2(y, x);
+  return ((θ * 180) / Math.PI + 360) % 360;
+}
+
 export interface StationLike {
   id: string;
   name: string;
