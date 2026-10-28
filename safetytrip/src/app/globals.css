@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+}
+
+/* 터치 영역 최소 44x44 권장 (PRD §5 모바일 규칙) */
+.tap {
+  @apply min-h-[44px] min-w-[44px];
+}
