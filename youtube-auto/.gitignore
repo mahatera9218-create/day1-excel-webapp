@@ -1,9 +1,17 @@
 # 비밀 키 / 인증 정보 — 절대 커밋하지 않는다
 .env
-client_secret*.json
-token.json
+channels/*/client_secret.json
+channels/*/token.json
 
-# 생성 결과물
-output/
+# 파이썬
 __pycache__/
 .venv/
+
+# 무거운 미디어는 커밋하지 않고 GitHub 실행 시 새로 생성한다.
+# (plan.json·script.md·status.json·timing.json·*.ass 는 커밋되어 기록으로 남는다)
+episodes/**/*.mp4
+episodes/**/*.mp3
+episodes/**/*.png
+episodes/**/*.jpg
+episodes/**/*.part
+episodes/**/concat.txt
