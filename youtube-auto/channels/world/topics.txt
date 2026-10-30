@@ -1,0 +1,29 @@
+# World folklore by continent/country. One per line. '#' lines are ignored.
+# Claude's scheduled drafting picks the next unused one (or researches fresh ones).
+
+# --- Asia ---
+The Fox Spirit Bride (Korea - Gumiho)
+The Tale of the Bamboo Cutter (Japan - Kaguya-hime)
+The Monkey King's Birth (China)
+The Churning of the Ocean of Milk (India)
+Mae Nak, the Ghost Wife of Phra Khanong (Thailand)
+
+# --- Europe ---
+The Wild Hunt Across the Winter Sky (Germanic/Norse)
+The Selkie Who Left the Sea (Scotland/Ireland)
+Baba Yaga and the House on Hen's Legs (Russia/Slavic)
+The Pied Piper of Hamelin (Germany)
+
+# --- Africa ---
+Anansi and the Sky God's Stories (West Africa - Akan)
+The Tokoloshe of the Night (Southern Africa)
+How the Tortoise Cracked Its Shell (Nigeria - Igbo)
+
+# --- Americas ---
+The Weeping Woman, La Llorona (Mexico)
+The Feathered Serpent Quetzalcoatl (Aztec)
+The Wendigo of the Frozen Forest (North America - Algonquian)
+
+# --- Oceania ---
+Maui Who Fished Up the Islands (Polynesia/Maori)
+The Rainbow Serpent and the Making of the Land (Aboriginal Australia)

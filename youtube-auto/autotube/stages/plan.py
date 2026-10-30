@@ -8,22 +8,39 @@ import json
 from pathlib import Path
 
 
+_BEATS_KO = [
+    ("한 선비가 깊은 산길을 홀로 걷고 있었습니다.", ["깊은 산길"], "a scholar walking alone on a misty mountain path at dusk", "kenburns_in"),
+    ("날이 저물자, 멀리 외딴 기와집에서 불빛이 새어 나왔습니다.", ["외딴 기와집"], "a lone tiled house glowing with lantern light in the dark forest", "kenburns_pan"),
+    ("문을 열어준 여인은 눈이 부시도록 아름다웠습니다.", ["아름다웠습니다"], "a mysterious beautiful woman opening a wooden gate, warm light behind her", "video"),
+    ("하지만 선비는 그녀의 그림자가 아홉 갈래로 갈라진 것을 보지 못했습니다.", ["아홉 갈래"], "a woman's shadow splitting into nine fox tails on the floor, candlelight", "kenburns_in"),
+    ("그날 이후, 마을에서는 선비를 다시 볼 수 없었습니다.", ["다시 볼 수 없었습니다"], "an empty mountain village at dawn, cold fog, no people", "kenburns_pan"),
+]
+_BEATS_EN = [
+    ("Long ago, in a village at the edge of the forest, an old story began.", ["old story"], "a quiet old village at the edge of a vast misty forest at dusk", "kenburns_in"),
+    ("Every night, something was heard beyond the treeline.", ["every night"], "dark dense forest at night, faint glow between the trees", "kenburns_pan"),
+    ("A lone traveler decided to find out what it was.", ["lone traveler"], "a cloaked traveler walking toward the dark woods, lantern in hand", "video"),
+    ("What they found would be told for a hundred years.", ["hundred years"], "a mysterious glowing figure deep in the forest, mist and moonlight", "kenburns_in"),
+    ("And to this day, the villagers never go there after dark.", ["never go there"], "empty forest path at dawn, cold fog, no people", "kenburns_pan"),
+]
+
+
 def mock_plan(cfg: dict, topic: str) -> dict:
     style = cfg["visual_style"].strip()
-    beats = [
-        ("한 선비가 깊은 산길을 홀로 걷고 있었습니다.", ["깊은 산길"], "a scholar walking alone on a misty mountain path at dusk", "kenburns_in"),
-        ("날이 저물자, 멀리 외딴 기와집에서 불빛이 새어 나왔습니다.", ["외딴 기와집"], "a lone tiled house glowing with lantern light in the dark forest", "kenburns_pan"),
-        ("문을 열어준 여인은 눈이 부시도록 아름다웠습니다.", ["아름다웠습니다"], "a mysterious beautiful woman opening a wooden gate, warm light behind her", "video"),
-        ("하지만 선비는 그녀의 그림자가 아홉 갈래로 갈라진 것을 보지 못했습니다.", ["아홉 갈래"], "a woman's shadow splitting into nine fox tails on the floor, candlelight", "kenburns_in"),
-        ("그날 이후, 마을에서는 선비를 다시 볼 수 없었습니다.", ["다시 볼 수 없었습니다"], "an empty mountain village at dawn, cold fog, no people", "kenburns_pan"),
-    ]
+    korean = cfg.get("language") == "Korean"
+    beats = _BEATS_KO if korean else _BEATS_EN
+    sfx = "wind, distant night sounds"
     scenes = [{"narration": n, "highlight": h, "image_prompt": f"{p}, {style}",
-               "motion": m, "sfx": "wind, distant night sounds"} for n, h, p, m in beats]
+               "motion": m, "sfx": sfx} for n, h, p, m in beats]
+    if korean:
+        desc, tags = "옛이야기를 차분하게 들려드립니다.", ["야담", "전설", "옛이야기", "한국설화", "괴담"]
+    else:
+        desc = "A folk tale retold. Relax and listen."
+        tags = ["folklore", "mythology", "legends", "folk tales", "storytelling", "bedtime story"]
     return {
         "topic": topic,
         "title": f"{cfg.get('title_prefix', '')} {topic}".strip(),
-        "description": f"{topic}\n\n옛이야기를 차분하게 들려드립니다.",
-        "tags": ["야담", "전설", "옛이야기", "한국설화", "미스터리", "괴담"],
+        "description": f"{topic}\n\n{desc}",
+        "tags": tags,
         "scenes": scenes,
     }
 

@@ -125,7 +125,15 @@ def main() -> None:
             upload.run_stage(run_dir, pipeline.load_plan(run_dir), cfg)
         return
     if args.cmd == "render":
-        cmd_render(load_channel(args.channel), yes=args.yes)
+        if args.channel == "all":
+            names = [d.parent.name for d in sorted(CHANNELS.glob("*/channel.yaml"))]
+            for name in names:
+                try:
+                    cmd_render(load_channel(name), yes=args.yes)
+                except SystemExit as e:
+                    print(f"[{name}] 건너뜀: {e}")
+        else:
+            cmd_render(load_channel(args.channel), yes=args.yes)
         return
 
     # approve/make/upload/status 는 폴더에서 채널명을 역산

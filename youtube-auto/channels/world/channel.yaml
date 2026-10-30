@@ -1,0 +1,60 @@
+# 영어권 글로벌 채널 — 세계 각국의 민담·전설·신화 (대륙별·국가별)
+
+name: world
+title_prefix: ""
+
+concept: >
+  A calm, atmospheric storytelling channel retelling folk tales, legends and myths
+  from every corner of the world — one country or culture at a time. Respectful,
+  well-researched, never mocking. Hooks within the first 5 seconds, a clear narrative
+  arc, and an ending that invites the next tale. Aimed at a global English-speaking
+  audience who keep it playing while relaxing or working.
+
+language: English
+
+visual_style: >
+  painterly folklore illustration, rich atmospheric lighting, culturally respectful
+  and era-appropriate detail, muted cinematic color, soft texture, no text, no logos
+
+voice_id: ""
+narrator_note: a warm, measured English storyteller voice, slightly low and unhurried
+
+length:
+  target_minutes: 18
+  min_scenes: 24
+  max_scenes: 60
+  video_scene_ratio: 0.12
+
+engines:
+  mode: mock
+  image_model: minimax/h3/text-to-image
+  video_model: pika/pika-h3-flex/image-to-video
+  image_resolution: "1024"
+  video_resolution: 480p
+  price_per_image_usd: 0.01
+  price_per_video_second_usd: 0.02
+  max_cost_usd: 8
+
+subtitles:
+  enabled: true
+  font: "Noto Sans KR"          # 이 폰트는 영문 글자도 포함합니다.
+  font_size: 42
+  primary_color: "FFFFFF"
+  highlight_color: "FFD400"
+  outline: 4
+  margin_v: 90
+
+music:
+  bgm_path: ""
+  bgm_volume: 0.12
+
+shorts:
+  enabled: true
+  count: 3
+  max_seconds: 55
+
+youtube:
+  privacy: private
+  category_id: "24"
+  made_for_kids: false
+  client_secret_file: client_secret.json
