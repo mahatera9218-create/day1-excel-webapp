@@ -1,0 +1,9 @@
+# 비밀 키 / 인증 정보 — 절대 커밋하지 않는다
+.env
+client_secret*.json
+token.json
+
+# 생성 결과물
+output/
+__pycache__/
+.venv/
