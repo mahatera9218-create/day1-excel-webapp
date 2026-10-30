@@ -9,6 +9,9 @@ from pathlib import Path
 
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 AI_NOTICE = "※ 이 영상의 화면과 음성은 AI로 생성되었습니다."
+# 채널 언어 → 유튜브 언어 코드. '영상 언어'를 정확히 넣어야 그 언어권 시청자에게 노출된다.
+LANG_CODE = {"Korean": "ko", "English": "en", "Japanese": "ja", "Spanish": "es",
+             "French": "fr", "German": "de", "Portuguese": "pt", "Chinese": "zh"}
 
 
 def _credentials(channel_dir: Path, client_secret_name: str):
@@ -37,13 +40,15 @@ def upload(video: Path, plan: dict, cfg: dict) -> str:
     creds = _credentials(cfg["_dir"], yt["client_secret_file"])
     service = build("youtube", "v3", credentials=creds)
     desc = f"{plan['description'].strip()}\n\n{AI_NOTICE}"
+    lang = LANG_CODE.get(cfg.get("language", ""), "en")
     body = {
         "snippet": {
             "title": plan["title"][:100],
             "description": desc[:5000],
             "tags": plan.get("tags", [])[:30],
             "categoryId": str(yt["category_id"]),
-            "defaultLanguage": "ko",
+            "defaultLanguage": lang,       # 제목·설명의 언어
+            "defaultAudioLanguage": lang,  # 내레이션(오디오) 언어 — 노출 대상 결정의 핵심
         },
         "status": {
             "privacyStatus": yt["privacy"],
