@@ -68,7 +68,7 @@ def _latest_approved(cfg: dict) -> Path:
             cands.append(d.parent)
     if not cands:
         raise SystemExit(f"[오류] {cfg['_name']} 에 승인되고 아직 안 올린 편이 없습니다.")
-    return sorted(cands)[-1]
+    return sorted(cands)[0]  # 오래된 것부터(FIFO) — 밀린 대기열이 순서대로 소진되게
 
 
 def cmd_render(cfg: dict, yes: bool) -> None:
