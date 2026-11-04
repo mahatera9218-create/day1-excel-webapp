@@ -1,29 +1,20 @@
-# World folklore by continent/country. One per line. '#' lines are ignored.
-# Claude's scheduled drafting picks the next unused one (or researches fresh ones).
+# 세계 야담 — 자극적인 숨은 실화. 메인=스캔들·금지된 사랑(2/3), 나머지는 충격·미스터리·상식.
+# '#' 줄 무시. 사실 기반, 노골적 성·고어·최근 실제범죄 금지(수위 조절).
 
-# --- Asia ---
-The Fox Spirit Bride (Korea - Gumiho)
-The Tale of the Bamboo Cutter (Japan - Kaguya-hime)
-The Monkey King's Birth (China)
-The Churning of the Ocean of Milk (India)
-Mae Nak, the Ghost Wife of Phra Khanong (Thailand)
+# === 스캔들 · 금지된 사랑 (메인) ===
+Cleopatra and Mark Antony: The Love That Shook Two Empires (Egypt/Rome)
+The King Who Gave Up His Throne for a Divorced Woman (Edward VIII & Wallis Simpson)
+Heloise and Abelard: Medieval Europe's Forbidden Love (France)
+Anne Boleyn: The Marriage That Broke a Church (England)
+The Affair of the Poisons at Versailles (France)
+Yang Guifei: The Concubine Who Toppled a Dynasty (China)
+Empress Wu, China's Only Female Emperor and Her Ruthless Court
+Catherine the Great: The Scandals, the Myths, and the Truth (Russia)
+Shah Jahan and Mumtaz: The Love Behind the Taj Mahal (India)
+Rasputin and the Secrets of the Romanov Court (Russia)
 
-# --- Europe ---
-The Wild Hunt Across the Winter Sky (Germanic/Norse)
-The Selkie Who Left the Sea (Scotland/Ireland)
-Baba Yaga and the House on Hen's Legs (Russia/Slavic)
-The Pied Piper of Hamelin (Germany)
-
-# --- Africa ---
-Anansi and the Sky God's Stories (West Africa - Akan)
-The Tokoloshe of the Night (Southern Africa)
-How the Tortoise Cracked Its Shell (Nigeria - Igbo)
-
-# --- Americas ---
-The Weeping Woman, La Llorona (Mexico)
-The Feathered Serpent Quetzalcoatl (Aztec)
-The Wendigo of the Frozen Forest (North America - Algonquian)
-
-# --- Oceania ---
-Maui Who Fished Up the Islands (Polynesia/Maori)
-The Rainbow Serpent and the Making of the Land (Aboriginal Australia)
+# === 충격 실화 · 미스터리 · 상식 (변주) ===
+The Dancing Plague of 1518 (Strasbourg)
+The Great Molasses Flood of Boston, 1919 (USA)
+Mansa Musa, the Richest Man Who Ever Lived (Mali)
+The Lost Colony That Vanished: Roanoke (USA)

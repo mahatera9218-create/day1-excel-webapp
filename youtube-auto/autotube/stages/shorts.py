@@ -13,9 +13,19 @@ from ..render.util import probe_duration, run
 
 
 def _pick(plan: dict, n: int) -> list[int]:
+    total = len(plan["scenes"])
+    order: list[int] = []
+    # 가장 자극적인 장면(썸네일로 지정한 것)을 1순위로.
+    ts = int(plan.get("thumbnail_scene", 0))
+    if 1 <= ts <= total:
+        order.append(ts)
     videos = [i for i, s in enumerate(plan["scenes"], 1) if s.get("motion") == "video"]
-    rest = [i for i, _ in enumerate(plan["scenes"], 1) if i not in videos]
-    return (videos + rest)[:n]
+    for i in videos + list(range(1, total + 1)):
+        if i not in order:
+            order.append(i)
+    return order[:n]
+
+
 
 
 def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
@@ -38,9 +48,11 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
                    "highlight": c.get("highlight", [])} for c in timing[key]["chunks"] if c["start"] < dur]
         build_ass(chunks, sub_cfg, size, ass)
         frames = max(int(dur * FPS), 1)
+        # 롱폼 썸네일과 같은 영화식 보정(대비/채도/비네트)으로 한 장이 확 서게.
         vf = (f"scale={w*2}:{h*2}:force_original_aspect_ratio=increase,crop={w*2}:{h*2},"
+              f"eq=contrast=1.1:saturation=1.22:brightness=-0.02,"
               f"zoompan=z='min(zoom+0.0012,1.2)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
-              f"d={frames}:s={w}x{h}:fps={FPS},format=yuv420p,"
+              f"d={frames}:s={w}x{h}:fps={FPS},format=yuv420p,vignette=PI/5,"
               f"subtitles={ass.name}:fontsdir={FONT_DIR}")
         out = out_dir / f"short_{n:02}.mp4"
         run(["-loop", "1", "-i", run_dir / "images" / f"scene_{key}.png", "-i", audio,

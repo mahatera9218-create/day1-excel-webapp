@@ -39,6 +39,9 @@ def mock_plan(cfg: dict, topic: str) -> dict:
     return {
         "topic": topic,
         "title": f"{cfg.get('title_prefix', '')} {topic}".strip(),
+        "thumbnail_prompt": f"dramatic cinematic close-up for '{topic.split('(')[0].strip()}', a striking face with intense eye contact, moody lighting, shallow depth of field",
+        "thumbnail_text": "",
+        "thumbnail_scene": 1,
         "description": f"{topic}\n\n{desc}",
         "tags": tags,
         "scenes": scenes,

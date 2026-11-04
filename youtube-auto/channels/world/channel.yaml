@@ -1,26 +1,28 @@
-# 영어권 글로벌 채널 — 세계 각국의 민담·전설·신화 (대륙별·국가별)
+# 영어권 글로벌 채널 — 세계 야담 (숨겨진 옛이야기·흥미로운 실화와 일화)
 
 name: world
 title_prefix: ""
 
 concept: >
-  A calm, atmospheric storytelling channel retelling folk tales, legends and myths
-  from every corner of the world — one country or culture at a time. Respectful,
-  well-researched, never mocking. Hooks within the first 5 seconds, a clear narrative
-  arc, and an ending that invites the next tale. Aimed at a global English-speaking
-  audience who keep it playing while relaxing or working.
+  Provocative, imagination-stirring true stories from world history — scandals, forbidden
+  love, power and betrayal, shocking events and unsolved mysteries that make people lean
+  in and think "no way that's real." Bold, teasing hooks in the first 5 seconds, juicy
+  details, and cliffhangers that keep them watching. Sensational in TONE but grounded in
+  FACT (no invented details) and kept advertiser-safe: suggestive and dramatic, but never
+  sexually explicit and never gory. For a global English-speaking audience that loves a
+  jaw-dropping "did you know" story.
 
 language: English
 
 visual_style: >
-  painterly folklore illustration, rich atmospheric lighting, culturally respectful
-  and era-appropriate detail, muted cinematic color, soft texture, no text, no logos
+  cinematic historical illustration, warm painterly tone, era-accurate detail,
+  documentary mood, dramatic natural lighting, no text, no logos, no modern objects
 
 # 기본 제공(premade) 목소리는 무료 플랜 API 로도 사용 가능.
-# 보이스 라이브러리 목소리(예: 7PbNGDB5sJCFnOZuMPNL)는 유료(Starter 이상) 필요.
-# Daniel = 깊고 차분한 영국 남성 내레이터. 유료로 올리면 원하는 보이스 ID 로 교체하세요.
-voice_id: "onwK4e9ZLuTAKqWW03F9"
-narrator_note: a warm, measured English storyteller voice, slightly low and unhurried
+# 보이스 라이브러리 목소리는 유료(Starter 이상) 필요.
+# Adam = 깊고 따뜻한 미국 남성 내레이터. 다른 목소리는 ElevenLabs Voices 에서 ID 복사해 교체.
+voice_id: "pNInz6obpgDQGcFmaJgB"
+narrator_note: a warm, curious English storyteller voice, engaging and documentary-like
 
 length:
   target_minutes: 18
@@ -48,8 +50,10 @@ subtitles:
   margin_v: 90
 
 music:
-  bgm_path: ""
-  bgm_volume: 0.12
+  # 번들된 앰비언트 배경음. 원하는 곡으로 바꾸려면 파일을 넣고 이 경로를 바꾸세요
+  # (유튜브 오디오 라이브러리 무료곡 추천). cwd=youtube-auto 기준 상대경로.
+  bgm_path: "autotube/assets/music/ambient_folk.mp3"
+  bgm_volume: 0.14
 
 shorts:
   enabled: true
