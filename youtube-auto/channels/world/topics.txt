@@ -1,26 +1,20 @@
-# 세계 야담 — 자극적이고 상상력을 자극하는 숨은 실화. 한 줄에 하나. '#' 줄 무시.
-# 스캔들/충격/미스터리로 후킹하되 사실 기반. 노골적 성·고어·최근 실제범죄 금지.
+# 세계 야담 — 자극적인 숨은 실화. 메인=스캔들·금지된 사랑(2/3), 나머지는 충격·미스터리·상식.
+# '#' 줄 무시. 사실 기반, 노골적 성·고어·최근 실제범죄 금지(수위 조절).
 
-# --- Europe ---
-The Affair of the Poisons at the Court of Versailles (France)
-Rasputin, the Mad Monk Who Refused to Die (Russia)
-Tulip Mania, When One Flower Cost a Mansion (Netherlands)
-The Man Who Sold the Eiffel Tower Twice (Victor Lustig)
+# === 스캔들 · 금지된 사랑 (메인) ===
+Cleopatra and Mark Antony: The Love That Shook Two Empires (Egypt/Rome)
+The King Who Gave Up His Throne for a Divorced Woman (Edward VIII & Wallis Simpson)
+Heloise and Abelard: Medieval Europe's Forbidden Love (France)
+Anne Boleyn: The Marriage That Broke a Church (England)
+The Affair of the Poisons at Versailles (France)
+Yang Guifei: The Concubine Who Toppled a Dynasty (China)
+Empress Wu, China's Only Female Emperor and Her Ruthless Court
+Catherine the Great: The Scandals, the Myths, and the Truth (Russia)
+Shah Jahan and Mumtaz: The Love Behind the Taj Mahal (India)
+Rasputin and the Secrets of the Romanov Court (Russia)
+
+# === 충격 실화 · 미스터리 · 상식 (변주) ===
 The Dancing Plague of 1518 (Strasbourg)
-
-# --- Asia ---
-Empress Wu, the Ruthless Rise of China's Only Female Emperor
-Zheng He and China's Lost Treasure Fleet
-The Concubine Who Toppled a Dynasty (China - Yang Guifei)
-
-# --- Africa / Middle East ---
+The Great Molasses Flood of Boston, 1919 (USA)
 Mansa Musa, the Richest Man Who Ever Lived (Mali)
-Cleopatra's Gamble to Seduce an Empire (Egypt)
-
-# --- Americas ---
-The Great Molasses Flood That Drowned a Street (Boston, 1919)
-The Lost Colony That Vanished Without a Trace (Roanoke)
-The Mystery of the Nazca Lines (Peru)
-
-# --- Oceania ---
-The Great Emu War Australia Actually Lost (1932)
+The Lost Colony That Vanished: Roanoke (USA)

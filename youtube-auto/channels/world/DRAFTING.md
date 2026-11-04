@@ -11,6 +11,12 @@ cliffhangers that make people lean in), but every episode is **grounded in fact*
 Pick the **juiciest, most surprising angle** of a true story and lead with it. Think
 tabloid hook, documentary substance.
 
+**Content mix (what to weight):** make **scandal and forbidden love the main pillar —
+roughly 2 of every 3 episodes** (royal affairs, secret marriages, love that broke
+dynasties, betrayals at court). Fill the rest with variety: shocking true events,
+character behind-the-stories, and jaw-dropping "did you know" trivia. When the weekly
+batch is drafted, lean it toward scandal / forbidden love.
+
 **Advertiser-safe line (important for monetization):** suggestive and dramatic is good;
 **sexually explicit, pornographic, or gory is not** — those kill ad revenue. Imply and
 tease rather than show. No recent real crimes or living-person defamation.
