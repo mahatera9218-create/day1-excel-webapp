@@ -36,8 +36,17 @@ next few episodes as `plan.json` files, ready for the human to review. **Never a
 - **Length:** target ~18 minutes. At ~2.3 English words/second, that's ~2,500 words total.
   Use **24-45 scenes**. Each scene's narration ≈ 40-90 words.
 - **Scene 1 is the hook:** a striking question or image in the first 5 seconds.
-- **narration:** English, spoken-style, factual. Don't invent quotes, dates, or details not
-  in the sources. If uncertain, phrase it as "as the story is often told…".
+- **Tell it as an immersive story, not a summary.** Build a clear arc: setup → rising
+  tension → turning point → resolution. Use sensory, concrete detail (sound, light,
+  weather), vary sentence rhythm, and end scenes on small cliff-hangers that pull the
+  viewer forward. Avoid encyclopedic "and then, and then" narration.
+- **Use character dialogue.** Weave short quoted lines into the narration to bring scenes
+  alive — e.g. `Nyame's laughter shook the clouds. "Greater kings have tried," he said.`
+  One narrator reads everything, so attribute each line ("he said", "the woman whispered").
+  Keep quotes natural and faithful to the tale; don't fabricate specific historical quotes.
+- **narration:** English, spoken-style. Stay faithful to the source plot; don't invent
+  dates, statistics, or real historical figures' words. If uncertain, phrase it as "as the
+  story is often told…". Dialogue inside a folk tale is fine (it is a retelling).
 - **highlight:** 1-2 short phrases per scene (the punchy words to color in the subtitle).
 - **image_prompt:** English, concrete, culturally and era appropriate. No on-screen text,
   no logos, no real living people. The channel's visual_style is appended automatically.
