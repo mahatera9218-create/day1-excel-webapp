@@ -1,28 +1,32 @@
-# Drafting SOP — `world` channel (world 야담 / eerie world folklore, English)
+# Drafting SOP — `world` channel (세계 야담 / hidden stories & anecdotes, English)
 
 This is the brief the scheduled drafting session follows. Goal: research and draft the
 next few episodes as `plan.json` files, ready for the human to review. **Never approve.**
 
-This channel is **"world 야담"**: atmospheric, unsettling folklore and ghost lore from
-around the world — vengeful spirits, cursed places, haunted roads, strange
-disappearances, creatures of the night. The feeling is **eerie and mysterious, made for
-listening in the dark** — suspense and dread, **never gore, never exploitative**, and
-avoid graphic harm (especially to children). Keep it tasteful; the unease comes from
-atmosphere and the unknown, not from violence.
+This channel is **"world 야담"**: fascinating, lesser-known stories from world history and
+cultures — surprising true events, forgotten people, strange customs, "wait, that really
+happened?" moments. The feeling is **curiosity and wonder**, told like an unfolding
+mystery with a satisfying "I never knew that" payoff. Not horror. Mostly **real history**.
+
+**Accuracy is the #1 rule.** These are presented as true, so:
+- Verify every claim with web search; note 2-3 reliable sources in your research.
+- **Never invent** dates, numbers, names, or quotes. Do not attribute made-up quotes to
+  real people. If a detail is uncertain or disputed, say so ("historians still debate…").
+- Clearly separate fact from legend when a story mixes both.
+- Avoid recent tragedies, living-person controversy, and anything advertiser-unfriendly.
 
 ## What to produce each run
 
 - Draft **4 episodes** (enough for one week of 3 uploads + buffer).
 - Spread them across **different continents** (don't do four from one region).
 - Pick topics from `channels/world/topics.txt` that have no episode yet, or research a
-  fresh, lesser-known **eerie tale, ghost story or legend**. Prefer **public-domain
-  folklore**, not modern copyrighted characters or recent real crimes.
+  fresh, genuinely surprising **true story or historical anecdote**.
 
 ## Steps for each episode
 
-1. **Research first.** Use web search to confirm the tale's origin, the culture it belongs
-   to, names, and the commonly told plot. Note 2-3 sources. If sources conflict or the tale
-   is sacred/sensitive, choose a respectful mainstream version and say so in the description.
+1. **Research first.** Use web search to confirm the facts: what happened, when, where,
+   who, and how it is commonly explained. Note 2-3 sources. If accounts conflict, pick the
+   mainstream scholarly version and say so in the description.
 2. Scaffold: `python -m autotube new world --topic "<Tale name (Country)>"`
 3. Overwrite the generated `plan.json` with the real episode (schema below).
 4. Leave `status.json` as `approved: false`.
@@ -47,13 +51,14 @@ atmosphere and the unknown, not from violence.
   tension → turning point → resolution. Use sensory, concrete detail (sound, light,
   weather), vary sentence rhythm, and end scenes on small cliff-hangers that pull the
   viewer forward. Avoid encyclopedic "and then, and then" narration.
-- **Use character dialogue.** Weave short quoted lines into the narration to bring scenes
-  alive — e.g. `Nyame's laughter shook the clouds. "Greater kings have tried," he said.`
-  One narrator reads everything, so attribute each line ("he said", "the woman whispered").
-  Keep quotes natural and faithful to the tale; don't fabricate specific historical quotes.
-- **narration:** English, spoken-style. Stay faithful to the source plot; don't invent
-  dates, statistics, or real historical figures' words. If uncertain, phrase it as "as the
-  story is often told…". Dialogue inside a folk tale is fine (it is a retelling).
+- **Build drama without faking facts.** Make it vivid through scene-setting, pacing and
+  the narrator's voice — not invented dialogue. **Do NOT put made-up quotes in real
+  people's mouths.** Only use a direct quote if it is genuinely documented (and then keep
+  it exact). Dramatize the *situation*, not fabricated speech.
+- **narration:** English, spoken-style, and factually accurate. Don't invent dates,
+  numbers, names, or quotes. When something is uncertain or debated, say so plainly
+  ("no one is sure why", "historians still argue about this") — the mystery is part of
+  the appeal.
 - **highlight:** 1-2 short phrases per scene (the punchy words to color in the subtitle).
 - **image_prompt:** English, concrete, culturally and era appropriate. No on-screen text,
   no logos, no real living people. The channel's visual_style is appended automatically.

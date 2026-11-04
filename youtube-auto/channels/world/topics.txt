@@ -1,29 +1,27 @@
-# 세계 야담 — 전 세계의 기이한 전설·귀신·괴담. 한 줄에 하나. '#' 줄 무시.
-# 잔혹/고어 금지, 분위기와 미스터리 위주. 대륙을 섞어서.
-
-# --- Asia ---
-The Fox Spirit Bride (Korea - Gumiho)
-The Slit-Mouthed Woman (Japan - Kuchisake-onna)
-The Banana Tree Ghost (Thailand - Nang Tani)
-The White Lady of the Well (China)
-The Pontianak of the Night Jasmine (Malaysia/Indonesia)
-
-# --- Europe ---
-The Selkie Who Could Not Stay (Scotland)
-Black Shuck, the Ghost Hound (England)
-The Lady in White of the Castle (Germany)
-The Church Grim (Scandinavia)
+# 세계 야담 — 숨겨진 옛이야기·흥미로운 실화·일화. 한 줄에 하나. '#' 줄 무시.
+# "오, 이런 일이?" 싶은 실제 사건/인물/풍습 위주. 대륙을 섞고, 사실 확인 필수.
 
 # --- Africa ---
-The Tokoloshe Under the Bed (Southern Africa)
-The Adze That Drinks the Night (Ewe, West Africa)
-The Impundulu, the Lightning Bird (Southern Africa)
+Mansa Musa, the Richest Man Who Ever Lived (Mali Empire)
+The Great Libraries of Timbuktu (Mali)
+The Kingdom of Kush and Its Nubian Pyramids (Sudan)
+
+# --- Europe ---
+The Dancing Plague of 1518 (Strasbourg)
+Tulip Mania, When Flowers Cost a Fortune (Netherlands)
+The Great Stink of London, 1858 (England)
+The Man Who Sold the Eiffel Tower Twice (Victor Lustig)
+
+# --- Asia ---
+Zheng He and China's Giant Treasure Fleet
+The Turtle Ships of Admiral Yi (Korea)
+The Forbidden City's Secret Builders (China)
 
 # --- Americas ---
-La Llorona, the Weeping Woman (Mexico)
-The Wendigo of the Frozen Woods (North America - Algonquian)
-La Sayona of the Lonely Road (Venezuela)
+The Great Molasses Flood of Boston, 1919 (USA)
+The Lost Colony of Roanoke (USA)
+The Real Story Behind the Nazca Lines (Peru)
 
 # --- Oceania ---
-The Yara-ma-yha-who in the Fig Tree (Aboriginal Australia)
-The Taniwha of the River Bend (Maori, New Zealand)
+The Great Emu War of 1932 (Australia)
+How the Maori Navigated the Open Pacific (New Zealand)
