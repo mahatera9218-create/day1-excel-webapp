@@ -16,7 +16,7 @@ visual_style: >
   painterly folklore illustration, rich atmospheric lighting, culturally respectful
   and era-appropriate detail, muted cinematic color, soft texture, no text, no logos
 
-voice_id: ""
+voice_id: "7PbNGDB5sJCFnOZuMPNL"
 narrator_note: a warm, measured English storyteller voice, slightly low and unhurried
 
 length:
@@ -26,7 +26,7 @@ length:
   video_scene_ratio: 0.12
 
 engines:
-  mode: mock
+  mode: real
   image_model: minimax/h3/text-to-image
   video_model: pika/pika-h3-flex/image-to-video
   image_resolution: "1024"
