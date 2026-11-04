@@ -1,9 +1,15 @@
-"""썸네일: 장면 그림 위에 '짧고 강렬한 후킹 문구'를 유튜브식으로 크게 얹는다."""
+"""썸네일: '가장 자극적인 전용 이미지'를 꽉 채우고 영화 같은 보정만. (글자 도배 X)
+
+- plan 에 thumbnail_prompt 가 있으면 그걸로 전용 썸네일 이미지를 새로 생성.
+- 없으면 thumbnail_scene(기본 1) 장면 그림을 사용.
+- thumbnail_text 가 있으면 아래쪽에 '작게' 한 줄만 얹는다(선택). 없으면 글자 없음.
+"""
 
 import textwrap
 from pathlib import Path
 
 from ..config import FONT_DIR
+from ..engines import Engines
 from ..render.util import run
 
 FONT = FONT_DIR / "NotoSansKR.ttf"
@@ -13,38 +19,33 @@ def _esc(text: str) -> str:
     return text.replace("\\", "\\\\").replace(":", "\\:").replace("'", "’").replace("%", "\\%")
 
 
-def _hook_text(plan: dict) -> str:
-    # 대본의 thumbnail_text 를 우선 사용, 없으면 제목/주제에서 짧게.
-    txt = (plan.get("thumbnail_text") or "").strip()
-    if not txt:
-        txt = (plan.get("title") or plan.get("topic") or "").split("|")[0].strip()
-    return txt.upper()
-
-
 def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
-    idx = int(plan.get("thumbnail_scene", 1))
-    src = run_dir / "images" / f"scene_{idx:02}.png"
-    if not src.exists():
-        src = run_dir / "images" / "scene_01.png"
     out = run_dir / "thumbnail.jpg"
+    # 1) 썸네일용 원본 이미지 확보
+    tprompt = (plan.get("thumbnail_prompt") or "").strip()
+    if tprompt:
+        src = run_dir / "images" / "thumb_src.png"
+        if not src.exists():
+            style = cfg["visual_style"].strip()
+            Engines(cfg).image({"image_prompt": tprompt, "_style": style, "_label": "T"}, src)
+    else:
+        idx = int(plan.get("thumbnail_scene", 1))
+        src = run_dir / "images" / f"scene_{idx:02}.png"
+        if not src.exists():
+            src = run_dir / "images" / "scene_01.png"
 
-    text = _hook_text(plan)
-    lines = textwrap.wrap(text, width=13)[:3] or [text]
-    n = len(lines)
-    size = 150 if n == 1 else (120 if n == 2 else 96)
-    gap = size + 24
-    draws = []
-    for i, line in enumerate(lines):
-        # 가운데 정렬, 세로로 쌓기. 굵은 검은 테두리 + 그림자 + 노란 글자.
-        y = f"(h-{n}*{gap})/2 + {i}*{gap} + 40"
-        draws.append(
-            f"drawtext=fontfile='{FONT}':text='{_esc(line)}':fontcolor=#FFD400:fontsize={size}:"
-            f"borderw=12:bordercolor=black:shadowx=6:shadowy=6:shadowcolor=black@0.6:"
-            f"x=(w-tw)/2:y={y}")
-    # 그림을 약간 어둡게 + 아래쪽을 더 어둡게 깔아 글자가 확 튀게.
+    # 2) 꽉 채우기 + 영화 같은 보정(대비/채도/비네트)
     vf = ("scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,"
-          "eq=brightness=-0.06:saturation=1.15,"
-          "drawbox=x=0:y=0:w=1280:h=720:color=black@0.28:t=fill,"
-          + ",".join(draws))
-    run(["-i", src, "-vf", vf, "-frames:v", "1", "-q:v", "3", out])
+          "eq=contrast=1.1:saturation=1.22:brightness=-0.02,"
+          "vignette=PI/5")
+
+    # 3) (선택) 작은 캡션 — 있으면 왼쪽 아래에 모던하게, 없으면 글자 없음
+    caption = (plan.get("thumbnail_text") or "").strip()
+    if caption:
+        line = textwrap.shorten(caption.upper(), width=22, placeholder="")
+        vf += (f",drawtext=fontfile='{FONT}':text='{_esc(line)}':fontcolor=white:fontsize=58:"
+               f"borderw=5:bordercolor=black@0.85:shadowx=3:shadowy=3:shadowcolor=black@0.7:"
+               f"x=50:y=h-110")
+
+    run(["-i", src, "-vf", vf, "-frames:v", "1", "-q:v", "2", out])
     return out

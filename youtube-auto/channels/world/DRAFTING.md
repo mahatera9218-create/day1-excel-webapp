@@ -62,11 +62,13 @@ tease rather than show. No recent real crimes or living-person defamation.
 - **Hook everything to the maximum (within the ad-safe line).**
   - **title:** a bold, curiosity-gap headline with a `|` subtitle. Tease the scandal/love
     ("The King Who Gave Up a Throne for Her"), don't spoil it. Strong verbs, no clickbait lies.
-  - **thumbnail_text:** 2-5 WORDS, punchy and provocative, ALL CAPS-friendly — the single
-    most jaw-dropping tease ("SHE SEDUCED TWO EMPIRES", "A LOVE THAT TOPPLED ROME"). Not the
-    full title. This is the biggest driver of clicks — make it irresistible but true.
-  - **thumbnail_scene:** index (1-based) of the most striking/dramatic scene image to use
-    as the thumbnail background.
+  - **thumbnail_prompt (most important):** a bespoke, image-first thumbnail. Describe the
+    single most arresting visual — usually a dramatic CLOSE-UP of a face with intense eye
+    contact and emotion (desire, shock, fear), strong lighting, shallow depth of field.
+    The IMAGE sells the click, not text. Make it provocative but ad-safe (no nudity/gore).
+  - **thumbnail_text:** leave `""` by default (modern thumbnails are image-first). Only add
+    2-4 short words if they truly add intrigue; it renders small, bottom-left.
+  - **thumbnail_scene:** fallback scene index (1-based) if no thumbnail_prompt is given.
   - Suggestive, dramatic, emotionally charged = good. Explicit, gory, or false = not.
 
 - **Length:** target ~18 minutes. At ~2.3 English words/second, that's ~2,500 words total.
