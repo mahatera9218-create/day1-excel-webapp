@@ -16,7 +16,10 @@ visual_style: >
   painterly folklore illustration, rich atmospheric lighting, culturally respectful
   and era-appropriate detail, muted cinematic color, soft texture, no text, no logos
 
-voice_id: "7PbNGDB5sJCFnOZuMPNL"
+# 기본 제공(premade) 목소리는 무료 플랜 API 로도 사용 가능.
+# 보이스 라이브러리 목소리(예: 7PbNGDB5sJCFnOZuMPNL)는 유료(Starter 이상) 필요.
+# Daniel = 깊고 차분한 영국 남성 내레이터. 유료로 올리면 원하는 보이스 ID 로 교체하세요.
+voice_id: "onwK4e9ZLuTAKqWW03F9"
 narrator_note: a warm, measured English storyteller voice, slightly low and unhurried
 
 length:
