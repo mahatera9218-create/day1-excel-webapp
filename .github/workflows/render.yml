@@ -25,7 +25,12 @@ jobs:
   render:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     defaults:
       run:
         working-directory: youtube-auto
@@ -56,28 +61,26 @@ jobs:
       - name: 영상 생성 + 업로드
         run: python -m autotube render "$CHANNEL" --yes
 
-      - name: 미리보기 이미지를 레포에 저장 (채팅에서 확인용)
+      - name: 미리보기 페이지 빌드
         if: success()
-        continue-on-error: true
-        working-directory: ${{ github.workspace }}
         run: |
-          ep=$(ls -dt youtube-auto/episodes/$CHANNEL/*/ | head -1)
-          dest="previews/$CHANNEL"
-          rm -rf "$dest"; mkdir -p "$dest"
-          cp "$ep"thumbnail.jpg "$dest/" 2>/dev/null || true
-          cp "$ep"images/*.png "$dest/" 2>/dev/null || true
-          # 자막이 입혀진 실제 화면도 2장 추출
-          if [ -f "$ep"final.mp4 ]; then
-            ffmpeg -y -loglevel error -ss 3 -i "$ep"final.mp4 -frames:v 1 "$dest/frame_01.jpg" || true
-            ffmpeg -y -loglevel error -ss 12 -i "$ep"final.mp4 -frames:v 1 "$dest/frame_02.jpg" || true
-          fi
-          git config user.name "autotube-bot"
-          git config user.email "actions@users.noreply.github.com"
-          # main 보호 때문에 별도 브랜치(autotube-preview)로 force push 한다.
-          git checkout -B autotube-preview
-          git add -f "$dest"
-          git commit -m "preview: $CHANNEL 미리보기 이미지" || { echo "변경 없음"; exit 0; }
-          git push -f origin autotube-preview || echo "push 실패 (무시)"
+          ep=$(ls -dt episodes/$CHANNEL/*/ | head -1)
+          python3 -m autotube.build_preview "$ep" "$GITHUB_WORKSPACE/site" "$CHANNEL"
+
+      - name: Pages 설정
+        if: success()
+        uses: actions/configure-pages@v5
+
+      - name: 미리보기를 Pages 아티팩트로 업로드
+        if: success()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: GitHub Pages 배포
+        id: deployment
+        if: success()
+        uses: actions/deploy-pages@v4
 
       - name: 결과물 보관 (final.mp4 / 썸네일 / 쇼츠)
         if: always()
