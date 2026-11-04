@@ -71,11 +71,10 @@ tease rather than show. No recent real crimes or living-person defamation.
   - **thumbnail_scene:** fallback scene index (1-based) if no thumbnail_prompt is given.
   - Suggestive, dramatic, emotionally charged = good. Explicit, gory, or false = not.
 
-- **Length & pacing:** target **~9-10 minutes** (~1,300-1,500 words) — long enough to
-  clear the 8-minute mark for mid-roll ads, short enough to hold retention. **Keep each
-  scene short so the image changes every ~6-9 seconds**: 1-2 sentences per scene (~15-30
-  words), roughly **50-80 scenes**. Long scenes make it drag; split into two beats + two
-  images when in doubt.
+- **Length & pacing:** target **~5 minutes** (~700-800 words) — a punchy, high-volume
+  format. **Keep each scene short so the image changes every ~6-9 seconds**: 1-2 sentences
+  per scene (~15-30 words), roughly **24-45 scenes**. Tight and fast beats retention; cut
+  anything that drags. (Note: 5-min videos don't get mid-roll ads — that needs 8+ min.)
 - **Scene 1 is the hook:** a striking question or image in the first 5 seconds.
 - **Tell it as an immersive story, not a summary.** Build a clear arc: setup → rising
   tension → turning point → resolution. Use sensory, concrete detail (sound, light,

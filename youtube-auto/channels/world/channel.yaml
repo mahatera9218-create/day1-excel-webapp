@@ -25,9 +25,9 @@ voice_id: "pNInz6obpgDQGcFmaJgB"
 narrator_note: a warm, curious English storyteller voice, engaging and documentary-like
 
 length:
-  target_minutes: 10          # 8분↑이면 중간광고 가능. 9~10분이 수익·지속률 스위트스폿
-  min_scenes: 45
-  max_scenes: 80
+  target_minutes: 5           # 다작 전략. (참고: 8분↑이어야 중간광고 가능)
+  min_scenes: 24
+  max_scenes: 45
   video_scene_ratio: 0.12
 
 engines:
