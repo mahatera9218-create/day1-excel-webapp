@@ -1,20 +1,21 @@
-# 영어권 글로벌 채널 — 세계 각국의 민담·전설·신화 (대륙별·국가별)
+# 영어권 글로벌 채널 — 세계 야담 (전 세계의 기이한 전설·귀신·괴담)
 
 name: world
 title_prefix: ""
 
 concept: >
-  A calm, atmospheric storytelling channel retelling folk tales, legends and myths
-  from every corner of the world — one country or culture at a time. Respectful,
-  well-researched, never mocking. Hooks within the first 5 seconds, a clear narrative
-  arc, and an ending that invites the next tale. Aimed at a global English-speaking
-  audience who keep it playing while relaxing or working.
+  Atmospheric retellings of the world's eerie folklore and ghost lore — vengeful
+  spirits, cursed places, haunted roads, strange disappearances and creatures of the
+  night, one culture at a time. Calm, suspenseful narration made for listening in the
+  dark. A strong hook in the first 5 seconds, a slow build of dread, and an ending that
+  lingers. Respectful and well-researched; unsettling and mysterious, never gory or
+  exploitative. For a global English-speaking audience who keep it playing at night.
 
 language: English
 
 visual_style: >
-  painterly folklore illustration, rich atmospheric lighting, culturally respectful
-  and era-appropriate detail, muted cinematic color, soft texture, no text, no logos
+  moody folklore illustration, candlelight and moonlight, drifting fog, deep shadows,
+  muted desaturated color, painterly texture, cinematic and eerie, no text, no logos
 
 # 기본 제공(premade) 목소리는 무료 플랜 API 로도 사용 가능.
 # 보이스 라이브러리 목소리는 유료(Starter 이상) 필요.

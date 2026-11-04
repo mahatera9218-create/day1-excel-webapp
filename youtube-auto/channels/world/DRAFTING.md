@@ -1,15 +1,22 @@
-# Drafting SOP — `world` channel (world folklore, English)
+# Drafting SOP — `world` channel (world 야담 / eerie world folklore, English)
 
 This is the brief the scheduled drafting session follows. Goal: research and draft the
 next few episodes as `plan.json` files, ready for the human to review. **Never approve.**
+
+This channel is **"world 야담"**: atmospheric, unsettling folklore and ghost lore from
+around the world — vengeful spirits, cursed places, haunted roads, strange
+disappearances, creatures of the night. The feeling is **eerie and mysterious, made for
+listening in the dark** — suspense and dread, **never gore, never exploitative**, and
+avoid graphic harm (especially to children). Keep it tasteful; the unease comes from
+atmosphere and the unknown, not from violence.
 
 ## What to produce each run
 
 - Draft **4 episodes** (enough for one week of 3 uploads + buffer).
 - Spread them across **different continents** (don't do four from one region).
 - Pick topics from `channels/world/topics.txt` that have no episode yet, or research a
-  fresh, lesser-known tale. Prefer tales that are **public-domain folklore**, not modern
-  copyrighted characters.
+  fresh, lesser-known **eerie tale, ghost story or legend**. Prefer **public-domain
+  folklore**, not modern copyrighted characters or recent real crimes.
 
 ## Steps for each episode
 
