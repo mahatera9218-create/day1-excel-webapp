@@ -26,8 +26,8 @@ narrator_note: a warm, curious English storyteller voice, engaging and documenta
 
 length:
   target_minutes: 18
-  min_scenes: 24
-  max_scenes: 60
+  min_scenes: 80
+  max_scenes: 140
   video_scene_ratio: 0.12
 
 engines:

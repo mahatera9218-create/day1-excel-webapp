@@ -13,36 +13,66 @@ Sources: Plutarch's Lives and standard histories of the late Roman Republic. Som
 ---
 
 ### 장면 1  ·  kenburns_in
-- 내레이션: She was the last queen of Egypt — and the only woman who ever made the mighty Roman Republic tremble. To survive, Cleopatra would seduce not one, but two of the most powerful men in the world.
-- 강조: two of the most powerful men
-- 그림: a regal ancient Egyptian queen standing on a palace balcony at sunset overlooking Alexandria and the sea, golden jewelry, commanding and alluring, cinematic
+- 내레이션: She was the last queen of Egypt — and she would bend the two most powerful men in Rome to her will.
+- 강조: the last queen of Egypt
+- 그림: a regal ancient Egyptian queen standing on a palace balcony at sunset overlooking Alexandria and the sea, golden jewelry, commanding and alluring
 
 ### 장면 2  ·  kenburns_pan
-- 내레이션: Her kingdom was crumbling, so she aimed for the top. As the story is famously told, she had herself smuggled past her enemies and delivered to Julius Caesar — rolled inside a carpet, unfurling at the feet of Rome's dictator.
-- 강조: rolled inside a carpet
-- 그림: a rolled ornate carpet partly unfurled on the floor of a torchlit ancient palace hall, a surprised Roman general in armor looking down, dramatic candlelight
+- 내레이션: Her kingdom was crumbling. To survive, Cleopatra needed Rome's protection — so she aimed for the very top.
+- 강조: aimed for the very top
+- 그림: a young Egyptian queen studying a map by candlelight in a grand palace chamber, worried and determined, golden glow
 
 ### 장면 3  ·  kenburns_in
-- 내레이션: It worked. Caesar fell under her spell, restored her throne, and she bore him a son. But in 44 BC, daggers in the Roman Senate changed everything. Caesar was dead — and the most dangerous game was only beginning.
-- 강조: daggers in the Roman Senate
-- 그림: ominous Roman senate marble hall with long shadows, a fallen laurel wreath on the steps, cold dramatic light, sense of betrayal
+- 내레이션: As the story is famously told, she had herself smuggled past her enemies — rolled inside a carpet.
+- 강조: rolled inside a carpet
+- 그림: servants carrying a long rolled ornate carpet through a torchlit ancient palace corridor at night, secretive mood
 
-### 장면 4  ·  kenburns_pan
-- 내레이션: Now Rome's greatest general, Mark Antony, summoned her to explain herself. Cleopatra answered with theater. She arrived on a golden barge with purple sails and silver oars, dressed as the goddess of love. Antony never stood a chance.
-- 강조: a golden barge with purple sails
-- 그림: a magnificent golden royal barge with purple sails and silver oars gliding on a river at dusk, an Egyptian queen reclining beneath canopies, opulent and dreamlike
+### 장면 4  ·  kenburns_in
+- 내레이션: It unfurled at the feet of Julius Caesar himself — the dictator of Rome.
+- 강조: Julius Caesar
+- 그림: a rolled carpet partly unfurled on the floor of a torchlit hall revealing a beautiful queen, a surprised Roman general in armor looking down, dramatic candlelight
 
-### 장면 5  ·  kenburns_in
-- 내레이션: What followed scandalized the ancient world. Antony abandoned his duties in Rome and lived with her in Alexandria — even though he was married to the sister of his rival, Octavian. To Rome, their love looked like treason.
-- 강조: their love looked like treason
-- 그림: an opulent Alexandrian palace feast at night, a Roman general and an Egyptian queen side by side on a dais, whispering courtiers in the shadows, lavish and tense
+### 장면 5  ·  kenburns_pan
+- 내레이션: Caesar fell under her spell. He restored her throne — and she bore him a son.
+- 강조: fell under her spell
+- 그림: an Egyptian queen and a powerful Roman leader seated close together in an opulent palace, warm intimate candlelight, ancient Egypt
 
 ### 장면 6  ·  kenburns_in
-- 내레이션: Octavian seized his chance. He painted Antony as a man bewitched, enslaved by a foreign queen, and turned Rome against them. It ended in war. At the naval Battle of Actium in 31 BC, their fleet was shattered, and the lovers fled.
+- 내레이션: Then, in 44 BC, daggers flashed in the Roman Senate. Caesar was dead, and the world was up for grabs.
+- 강조: daggers flashed in the Roman Senate
+- 그림: an ominous Roman senate marble hall with long shadows and a fallen laurel wreath on the steps, cold dramatic light, sense of betrayal
+
+### 장면 7  ·  kenburns_pan
+- 내레이션: Now Rome's greatest general, Mark Antony, summoned her to answer for her loyalties.
+- 강조: Mark Antony
+- 그림: a commanding Roman general in ornate armor standing in a sunlit stone hall, powerful and stern, dramatic side light
+
+### 장면 8  ·  kenburns_in
+- 내레이션: Cleopatra answered with pure theater. She arrived on a golden barge with purple sails and silver oars.
+- 강조: a golden barge
+- 그림: a magnificent golden royal barge with purple sails and silver oars gliding on a river at dusk, opulent and dreamlike
+
+### 장면 9  ·  kenburns_pan
+- 내레이션: Dressed as the goddess of love, radiant and perfumed, she stepped ashore. Antony never stood a chance.
+- 강조: never stood a chance
+- 그림: an Egyptian queen dressed as a goddess reclining beneath silk canopies on a lavish barge, glowing and alluring, golden light
+
+### 장면 10  ·  kenburns_in
+- 내레이션: What followed scandalized the ancient world. Antony abandoned Rome and lived with her in Alexandria.
+- 강조: scandalized the ancient world
+- 그림: an opulent Alexandrian palace feast at night, a Roman general and an Egyptian queen side by side on a dais, lavish and tense
+
+### 장면 11  ·  kenburns_pan
+- 내레이션: He did it even though he was married to the sister of his rival, Octavian. To Rome, it looked like treason.
+- 강조: it looked like treason
+- 그림: whispering Roman senators in togas plotting in a marble hall, shadows and suspicion, cold light
+
+### 장면 12  ·  kenburns_in
+- 내레이션: Octavian struck. He painted Antony as a man bewitched by a foreign queen — and turned Rome to war. At Actium, their fleet was shattered.
 - 강조: a man bewitched
 - 그림: a chaotic ancient naval battle at sea, Roman warships ramming amid smoke and fire, a distant royal ship turning to flee, epic dramatic sky
 
-### 장면 7  ·  kenburns_in
-- 내레이션: Cornered in Alexandria, Antony fell on his own sword. And Cleopatra, refusing to be paraded through Rome in chains, soon followed — by legend, through the bite of a venomous asp. With her died the last pharaoh, and Egypt itself fell to Rome. Their forbidden love had redrawn the map of the world.
+### 장면 13  ·  kenburns_in
+- 내레이션: Cornered in Alexandria, Antony fell on his sword. Cleopatra, refusing to be paraded in chains, soon followed — by legend, the bite of an asp. With her died the last pharaoh, and their forbidden love had redrawn the map of the world.
 - 강조: the last pharaoh
 - 그림: a somber dim Egyptian royal chamber at dawn, an empty ornate throne, a single coiled serpent motif, soft mournful light, elegant and restrained
