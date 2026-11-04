@@ -49,13 +49,25 @@ tease rather than show. No recent real crimes or living-person defamation.
 
 ```json
 {
-  "topic": "The Fox Spirit Bride (Korea)",
-  "title": "The Fox Spirit Who Married a Scholar | Korean Folklore",
+  "topic": "Cleopatra and Mark Antony (Egypt / Rome)",
+  "title": "The Queen Who Seduced Two Roman Titans | Cleopatra & Mark Antony",
+  "thumbnail_text": "SHE SEDUCED TWO EMPIRES",
+  "thumbnail_scene": 4,
   "description": "2-4 lines. End with a one-line source note.",
-  "tags": ["folklore","korean mythology","gumiho","legends","storytelling", "..."],
+  "tags": ["history","cleopatra","forbidden love","scandal","ancient rome", "..."],
   "scenes": [ { "narration": "...", "highlight": ["..."], "image_prompt": "...", "motion": "kenburns_in", "sfx": "..." } ]
 }
 ```
+
+- **Hook everything to the maximum (within the ad-safe line).**
+  - **title:** a bold, curiosity-gap headline with a `|` subtitle. Tease the scandal/love
+    ("The King Who Gave Up a Throne for Her"), don't spoil it. Strong verbs, no clickbait lies.
+  - **thumbnail_text:** 2-5 WORDS, punchy and provocative, ALL CAPS-friendly — the single
+    most jaw-dropping tease ("SHE SEDUCED TWO EMPIRES", "A LOVE THAT TOPPLED ROME"). Not the
+    full title. This is the biggest driver of clicks — make it irresistible but true.
+  - **thumbnail_scene:** index (1-based) of the most striking/dramatic scene image to use
+    as the thumbnail background.
+  - Suggestive, dramatic, emotionally charged = good. Explicit, gory, or false = not.
 
 - **Length:** target ~18 minutes. At ~2.3 English words/second, that's ~2,500 words total.
   Use **24-45 scenes**. Each scene's narration ≈ 40-90 words.

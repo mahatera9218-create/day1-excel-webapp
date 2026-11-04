@@ -4,6 +4,7 @@
 """
 
 import json
+import textwrap
 from pathlib import Path
 
 from ..config import FONT_DIR
@@ -11,11 +12,33 @@ from ..render.kenburns import FPS
 from ..render.subtitles import build_ass
 from ..render.util import probe_duration, run
 
+FONT = FONT_DIR / "NotoSansKR.ttf"
+
 
 def _pick(plan: dict, n: int) -> list[int]:
     videos = [i for i, s in enumerate(plan["scenes"], 1) if s.get("motion") == "video"]
     rest = [i for i, _ in enumerate(plan["scenes"], 1) if i not in videos]
     return (videos + rest)[:n]
+
+
+def _esc(text: str) -> str:
+    return text.replace("\\", "\\\\").replace(":", "\\:").replace("'", "’").replace("%", "\\%")
+
+
+def _top_hook_filters(plan: dict, w: int) -> str:
+    """쇼츠 상단에 걸리는 강렬한 후킹 문구(정적 오버레이)."""
+    txt = (plan.get("thumbnail_text") or plan.get("title") or plan.get("topic") or "").split("|")[0].strip()
+    if not txt:
+        return ""
+    lines = textwrap.wrap(txt.upper(), width=16)[:2]
+    parts = ["drawbox=x=0:y=0:w=iw:h=360:color=black@0.38:t=fill"]
+    for i, line in enumerate(lines):
+        y = 120 + i * 92
+        parts.append(
+            f"drawtext=fontfile='{FONT}':text='{_esc(line)}':fontcolor=#FFD400:fontsize=72:"
+            f"borderw=8:bordercolor=black:shadowx=4:shadowy=4:shadowcolor=black@0.6:"
+            f"x=(w-tw)/2:y={y}")
+    return "," + ",".join(parts)
 
 
 def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
@@ -29,6 +52,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
     out_dir.mkdir(exist_ok=True)
     made = []
     sub_cfg = {**cfg["subtitles"], "font_size": 64, "margin_v": 320}
+    hook = _top_hook_filters(plan, w)
     for n, i in enumerate(_pick(plan, sh.get("count", 3)), 1):
         key = f"{i:02}"
         audio = run_dir / "audio" / f"scene_{key}.mp3"
@@ -40,7 +64,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
         frames = max(int(dur * FPS), 1)
         vf = (f"scale={w*2}:{h*2}:force_original_aspect_ratio=increase,crop={w*2}:{h*2},"
               f"zoompan=z='min(zoom+0.0012,1.2)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
-              f"d={frames}:s={w}x{h}:fps={FPS},format=yuv420p,"
+              f"d={frames}:s={w}x{h}:fps={FPS},format=yuv420p{hook},"
               f"subtitles={ass.name}:fontsdir={FONT_DIR}")
         out = out_dir / f"short_{n:02}.mp4"
         run(["-loop", "1", "-i", run_dir / "images" / f"scene_{key}.png", "-i", audio,
