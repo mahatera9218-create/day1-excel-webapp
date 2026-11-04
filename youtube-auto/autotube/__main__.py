@@ -85,23 +85,34 @@ def _uploaded_titles_safe(cfg: dict) -> set[str]:
         return set()
 
 
-def cmd_render(cfg: dict, yes: bool) -> None:
-    """승인된 편 중 '아직 유튜브에 없는' 가장 오래된 1편을 만들고 업로드."""
-    uploaded = _uploaded_titles_safe(cfg)
-    run_dir = None
-    for d in _approved_queue(cfg):
-        title = pipeline.load_plan(d)["title"][:100]
-        if title in uploaded:
-            print(f"   [건너뜀] 이미 업로드됨: {title}")
-            continue
-        run_dir = d
-        break
-    if run_dir is None:
-        raise SystemExit(f"[오류] {cfg['_name']} 에 아직 안 올린 승인 편이 없습니다.")
+def _render_one(cfg: dict, run_dir: Path, yes: bool) -> None:
     print(f"[render] {run_dir}")
     pipeline.make(run_dir, cfg, yes=yes)
     from .stages import upload
     upload.run_stage(run_dir, pipeline.load_plan(run_dir), cfg)
+
+
+def cmd_render(cfg: dict, yes: bool, episode: str | None = None, count: int = 1) -> None:
+    """승인된 편 중 '아직 유튜브에 없는' 가장 오래된 것부터 count 편을 만든다.
+    episode 를 주면 그 폴더만 만든다."""
+    if episode:
+        run_dir = OUTPUT / cfg["_name"] / episode
+        if not (run_dir / "plan.json").exists():
+            raise SystemExit(f"[오류] 그런 편이 없습니다: {run_dir}")
+        _render_one(cfg, run_dir, yes)
+        return
+    uploaded = _uploaded_titles_safe(cfg)
+    picks = []
+    for d in _approved_queue(cfg):
+        if pipeline.load_plan(d)["title"][:100] in uploaded:
+            continue
+        picks.append(d)
+        if len(picks) >= max(1, count):
+            break
+    if not picks:
+        raise SystemExit(f"[오류] {cfg['_name']} 에 아직 안 올린 승인 편이 없습니다.")
+    for d in picks:
+        _render_one(cfg, d, yes)
 
 
 def cmd_status(run_dir: Path) -> None:
@@ -123,6 +134,8 @@ def main() -> None:
     rp = sub.add_parser("render")
     rp.add_argument("channel")
     rp.add_argument("--yes", action="store_true")
+    rp.add_argument("--episode", default=None)
+    rp.add_argument("--count", type=int, default=1)
     for name in ("approve", "make", "upload", "status"):
         sp = sub.add_parser(name)
         sp.add_argument("run_dir", type=Path)
@@ -157,7 +170,7 @@ def main() -> None:
                 except SystemExit as e:
                     print(f"[{name}] 건너뜀: {e}")
         else:
-            cmd_render(load_channel(args.channel), yes=args.yes)
+            cmd_render(load_channel(args.channel), yes=args.yes, episode=args.episode, count=args.count)
         return
 
     # approve/make/upload/status 는 폴더에서 채널명을 역산
