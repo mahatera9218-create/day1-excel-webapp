@@ -1,0 +1,59 @@
+# 채널 하나의 모든 설정. 새 채널은 이 폴더를 통째로 복사해서 값만 바꾸면 됩니다.
+
+name: yadam
+title_prefix: "[야담]"           # 영상 제목 앞에 붙는 말머리 (비워도 됨)
+
+concept: >
+  잠들기 전 혹은 일하며 틀어놓고 듣는, 조선과 옛 한국의 야담·전설·기담을
+  차분하게 들려주는 롱폼 채널. 과장 없이 담담하게, 이야기의 분위기로 몰입시킨다.
+
+language: Korean
+
+# 모든 그림에 공통으로 붙는 화풍 — 장면끼리 톤이 튀지 않게 한다.
+visual_style: >
+  traditional Korean webtoon illustration, muted earthy ink-wash colors,
+  soft paper texture, cinematic lighting, no text, no modern objects
+
+# 목소리 (ElevenLabs voice_id). mock 모드에서는 무시됨.
+voice_id: ""
+narrator_note: a calm, low, slow Korean male storyteller
+
+length:
+  target_minutes: 25            # 롱폼 목표 길이
+  min_scenes: 30
+  max_scenes: 70
+  video_scene_ratio: 0.12       # 전체 장면 중 '움직이는 영상'으로 만들 비율 (나머지는 그림+확대효과)
+
+engines:
+  mode: mock                    # mock | real  (키가 준비되면 real 로 바꿈)
+  image_model: minimax/h3/text-to-image   # Pika API 이미지 모델 경로 (dev.pika.art 에서 확인)
+  video_model: pika/pika-h3-flex/image-to-video
+  image_resolution: "1024"
+  video_resolution: 480p        # 가장 저렴한 티어
+  price_per_image_usd: 0.01
+  price_per_video_second_usd: 0.02
+  max_cost_usd: 8               # 영상 1편 상한. 넘으면 시작하지 않음.
+
+subtitles:
+  enabled: true
+  font: "Noto Sans KR"          # 번들 폰트. 바꾸려면 PC에 설치된 글꼴 이름.
+  font_size: 44
+  primary_color: "FFFFFF"       # 기본 글자색 (RRGGBB)
+  highlight_color: "FFD400"     # 강조 단어 색 (노랑). 대본의 highlight 단어에 적용
+  outline: 4
+  margin_v: 90                  # 화면 아래에서 띄울 거리
+
+music:
+  bgm_path: ""                  # 배경음악 파일 경로 (비우면 음악 없음)
+  bgm_volume: 0.12
+
+shorts:
+  enabled: true
+  count: 3                      # 롱폼 1편에서 뽑을 쇼츠 개수
+  max_seconds: 55
+
+youtube:
+  privacy: private              # 비공개(=임시저장)로 올린 뒤 직접 확인하고 공개
+  category_id: "24"             # 24=엔터테인먼트, 27=교육
+  made_for_kids: false
+  client_secret_file: client_secret.json
