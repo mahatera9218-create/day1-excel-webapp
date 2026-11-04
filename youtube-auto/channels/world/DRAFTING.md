@@ -3,10 +3,17 @@
 This is the brief the scheduled drafting session follows. Goal: research and draft the
 next few episodes as `plan.json` files, ready for the human to review. **Never approve.**
 
-This channel is **"world 야담"**: fascinating, lesser-known stories from world history and
-cultures — surprising true events, forgotten people, strange customs, "wait, that really
-happened?" moments. The feeling is **curiosity and wonder**, told like an unfolding
-mystery with a satisfying "I never knew that" payoff. Not horror. Mostly **real history**.
+This channel is **"world 야담"**: provocative, imagination-stirring **true** stories from
+world history — scandals, forbidden love, power and betrayal, shocking events and unsolved
+mysteries. The tone is **sensational and teasing** (bold hooks, juicy details,
+cliffhangers that make people lean in), but every episode is **grounded in fact**.
+
+Pick the **juiciest, most surprising angle** of a true story and lead with it. Think
+tabloid hook, documentary substance.
+
+**Advertiser-safe line (important for monetization):** suggestive and dramatic is good;
+**sexually explicit, pornographic, or gory is not** — those kill ad revenue. Imply and
+tease rather than show. No recent real crimes or living-person defamation.
 
 **Accuracy is the #1 rule.** These are presented as true, so:
 - Verify every claim with web search; note 2-3 reliable sources in your research.

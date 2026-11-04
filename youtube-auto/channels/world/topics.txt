@@ -1,27 +1,26 @@
-# 세계 야담 — 숨겨진 옛이야기·흥미로운 실화·일화. 한 줄에 하나. '#' 줄 무시.
-# "오, 이런 일이?" 싶은 실제 사건/인물/풍습 위주. 대륙을 섞고, 사실 확인 필수.
-
-# --- Africa ---
-Mansa Musa, the Richest Man Who Ever Lived (Mali Empire)
-The Great Libraries of Timbuktu (Mali)
-The Kingdom of Kush and Its Nubian Pyramids (Sudan)
+# 세계 야담 — 자극적이고 상상력을 자극하는 숨은 실화. 한 줄에 하나. '#' 줄 무시.
+# 스캔들/충격/미스터리로 후킹하되 사실 기반. 노골적 성·고어·최근 실제범죄 금지.
 
 # --- Europe ---
-The Dancing Plague of 1518 (Strasbourg)
-Tulip Mania, When Flowers Cost a Fortune (Netherlands)
-The Great Stink of London, 1858 (England)
+The Affair of the Poisons at the Court of Versailles (France)
+Rasputin, the Mad Monk Who Refused to Die (Russia)
+Tulip Mania, When One Flower Cost a Mansion (Netherlands)
 The Man Who Sold the Eiffel Tower Twice (Victor Lustig)
+The Dancing Plague of 1518 (Strasbourg)
 
 # --- Asia ---
-Zheng He and China's Giant Treasure Fleet
-The Turtle Ships of Admiral Yi (Korea)
-The Forbidden City's Secret Builders (China)
+Empress Wu, the Ruthless Rise of China's Only Female Emperor
+Zheng He and China's Lost Treasure Fleet
+The Concubine Who Toppled a Dynasty (China - Yang Guifei)
+
+# --- Africa / Middle East ---
+Mansa Musa, the Richest Man Who Ever Lived (Mali)
+Cleopatra's Gamble to Seduce an Empire (Egypt)
 
 # --- Americas ---
-The Great Molasses Flood of Boston, 1919 (USA)
-The Lost Colony of Roanoke (USA)
-The Real Story Behind the Nazca Lines (Peru)
+The Great Molasses Flood That Drowned a Street (Boston, 1919)
+The Lost Colony That Vanished Without a Trace (Roanoke)
+The Mystery of the Nazca Lines (Peru)
 
 # --- Oceania ---
-The Great Emu War of 1932 (Australia)
-How the Maori Navigated the Open Pacific (New Zealand)
+The Great Emu War Australia Actually Lost (1932)
