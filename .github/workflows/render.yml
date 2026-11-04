@@ -73,9 +73,11 @@ jobs:
           fi
           git config user.name "autotube-bot"
           git config user.email "actions@users.noreply.github.com"
+          # main 보호 때문에 별도 브랜치(autotube-preview)로 force push 한다.
+          git checkout -B autotube-preview
           git add -f "$dest"
           git commit -m "preview: $CHANNEL 미리보기 이미지" || { echo "변경 없음"; exit 0; }
-          git push origin HEAD:main || echo "push 실패 (무시)"
+          git push -f origin autotube-preview || echo "push 실패 (무시)"
 
       - name: 결과물 보관 (final.mp4 / 썸네일 / 쇼츠)
         if: always()
