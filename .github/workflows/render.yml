@@ -16,7 +16,8 @@ on:
   # 매일 자동으로 2편 생성 (10:17 UTC = 한국 19:17). 업로드 키트에 올라옴.
   # 올린 편을 '목록에서 제거'(status.json 삭제)하지 않으면 다음날 또 만들어지니 주의.
   schedule:
-    - cron: "17 10 * * *"
+    - cron: "17 10 * * *"      # 매일 19:17 KST: 2편 생성
+    - cron: "40 14 * * 0"      # 일요일 23:40 KST: 그날 작성된 대본으로 첫 2편 바로 생성
 
 concurrency:
   group: render-${{ github.event.inputs.channel || 'all' }}
