@@ -26,12 +26,14 @@ narrator_note: a warm, curious English storyteller voice, engaging and documenta
 
 length:
   target_minutes: 5           # 다작 전략. (참고: 8분↑이어야 중간광고 가능)
-  min_scenes: 24
-  max_scenes: 45
-  video_scene_ratio: 0.12
+  min_scenes: 20              # 그림 적당히(컷 ~8-10초) → 비용 절감
+  max_scenes: 34
+  video_scene_ratio: 0.0      # 비싼 영상변환은 기본 꺼둠 (그림만)
 
 engines:
   mode: real
+  tts: edge                   # edge(무료 Microsoft) | elevenlabs(유료, voice_id 필요)
+  edge_voice: en-US-ChristopherNeural   # 깊고 따뜻한 미국 남성. 목록은 `edge-tts --list-voices`
   image_model: bytedance/seedream-5.0-pro/text-to-image
   video_model: minimax/h3/image-to-video
   image_resolution: "1024"

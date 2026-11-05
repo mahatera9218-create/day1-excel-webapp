@@ -13,9 +13,14 @@ class Engines:
             from .mock import MockEngine
             self._v = self._i = self._m = MockEngine(cfg)
         else:
-            from .elevenlabs import ElevenLabsEngine
             from .pika import PikaEngine
-            self._v = ElevenLabsEngine(cfg, os.environ["ELEVENLABS_API_KEY"])
+            tts = cfg["engines"].get("tts", "edge")
+            if tts == "elevenlabs":
+                from .elevenlabs import ElevenLabsEngine
+                self._v = ElevenLabsEngine(cfg, os.environ["ELEVENLABS_API_KEY"])
+            else:  # edge: 무료 Microsoft TTS, 키 불필요
+                from .edge import EdgeEngine
+                self._v = EdgeEngine(cfg)
             self._i = self._m = PikaEngine(cfg, os.environ["PIKA_API_KEY"])
 
     def voice(self, scene, out):

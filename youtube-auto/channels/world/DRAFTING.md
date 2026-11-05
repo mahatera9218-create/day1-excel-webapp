@@ -62,19 +62,21 @@ tease rather than show. No recent real crimes or living-person defamation.
 - **Hook everything to the maximum (within the ad-safe line).**
   - **title:** a bold, curiosity-gap headline with a `|` subtitle. Tease the scandal/love
     ("The King Who Gave Up a Throne for Her"), don't spoil it. Strong verbs, no clickbait lies.
-  - **thumbnail_prompt (most important):** a bespoke, image-first thumbnail. Describe the
-    single most arresting visual — usually a dramatic CLOSE-UP of a face with intense eye
-    contact and emotion (desire, shock, fear), strong lighting, shallow depth of field.
-    The IMAGE sells the click, not text. Make it provocative but ad-safe (no nudity/gore).
+  - **thumbnail_prompt (PUT YOUR BEST EFFORT HERE — it matters more than anything else):**
+    a bespoke, image-first thumbnail that makes someone stop scrolling. Describe the single
+    most arresting visual — usually a dramatic CLOSE-UP of a face with intense eye contact
+    and raw emotion (desire, shock, fear, grief), cinematic lighting, shallow depth of
+    field, rich detail. Over-invest here; the body images can be simpler. Provocative but
+    ad-safe (no nudity/gore).
   - **thumbnail_text:** leave `""` by default (modern thumbnails are image-first). Only add
     2-4 short words if they truly add intrigue; it renders small, bottom-left.
   - **thumbnail_scene:** fallback scene index (1-based) if no thumbnail_prompt is given.
   - Suggestive, dramatic, emotionally charged = good. Explicit, gory, or false = not.
 
-- **Length & pacing:** target **~5 minutes** (~700-800 words) — a punchy, high-volume
-  format. **Keep each scene short so the image changes every ~6-9 seconds**: 1-2 sentences
-  per scene (~15-30 words), roughly **24-45 scenes**. Tight and fast beats retention; cut
-  anything that drags. (Note: 5-min videos don't get mid-roll ads — that needs 8+ min.)
+- **Length & pacing:** target **~5 minutes** (~700-800 words). To keep image cost
+  moderate, change the image about **every ~8-10 seconds**: ~2 sentences per scene
+  (~25-40 words), roughly **20-34 scenes**. Still lively, but fewer images than a
+  super-fast cut. (Note: 5-min videos don't get mid-roll ads — that needs 8+ min.)
 - **Scene 1 is the hook:** a striking question or image in the first 5 seconds.
 - **Tell it as an immersive story, not a summary.** Build a clear arc: setup → rising
   tension → turning point → resolution. Use sensory, concrete detail (sound, light,
