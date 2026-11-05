@@ -59,25 +59,60 @@ def cmd_approve(run_dir: Path) -> None:
     print(f"[승인] {plan['title']} — 이제: autotube make {run_dir}")
 
 
-def _latest_approved(cfg: dict) -> Path:
+def _approved_queue(cfg: dict) -> list[Path]:
+    """승인됐고 아직 로컬에 업로드 기록 없는 편들 (오래된 것부터)."""
     base = OUTPUT / cfg["_name"]
     cands = []
     for d in sorted(base.glob("*/status.json")):
         st = json.loads(d.read_text(encoding="utf-8"))
         if st.get("approved") and not (d.parent / "youtube_id.txt").exists():
             cands.append(d.parent)
-    if not cands:
-        raise SystemExit(f"[오류] {cfg['_name']} 에 승인되고 아직 안 올린 편이 없습니다.")
-    return sorted(cands)[-1]
+    return sorted(cands)
 
 
-def cmd_render(cfg: dict, yes: bool) -> None:
-    """승인된 최신 편을 만들고 업로드까지 (GitHub 버튼 실행용)."""
-    run_dir = _latest_approved(cfg)
+def _uploaded_titles_safe(cfg: dict) -> set[str]:
+    """유튜브에 이미 올라간 제목(중복 방지). 인증 없거나 실패하면 빈 집합."""
+    if cfg["engines"]["mode"] == "mock":
+        return set()
+    has_auth = (cfg["_dir"] / "token.json").exists() or (cfg["_dir"] / cfg["youtube"]["client_secret_file"]).exists()
+    if not has_auth:
+        return set()
+    try:
+        from .engines.youtube import uploaded_titles
+        return uploaded_titles(cfg)
+    except Exception as e:  # 인증/네트워크 문제면 그냥 진행 (업로드 단계가 또 거른다)
+        print(f"   [알림] 기존 업로드 목록 조회 실패(무시): {e}")
+        return set()
+
+
+def _render_one(cfg: dict, run_dir: Path, yes: bool) -> None:
     print(f"[render] {run_dir}")
     pipeline.make(run_dir, cfg, yes=yes)
     from .stages import upload
     upload.run_stage(run_dir, pipeline.load_plan(run_dir), cfg)
+
+
+def cmd_render(cfg: dict, yes: bool, episode: str | None = None, count: int = 1) -> None:
+    """승인된 편 중 '아직 유튜브에 없는' 가장 오래된 것부터 count 편을 만든다.
+    episode 를 주면 그 폴더만 만든다."""
+    if episode:
+        run_dir = OUTPUT / cfg["_name"] / episode
+        if not (run_dir / "plan.json").exists():
+            raise SystemExit(f"[오류] 그런 편이 없습니다: {run_dir}")
+        _render_one(cfg, run_dir, yes)
+        return
+    uploaded = _uploaded_titles_safe(cfg)
+    picks = []
+    for d in _approved_queue(cfg):
+        if pipeline.load_plan(d)["title"][:100] in uploaded:
+            continue
+        picks.append(d)
+        if len(picks) >= max(1, count):
+            break
+    if not picks:
+        raise SystemExit(f"[오류] {cfg['_name']} 에 아직 안 올린 승인 편이 없습니다.")
+    for d in picks:
+        _render_one(cfg, d, yes)
 
 
 def cmd_status(run_dir: Path) -> None:
@@ -99,6 +134,8 @@ def main() -> None:
     rp = sub.add_parser("render")
     rp.add_argument("channel")
     rp.add_argument("--yes", action="store_true")
+    rp.add_argument("--episode", default=None)
+    rp.add_argument("--count", type=int, default=1)
     for name in ("approve", "make", "upload", "status"):
         sp = sub.add_parser(name)
         sp.add_argument("run_dir", type=Path)
@@ -133,7 +170,7 @@ def main() -> None:
                 except SystemExit as e:
                     print(f"[{name}] 건너뜀: {e}")
         else:
-            cmd_render(load_channel(args.channel), yes=args.yes)
+            cmd_render(load_channel(args.channel), yes=args.yes, episode=args.episode, count=args.count)
         return
 
     # approve/make/upload/status 는 폴더에서 채널명을 역산

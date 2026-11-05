@@ -7,7 +7,8 @@
 import json
 from pathlib import Path
 
-SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
+SCOPES = ["https://www.googleapis.com/auth/youtube.upload",
+          "https://www.googleapis.com/auth/youtube.readonly"]
 AI_NOTICE = "※ 이 영상의 화면과 음성은 AI로 생성되었습니다."
 # 채널 언어 → 유튜브 언어 코드. '영상 언어'를 정확히 넣어야 그 언어권 시청자에게 노출된다.
 LANG_CODE = {"Korean": "ko", "English": "en", "Japanese": "ja", "Spanish": "es",
@@ -30,6 +31,28 @@ def _credentials(channel_dir: Path, client_secret_name: str):
         creds = InstalledAppFlow.from_client_secrets_file(str(secret), SCOPES).run_local_server(port=0)
         token_path.write_text(creds.to_json(), encoding="utf-8")
     return creds
+
+
+def uploaded_titles(cfg: dict) -> set[str]:
+    """내 채널에 이미 올라간 영상 제목 집합. (중복 업로드 방지용)"""
+    from googleapiclient.discovery import build
+
+    creds = _credentials(cfg["_dir"], cfg["youtube"]["client_secret_file"])
+    service = build("youtube", "v3", credentials=creds)
+    ch = service.channels().list(part="contentDetails", mine=True).execute()
+    if not ch.get("items"):
+        return set()
+    uploads = ch["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+    titles, token = set(), None
+    while True:
+        r = service.playlistItems().list(part="snippet", playlistId=uploads,
+                                          maxResults=50, pageToken=token).execute()
+        for it in r.get("items", []):
+            titles.add(it["snippet"]["title"])
+        token = r.get("nextPageToken")
+        if not token:
+            break
+    return titles
 
 
 def upload(video: Path, plan: dict, cfg: dict) -> str:
