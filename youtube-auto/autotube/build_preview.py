@@ -1,7 +1,7 @@
 """이번에 만들어진 편들을 '업로드 키트' 목록 페이지(site/)로 만든다.
 
-반자동 업로드용: 편마다 영상/썸네일/쇼츠 다운로드 + 제목·설명·태그 복사 +
-'업로드함 → 목록에서 제거'(GitHub에서 status.json 삭제) 링크.
+목록형: 썸네일 + 제목만 한 줄씩. 항목을 누르면 펼쳐서
+영상/썸네일/쇼츠 다운로드 + 제목·설명·태그 복사 + '목록에서 제거'(GitHub status.json 삭제).
 
 사용법: python -m autotube.build_preview <channel_episodes_dir> <site_dir> <channel_title> <repo> <branch> <ep_path_prefix>
 """
@@ -15,7 +15,7 @@ from pathlib import Path
 AI_NOTICE = "This video's visuals and narration were created with AI."
 
 
-def _episode_block(ep: Path, media: Path, repo: str, branch: str, ep_prefix: str) -> str:
+def _item(ep: Path, media: Path, repo: str, branch: str, ep_prefix: str) -> str:
     plan = json.loads((ep / "plan.json").read_text(encoding="utf-8"))
     folder = ep.name
     dst = media / folder
@@ -37,19 +37,25 @@ def _episode_block(ep: Path, media: Path, repo: str, branch: str, ep_prefix: str
         for n, s in enumerate(shorts, 1)
     )
     return f"""
-  <section class="ep">
-    <h2>{e(title)}</h2>
-    <video controls preload="none" poster="media/{folder}/thumbnail.jpg" src="media/{folder}/final.mp4"></video>
-    <div class="row">
-      <a class="dl" download href="media/{folder}/final.mp4">⬇ 영상</a>
-      <a class="dl alt" download href="media/{folder}/thumbnail.jpg">⬇ 썸네일</a>
-      {short_dl}
+  <details class="item">
+    <summary>
+      <img class="thumb" loading="lazy" src="media/{folder}/thumbnail.jpg" alt="">
+      <span class="title">{e(title)}</span>
+      <span class="chev">▸</span>
+    </summary>
+    <div class="detail">
+      <video controls preload="none" poster="media/{folder}/thumbnail.jpg" src="media/{folder}/final.mp4"></video>
+      <div class="row">
+        <a class="dl" download href="media/{folder}/final.mp4">⬇ 영상</a>
+        <a class="dl alt" download href="media/{folder}/thumbnail.jpg">⬇ 썸네일</a>
+        {short_dl}
+      </div>
+      <div class="box"><button class="copy" data-t="t-{folder}">제목 복사</button><pre id="t-{folder}">{e(title)}</pre></div>
+      <div class="box"><button class="copy" data-t="d-{folder}">설명 복사</button><pre id="d-{folder}">{e(desc)}</pre></div>
+      <div class="box"><button class="copy" data-t="g-{folder}">태그 복사</button><pre id="g-{folder}">{e(tags)}</pre></div>
+      <a class="remove" href="{remove_url}" target="_blank" rel="noopener">✓ 업로드함 — 목록에서 제거</a>
     </div>
-    <div class="box"><button class="copy" data-t="t-{folder}">제목 복사</button><pre id="t-{folder}">{e(title)}</pre></div>
-    <div class="box"><button class="copy" data-t="d-{folder}">설명 복사</button><pre id="d-{folder}">{e(desc)}</pre></div>
-    <div class="box"><button class="copy" data-t="g-{folder}">태그 복사</button><pre id="g-{folder}">{e(tags)}</pre></div>
-    <a class="remove" href="{remove_url}" target="_blank" rel="noopener">✓ 업로드함 — 목록에서 제거</a>
-  </section>"""
+  </details>"""
 
 
 def build(channel_dir: Path, site: Path, channel_title: str,
@@ -57,8 +63,8 @@ def build(channel_dir: Path, site: Path, channel_title: str,
     media = site / "media"
     media.mkdir(parents=True, exist_ok=True)
     eps = sorted(d for d in channel_dir.glob("*") if (d / "final.mp4").exists())
-    blocks = "".join(_episode_block(ep, media, repo, branch, ep_prefix) for ep in eps)
-    empty = "" if eps else '<p class="tag">이번에 만들어진 영상이 없습니다.</p>'
+    items = "".join(_item(ep, media, repo, branch, ep_prefix) for ep in eps)
+    empty = "" if eps else '<p class="muted">이번에 만들어진 영상이 없습니다.</p>'
 
     page = f"""<!doctype html>
 <html lang="ko"><head>
@@ -69,36 +75,42 @@ def build(channel_dir: Path, site: Path, channel_title: str,
   :root {{ color-scheme: dark; }}
   * {{ box-sizing: border-box; }}
   body {{ margin:0; background:#0e0f13; color:#e8e8ea; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }}
-  .wrap {{ max-width:900px; margin:0 auto; padding:16px; }}
-  h1 {{ font-size:1.2rem; margin:.4rem 0 .2rem; }}
-  .ep {{ border-top:1px solid #262a33; padding-top:18px; margin-top:22px; }}
-  h2 {{ font-size:1rem; margin:0 0 .6rem; }}
-  video {{ width:100%; border-radius:12px; background:#000; aspect-ratio:16/9; }}
+  .wrap {{ max-width:820px; margin:0 auto; padding:14px; }}
+  h1 {{ font-size:1.15rem; margin:.3rem 0 .2rem; }}
+  .muted {{ color:#9aa0aa; font-size:.85rem; }}
+  .hint {{ color:#9aa0aa; font-size:.82rem; margin:.2rem 0 1rem; }}
+
+  .item {{ border:1px solid #23262e; border-radius:12px; margin:8px 0; background:#14161b; overflow:hidden; }}
+  summary {{ display:flex; align-items:center; gap:12px; padding:10px; cursor:pointer; list-style:none; }}
+  summary::-webkit-details-marker {{ display:none; }}
+  .thumb {{ width:120px; height:68px; object-fit:cover; border-radius:8px; background:#000; flex:none; }}
+  .title {{ flex:1; font-size:.95rem; font-weight:600; line-height:1.35;
+            display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }}
+  .chev {{ color:#6b7280; transition:transform .15s; flex:none; }}
+  details[open] .chev {{ transform:rotate(90deg); }}
+
+  .detail {{ padding:0 12px 14px; }}
+  video {{ width:100%; border-radius:10px; background:#000; aspect-ratio:16/9; }}
   .row {{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }}
   .dl {{ background:#2563eb; color:#fff; text-decoration:none; padding:11px 14px; border-radius:10px; font-weight:600; font-size:.9rem; }}
   .dl.alt {{ background:#334155; }}
-  .box {{ position:relative; background:#15171d; border:1px solid #262a33; border-radius:12px; padding:14px; margin:8px 0; }}
-  .box pre {{ margin:0; white-space:pre-wrap; word-break:break-word; font-size:.88rem; color:#dfe3ea; }}
-  .copy {{ position:absolute; top:10px; right:10px; background:#334155; color:#fff; border:0; border-radius:8px; padding:6px 10px; font-size:.8rem; cursor:pointer; }}
-  .remove {{ display:inline-block; margin-top:8px; background:#7f1d1d; color:#fff; text-decoration:none; padding:11px 14px; border-radius:10px; font-weight:600; font-size:.9rem; }}
-  .steps {{ background:#15171d; border-radius:12px; padding:12px 16px; font-size:.88rem; line-height:1.7; color:#b8bdc6; margin-top:8px; }}
-  .tag {{ color:#9aa0aa; font-size:.85rem; }}
+  .box {{ position:relative; background:#0e0f13; border:1px solid #23262e; border-radius:10px; padding:42px 12px 12px; margin:8px 0; }}
+  .box pre {{ margin:0; white-space:pre-wrap; word-break:break-word; font-size:.86rem; color:#dfe3ea; }}
+  .copy {{ position:absolute; top:8px; right:8px; background:#334155; color:#fff; border:0; border-radius:8px; padding:6px 10px; font-size:.78rem; cursor:pointer; }}
+  .remove {{ display:inline-block; margin-top:6px; background:#7f1d1d; color:#fff; text-decoration:none; padding:11px 14px; border-radius:10px; font-weight:600; font-size:.9rem; }}
   footer {{ color:#6b7280; font-size:.75rem; margin:2rem 0 1rem; text-align:center; }}
 </style></head>
 <body><div class="wrap">
-  <h1>{html.escape(channel_title)} · 업로드 대기</h1>
-  <div class="steps">
-    각 영상: <b>영상·썸네일 받기 → 유튜브 스튜디오에 올리기 → 제목·설명·태그 붙여넣기 →
-    썸네일 지정 → "변경되거나 합성된 콘텐츠: 예" 체크 → 비공개로 업로드</b>.
-    올린 뒤 <b>빨간 "목록에서 제거"</b>를 누르면(깃헙에서 삭제 확인) 다시 안 만들어집니다.
-  </div>
+  <h1>{html.escape(channel_title)} · 업로드 대기 ({len(eps)})</h1>
+  <div class="hint">항목을 눌러 펼친 뒤 받아서 올리고, 올린 건 빨간 "목록에서 제거"를 누르세요.</div>
   {empty}
-  {blocks}
+  <div class="list">{items}</div>
   <footer>autotube upload kit</footer>
 </div>
 <script>
   for (const b of document.querySelectorAll('.copy')) {{
-    b.onclick = () => {{ const el=document.getElementById(b.dataset.t);
+    b.onclick = (ev) => {{ ev.preventDefault();
+      const el=document.getElementById(b.dataset.t);
       navigator.clipboard.writeText(el.innerText).then(()=>{{const o=b.textContent;b.textContent='복사됨';setTimeout(()=>b.textContent=o,1200);}}); }};
   }}
 </script>
