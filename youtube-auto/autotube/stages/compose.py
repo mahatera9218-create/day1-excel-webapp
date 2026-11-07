@@ -91,7 +91,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     if bgm:
         inputs += ["-stream_loop", "-1", "-i", str(Path(bgm).resolve())]
         bgm_idx = next_idx; next_idx += 1
-    use_motes = MOTES.exists()
+    use_motes = False  # 성능: 프레임별 빛입자 오버레이는 CI에서 너무 느려 비활성화
     if use_motes:
         inputs += ["-loop", "1", "-i", str(MOTES.resolve())]
         motes_idx = next_idx; next_idx += 1
@@ -115,8 +115,8 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     vchain = f"{vprev}fade=t=in:st=0:d=0.6,fade=t=out:st={max(0.0, total-0.6):.3f}:d=0.6"
     if subs_on:
         vchain += f",subtitles=subs.ass:fontsdir={FONT_DIR}"
-    # 색보정+비네트+가벼운(공간) 그레인. 시간축(allf=t) 그레인은 CI에서 매우 느려 제거.
-    vchain += ",eq=contrast=1.05:saturation=1.08:gamma=0.98,vignette=PI/6,noise=alls=5"
+    # 색보정+비네트만(가벼움). 프레임별 노이즈/빛입자 오버레이는 CI에서 너무 느려 제외.
+    vchain += ",eq=contrast=1.05:saturation=1.08:gamma=0.98,vignette=PI/6"
     # What-if(가상 시나리오)는 신뢰·광고 안전을 위해 작은 상시 라벨을 항상 표기
     if plan.get("content_type") == "what_if":
         fnt = FONT_DIR / "NotoSansKR.ttf"
