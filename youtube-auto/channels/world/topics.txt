@@ -1,20 +1,33 @@
-# 세계 야담 — 자극적인 숨은 실화. 메인=스캔들·금지된 사랑(2/3), 나머지는 충격·미스터리·상식.
-# '#' 줄 무시. 사실 기반, 노골적 성·고어·최근 실제범죄 금지(수위 조절).
+# Mr.Untold 소재 — 호기심 격차 중심. 메인=사실 기반 "만약에?"(what_if), 일부=안 흔한 사실 앵글(true).
+# '#' 줄 무시. 핵심은 '주제'가 아니라 '앵글': 흔한 상식과 다른 지점을 잡아라.
+# 사실 토대는 검증, 분기 이후는 '추정'임을 명시. 노골적 성·고어·최근 실제범죄 금지.
 
-# === 스캔들 · 금지된 사랑 (메인) ===
-Cleopatra and Mark Antony: The Love That Shook Two Empires (Egypt/Rome)
-The King Who Gave Up His Throne for a Divorced Woman (Edward VIII & Wallis Simpson)
-Heloise and Abelard: Medieval Europe's Forbidden Love (France)
-Anne Boleyn: The Marriage That Broke a Church (England)
-The Affair of the Poisons at Versailles (France)
-Yang Guifei: The Concubine Who Toppled a Dynasty (China)
-Empress Wu, China's Only Female Emperor and Her Ruthless Court
-Catherine the Great: The Scandals, the Myths, and the Truth (Russia)
-Shah Jahan and Mumtaz: The Love Behind the Taj Mahal (India)
-Rasputin and the Secrets of the Romanov Court (Russia)
+# === WHAT-IF · 역사 (메인) ===
+What if the Library of Alexandria never burned? (Egypt / knowledge)
+What if the Black Death never happened? (Europe / demographics)
+What if Rome never fell? (Rome / civilization)
+What if the Mongols had not turned back from Europe? (Eurasia)
+What if the Soviets had reached the Moon first? (Cold War / space)
+What if Zheng He's fleet had kept exploring? (Ming China / oceans)
+What if the printing press was invented 500 years earlier? (media)
+What if Tesla, not Edison, had won the current war? (electricity)
+What if the Great Fire of London never happened? (England / cities)
+What if the Louisiana Purchase had failed? (USA / France)
 
-# === 충격 실화 · 미스터리 · 상식 (변주) ===
-The Dancing Plague of 1518 (Strasbourg)
-The Great Molasses Flood of Boston, 1919 (USA)
-Mansa Musa, the Richest Man Who Ever Lived (Mali)
-The Lost Colony That Vanished: Roanoke (USA)
+# === WHAT-IF · 과학 · 자연 · 문명 (메인) ===
+What if humans never discovered fire? (anthropology)
+What if the dinosaurs never went extinct? (deep time)
+What if Earth had two moons? (astronomy)
+What if antibiotics were never discovered? (medicine)
+What if the Sahara were still green? (climate / Africa)
+What if oil had never been used as fuel? (energy)
+What if the internet had stayed decentralized? (technology)
+
+# === THE UNTOLD ANGLE · 안 흔한 사실 앵글 (보조, content_type: true) ===
+Why the Titanic's lifeboats rowed away half-empty (1912)
+The map error that gave Brazil its language (Treaty of Tordesillas)
+The clerk whose typo nearly started a war (Cold War near-misses)
+The woman who edited the atomic bomb reports out of history (Lise Meitner)
+The forgotten reason clocks run clockwise (sundials / hemisphere)
+The single mistranslation behind a famous "canal" on Mars
+The accountant who saved the Eiffel Tower from demolition

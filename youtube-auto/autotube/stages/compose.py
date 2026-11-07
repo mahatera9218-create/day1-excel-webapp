@@ -116,6 +116,11 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     if subs_on:
         vchain += f",subtitles=subs.ass:fontsdir={FONT_DIR}"
     vchain += ",eq=contrast=1.05:saturation=1.08:gamma=0.98,vignette=PI/6,noise=alls=6:allf=t"
+    # What-if(가상 시나리오)는 신뢰·광고 안전을 위해 작은 상시 라벨을 항상 표기
+    if plan.get("content_type") == "what_if":
+        fnt = FONT_DIR / "NotoSansKR.ttf"
+        vchain += (f",drawtext=fontfile='{fnt}':text='WHAT-IF SCENARIO':fontcolor=white@0.55:"
+                   f"fontsize=22:x=w-tw-28:y=h-th-26:box=1:boxcolor=black@0.28:boxborderw=8")
 
     if motes_idx is not None:
         # 프레임보다 큰 빛입자 레이어를 천천히 떠다니게 오버레이 → 정지화면에 생동감

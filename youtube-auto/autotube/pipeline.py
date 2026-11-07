@@ -25,7 +25,8 @@ def load_plan(run_dir: Path) -> dict:
 
 def estimate_cost(plan: dict, cfg: dict) -> float:
     e = cfg["engines"]
-    n_img = len(plan["scenes"])
+    # 재활용(image_ref / image_lib) 장면은 생성하지 않으므로 비용에서 제외
+    n_img = sum(1 for s in plan["scenes"] if not s.get("image_ref") and not s.get("image_lib"))
     n_vid = sum(1 for s in plan["scenes"] if s.get("motion") == "video")
     from .engines.base import estimate_seconds
     vid_sec = sum(min(15, max(5, round(estimate_seconds(s["narration"]))))

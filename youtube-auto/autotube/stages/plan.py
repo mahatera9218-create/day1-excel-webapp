@@ -39,6 +39,9 @@ def mock_plan(cfg: dict, topic: str) -> dict:
         tags = ["folklore", "mythology", "legends", "folk tales", "storytelling", "bedtime story"]
     return {
         "topic": topic,
+        "content_type": "what_if",
+        "angle": f"A grounded what-if on {topic}, not the usual retelling",
+        "disclaimer": "A what-if scenario: grounded in real history up to the branch point, then informed speculation.",
         "title": f"{cfg.get('title_prefix', '')} {topic}".strip(),
         "thumbnail_prompt": f"dramatic cinematic close-up for '{topic.split('(')[0].strip()}', a striking face with intense eye contact, moody lighting, shallow depth of field",
         "thumbnail_text": "",
@@ -59,6 +62,12 @@ def write_script_md(plan: dict, path: Path) -> None:
             tag += " ★KEY"
         lines.append(f"### 장면 {i}  ·  [{tag}]  ·  {s['motion']}")
         lines.append(f"- 내레이션: {s['narration']}")
-        lines.append(f"- 강조: {', '.join(s.get('highlight', [])) or '-'}")
-        lines.append(f"- 그림: {s['image_prompt']}\n")
+        lines.append(f"- 강조: {', '.join(s.get('highlight') or []) or '-'}")
+        if s.get("image_ref"):
+            img = f"♻ 장면 {s['image_ref']} 재활용"
+        elif s.get("image_lib"):
+            img = f"♻ 라이브러리 '{s['image_lib']}'" + (f" (폴백: {s['image_prompt']})" if s.get("image_prompt") else "")
+        else:
+            img = s.get("image_prompt", "-")
+        lines.append(f"- 그림: {img}\n")
     path.write_text("\n".join(lines), encoding="utf-8")

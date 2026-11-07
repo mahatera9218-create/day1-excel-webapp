@@ -41,6 +41,20 @@ def lint_plan(plan: dict) -> tuple[list[str], list[str]]:
     if not (plan.get("thumbnail_prompt") or "").strip():
         errors.append("thumbnail_prompt 가 비어 있습니다. (이미지-우선 전용 썸네일은 필수)")
 
+    # 니치: 그 편만의 '안 흔한 앵글' 한 줄이 반드시 있어야 한다.
+    angle = (plan.get("angle") or "").strip()
+    if not angle:
+        errors.append("angle 이 비어 있습니다 — 이 편만의 '흔하지 않은 니치 앵글' 한 줄은 필수.")
+    elif len(angle.split()) < 4:
+        warnings.append("angle 이 너무 짧습니다 — 상식과 다른 지점을 구체적으로.")
+
+    # 포맷: content_type = 'what_if'(사실 기반 가상) | 'true'(사실). what_if 는 라벨링 필수.
+    ctype = plan.get("content_type", "true")
+    if ctype not in ("what_if", "true"):
+        errors.append(f"content_type '{ctype}' 이(가) 잘못됐습니다. 'what_if' 또는 'true'.")
+    if ctype == "what_if" and not (plan.get("disclaimer") or "").strip():
+        errors.append("what_if 편은 disclaimer(가상 시나리오 명시)가 필수입니다 — 신뢰·광고 안전.")
+
     scenes = plan.get("scenes") or []
     n = len(scenes)
     if not (20 <= n <= 34):
@@ -51,8 +65,12 @@ def lint_plan(plan: dict) -> tuple[list[str], list[str]]:
     for i, s in enumerate(scenes, 1):
         if not (s.get("narration") or "").strip():
             errors.append(f"장면 {i}: narration 이 비어 있습니다.")
-        if not (s.get("image_prompt") or "").strip():
-            errors.append(f"장면 {i}: image_prompt 가 비어 있습니다.")
+        ref = s.get("image_ref")
+        if ref is not None and (not isinstance(ref, int) or ref < 1 or ref >= i):
+            errors.append(f"장면 {i}: image_ref={ref} 는 '이전 장면 번호(1~{i-1})'여야 합니다.")
+        # image_ref(이전 장면 재활용)면 프롬프트 불필요. 그 외(생성/라이브러리)는 프롬프트 필수(폴백).
+        if ref is None and not (s.get("image_prompt") or "").strip():
+            errors.append(f"장면 {i}: image_prompt 가 비어 있습니다 (또는 image_ref 로 재활용).")
         r = s.get("role")
         if r not in ROLES:
             errors.append(f"장면 {i}: role '{r}' 이(가) 규격 밖입니다. 허용: {sorted(ROLES)}")

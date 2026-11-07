@@ -1,0 +1,279 @@
+{
+  "topic": "What if the Black Death never happened? (Europe / the modern world)",
+  "content_type": "what_if",
+  "angle": "Not the millions saved, but the counterintuitive case that the plague's death toll is what broke serfdom and triggered modernity — so erasing it freezes Europe in place.",
+  "disclaimer": "A what-if scenario: the history up to 1347 and the plague's real aftermath are factual; the alternate timeline is informed speculation, and historians still debate the plague's true impact.",
+  "title": "What If the Black Death Never Happened? | The Plague That Built the Modern World",
+  "thumbnail_prompt": "cinematic extreme close-up of a medieval peasant's weathered face lit by firelight, haunted but hopeful eyes looking up, smoke and embers of plague-era Europe behind, shallow depth of field, oil-painting realism",
+  "thumbnail_text": "",
+  "thumbnail_scene": 20,
+  "description": "What if the deadliest pandemic in history had never struck Europe? You'd expect a golden age — but the Black Death may have been the shock that ended serfdom and lit the fuse of the modern world. A grounded what-if scenario.\n\nFactual spine: the Black Death (c.1347-1351), the post-plague labor shortage and wage rises, the Statute of Labourers (1351), and the Peasants' Revolt (1381). Everything after the branch point is informed speculation. Sources: standard historical accounts (incl. Wikipedia: Black Death; Statute of Labourers 1351).",
+  "tags": [
+    "what if",
+    "black death",
+    "alternate history",
+    "history",
+    "middle ages",
+    "plague",
+    "serfdom",
+    "renaissance",
+    "counterfactual history",
+    "europe"
+  ],
+  "scenes": [
+    {
+      "narration": "The Black Death killed as many as half the people in Europe. Now imagine, for a moment, that it never came at all.",
+      "highlight": [
+        "half the people in Europe"
+      ],
+      "role": "hook",
+      "is_key": true,
+      "motion": "kenburns_in",
+      "image_prompt": "a lone hooded medieval figure standing before a vast dark horizon at dusk, cold wind, ominous sky"
+    },
+    {
+      "narration": "You would expect that to be the greatest mercy in history. Instead, the deeper you look, the more the opposite seems true.",
+      "highlight": [
+        "the greatest mercy in history"
+      ],
+      "role": "setup",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "a cracked church bell hanging silent above an empty medieval square, grey morning light"
+    },
+    {
+      "narration": "It begins in October 1347. Twelve ships drift into the harbor of Messina, in Sicily, and most of the sailors slumped on their decks are already dead.",
+      "highlight": [
+        "twelve ships",
+        "already dead"
+      ],
+      "role": "setup",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "ghostly Genoese sailing ships drifting into a medieval Sicilian harbor at dusk, heavy fog, no movement"
+    },
+    {
+      "narration": "Within five years the plague has swept the whole continent. By most estimates it kills a third of all Europeans — tens of millions of lives, gone.",
+      "highlight": [
+        "a third of all Europeans"
+      ],
+      "role": "setup",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "a dark map of medieval Europe with black shadow spreading across it, circling crows, candlelight",
+      "image_lib": "europe_map_medieval"
+    },
+    {
+      "narration": "Entire villages fall silent. In some towns there are not enough living left to bury the dead. To the people of the time, it truly feels like the end of the world.",
+      "highlight": [
+        "not enough living to bury the dead"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "an abandoned medieval village shrouded in fog at dawn, doors hanging open, no people in sight"
+    },
+    {
+      "narration": "So here is our question. What if those ships had been turned back in time — and the plague had never touched Europe at all?",
+      "highlight": [
+        "never touched Europe"
+      ],
+      "role": "loop_q",
+      "is_key": true,
+      "motion": "kenburns_pan",
+      "image_prompt": "medieval ships being waved back out to sea from a harbor wall, a watchman pointing, pale hopeful light"
+    },
+    {
+      "narration": "From this point on, we step off the historical record and start to reason. And the obvious answer feels like pure relief: a blessing.",
+      "highlight": [
+        "a blessing"
+      ],
+      "role": "loop_fake",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "a bustling thriving medieval city street packed with people and market stalls, warm golden light"
+    },
+    {
+      "narration": "Thirty million people go on living. Europe, untouched by the horror, surely surges ahead of the rest of the world. Surely.",
+      "highlight": [
+        "surges ahead"
+      ],
+      "role": "loop_problem",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "a prosperous medieval port city crowded with ships and merchants, bright and busy at midday"
+    },
+    {
+      "narration": "But here is the problem with that dream. Europe in 1347 was not a healthy, hopeful society waiting to bloom. It was dangerously overcrowded.",
+      "highlight": [
+        "dangerously overcrowded"
+      ],
+      "role": "loop_problem",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "a cramped medieval town with narrow twisting streets packed shoulder to shoulder with people, high view"
+    },
+    {
+      "narration": "For three centuries its population had swelled and swelled. Almost every scrap of usable farmland was already being worked, with little new left to clear.",
+      "highlight": [
+        "every scrap of usable farmland"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "exhausted medieval terraced farmland stretching to the horizon, thin tired crops, flat overcast light"
+    },
+    {
+      "narration": "Only thirty years earlier, the Great Famine of 1315 had starved millions to death. The land was already stretched to its breaking point.",
+      "highlight": [
+        "the Great Famine of 1315"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "a bleak famine-struck medieval countryside, barren fields and gaunt villagers trudging under a grey sky"
+    },
+    {
+      "narration": "Historians call this a Malthusian trap: too many people, too little food, and the wages of ordinary workers crushed down to almost nothing.",
+      "highlight": [
+        "a Malthusian trap"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "a wealthy lord's overflowing granary beside a line of ragged hungry peasants, stark cold contrast"
+    },
+    {
+      "narration": "Without the plague, that trap only tightens. More mouths each year, the same tired soil, and a single peasant's life worth a little less every season.",
+      "highlight": [
+        "the trap only tightens"
+      ],
+      "role": "loop_reveal",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_ref": 10
+    },
+    {
+      "narration": "But the strangest part of this story isn't about food at all. The plague may have been the very shock that cracked the medieval world open.",
+      "highlight": [
+        "cracked the medieval world open"
+      ],
+      "role": "second_hook",
+      "is_key": true,
+      "motion": "kenburns_in",
+      "image_prompt": "a thick stone wall splitting apart as brilliant light pours through the crack, cinematic and symbolic"
+    },
+    {
+      "narration": "How on earth could a catastrophe end up building a better world? To see it, you have to follow the survivors.",
+      "highlight": [
+        "follow the survivors"
+      ],
+      "role": "loop_q",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "a handful of survivors walking along an empty country road at dawn, long shadows, mist slowly lifting"
+    },
+    {
+      "narration": "Once the dying stopped, workers were suddenly rare and precious. For the first time in memory, a laborer could look a lord in the eye and name his own price.",
+      "highlight": [
+        "name his own price"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "a medieval peasant standing firm before a seated nobleman, tense eye contact across a table, lamplight"
+    },
+    {
+      "narration": "Wages climbed fast — by more than sixty percent, in some English records. Across Europe, the landowners began to panic.",
+      "highlight": [
+        "more than sixty percent"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "stacks of silver coins on an open ledger beside a nobleman's worried hand, candlelight"
+    },
+    {
+      "narration": "In 1351, England passed the Statute of Labourers, trying to freeze wages at their old levels by law. It barely worked at all.",
+      "highlight": [
+        "the Statute of Labourers"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "a medieval royal decree on parchment sealed with heavy red wax, quill and candle beside it"
+    },
+    {
+      "narration": "The old chains were loosening. Serfdom slowly faded across Western Europe, and in 1381 the peasants of England rose up in open revolt.",
+      "highlight": [
+        "rose up in open revolt"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "a crowd of medieval peasants marching with farm tools and rough banners down a road under a dramatic sky"
+    },
+    {
+      "narration": "Now erase the plague, and you erase every bit of this. No labor shortage. No bargaining power. The serf simply stays a serf, and the lord keeps his grip for generations longer.",
+      "highlight": [
+        "the serf simply stays a serf"
+      ],
+      "role": "turn",
+      "is_key": true,
+      "motion": "kenburns_in",
+      "image_prompt": "a towering nobleman casting a long cold shadow over rows of bowed, kneeling peasants, dramatic light"
+    },
+    {
+      "narration": "No desperate scramble for labor-saving invention. No rising middle class with coin to spend on new art, new printing, new ideas. The engine of change never turns over.",
+      "highlight": [
+        "the engine of change never turns over"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "an idle wooden printing press standing in a dark, unlit workshop, dust drifting in one shaft of light"
+    },
+    {
+      "narration": "Meanwhile the great powers of the East — Ming China, the Islamic world — keep their long lead, unthreatened and unhurried for centuries more.",
+      "highlight": [
+        "keep their long lead"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "a magnificent golden Ming-era Chinese city skyline at sunset, grand, prosperous and serene"
+    },
+    {
+      "narration": "A Europe spared the Black Death might not be richer or freer. It could be crowded, hungry and frozen in place — the Renaissance delayed by centuries, or born somewhere else entirely.",
+      "highlight": [
+        "frozen in place",
+        "born somewhere else"
+      ],
+      "role": "payoff",
+      "is_key": true,
+      "motion": "kenburns_pan",
+      "image_prompt": "a vast grey unchanging medieval Europe stretching endlessly to the horizon, static and cold, wide cinematic shot"
+    },
+    {
+      "narration": "Of course, historians still argue over how much the plague truly changed. It was never the only force pushing on that world, and nothing here is certain.",
+      "highlight": [
+        "historians still argue"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "old leather-bound history books stacked beside a candle on a scholar's wooden desk, warm quiet light"
+    },
+    {
+      "narration": "But it leaves us with a chilling thought: that the worst thing that ever happened to us may have been the very thing that set us free. A curse, or a strange gift? Tell me what you think.",
+      "highlight": [
+        "set us free",
+        "a curse, or a strange gift"
+      ],
+      "role": "button",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_ref": 1
+    }
+  ]
+}
