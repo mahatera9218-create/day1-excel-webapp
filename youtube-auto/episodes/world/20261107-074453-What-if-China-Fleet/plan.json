@@ -1,0 +1,277 @@
+{
+  "topic": "What if China's giant treasure fleet never stopped sailing? (China / the age of exploration)",
+  "continent": "Asia",
+  "content_type": "what_if",
+  "angle": "Not 'China would have ruled the world' — China explored first, then chose to quit and let its record-breaking fleet rot, and that one choice may have handed the age of exploration to Europe.",
+  "disclaimer": "A what-if scenario: Zheng He's voyages (1405-1433) and China's turn inward are real history; the alternate future is informed speculation, and historians still debate how much it could have changed.",
+  "title": "What If China Never Stopped Sailing? | The Biggest Fleet in History",
+  "thumbnail_prompt": "cinematic close-up of a giant ancient Chinese treasure ship with red sails towering over the ocean at golden sunrise, a small figure on deck looking up in awe, dramatic scale, shallow depth of field, oil-painting realism",
+  "thumbnail_text": "",
+  "thumbnail_scene": 5,
+  "description": "China once had the biggest ships on Earth — and sailed them all the way to Africa, long before Columbus. Then they stopped, and let the fleet rot. What if they never had? A grounded what-if, in plain English.\n\nReal history: Admiral Zheng He's seven voyages (1405-1433) under the Ming emperor, and China's later turn away from the sea. The alternate future is speculation. Sources: standard histories of Zheng He's treasure-fleet voyages.",
+  "tags": [
+    "what if",
+    "zheng he",
+    "treasure fleet",
+    "china",
+    "ming dynasty",
+    "history",
+    "age of exploration",
+    "alternate history",
+    "ships",
+    "asia"
+  ],
+  "scenes": [
+    {
+      "narration": "Six hundred years ago, the biggest ships on Earth did not belong to Europe. They belonged to China. And then, in just a few years, China walked away from them and almost erased them from history.",
+      "highlight": [
+        "China walked away from them"
+      ],
+      "role": "hook",
+      "is_key": true,
+      "motion": "kenburns_in",
+      "image_prompt": "colossal ancient Chinese treasure ships with red sails on the open sea at dawn, dramatic scale, cinematic"
+    },
+    {
+      "narration": "This is the story of the greatest fleet the world had ever seen. It could have changed everything. Instead, one choice made it vanish.",
+      "highlight": [
+        "one choice made it vanish"
+      ],
+      "role": "setup",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "a vast silhouette of a huge fleet of sailing ships filling the horizon at sunrise, misty"
+    },
+    {
+      "narration": "It starts in the year 1405. China's emperor wanted the whole world to know how strong his country was. So he sent a huge fleet out to sea, led by a famous captain named Zheng He.",
+      "highlight": [
+        "the year 1405"
+      ],
+      "role": "setup",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "a commanding Ming-era Chinese admiral in rich robes standing on the deck of a great ship, banners flying"
+    },
+    {
+      "narration": "The fleet was almost too big to believe. More than three hundred ships sailed together. They carried tens of thousands of sailors, soldiers, doctors, and even gifts for faraway kings.",
+      "highlight": [
+        "three hundred ships"
+      ],
+      "role": "setup",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "an overhead view of hundreds of wooden Chinese ships sailing together across a blue ocean"
+    },
+    {
+      "narration": "The largest ships were some of the biggest wooden boats ever built. Years later, when Columbus crossed the sea, his little ships would have looked like toys next to them.",
+      "highlight": [
+        "biggest wooden boats ever built"
+      ],
+      "role": "setup",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "a gigantic Chinese treasure ship beside a tiny European sailing boat, dramatic size difference, open sea"
+    },
+    {
+      "narration": "Over about thirty years, the fleet made seven long trips. It sailed all the way to Vietnam, India, Arabia, and the coast of Africa. Few people in history had ever travelled so far.",
+      "highlight": [
+        "seven long trips"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "a glowing sea route map stretching from China across the Indian Ocean to Africa, candlelit parchment",
+      "image_lib": "indian_ocean_map"
+    },
+    {
+      "narration": "On one trip, the ships even brought home a giraffe from Africa. No one at the emperor's palace had ever seen an animal like it. To them, it looked like a creature from a legend.",
+      "highlight": [
+        "a giraffe from Africa"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "a live giraffe being presented to amazed people at a grand Ming Chinese palace courtyard, warm light"
+    },
+    {
+      "narration": "So here is the big question. What if China had never stopped? What if those ships just kept sailing, year after year, further and further out?",
+      "highlight": [
+        "what if China had never stopped"
+      ],
+      "role": "loop_q",
+      "is_key": true,
+      "motion": "kenburns_pan",
+      "image_prompt": "a lone Chinese treasure ship sailing toward a glowing open horizon, hopeful light, vast sea"
+    },
+    {
+      "narration": "It is easy to picture. Chinese ships reach Europe and dock in its harbors. Maybe they even cross the wide ocean and find the Americas, long before anyone else ever could.",
+      "highlight": [
+        "reach Europe"
+      ],
+      "role": "loop_fake",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "Chinese treasure ships arriving at a surprised medieval European port town, crowds watching from the docks"
+    },
+    {
+      "narration": "But wait. China did not stop because it failed. The ships worked beautifully. Every trip came home a success. So why would anyone give all of that up?",
+      "highlight": [
+        "so why would anyone give it up?"
+      ],
+      "role": "loop_problem",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "a Chinese treasure ship at anchor in calm water at dusk, sails down, quiet and still"
+    },
+    {
+      "narration": "The answer is money and power. When the old emperor died, new leaders took charge. They looked at the voyages and saw only a giant pile of gold, sailing away for very little in return.",
+      "highlight": [
+        "money and power"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "worried Ming officials in dark robes talking together in a dim palace hall, serious faces"
+    },
+    {
+      "narration": "They wanted to spend that gold on problems at home instead. There were hungry families to feed. And there were dangerous enemies pushing in from the cold lands to the north.",
+      "highlight": [
+        "problems at home"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "a poor Chinese village with hungry families, and distant soldiers on a cold northern border, grey light"
+    },
+    {
+      "narration": "So they made their choice. The giant ships were tied up and left to rot in the mud. Years later, officials even destroyed the records, so people would forget the voyages ever happened.",
+      "highlight": [
+        "left to rot in the mud"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "once-mighty Chinese ships rotting and abandoned in a muddy harbor, broken masts, grey overcast sky"
+    },
+    {
+      "narration": "But here is the strangest part of all. That single choice, made in one palace, may have quietly handed the whole world to Europe.",
+      "highlight": [
+        "handed the whole world to Europe"
+      ],
+      "role": "second_hook",
+      "is_key": true,
+      "motion": "kenburns_in",
+      "image_prompt": "a cracked ancient map of the world with a bright line of light splitting it in two, symbolic, cinematic"
+    },
+    {
+      "narration": "How could parking a few ships change the whole planet? To see it, you just have to follow what happened next.",
+      "highlight": [
+        "follow what happened next"
+      ],
+      "role": "loop_q",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "an empty calm ocean at dawn with no ships in sight, soft mist, wide open water"
+    },
+    {
+      "narration": "With China gone from the seas, the oceans were left wide open. The richest trade routes in the world had no one left to guard them. It was an empty stage, waiting.",
+      "highlight": [
+        "left wide open"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "a vast empty ocean with faint old trade routes glowing faintly across it, nobody there"
+    },
+    {
+      "narration": "Then, decades later, small European ships finally sailed out. And out on the water, they found almost no one powerful enough to stop them.",
+      "highlight": [
+        "almost no one to stop them"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "small European sailing ships setting out from a harbor into a wide empty sea, hopeful morning light"
+    },
+    {
+      "narration": "They reached the Americas, Africa, and Asia. They set up trading posts and empires. Those few trips would go on to shape the next five hundred years of history.",
+      "highlight": [
+        "the next five hundred years"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_prompt": "European ships landing on distant shores while flags are raised, sweeping dramatic sky"
+    },
+    {
+      "narration": "Now imagine China had kept on sailing instead. The same routes, the same faraway lands, reached first by the giant fleet from the East. The map of power could have been flipped.",
+      "highlight": [
+        "reached first by the fleet from the East"
+      ],
+      "role": "turn",
+      "is_key": true,
+      "motion": "kenburns_in",
+      "image_prompt": "Chinese treasure ships planting their banners on a distant shore first, triumphant golden light"
+    },
+    {
+      "narration": "Maybe the languages we speak, the borders on our maps, and even the money in our pockets would all look completely different today. A whole other world.",
+      "highlight": [
+        "all look completely different"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "a dreamlike blend of Chinese lanterns and world landmarks under one sky, surreal warm tones"
+    },
+    {
+      "narration": "Or maybe not. A fleet that size costs a fortune to run. China might well have given it all up a little later anyway, for the very same money worries.",
+      "highlight": [
+        "might have given it up anyway"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_ref": 10
+    },
+    {
+      "narration": "Either way, one thing is clear. For a short and amazing moment, the future of the world was riding on Chinese ships. And then, quietly, it all turned back toward home.",
+      "highlight": [
+        "turned back toward home"
+      ],
+      "role": "payoff",
+      "is_key": true,
+      "motion": "kenburns_in",
+      "image_prompt": "a great Chinese fleet turning back toward home against a huge red sunset, bittersweet, cinematic"
+    },
+    {
+      "narration": "We will never really know the world that might have been. The great ships were gone. The records were burned. A door to the future simply closed.",
+      "highlight": [
+        "the world that might have been"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_in",
+      "image_ref": 13
+    },
+    {
+      "narration": "And of course, historians still argue about how much those voyages could truly have changed. Nobody can say for sure. This is a story of what might have been, not what was.",
+      "highlight": [
+        "historians still argue"
+      ],
+      "role": "context",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_prompt": "old history books and a candle on a wooden desk, warm quiet light"
+    },
+    {
+      "narration": "But it makes you wonder. The biggest fleet in all of history did not lose a single battle. It was simply called home. Was that the greatest mistake ever made, or the right call? Tell me what you think.",
+      "highlight": [
+        "the greatest mistake ever made"
+      ],
+      "role": "button",
+      "is_key": false,
+      "motion": "kenburns_pan",
+      "image_ref": 1
+    }
+  ]
+}

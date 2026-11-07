@@ -17,6 +17,18 @@ concept: >
 
 language: English
 
+# 쉬운 말 규칙: 역사학자·마니아 용어 금지. 초등학생·역사 입문자도 이해할 쉬운 단어로
+# 스크립트와 자막을 쓴다. (린트가 어려운 단어를 막음)
+plain_language: true
+
+# 대륙 로테이션: 발행을 아래 5개 대륙에 고르게 돌리고 특정 국가에 편중하지 않는다.
+continents:
+  - Asia
+  - Europe
+  - Americas
+  - Africa
+  - Oceania
+
 visual_style: >
   cinematic historical illustration, warm painterly tone, era-accurate detail,
   documentary mood, dramatic natural lighting, no text, no logos, no modern objects

@@ -4,6 +4,8 @@
 의미(사실성 등)는 사람이 보지만, 구조는 여기서 강제한다.
 """
 
+import re
+
 # 장면 역할 — 대본 뼈대를 기계가 알아볼 수 있게 태깅한다.
 ROLES = {
     "hook",          # 0~15초: 가장 충격적인 그림 + 질문/주장 (1번 장면)
@@ -18,6 +20,22 @@ ROLES = {
     "button",        # 마지막 여운 한 줄 (댓글·다음영상 유도)
     "context",       # 그 외 연결 장면
 }
+
+# 대륙 카테고리 — 발행을 여기에 맞춰 돌린다(특정 국가 편중 금지).
+CONTINENTS = {"Asia", "Europe", "Americas", "Africa", "Oceania"}
+
+# 쉬운 말 규칙: 역사학자·마니아가 쓸 법한 어려운 단어는 막는다(초등학생도 이해 가능해야).
+# 더 쉬운 표현으로 풀어 쓰면 통과. (단어 경계로 검사, 대소문자 무시)
+HARD_WORDS = {
+    "feudal", "feudalism", "serf", "serfs", "serfdom", "vassal", "vassals",
+    "aristocracy", "aristocratic", "aristocrat", "bourgeoisie", "proletariat",
+    "malthusian", "mercantilism", "hegemony", "autocracy", "oligarchy",
+    "abdicate", "abdication", "annexation", "annexed", "ratify", "ratified",
+    "sovereignty", "excommunicate", "excommunicated", "indulgences", "secession",
+    "suffrage", "regicide", "usurp", "usurped", "dynastic", "patronage",
+    "dowry", "primogeniture", "schism", "theological", "mercantile",
+}
+MAX_SENTENCE_WORDS = 28  # 쉬운 말 = 짧은 문장
 
 
 def lint_plan(plan: dict) -> tuple[list[str], list[str]]:
@@ -55,6 +73,11 @@ def lint_plan(plan: dict) -> tuple[list[str], list[str]]:
     if ctype == "what_if" and not (plan.get("disclaimer") or "").strip():
         errors.append("what_if 편은 disclaimer(가상 시나리오 명시)가 필수입니다 — 신뢰·광고 안전.")
 
+    # 대륙: 발행 로테이션용. 반드시 5개 중 하나.
+    cont = plan.get("continent")
+    if cont not in CONTINENTS:
+        errors.append(f"continent '{cont}' 이(가) 잘못됐습니다. {sorted(CONTINENTS)} 중 하나.")
+
     scenes = plan.get("scenes") or []
     n = len(scenes)
     if not (20 <= n <= 34):
@@ -81,6 +104,16 @@ def lint_plan(plan: dict) -> tuple[list[str], list[str]]:
         narr = s.get("narration") or ""
         if any(q in narr for q in ('"', "“", "”")):
             warnings.append(f"장면 {i}: 따옴표가 있습니다 — 실제로 문서화된 인용인지 확인(지어낸 대사 금지).")
+        # 쉬운 말 규칙: 어려운 단어(전문용어) 차단
+        words_lc = re.findall(r"[a-zA-Z]+", narr.lower())
+        hard = sorted({w for w in words_lc if w in HARD_WORDS})
+        if hard:
+            errors.append(f"장면 {i}: 어려운 단어 {hard} — 초등학생도 알 쉬운 말로 풀어 쓰세요.")
+        # 긴 문장 경고 (쉬운 말 = 짧은 문장)
+        for sent in re.split(r"[.!?]+", narr):
+            if len(sent.split()) > MAX_SENTENCE_WORDS:
+                warnings.append(f"장면 {i}: 문장이 깁니다(>{MAX_SENTENCE_WORDS}단어) — 짧게 끊으세요.")
+                break
 
     # ---- 뼈대 필수 요소 ----
     if scenes and roles[0] != "hook":

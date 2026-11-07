@@ -39,6 +39,7 @@ def mock_plan(cfg: dict, topic: str) -> dict:
         tags = ["folklore", "mythology", "legends", "folk tales", "storytelling", "bedtime story"]
     return {
         "topic": topic,
+        "continent": "Asia",
         "content_type": "what_if",
         "angle": f"A grounded what-if on {topic}, not the usual retelling",
         "disclaimer": "A what-if scenario: grounded in real history up to the branch point, then informed speculation.",

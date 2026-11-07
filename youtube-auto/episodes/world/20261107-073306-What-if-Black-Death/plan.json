@@ -134,9 +134,9 @@
       "image_prompt": "a bleak famine-struck medieval countryside, barren fields and gaunt villagers trudging under a grey sky"
     },
     {
-      "narration": "Historians call this a Malthusian trap: too many people, too little food, and the wages of ordinary workers crushed down to almost nothing.",
+      "narration": "People were stuck in a cruel trap: too many mouths and too little food, and the pay of ordinary workers crushed down to almost nothing.",
       "highlight": [
-        "a Malthusian trap"
+        "too many mouths, too little food"
       ],
       "role": "context",
       "is_key": false,
@@ -204,7 +204,7 @@
       "image_prompt": "a medieval royal decree on parchment sealed with heavy red wax, quill and candle beside it"
     },
     {
-      "narration": "The old chains were loosening. Serfdom slowly faded across Western Europe, and in 1381 the peasants of England rose up in open revolt.",
+      "narration": "The old chains were loosening. The rules that tied poor farmers to the land slowly faded across Western Europe, and in 1381 England's poor rose up in open revolt.",
       "highlight": [
         "rose up in open revolt"
       ],
@@ -214,9 +214,9 @@
       "image_prompt": "a crowd of medieval peasants marching with farm tools and rough banners down a road under a dramatic sky"
     },
     {
-      "narration": "Now erase the plague, and you erase every bit of this. No labor shortage. No bargaining power. The serf simply stays a serf, and the lord keeps his grip for generations longer.",
+      "narration": "Now erase the plague, and you erase every bit of this. No shortage of workers. No power to bargain. The poor farmer stays trapped and poor, and the rich landowner keeps his grip for generations longer.",
       "highlight": [
-        "the serf simply stays a serf"
+        "the poor stay trapped"
       ],
       "role": "turn",
       "is_key": true,
@@ -275,5 +275,6 @@
       "motion": "kenburns_pan",
       "image_ref": 1
     }
-  ]
+  ],
+  "continent": "Europe"
 }

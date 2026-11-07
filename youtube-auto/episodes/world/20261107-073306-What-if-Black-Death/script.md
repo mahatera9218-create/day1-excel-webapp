@@ -68,8 +68,8 @@ Factual spine: the Black Death (c.1347-1351), the post-plague labor shortage and
 - 그림: a bleak famine-struck medieval countryside, barren fields and gaunt villagers trudging under a grey sky
 
 ### 장면 12  ·  [context]  ·  kenburns_pan
-- 내레이션: Historians call this a Malthusian trap: too many people, too little food, and the wages of ordinary workers crushed down to almost nothing.
-- 강조: a Malthusian trap
+- 내레이션: People were stuck in a cruel trap: too many mouths and too little food, and the pay of ordinary workers crushed down to almost nothing.
+- 강조: too many mouths, too little food
 - 그림: a wealthy lord's overflowing granary beside a line of ragged hungry peasants, stark cold contrast
 
 ### 장면 13  ·  [loop_reveal]  ·  kenburns_in
@@ -103,13 +103,13 @@ Factual spine: the Black Death (c.1347-1351), the post-plague labor shortage and
 - 그림: a medieval royal decree on parchment sealed with heavy red wax, quill and candle beside it
 
 ### 장면 19  ·  [context]  ·  kenburns_pan
-- 내레이션: The old chains were loosening. Serfdom slowly faded across Western Europe, and in 1381 the peasants of England rose up in open revolt.
+- 내레이션: The old chains were loosening. The rules that tied poor farmers to the land slowly faded across Western Europe, and in 1381 England's poor rose up in open revolt.
 - 강조: rose up in open revolt
 - 그림: a crowd of medieval peasants marching with farm tools and rough banners down a road under a dramatic sky
 
 ### 장면 20  ·  [turn ★KEY]  ·  kenburns_in
-- 내레이션: Now erase the plague, and you erase every bit of this. No labor shortage. No bargaining power. The serf simply stays a serf, and the lord keeps his grip for generations longer.
-- 강조: the serf simply stays a serf
+- 내레이션: Now erase the plague, and you erase every bit of this. No shortage of workers. No power to bargain. The poor farmer stays trapped and poor, and the rich landowner keeps his grip for generations longer.
+- 강조: the poor stay trapped
 - 그림: a towering nobleman casting a long cold shadow over rows of bowed, kneeling peasants, dramatic light
 
 ### 장면 21  ·  [context]  ·  kenburns_pan

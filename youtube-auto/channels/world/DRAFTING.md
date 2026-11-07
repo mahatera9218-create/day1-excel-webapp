@@ -34,7 +34,7 @@ subject** (awe for a cosmic what-if, dread for a plague, intimacy for a love sto
 everyone already knows.* If the angle is just the common summary, it fails the brief. Lead
 the hook with that angle.
 
-## Two hard rules
+## Three hard rules
 
 1. **Honesty about what's real.** Facts must be real; speculation must be labeled.
    - Verify the factual spine with web search; note 2–3 reliable sources.
@@ -47,6 +47,13 @@ the hook with that angle.
      protects trust **and** ad revenue.
 2. **Advertiser-safe.** Dramatic and provocative is good; **sexually explicit or gory is
    not.** Imply, don't show. Avoid recent tragedies and living-person defamation.
+3. **Plain language — write for a 10-year-old.** Both narration and subtitles must be
+   understandable by a child or someone brand-new to history. Use everyday words and short
+   sentences. **No specialist/history-buff vocabulary** — the lint blocks words like
+   *feudalism, serfdom, Malthusian, aristocracy, mercantilism, abdicate, dynastic, dowry,
+   schism…* Explain the idea in simple words instead ("the old system where lords owned the
+   land and poor farmers worked it"). Keep sentences short (lint warns past ~28 words). Never
+   dumb down the *facts* — just the words.
 
 ## The mandatory skeleton — the "open loop" engine
 
@@ -101,7 +108,12 @@ part); everything else uses free `kenburns_in` / `kenburns_pan`.
 ## What to produce each run
 
 - Draft **14 episodes** (one week: 2/day × 7). **Mostly what-if**, a few untold-angle facts.
-- Spread across **different subjects, continents, and eras** (don't cluster).
+- **Continental rotation (required).** Every episode sets `continent` to one of **Asia,
+  Europe, Americas, Africa, Oceania**. Balance the batch across all five and **do not cluster
+  on one country** — check the `continent` of episodes already drafted and spread out. (Pure
+  "what-if-science/nature" ideas: tag the continent most tied to the story, or where the real
+  events happened.)
+- Spread across **different subjects and eras** too.
 - Pull ideas from `channels/world/topics.txt`, or research a fresh one.
 
 ## Steps per episode
@@ -117,6 +129,7 @@ part); everything else uses free `kenburns_in` / `kenburns_pan`.
 ```json
 {
   "topic": "What if the Library of Alexandria never burned? (Egypt / knowledge)",
+  "continent": "Africa",
   "content_type": "what_if",
   "angle": "Not 'what we lost' — what specific technologies arrive centuries early, and who it hurts",
   "disclaimer": "A what-if scenario: real history up to the fire, then informed speculation.",
@@ -142,8 +155,10 @@ living people — the channel visual_style is appended) **or** `image_ref` to re
 ## The approval gate (automatic — do not bypass)
 
 `autotube approve` refuses unless the lint passes. It checks: non-empty `angle`; valid
-`content_type` (and a `disclaimer` when `what_if`); `title` has `|`; `description`; ≥ 5
-`tags`; `thumbnail_prompt`; 20–34 scenes; each scene has `narration`, a valid `role`, and
-either an `image_prompt` or a valid `image_ref`; scene 1 is `hook`; a `second_hook`; ≥ 2
-`loop_q`; a `turn`; a `payoff`; last scene is `button`; 4–6 `is_key` scenes. Warnings (fix if
-you can): quote marks (confirm documented), word count ~700–800, second hook near the 40% mark.
+`content_type` (and a `disclaimer` when `what_if`); valid `continent` (one of the five); no
+blocked hard/jargon words in any narration (plain-language rule); `title` has `|`;
+`description`; ≥ 5 `tags`; `thumbnail_prompt`; 20–34 scenes; each scene has `narration`, a
+valid `role`, and either an `image_prompt` or a valid `image_ref`; scene 1 is `hook`; a
+`second_hook`; ≥ 2 `loop_q`; a `turn`; a `payoff`; last scene is `button`; 4–6 `is_key`
+scenes. Warnings (fix if you can): quote marks (confirm documented), long sentences
+(>28 words), word count ~700–800, second hook near the 40% mark.
