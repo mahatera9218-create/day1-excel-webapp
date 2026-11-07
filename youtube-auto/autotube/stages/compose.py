@@ -46,7 +46,7 @@ def _scene_clip(scene: dict, idx: int, image: Path, clip: Path | None, audio: Pa
         vf = _kenburns_vf(idx, max(int(dur * FPS), 1), w, h)
         src = ["-loop", "1", "-i", str(image)]
     run([*src, "-i", str(audio), "-t", f"{dur:.3f}", "-vf", vf,
-         "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
          "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-shortest", str(out)])
 
 
@@ -115,7 +115,8 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     vchain = f"{vprev}fade=t=in:st=0:d=0.6,fade=t=out:st={max(0.0, total-0.6):.3f}:d=0.6"
     if subs_on:
         vchain += f",subtitles=subs.ass:fontsdir={FONT_DIR}"
-    vchain += ",eq=contrast=1.05:saturation=1.08:gamma=0.98,vignette=PI/6,noise=alls=6:allf=t"
+    # 색보정+비네트+가벼운(공간) 그레인. 시간축(allf=t) 그레인은 CI에서 매우 느려 제거.
+    vchain += ",eq=contrast=1.05:saturation=1.08:gamma=0.98,vignette=PI/6,noise=alls=5"
     # What-if(가상 시나리오)는 신뢰·광고 안전을 위해 작은 상시 라벨을 항상 표기
     if plan.get("content_type") == "what_if":
         fnt = FONT_DIR / "NotoSansKR.ttf"
@@ -147,7 +148,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
         amap = aprev
 
     cmd = inputs + ["-filter_complex", ";".join(parts), "-map", "[vout]", "-map", amap,
-                    "-c:v", "libx264", "-preset", "medium", "-crf", "19",
+                    "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-threads", "0",
                     "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", "final.mp4"]
     run(cmd, cwd=run_dir)
     return run_dir / "final.mp4"

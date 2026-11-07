@@ -57,7 +57,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
         out = out_dir / f"short_{n:02}.mp4"
         run(["-loop", "1", "-i", run_dir / "images" / f"scene_{key}.png", "-i", audio,
              "-t", f"{dur:.3f}", "-vf", vf, "-map", "0:v", "-map", "1:a",
-             "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-c:a", "aac",
+             "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-c:a", "aac",
              "-b:a", "192k", "-shortest", out.name], cwd=out_dir)
         made.append(out)
     return made
