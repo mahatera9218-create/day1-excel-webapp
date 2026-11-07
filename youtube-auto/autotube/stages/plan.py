@@ -9,18 +9,18 @@ from pathlib import Path
 
 
 _BEATS_KO = [
-    ("한 선비가 깊은 산길을 홀로 걷고 있었습니다.", ["깊은 산길"], "a scholar walking alone on a misty mountain path at dusk", "kenburns_in"),
-    ("날이 저물자, 멀리 외딴 기와집에서 불빛이 새어 나왔습니다.", ["외딴 기와집"], "a lone tiled house glowing with lantern light in the dark forest", "kenburns_pan"),
-    ("문을 열어준 여인은 눈이 부시도록 아름다웠습니다.", ["아름다웠습니다"], "a mysterious beautiful woman opening a wooden gate, warm light behind her", "video"),
-    ("하지만 선비는 그녀의 그림자가 아홉 갈래로 갈라진 것을 보지 못했습니다.", ["아홉 갈래"], "a woman's shadow splitting into nine fox tails on the floor, candlelight", "kenburns_in"),
-    ("그날 이후, 마을에서는 선비를 다시 볼 수 없었습니다.", ["다시 볼 수 없었습니다"], "an empty mountain village at dawn, cold fog, no people", "kenburns_pan"),
+    ("한 선비가 깊은 산길을 홀로 걷고 있었습니다.", ["깊은 산길"], "a scholar walking alone on a misty mountain path at dusk", "kenburns_in", "hook"),
+    ("날이 저물자, 멀리 외딴 기와집에서 불빛이 새어 나왔습니다.", ["외딴 기와집"], "a lone tiled house glowing with lantern light in the dark forest", "kenburns_pan", "loop_q"),
+    ("문을 열어준 여인은 눈이 부시도록 아름다웠습니다.", ["아름다웠습니다"], "a mysterious beautiful woman opening a wooden gate, warm light behind her", "video", "second_hook"),
+    ("하지만 선비는 그녀의 그림자가 아홉 갈래로 갈라진 것을 보지 못했습니다.", ["아홉 갈래"], "a woman's shadow splitting into nine fox tails on the floor, candlelight", "kenburns_in", "turn"),
+    ("그날 이후, 마을에서는 선비를 다시 볼 수 없었습니다.", ["다시 볼 수 없었습니다"], "an empty mountain village at dawn, cold fog, no people", "kenburns_pan", "button"),
 ]
 _BEATS_EN = [
-    ("Long ago, in a village at the edge of the forest, an old story began.", ["old story"], "a quiet old village at the edge of a vast misty forest at dusk", "kenburns_in"),
-    ("Every night, something was heard beyond the treeline.", ["every night"], "dark dense forest at night, faint glow between the trees", "kenburns_pan"),
-    ("A lone traveler decided to find out what it was.", ["lone traveler"], "a cloaked traveler walking toward the dark woods, lantern in hand", "video"),
-    ("What they found would be told for a hundred years.", ["hundred years"], "a mysterious glowing figure deep in the forest, mist and moonlight", "kenburns_in"),
-    ("And to this day, the villagers never go there after dark.", ["never go there"], "empty forest path at dawn, cold fog, no people", "kenburns_pan"),
+    ("Long ago, in a village at the edge of the forest, an old story began.", ["old story"], "a quiet old village at the edge of a vast misty forest at dusk", "kenburns_in", "hook"),
+    ("Every night, something was heard beyond the treeline.", ["every night"], "dark dense forest at night, faint glow between the trees", "kenburns_pan", "loop_q"),
+    ("A lone traveler decided to find out what it was.", ["lone traveler"], "a cloaked traveler walking toward the dark woods, lantern in hand", "video", "second_hook"),
+    ("What they found would be told for a hundred years.", ["hundred years"], "a mysterious glowing figure deep in the forest, mist and moonlight", "kenburns_in", "turn"),
+    ("And to this day, the villagers never go there after dark.", ["never go there"], "empty forest path at dawn, cold fog, no people", "kenburns_pan", "button"),
 ]
 
 
@@ -30,7 +30,8 @@ def mock_plan(cfg: dict, topic: str) -> dict:
     beats = _BEATS_KO if korean else _BEATS_EN
     sfx = "wind, distant night sounds"
     scenes = [{"narration": n, "highlight": h, "image_prompt": f"{p}, {style}",
-               "motion": m, "sfx": sfx} for n, h, p, m in beats]
+               "motion": m, "role": r, "is_key": r in ("hook", "turn", "button"), "sfx": sfx}
+              for n, h, p, m, r in beats]
     if korean:
         desc, tags = "옛이야기를 차분하게 들려드립니다.", ["야담", "전설", "옛이야기", "한국설화", "괴담"]
     else:
@@ -53,7 +54,10 @@ def write_script_md(plan: dict, path: Path) -> None:
     lines = [f"# {plan['title']}\n", f"> 소재: {plan['topic']}\n",
              f"**설명**\n\n{plan['description']}\n", f"**태그**: {', '.join(plan['tags'])}\n", "---\n"]
     for i, s in enumerate(plan["scenes"], 1):
-        lines.append(f"### 장면 {i}  ·  {s['motion']}")
+        tag = s.get("role", "-")
+        if s.get("is_key"):
+            tag += " ★KEY"
+        lines.append(f"### 장면 {i}  ·  [{tag}]  ·  {s['motion']}")
         lines.append(f"- 내레이션: {s['narration']}")
         lines.append(f"- 강조: {', '.join(s.get('highlight', [])) or '-'}")
         lines.append(f"- 그림: {s['image_prompt']}\n")

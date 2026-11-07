@@ -1,7 +1,8 @@
 """AI 롱폼 유튜브 자동 제작 — 명령 진입점.
 
   autotube new <채널> --topic "소재"    새 편 기획 → plan.json + script.md (검토용)
-  autotube approve <폴더>               검토 완료 표시
+  autotube lint <폴더>                  대본 구조 규격 검사 (열린 고리 뼈대)
+  autotube approve <폴더> [--force]     구조 린트 통과 시 검토 완료 표시
   autotube make <폴더> [--yes]          목소리·그림·합성·썸네일·쇼츠 (끊기면 다시 실행 시 이어서)
   autotube upload <폴더>                유튜브 비공개 업로드
   autotube run <채널> --mock            키 없이 기획→완성까지 한 번에 (시험용)
@@ -50,11 +51,30 @@ def cmd_new(cfg: dict, topic: str | None) -> Path:
     return run_dir
 
 
-def cmd_approve(run_dir: Path) -> None:
+def cmd_lint(run_dir: Path) -> int:
+    """대본 구조 규격 검사. errors 개수를 반환."""
+    from . import lint
+    plan = pipeline.load_plan(run_dir)
+    errors, warnings = lint.lint_plan(plan)
+    print(lint.format_report(errors, warnings))
+    return len(errors)
+
+
+def cmd_approve(run_dir: Path, force: bool = False) -> None:
+    from . import lint
+    plan = pipeline.load_plan(run_dir)
+    errors, warnings = lint.lint_plan(plan)
+    if errors and not force:
+        print(lint.format_report(errors, warnings))
+        raise SystemExit("[승인 거부] 위 구조 문제를 고친 뒤 다시 승인하세요. (강제: --force)")
+    if errors and force:
+        print(lint.format_report(errors, warnings))
+        print("[강제 승인] 구조 문제가 있지만 --force 로 진행합니다.")
+    elif warnings:
+        print(lint.format_report([], warnings))
     status = json.loads((run_dir / "status.json").read_text(encoding="utf-8"))
     status["approved"] = True
     (run_dir / "status.json").write_text(json.dumps(status, ensure_ascii=False, indent=2), encoding="utf-8")
-    plan = pipeline.load_plan(run_dir)
     plan_stage.write_script_md(plan, run_dir / "script.md")
     print(f"[승인] {plan['title']} — 이제: autotube make {run_dir}")
 
@@ -136,11 +156,13 @@ def main() -> None:
     rp.add_argument("--yes", action="store_true")
     rp.add_argument("--episode", default=None)
     rp.add_argument("--count", type=int, default=1)
-    for name in ("approve", "make", "upload", "status"):
+    for name in ("approve", "make", "upload", "status", "lint"):
         sp = sub.add_parser(name)
         sp.add_argument("run_dir", type=Path)
         if name == "make":
             sp.add_argument("--yes", action="store_true")
+        if name == "approve":
+            sp.add_argument("--force", action="store_true")
     sub.add_parser("list")
 
     args = p.parse_args()
@@ -156,7 +178,7 @@ def main() -> None:
             cfg["engines"]["mode"] = "mock"
         run_dir = cmd_new(cfg, args.topic)
         if args.cmd == "run":
-            cmd_approve(run_dir)
+            cmd_approve(run_dir, force=True)  # mock 스모크 테스트는 구조 린트를 통과시켜 진행
             pipeline.make(run_dir, cfg, yes=True)
             from .stages import upload
             upload.run_stage(run_dir, pipeline.load_plan(run_dir), cfg)
@@ -178,7 +200,9 @@ def main() -> None:
     channel = run_dir.resolve().parent.name
     cfg = load_channel(channel)
     if args.cmd == "approve":
-        cmd_approve(run_dir)
+        cmd_approve(run_dir, force=getattr(args, "force", False))
+    elif args.cmd == "lint":
+        raise SystemExit(1 if cmd_lint(run_dir) else 0)
     elif args.cmd == "make":
         pipeline.make(run_dir, cfg, yes=args.yes)
     elif args.cmd == "upload":

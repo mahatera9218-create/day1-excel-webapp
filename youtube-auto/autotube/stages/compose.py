@@ -1,4 +1,4 @@
-"""합성: 장면별 클립 → 크로스페이드 전환으로 이어붙이기 → 강조 자막 → 배경음악 → final.mp4"""
+"""합성: 장면 클립 → 다양한 크로스페이드 전환 → 자막 → 색보정·그레인·빛입자 → 배경음악(더킹) → final.mp4"""
 
 import json
 from pathlib import Path
@@ -8,7 +8,11 @@ from ..render.kenburns import FPS
 from ..render.subtitles import build_ass
 from ..render.util import frame_size, probe_duration, run
 
-XFADE = 0.5  # 장면 전환(디졸브) 길이(초)
+XFADE = 0.5  # 장면 전환 길이(초)
+# 밋밋하지 않게, 장면마다 전환 방식을 순환 (은은한 것들 위주)
+TRANSITIONS = ["fade", "dissolve", "fadeblack", "smoothleft", "smoothright", "wiperight", "fadegrays"]
+FX_DIR = FONT_DIR.parent / "fx"
+MOTES = FX_DIR / "motes.png"  # 떠다니는 빛 입자(보케/먼지) 오버레이
 
 
 def _kenburns_vf(idx: int, frames: int, w: int, h: int) -> str:
@@ -63,7 +67,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
             _scene_clip(scene, i - 1, run_dir / "images" / f"scene_{key}.png",
                         run_dir / "clips" / f"scene_{key}.mp4", audio, dur, size, sc)
         clip_files.append(sc)
-        # 크로스페이드로 겹치는 만큼 시작 시각이 앞당겨진다: start_i = cum - i*XFADE
+        # 크로스페이드로 겹치는 만큼 시작 시각이 앞당겨진다
         soff = cum - (i - 1) * XFADE
         for ch in timing[key]["chunks"]:
             entries.append({"text": ch["text"], "start": round(ch["start"] + soff, 2),
@@ -78,25 +82,61 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
         build_ass(entries, cfg["subtitles"], size, run_dir / "subs.ass")
     bgm = (cfg.get("music") or {}).get("bgm_path")
 
-    # ---- 필터 그래프: 영상 크로스페이드 + 오디오 크로스페이드 (+자막 +배경음악) ----
-    inputs, parts = [], []
+    # ---- 입력 순서를 먼저 정해 인덱스를 고정한다 ----
+    inputs = []
     for p in clip_files:
         inputs += ["-i", f"compose/{p.name}"]
-    vprev, aprev, sb = "[0:v]", "[0:a]", 0.0
+    next_idx = n
+    bgm_idx = motes_idx = None
+    if bgm:
+        inputs += ["-stream_loop", "-1", "-i", str(Path(bgm).resolve())]
+        bgm_idx = next_idx; next_idx += 1
+    use_motes = MOTES.exists()
+    if use_motes:
+        inputs += ["-loop", "1", "-i", str(MOTES.resolve())]
+        motes_idx = next_idx; next_idx += 1
+
+    parts = []
+    # ---- 영상: 장면 전환(종류 순환) ----
+    vprev, sb = "[0:v]", 0.0
     for k in range(1, n):
         sb += durs[k - 1]
         off = sb - k * XFADE
-        parts.append(f"{vprev}[{k}:v]xfade=transition=fade:duration={XFADE}:offset={off:.3f}[v{k}]")
+        tr = TRANSITIONS[(k - 1) % len(TRANSITIONS)]
+        parts.append(f"{vprev}[{k}:v]xfade=transition={tr}:duration={XFADE}:offset={off:.3f}[v{k}]")
+        vprev = f"[v{k}]"
+    # ---- 오디오: 내레이션 크로스페이드 ----
+    aprev = "[0:a]"
+    for k in range(1, n):
         parts.append(f"{aprev}[{k}:a]acrossfade=d={XFADE}[a{k}]")
-        vprev, aprev = f"[v{k}]", f"[a{k}]"
+        aprev = f"[a{k}]"
+
+    # ---- 영상 마감: 시작/끝 페이드 + 자막 + 영화 같은 색보정·비네트·필름 그레인 ----
     vchain = f"{vprev}fade=t=in:st=0:d=0.6,fade=t=out:st={max(0.0, total-0.6):.3f}:d=0.6"
     if subs_on:
         vchain += f",subtitles=subs.ass:fontsdir={FONT_DIR}"
-    parts.append(f"{vchain}[vout]")
-    if bgm:
-        inputs += ["-stream_loop", "-1", "-i", str(Path(bgm).resolve())]
-        vol = cfg["music"].get("bgm_volume", 0.12)
-        parts.append(f"[{n}:a]volume={vol}[bg];{aprev}[bg]amix=inputs=2:duration=first:normalize=0[aout]")
+    vchain += ",eq=contrast=1.05:saturation=1.08:gamma=0.98,vignette=PI/6,noise=alls=6:allf=t"
+
+    if motes_idx is not None:
+        # 프레임보다 큰 빛입자 레이어를 천천히 떠다니게 오버레이 → 정지화면에 생동감
+        parts.append(f"{vchain}[vbase]")
+        w2, h2 = int(w * 1.2), int(h * 1.2)
+        dx, dy = (w2 - w) // 2, (h2 - h) // 2
+        parts.append(f"[{motes_idx}:v]scale={w2}:{h2},format=rgba[mz]")
+        parts.append(
+            f"[vbase][mz]overlay="
+            f"x='-{dx}+90*sin(t*0.08)':y='-{dy}+70*cos(t*0.06)':format=auto[vout]"
+        )
+    else:
+        parts.append(f"{vchain}[vout]")
+
+    # ---- 오디오: 배경음악을 내레이션 아래로 자동 더킹(sidechaincompress) ----
+    if bgm_idx is not None:
+        vol = cfg["music"].get("bgm_volume", 0.20)
+        parts.append(f"{aprev}asplit=2[nar][key]")
+        parts.append(f"[{bgm_idx}:a]volume={vol}[bgv]")
+        parts.append(f"[bgv][key]sidechaincompress=threshold=0.03:ratio=8:attack=20:release=400[duck]")
+        parts.append(f"[nar][duck]amix=inputs=2:duration=first:normalize=0[aout]")
         amap = "[aout]"
     else:
         amap = aprev
