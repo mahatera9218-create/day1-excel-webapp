@@ -13,6 +13,10 @@ on:
         description: "특정 편 폴더명 (비우면 아직 안 만든 가장 오래된 승인 편)"
         required: false
         default: ""
+      upload:
+        description: "유튜브 업로드 (false면 렌더만 하고 업로드 키트로 검토)"
+        required: false
+        default: "true"
   # 매일 자동으로 2편 생성 (10:17 UTC = 한국 19:17). 업로드 키트에 올라옴.
   # 올린 편을 '목록에서 제거'(status.json 삭제)하지 않으면 다음날 또 만들어지니 주의.
   schedule:
@@ -66,11 +70,14 @@ jobs:
       - name: 영상 생성 (하루 2편, 또는 지정 편)
         env:
           EPISODE: ${{ github.event.inputs.episode }}
+          UPLOAD: ${{ github.event.inputs.upload }}
         run: |
+          NOUP=""
+          if [ "$UPLOAD" = "false" ]; then NOUP="--no-upload"; fi
           if [ -n "$EPISODE" ]; then
-            python -m autotube render "$CHANNEL" --yes --episode "$EPISODE"
+            python -m autotube render "$CHANNEL" --yes --episode "$EPISODE" $NOUP
           else
-            python -m autotube render "$CHANNEL" --yes --count 2
+            python -m autotube render "$CHANNEL" --yes --count 2 $NOUP
           fi
 
       - name: 업로드 키트 페이지 빌드

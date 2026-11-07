@@ -105,21 +105,24 @@ def _uploaded_titles_safe(cfg: dict) -> set[str]:
         return set()
 
 
-def _render_one(cfg: dict, run_dir: Path, yes: bool) -> None:
+def _render_one(cfg: dict, run_dir: Path, yes: bool, upload: bool = True) -> None:
     print(f"[render] {run_dir}")
     pipeline.make(run_dir, cfg, yes=yes)
-    from .stages import upload
-    upload.run_stage(run_dir, pipeline.load_plan(run_dir), cfg)
+    if upload:
+        from .stages import upload as up
+        up.run_stage(run_dir, pipeline.load_plan(run_dir), cfg)
+    else:
+        print("   [업로드 생략] --no-upload (완성본은 검토 후 직접 업로드)")
 
 
-def cmd_render(cfg: dict, yes: bool, episode: str | None = None, count: int = 1) -> None:
+def cmd_render(cfg: dict, yes: bool, episode: str | None = None, count: int = 1, upload: bool = True) -> None:
     """승인된 편 중 '아직 유튜브에 없는' 가장 오래된 것부터 count 편을 만든다.
     episode 를 주면 그 폴더만 만든다."""
     if episode:
         run_dir = OUTPUT / cfg["_name"] / episode
         if not (run_dir / "plan.json").exists():
             raise SystemExit(f"[오류] 그런 편이 없습니다: {run_dir}")
-        _render_one(cfg, run_dir, yes)
+        _render_one(cfg, run_dir, yes, upload=upload)
         return
     uploaded = _uploaded_titles_safe(cfg)
     picks = []
@@ -132,7 +135,7 @@ def cmd_render(cfg: dict, yes: bool, episode: str | None = None, count: int = 1)
     if not picks:
         raise SystemExit(f"[오류] {cfg['_name']} 에 아직 안 올린 승인 편이 없습니다.")
     for d in picks:
-        _render_one(cfg, d, yes)
+        _render_one(cfg, d, yes, upload=upload)
 
 
 def cmd_status(run_dir: Path) -> None:
@@ -156,6 +159,7 @@ def main() -> None:
     rp.add_argument("--yes", action="store_true")
     rp.add_argument("--episode", default=None)
     rp.add_argument("--count", type=int, default=1)
+    rp.add_argument("--no-upload", action="store_true", help="렌더만 하고 유튜브 업로드는 생략")
     for name in ("approve", "make", "upload", "status", "lint"):
         sp = sub.add_parser(name)
         sp.add_argument("run_dir", type=Path)
@@ -184,15 +188,16 @@ def main() -> None:
             upload.run_stage(run_dir, pipeline.load_plan(run_dir), cfg)
         return
     if args.cmd == "render":
+        up = not args.no_upload
         if args.channel == "all":
             names = [d.parent.name for d in sorted(CHANNELS.glob("*/channel.yaml"))]
             for name in names:
                 try:
-                    cmd_render(load_channel(name), yes=args.yes)
+                    cmd_render(load_channel(name), yes=args.yes, upload=up)
                 except SystemExit as e:
                     print(f"[{name}] 건너뜀: {e}")
         else:
-            cmd_render(load_channel(args.channel), yes=args.yes, episode=args.episode, count=args.count)
+            cmd_render(load_channel(args.channel), yes=args.yes, episode=args.episode, count=args.count, upload=up)
         return
 
     # approve/make/upload/status 는 폴더에서 채널명을 역산
