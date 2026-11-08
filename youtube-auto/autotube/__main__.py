@@ -119,6 +119,7 @@ def cmd_render(cfg: dict, yes: bool, episode: str | None = None, count: int = 1,
     """승인된 편 중 '아직 유튜브에 없는' 가장 오래된 것부터 count 편을 만든다.
     episode 를 주면 그 폴더만 만든다."""
     if episode:
+        episode = episode.strip().strip("/")  # 복붙 시 끝 공백/슬래시가 붙어도 안전하게
         run_dir = OUTPUT / cfg["_name"] / episode
         if not (run_dir / "plan.json").exists():
             raise SystemExit(f"[오류] 그런 편이 없습니다: {run_dir}")

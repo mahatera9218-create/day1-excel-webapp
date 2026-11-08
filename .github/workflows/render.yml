@@ -72,6 +72,7 @@ jobs:
         run: |
           NOUP=""
           if [ "$UPLOAD" = "false" ]; then NOUP="--no-upload"; fi   # 기본은 자동 업로드(스케줄 포함); false면 렌더만
+          EPISODE="$(printf '%s' "$EPISODE" | xargs)"   # 복붙 시 앞뒤 공백 제거(입력 실수 방지)
           if [ -n "$EPISODE" ]; then
             python -m autotube render "$CHANNEL" --yes --episode "$EPISODE" $NOUP
           else
