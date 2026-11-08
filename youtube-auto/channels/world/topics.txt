@@ -1,42 +1,31 @@
-# Mr.Untold 소재 — 가볍고 재미있는 "만약에?" 위주. 무겁고 어두운 역사·경제·정치는 피한다.
-# 핵심: "우와 신기해/재밌다" 가 나오는 상상. 과학·자연·동물·우주·일상·모험.
-# '#' 줄 무시. 사실 토대는 검증, 분기 이후는 '추정'임을 명시. 쉬운 말.
-# (continent 는 이야기와 가장 관련 깊은 대륙으로 태깅 — 지구 전체면 사건 배경 기준.)
+# Mr.Untold 소재 — 역사(실화·what-if)를 재밌고 기발하고 발칙하게. 과학/동물 트리비아 아님.
+# 핵심: "말도 안 돼, 이게 진짜라고?" / "그때 이랬으면?" 를 세게 후킹. 제목은 전부 What If 로 시작 X.
+# '#' 줄 무시. 사실 토대는 검증, 분기 이후는 '추정' 명시. 쉬운 말. (continent = 이야기 배경 대륙)
 
-# === 과학 · 우주 (재미/경이) ===
-What if the Moon suddenly vanished? (space / Earth)
-What if the Earth stopped spinning for five seconds? (space / Earth)
-What if Earth had rings like Saturn? (space / Earth)
-What if a day lasted 48 hours? (space / Earth)
-What if gravity were only half as strong? (science / Earth)
-What if humans could photosynthesize like plants? (science / Earth)
-What if the oceans were made of fresh water? (nature / oceans)
-What if the Sahara were still a green jungle? (nature / Africa)
+# === UNTOLD 실화 (발칙하고 놀라운 진짜 역사) ===
+The Roman emperor who made his horse a senator (Rome / Europe)
+The medieval town that put a pig on trial — and hanged it (France / Europe)
+The war that started over a stolen bucket (Modena vs Bologna / Europe)
+Napoleon wasn't actually short — why everyone believes he was (France / Europe)
+Vikings never wore horned helmets — who invented that? (Scandinavia / Europe)
+The Chinese admiral whose ships made Columbus look tiny (Zheng He / Asia)
+The African king so rich he accidentally crashed economies (Mansa Musa / Africa)
+The Egyptian queen later rulers tried to erase from history (Hatshepsut / Africa)
+The Aztec capital that dwarfed every city in Europe (Tenochtitlan / Americas)
+The war Australia fought against emus — and lost (Australia / Oceania)
+The 38-minute war between Britain and Zanzibar (Africa)
+The pope who put a dead pope on trial (Cadaver Synod / Europe)
 
-# === 동물 · 자연 (재미/경이) ===
-What if the dinosaurs never went extinct? (nature / deep time)
-What if humans had tails? (biology)
-What if cats were the size of tigers? (animals)
-What if insects grew as big as dogs? (animals)
-What if we could understand what animals are saying? (animals)
-What if whales walked back onto land? (nature / oceans)
-
-# === 일상 · 사람 (가벼운 상상) ===
-What if we never needed to sleep? (everyday)
-What if everyone on Earth jumped at the exact same time? (everyday / Earth)
-What if the whole world spoke one language? (society)
-What if humans could breathe underwater? (biology / oceans)
-What if we never invented the wheel? (everyday / tech)
-
-# === 역사·모험 (가볍고 신나는 각도만) ===
-What if China's giant treasure fleet never stopped sailing? (China / Asia)
-What if the Vikings had settled America for good? (Norse / Americas)
-What if the Great Pyramid still had its shiny white casing today? (Egypt / Africa)
-What if the Library of Alexandria never burned? (Egypt / knowledge)
-What if Australia's giant animals never disappeared? (Australia / Oceania)
+# === WHAT-IF 역사 (가볍고 기발한 상상) ===
+If Cleopatra had defeated Rome (Egypt / Africa)
+If China's giant treasure fleet never stopped sailing (China / Asia)
+If the Vikings had held onto North America (Norse / Americas)
+If the Library of Alexandria had survived (Egypt / Africa)
+If the Aztecs had beaten the conquistadors (Mexico / Americas)
+If the Maori had sailed on to conquer Australia (Pacific / Oceania)
 
 # === 가끔 깊이 있는 편 (대략 4편에 1편, 묵직해도 OK) ===
-What if the Roman Empire never fell? (Rome / Europe)
-What if the Americas were never colonized? (Americas)
-What if the printing press was invented 500 years earlier? (media / Europe)
-What if humans never discovered farming? (civilization)
+If Rome never fell (Rome / Europe)
+If the Mongols had not turned back from Europe (Mongol / Asia)
+If Napoleon had won at Waterloo (France / Europe)
+If the Americas were never colonized (Americas)

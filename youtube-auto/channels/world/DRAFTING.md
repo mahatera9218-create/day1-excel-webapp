@@ -13,29 +13,25 @@ batch of episodes as `plan.json` files, ready for the human to review. **Never a
 the **angle is the product.** Two formats, same goal (make someone think "I never thought
 about it that way"):
 
-> **MOSTLY LIGHT AND FUN, with variety — this is the #1 note.** The default is a grin and a
-> "whoa, cool" — wonder, play and imagination, not a dry lecture. Make **~3 of every 4**
-> episodes light and fun. But **keep variety: about 1 in 4 can be a deeper, meatier,
-> thought-provoking episode** (a weighty history or big-consequence what-if, treasure-fleet /
-> Black-Death style). Don't make the whole batch one note, and don't make it all heavy either.
+> **THIS IS A HISTORY CHANNEL — made fun, clever, cheeky and a little outrageous.** Keep the
+> SUBJECT historical (people, empires, events, the world's past). Don't switch to science /
+> animals / everyday trivia. What changes is the TREATMENT: bold, witty, playful, "wait, that
+> really happened?!" — never a dry documentary. Mostly light & cheeky (~3 of 4), with the
+> occasional deeper/meatier history episode (~1 in 4) for variety. Don't make it all one note.
 
-- **Format B — "What If" (PRIMARY, `content_type: "what_if"`).** A fun, imaginative premise,
-  grounded in one real fact up to the branch, then **playful, plausible speculation** that's
-  a joy to picture. Favor **vivid, daydream-y "what ifs"** — science, nature, animals, the
-  cosmos, everyday life, wild hypotheticals. Examples: *What if the dinosaurs never went
-  extinct? What if the Moon vanished tomorrow? What if humans had tails? What if the Earth
-  stopped spinning for five seconds? What if everyone spoke one language?* For the occasional
-  deeper episode (~1 in 4), a weightier history/consequence what-if is welcome too (e.g. the
-  treasure-fleet or Black-Death style) — just keep it a minority, not the default.
-- **Format A — "The Untold Angle" (secondary, `content_type: "true"`).** A real story seen
-  through a **fun, surprising lens** nobody covers — a wild detail, a "wait, really?" fact.
-  Example: not "the Titanic," but *"the band kept playing — here's the song."* Keep it light.
+- **Format B — "What If" history (PRIMARY, `content_type: "what_if"`).** A cheeky, irresistible
+  historical premise — real fact up to the branch, then playful, plausible speculation.
+  Examples: *If Rome never fell. If Cleopatra had won. If the printing press came 500 years
+  early. If the Library of Alexandria survived.* Lead with the fun, audacious angle, not a
+  lecture.
+- **Format A — "The Untold" true story (secondary, `content_type: "true"`).** A jaw-dropping,
+  cheeky TRUE history story through a wild, overlooked lens. Examples: *the emperor who made his
+  horse a senator; the medieval town that put a pig on trial; the war that started over a
+  bucket; why Napoleon wasn't actually short.* Delightfully true, "I can't believe that's real."
 
-**Theme is open; most episodes should FEEL fun and curious.** Science, nature, animals, space,
-everyday wonders and playful hypotheticals are the staple. **Default tone: light, warm, a
-little playful** — short punchy lines, vivid images, not an academic lecture. For the ~1-in-4
-deeper episode, a more serious tone is fine — but still plain language and a strong hook, never
-dry or depressing for its own sake. Avoid purely grim/hopeless topics with no wonder in them.
+**Keep the FEEL fun, witty and a little cheeky** — short punchy lines, vivid scenes, plain
+language, a wink in the voice. The ~1-in-4 deeper episode can be weightier, but still with a
+killer hook and plain words. The subject stays history; only the energy changes.
 
 ### The niche rule (required on every episode)
 
@@ -135,13 +131,21 @@ Write **2 purpose-built teaser scripts** in `plan["shorts"]`. Each is **self-con
 ]
 ```
 
-## The thumbnail (most important single asset)
+## Title & thumbnail — HOOKING IS LIFE (the make-or-break)
 
-- **`thumbnail_prompt` — over-invest.** One arresting visual, usually a dramatic close-up
-  (a face, or the single iconic image of the what-if), cinematic light, shallow depth of
-  field. Ad-safe; no on-screen text, no logos, no real living people.
-- **`title`** — curiosity-gap headline with a `|` subtitle (the `|` is required). What-if
-  titles usually start with "What If…". Tease, don't spoil; strong verbs; no clickbait lies.
+Half the effort goes here. A perfect script with a weak title/thumbnail gets zero views.
+
+- **`title` — strong, varied hooks. DO NOT start every title with "What if".** Rotate hook
+  styles so the feed doesn't look repetitive: a shocking claim (*"Napoleon Wasn't Short — Here's
+  the Real Reason Everyone Thinks So"*), a cheeky question (*"Why Did a Roman Emperor Make His
+  Horse a Senator?"*), a "The ___ who ___" (*"The Town That Put a Pig on Trial"*), a number
+  (*"The 38-Minute War"*), or a bold tease (*"They Erased Her From History. We Found Out Why."*).
+  Keep a `|` subtitle for context (the `|` is required). Tease, don't spoil; no clickbait lies
+  (it must pay off). At most ~1 in 5 titles may use the "What if" phrasing.
+- **`thumbnail_prompt` — over-invest, this is #1.** One split-second-arresting visual: usually a
+  dramatic CLOSE-UP of a face mid-emotion (shock, mischief, fear, awe) with intense eye contact,
+  bold cinematic light, shallow depth of field, rich detail — something you can't scroll past.
+  Ad-safe; no on-screen text, no logos, no real living people.
 - **`thumbnail_text`** — `""` by default (image-first). `thumbnail_scene` — fallback index.
 
 ## What to produce each run
