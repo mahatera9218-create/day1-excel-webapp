@@ -49,6 +49,12 @@ def mock_plan(cfg: dict, topic: str) -> dict:
         "thumbnail_scene": 1,
         "description": f"{topic}\n\n{desc}",
         "tags": tags,
+        "shorts": [
+            {"narration": "Here is a question almost no one asks. And the answer might change how you see everything.",
+             "scenes": [1, 3, 4], "highlight": ["almost no one asks"], "cta": "▶  Full story on the channel"},
+            {"narration": "Everyone thinks they know this story. But the strangest part is the one nobody talks about.",
+             "scenes": [1, 4, 5], "highlight": ["nobody talks about"], "cta": "▶  Watch the full story"},
+        ],
         "scenes": scenes,
     }
 
@@ -71,4 +77,12 @@ def write_script_md(plan: dict, path: Path) -> None:
         else:
             img = s.get("image_prompt", "-")
         lines.append(f"- 그림: {img}\n")
+    shorts = plan.get("shorts") or []
+    if shorts:
+        lines.append("---\n")
+        lines.append(f"## 쇼츠 티저 ({len(shorts)}편)\n")
+        for si, sh in enumerate(shorts, 1):
+            lines.append(f"### 쇼츠 {si}  ·  장면 {sh.get('scenes', [])}  ·  CTA: {sh.get('cta', '-')}")
+            lines.append(f"- 나레이션: {sh.get('narration', '')}")
+            lines.append(f"- 강조: {', '.join(sh.get('highlight') or []) or '-'}\n")
     path.write_text("\n".join(lines), encoding="utf-8")

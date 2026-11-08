@@ -273,5 +273,31 @@
       "motion": "kenburns_pan",
       "image_ref": 1
     }
+  ],
+  "shorts": [
+    {
+      "narration": "Six hundred years ago, the biggest ships on Earth were not European. They belonged to China. So why did China let that giant fleet rot away? The choice may have handed the whole world to someone else.",
+      "scenes": [
+        1,
+        5,
+        13
+      ],
+      "highlight": [
+        "handed the whole world"
+      ],
+      "cta": "▶  Full story on the channel"
+    },
+    {
+      "narration": "China sailed all the way to Africa and brought home a giraffe, long before Columbus was even born. They had already won the race to explore the world. Then they simply stopped. Why anyone would throw that away is one of history's strangest choices.",
+      "scenes": [
+        7,
+        5,
+        18
+      ],
+      "highlight": [
+        "one of history's strangest choices"
+      ],
+      "cta": "▶  Watch the full story"
+    }
   ]
 }

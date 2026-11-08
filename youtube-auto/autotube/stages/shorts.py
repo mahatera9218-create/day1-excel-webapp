@@ -1,63 +1,105 @@
-"""쇼츠: 하이라이트 장면 몇 개를 세로(9:16)로 재편집해 유입용 쇼츠를 만든다.
+"""쇼츠: '전용 티저 대본'으로 유입용 세로 영상을 만든다.
 
-롱폼에서 이미 만든 그림·음성을 재사용하므로 추가 비용이 거의 없다.
+각 쇼츠는 그 자체로 완결된 티저다 — 강한 훅 → 궁금증 → (답은 안 주고) CTA.
+plan["shorts"] = [{ "narration": "...", "scenes": [본편 장면번호들], "highlight": [...],
+                    "cta": "..."(선택) }, ...]
+- 나레이션은 무료 목소리(edge)로 새로 읽고, 그림은 본편에서 이미 만든 걸 재사용(추가비용 0).
+- 세로 9:16, 큰 자막, 켄번스+전환, what-if면 라벨, 끝 3초 CTA 카드.
 """
 
-import json
 from pathlib import Path
 
 from ..config import FONT_DIR
+from ..engines import Engines
 from ..render.kenburns import FPS
 from ..render.subtitles import build_ass
 from ..render.util import probe_duration, run
+from .compose import XFADE, _kenburns_vf
+
+DEFAULT_CTA = "▶  Full story on the channel"
 
 
-def _pick(plan: dict, n: int) -> list[int]:
-    total = len(plan["scenes"])
-    order: list[int] = []
-    # 가장 자극적인 장면(썸네일로 지정한 것)을 1순위로.
-    ts = int(plan.get("thumbnail_scene", 0))
-    if 1 <= ts <= total:
-        order.append(ts)
-    videos = [i for i, s in enumerate(plan["scenes"], 1) if s.get("motion") == "video"]
-    for i in videos + list(range(1, total + 1)):
-        if i not in order:
-            order.append(i)
-    return order[:n]
+def _esc(t: str) -> str:
+    return t.replace("\\", "\\\\").replace(":", "\\:").replace("'", "’").replace("%", "\\%")
 
 
+def _seg_clip(img: Path, idx: int, dur: float, size: tuple[int, int], out: Path) -> None:
+    w, h = size
+    vf = _kenburns_vf(idx, max(int(dur * FPS), 1), w, h)
+    run(["-loop", "1", "-i", str(img), "-t", f"{dur:.3f}", "-vf", vf, "-an",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", str(out)])
 
 
 def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
     sh = cfg.get("shorts", {})
-    if not sh.get("enabled", True):
+    specs = plan.get("shorts") or []
+    if not sh.get("enabled", True) or not specs:
         return []
     size = (1080, 1920)
     w, h = size
-    timing = json.loads((run_dir / "timing.json").read_text(encoding="utf-8"))
     out_dir = run_dir / "shorts"
     out_dir.mkdir(exist_ok=True)
+    engines = Engines(cfg)
+    fnt = FONT_DIR / "NotoSansKR.ttf"
+    sub_cfg = {**cfg["subtitles"], "font_size": 64, "margin_v": 360}
+    is_whatif = plan.get("content_type") == "what_if"
     made = []
-    sub_cfg = {**cfg["subtitles"], "font_size": 64, "margin_v": 320}
-    for n, i in enumerate(_pick(plan, sh.get("count", 3)), 1):
-        key = f"{i:02}"
-        audio = run_dir / "audio" / f"scene_{key}.mp3"
-        dur = min(probe_duration(audio), sh.get("max_seconds", 55))
+
+    for n, short in enumerate(specs[: sh.get("count", 2)], 1):
+        final = out_dir / f"short_{n:02}.mp4"
+        if final.exists():
+            made.append(final)
+            continue
+
+        # 1) 티저 나레이션 → 무료 목소리(한 번 호출로 mp3 + 자막 타이밍 둘 다)
+        saud = out_dir / f"short_{n:02}.mp3"
+        tdict = engines.voice({"narration": short["narration"], "highlight": short.get("highlight", [])}, saud)
+        dur = probe_duration(saud)
         ass = out_dir / f"short_{n:02}.ass"
-        chunks = [{"text": c["text"], "start": c["start"], "end": c["end"],
-                   "highlight": c.get("highlight", [])} for c in timing[key]["chunks"] if c["start"] < dur]
-        build_ass(chunks, sub_cfg, size, ass)
-        frames = max(int(dur * FPS), 1)
-        # 롱폼 썸네일과 같은 영화식 보정(대비/채도/비네트)으로 한 장이 확 서게.
-        vf = (f"scale={w*2}:{h*2}:force_original_aspect_ratio=increase,crop={w*2}:{h*2},"
-              f"eq=contrast=1.1:saturation=1.22:brightness=-0.02,"
-              f"zoompan=z='min(zoom+0.0012,1.2)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
-              f"d={frames}:s={w}x{h}:fps={FPS},format=yuv420p,vignette=PI/5,"
-              f"subtitles={ass.name}:fontsdir={FONT_DIR}")
-        out = out_dir / f"short_{n:02}.mp4"
-        run(["-loop", "1", "-i", run_dir / "images" / f"scene_{key}.png", "-i", audio,
-             "-t", f"{dur:.3f}", "-vf", vf, "-map", "0:v", "-map", "1:a",
-             "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-c:a", "aac",
-             "-b:a", "192k", "-shortest", out.name], cwd=out_dir)
-        made.append(out)
+        build_ass(tdict["chunks"], sub_cfg, size, ass)
+
+        # 2) 그림: 본편 장면 재사용 (없으면 1번)
+        refs = [int(s) for s in (short.get("scenes") or []) if str(s).isdigit()]
+        imgs = [run_dir / "images" / f"scene_{r:02}.png" for r in refs]
+        imgs = [p for p in imgs if p.exists()] or [run_dir / "images" / "scene_01.png"]
+        nimg = len(imgs)
+
+        # 3) 장면별 세로 켄번스 클립 (전환 겹침만큼 약간 길게)
+        seg = dur / nimg + (XFADE if nimg > 1 else 0)
+        clips = []
+        for k, img in enumerate(imgs):
+            sc = out_dir / f"_s{n}_{k:02}.mp4"
+            if not sc.exists():
+                _seg_clip(img, k, seg, size, sc)
+            clips.append(sc)
+
+        # 4) 합성: 전환 + 색보정/비네트 + 자막 + (what-if 라벨) + 끝 CTA + 오디오
+        inputs, parts = [], []
+        for c in clips:
+            inputs += ["-i", c.name]
+        inputs += ["-i", saud.name]
+        aidx = nimg
+        vprev = "[0:v]"
+        for k in range(1, nimg):
+            off = k * (seg - XFADE)
+            parts.append(f"{vprev}[{k}:v]xfade=transition=fade:duration={XFADE}:offset={off:.3f}[v{k}]")
+            vprev = f"[v{k}]"
+        vchain = (f"{vprev}fade=t=in:st=0:d=0.4,"
+                  f"eq=contrast=1.08:saturation=1.16:gamma=0.98,vignette=PI/6,"
+                  f"subtitles={ass.name}:fontsdir={FONT_DIR}")
+        if is_whatif:
+            vchain += (f",drawtext=fontfile='{fnt}':text='WHAT-IF SCENARIO':fontcolor=white@0.55:"
+                       f"fontsize=30:x=w-tw-28:y=36:box=1:boxcolor=black@0.28:boxborderw=8")
+        cta = _esc(short.get("cta") or DEFAULT_CTA)
+        cta_from = max(0.0, dur - 3.0)
+        vchain += (f",drawtext=fontfile='{fnt}':text='{cta}':fontcolor=white:fontsize=58:"
+                   f"borderw=6:bordercolor=black@0.85:x=(w-tw)/2:y=h*0.68:"
+                   f"box=1:boxcolor=black@0.35:boxborderw=18:enable='gte(t,{cta_from:.2f})'")
+        parts.append(f"{vchain}[vout]")
+
+        cmd = inputs + ["-filter_complex", ";".join(parts), "-map", "[vout]", "-map", f"{aidx}:a",
+                        "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-threads", "0",
+                        "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", final.name]
+        run(cmd, cwd=out_dir)
+        made.append(final)
     return made

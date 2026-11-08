@@ -74,7 +74,7 @@ music:
 
 shorts:
   enabled: true
-  count: 3
+  count: 2            # 편당 전용 티저 2편 (plan["shorts"] 에 대본 작성)
   max_seconds: 55
 
 youtube:

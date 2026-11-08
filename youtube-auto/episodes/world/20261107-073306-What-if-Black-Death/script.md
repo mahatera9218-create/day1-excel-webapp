@@ -136,3 +136,15 @@ Factual spine: the Black Death (c.1347-1351), the post-plague labor shortage and
 - 내레이션: But it leaves us with a chilling thought: that the worst thing that ever happened to us may have been the very thing that set us free. A curse, or a strange gift? Tell me what you think.
 - 강조: set us free, a curse, or a strange gift
 - 그림: ♻ 장면 1 재활용
+
+---
+
+## 쇼츠 티저 (2편)
+
+### 쇼츠 1  ·  장면 [1, 3, 5]  ·  CTA: ▶  Full story on the channel
+- 나레이션: The Black Death wiped out as many as half the people in Europe. Now imagine it never happened. You would expect a golden age. History hints at the exact opposite.
+- 강조: the exact opposite
+
+### 쇼츠 2  ·  장면 [14, 20, 23]  ·  CTA: ▶  Watch the full story
+- 나레이션: What if the deadliest disaster in history was secretly the thing that set us free? The dying may have broken the old world and built the modern one. Erase it, and we might all still be stuck.
+- 강조: set us free

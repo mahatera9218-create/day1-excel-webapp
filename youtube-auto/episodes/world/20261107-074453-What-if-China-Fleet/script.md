@@ -136,3 +136,15 @@ Real history: Admiral Zheng He's seven voyages (1405-1433) under the Ming empero
 - 내레이션: But it makes you wonder. The biggest fleet in all of history did not lose a single battle. It was simply called home. Was that the greatest mistake ever made, or the right call? Tell me what you think.
 - 강조: the greatest mistake ever made
 - 그림: ♻ 장면 1 재활용
+
+---
+
+## 쇼츠 티저 (2편)
+
+### 쇼츠 1  ·  장면 [1, 5, 13]  ·  CTA: ▶  Full story on the channel
+- 나레이션: Six hundred years ago, the biggest ships on Earth were not European. They belonged to China. So why did China let that giant fleet rot away? The choice may have handed the whole world to someone else.
+- 강조: handed the whole world
+
+### 쇼츠 2  ·  장면 [7, 5, 18]  ·  CTA: ▶  Watch the full story
+- 나레이션: China sailed all the way to Africa and brought home a giraffe, long before Columbus was even born. They had already won the race to explore the world. Then they simply stopped. Why anyone would throw that away is one of history's strangest choices.
+- 강조: one of history's strangest choices

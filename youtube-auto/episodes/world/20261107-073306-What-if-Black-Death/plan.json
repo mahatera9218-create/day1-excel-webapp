@@ -276,5 +276,31 @@
       "image_ref": 1
     }
   ],
-  "continent": "Europe"
+  "continent": "Europe",
+  "shorts": [
+    {
+      "narration": "The Black Death wiped out as many as half the people in Europe. Now imagine it never happened. You would expect a golden age. History hints at the exact opposite.",
+      "scenes": [
+        1,
+        3,
+        5
+      ],
+      "highlight": [
+        "the exact opposite"
+      ],
+      "cta": "▶  Full story on the channel"
+    },
+    {
+      "narration": "What if the deadliest disaster in history was secretly the thing that set us free? The dying may have broken the old world and built the modern one. Erase it, and we might all still be stuck.",
+      "scenes": [
+        14,
+        20,
+        23
+      ],
+      "highlight": [
+        "set us free"
+      ],
+      "cta": "▶  Watch the full story"
+    }
+  ]
 }

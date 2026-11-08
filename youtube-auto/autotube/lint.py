@@ -78,6 +78,24 @@ def lint_plan(plan: dict) -> tuple[list[str], list[str]]:
     if cont not in CONTINENTS:
         errors.append(f"continent '{cont}' 이(가) 잘못됐습니다. {sorted(CONTINENTS)} 중 하나.")
 
+    # 쇼츠: 전용 티저 2편(그 자체로 완결된 훅+CTA). 본편 장면 그림을 재사용.
+    nsc = len(plan.get("scenes") or [])
+    shorts = plan.get("shorts") or []
+    need = 2
+    if len(shorts) < need:
+        errors.append(f"shorts 가 {len(shorts)}개입니다. 전용 티저 {need}편이 필요합니다.")
+    for si, sh in enumerate(shorts[:need], 1):
+        snar = (sh.get("narration") or "").strip()
+        if not snar:
+            errors.append(f"쇼츠 {si}: narration 이 비어 있습니다.")
+        shard = sorted({w for w in re.findall(r"[a-zA-Z]+", snar.lower()) if w in HARD_WORDS})
+        if shard:
+            errors.append(f"쇼츠 {si}: 어려운 단어 {shard} — 쉬운 말로.")
+        srefs = sh.get("scenes") or []
+        good = [r for r in srefs if isinstance(r, int) and 1 <= r <= nsc]
+        if not good:
+            errors.append(f"쇼츠 {si}: scenes(보여줄 본편 장면 번호 1~{nsc})가 없습니다/잘못됐습니다.")
+
     scenes = plan.get("scenes") or []
     n = len(scenes)
     if not (20 <= n <= 34):

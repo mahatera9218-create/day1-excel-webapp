@@ -96,6 +96,29 @@ Aim to **generate only the 4–6 `is_key` scenes richly**, and lean on reuse + s
 for the rest. Put `motion: video` on **only ~1 scene in 8** (video frames are the expensive
 part); everything else uses free `kenburns_in` / `kenburns_pan`.
 
+## Shorts — 2 dedicated teasers per episode
+
+Shorts are **not** sliced from the long video (that gives weird, context-less fragments).
+Write **2 purpose-built teaser scripts** in `plan["shorts"]`. Each is **self-contained**:
+
+- **Structure:** a punchy hook question → 1–2 lines that deepen the mystery → **do NOT give the
+  answer** → it ends on a CTA card automatically. ~**30–45s** (≈ 80–110 words), plain language.
+- **Two different angles:** e.g. teaser 1 leads with the premise/hook; teaser 2 leads with the
+  biggest twist ("the strangest part"). Don't just reword the same thing.
+- **`scenes`:** 3–4 of the episode's strongest images to show, by scene number (reuses the
+  long video's images → no extra image cost). Prefer `is_key` scenes.
+- **`highlight`:** 1–2 punchy phrases to color. **`cta`** optional (defaults to a channel CTA).
+- Never resolve the mystery — the whole point is to send viewers to the full video.
+
+```json
+"shorts": [
+  { "narration": "What if the one choice that saved a nation… was the one that doomed it?",
+    "scenes": [1, 6, 8], "highlight": ["doomed it"], "cta": "▶  Full story on the channel" },
+  { "narration": "Everyone thinks they know how this ended. They are wrong about the strangest part.",
+    "scenes": [14, 19, 23], "highlight": ["the strangest part"], "cta": "▶  Watch the full story" }
+]
+```
+
 ## The thumbnail (most important single asset)
 
 - **`thumbnail_prompt` — over-invest.** One arresting visual, usually a dramatic close-up
@@ -139,6 +162,7 @@ part); everything else uses free `kenburns_in` / `kenburns_pan`.
   "thumbnail_scene": 4,
   "description": "2-4 lines that tease it, clearly a what-if. End with a one-line source note.",
   "tags": ["what if","history","alexandria","alternate history","science","..."],
+  "shorts": [ {"narration":"...","scenes":[1,6,8],"highlight":["..."],"cta":"..."}, {"...":"..."} ],
   "scenes": [
     { "narration": "...", "highlight": ["..."], "image_prompt": "...",
       "role": "hook", "is_key": true, "motion": "kenburns_in", "sfx": "..." },
@@ -160,5 +184,6 @@ blocked hard/jargon words in any narration (plain-language rule); `title` has `|
 `description`; ≥ 5 `tags`; `thumbnail_prompt`; 20–34 scenes; each scene has `narration`, a
 valid `role`, and either an `image_prompt` or a valid `image_ref`; scene 1 is `hook`; a
 `second_hook`; ≥ 2 `loop_q`; a `turn`; a `payoff`; last scene is `button`; 4–6 `is_key`
-scenes. Warnings (fix if you can): quote marks (confirm documented), long sentences
+scenes; **2 `shorts` teasers** (each with narration, valid scene refs, plain words).
+Warnings (fix if you can): quote marks (confirm documented), long sentences
 (>28 words), word count ~700–800, second hook near the 40% mark.
