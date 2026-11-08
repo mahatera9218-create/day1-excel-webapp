@@ -1,0 +1,28 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,64,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,360
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.00,0:00:01.47,Main,In 1518,
+Dialogue: 0,0:00:01.47,0:00:05.63,Main,a whole town started
+Dialogue: 0,0:00:05.63,0:00:10.04,Main,dancing and could not
+Dialogue: 0,0:00:10.04,0:00:11.02,Main,stop.
+Dialogue: 0,0:00:11.02,0:00:15.19,Main,So the city called in
+Dialogue: 0,0:00:15.19,0:00:16.90,Main,doctors.
+Dialogue: 0,0:00:16.90,0:00:21.06,Main,Their official cure?
+Dialogue: 0,0:00:21.06,0:00:23.76,Main,{\c&H0000D4FF}More dancing{\c&H00FFFFFF}.
+Dialogue: 0,0:00:23.76,0:00:28.17,Main,They built a stage and
+Dialogue: 0,0:00:28.17,0:00:30.62,Main,hired a band.
+Dialogue: 0,0:00:30.62,0:00:35.02,Main,What happened next is
+Dialogue: 0,0:00:35.02,0:00:38.21,Main,the part nobody
+Dialogue: 0,0:00:38.21,0:00:40.17,Main,believes.
+Dialogue: 0,0:00:40.17,0:00:44.09,Main,The full story is in
+Dialogue: 0,0:00:44.09,0:00:48.74,Main,the description below.

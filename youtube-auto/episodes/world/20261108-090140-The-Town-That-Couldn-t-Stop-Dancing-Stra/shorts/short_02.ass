@@ -1,0 +1,28 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,64,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,360
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.00,0:00:03.43,Main,This might be the
+Dialogue: 0,0:00:03.43,0:00:07.59,Main,strangest plague in
+Dialogue: 0,0:00:07.59,0:00:09.31,Main,history,
+Dialogue: 0,0:00:09.31,0:00:13.47,Main,because there was no
+Dialogue: 0,0:00:13.47,0:00:14.45,Main,germ.
+Dialogue: 0,0:00:14.45,0:00:18.12,Main,One woman started
+Dialogue: 0,0:00:18.12,0:00:22.53,Main,dancing in the street.
+Dialogue: 0,0:00:22.53,0:00:24.98,Main,Weeks later,
+Dialogue: 0,0:00:24.98,0:00:28.41,Main,dozens were dead,
+Dialogue: 0,0:00:28.41,0:00:32.09,Main,and not one of them
+Dialogue: 0,0:00:32.09,0:00:33.80,Main,was sick.
+Dialogue: 0,0:00:33.80,0:00:37.47,Main,So what was really
+Dialogue: 0,0:00:37.47,0:00:40.17,Main,killing them?
+Dialogue: 0,0:00:40.17,0:00:44.09,Main,The full story is in
+Dialogue: 0,0:00:44.09,0:00:48.74,Main,the description below.

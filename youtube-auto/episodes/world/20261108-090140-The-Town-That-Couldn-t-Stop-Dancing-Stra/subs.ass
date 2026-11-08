@@ -1,0 +1,219 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,42,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,90
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:01.30,0:00:05.54,Main,You are standing in a
+Dialogue: 0,0:00:05.54,0:00:09.03,Main,narrow street in
+Dialogue: 0,0:00:09.03,0:00:11.52,Main,Strasbourg.
+Dialogue: 0,0:00:11.52,0:00:13.52,Main,It is July,
+Dialogue: 0,0:00:13.52,0:00:14.51,Main,1518.
+Dialogue: 0,0:00:14.51,0:00:18.50,Main,A woman walks out of
+Dialogue: 0,0:00:18.50,0:00:22.74,Main,her house and begins
+Dialogue: 0,0:00:22.74,0:00:24.49,Main,to dance.
+Dialogue: 0,0:00:24.49,0:00:27.98,Main,There is no music.
+Dialogue: 0,0:00:27.98,0:00:30.47,Main,No festival.
+Dialogue: 0,0:00:30.47,0:00:33.71,Main,She just dances.
+Dialogue: 0,0:00:33.71,0:00:37.95,Main,And {\c&H0000D4FF}she will not stop{\c&H00FFFFFF}.
+Dialogue: 0,0:00:19.42,0:00:23.85,Main,By sunset her feet are
+Dialogue: 0,0:00:23.85,0:00:25.82,Main,bleeding.
+Dialogue: 0,0:00:25.82,0:00:29.27,Main,By morning she is
+Dialogue: 0,0:00:29.27,0:00:32.23,Main,{\c&H0000D4FF}still dancing{\c&H00FFFFFF}.
+Dialogue: 0,0:00:32.23,0:00:36.17,Main,And here is the part
+Dialogue: 0,0:00:36.17,0:00:39.86,Main,no one can explain.
+Dialogue: 0,0:00:39.86,0:00:43.80,Main,Soon she will not be
+Dialogue: 0,0:00:43.80,0:00:46.76,Main,dancing alone.
+Dialogue: 0,0:00:30.49,0:00:33.98,Main,This is one of the
+Dialogue: 0,0:00:33.98,0:00:37.71,Main,richest cities in
+Dialogue: 0,0:00:37.71,0:00:39.21,Main,Europe.
+Dialogue: 0,0:00:39.21,0:00:43.44,Main,But these are hungry
+Dialogue: 0,0:00:43.44,0:00:44.69,Main,years.
+Dialogue: 0,0:00:44.69,0:00:47.43,Main,Bad harvests.
+Dialogue: 0,0:00:47.43,0:00:50.17,Main,New sickness.
+Dialogue: 0,0:00:50.17,0:00:53.65,Main,Prices climbing.
+Dialogue: 0,0:00:53.65,0:00:57.89,Main,People are tired and
+Dialogue: 0,0:00:57.89,0:00:59.38,Main,afraid.
+Dialogue: 0,0:00:59.38,0:01:03.86,Main,The records give her a
+Dialogue: 0,0:01:03.86,0:01:04.86,Main,name.
+Dialogue: 0,0:01:04.86,0:01:07.60,Main,Frau Troffea.
+Dialogue: 0,0:00:48.11,0:00:50.63,Main,Within days,
+Dialogue: 0,0:00:50.63,0:00:53.91,Main,{\c&H0000D4FF}others join her{\c&H00FFFFFF}.
+Dialogue: 0,0:00:53.91,0:00:56.94,Main,Thirty people.
+Dialogue: 0,0:00:56.94,0:00:58.96,Main,Then more.
+Dialogue: 0,0:00:58.96,0:01:02.49,Main,They dance in the
+Dialogue: 0,0:01:02.49,0:01:05.51,Main,market and the
+Dialogue: 0,0:01:05.51,0:01:07.28,Main,squares,
+Dialogue: 0,0:01:07.28,0:01:10.31,Main,all night long.
+Dialogue: 0,0:01:10.31,0:01:14.34,Main,Nobody told them to.
+Dialogue: 0,0:01:14.34,0:01:18.63,Main,Nobody can make them
+Dialogue: 0,0:01:18.63,0:01:19.64,Main,stop.
+Dialogue: 0,0:01:02.42,0:01:06.22,Main,And this is {\c&H0000D4FF}not joy{\c&H00FFFFFF}.
+Dialogue: 0,0:01:06.22,0:01:10.77,Main,Their faces are blank
+Dialogue: 0,0:01:10.77,0:01:12.79,Main,with fear.
+Dialogue: 0,0:01:12.79,0:01:15.07,Main,They sweat.
+Dialogue: 0,0:01:15.07,0:01:18.11,Main,They fall down.
+Dialogue: 0,0:01:18.11,0:01:21.65,Main,They stand up and
+Dialogue: 0,0:01:21.65,0:01:24.18,Main,dance again.
+Dialogue: 0,0:01:12.94,0:01:16.92,Main,You could walk away.
+Dialogue: 0,0:01:16.92,0:01:20.90,Main,But you cannot look
+Dialogue: 0,0:01:20.90,0:01:21.90,Main,away.
+Dialogue: 0,0:01:21.90,0:01:25.88,Main,One old man catches
+Dialogue: 0,0:01:25.88,0:01:29.86,Main,your eye as he spins.
+Dialogue: 0,0:01:29.86,0:01:33.34,Main,There is nothing
+Dialogue: 0,0:01:33.34,0:01:35.33,Main,behind it.
+Dialogue: 0,0:01:35.33,0:01:37.32,Main,Just fear,
+Dialogue: 0,0:01:37.32,0:01:41.80,Main,and feet that will not
+Dialogue: 0,0:01:41.80,0:01:43.54,Main,obey him.
+Dialogue: 0,0:01:25.64,0:01:29.63,Main,So the city calls in
+Dialogue: 0,0:01:29.63,0:01:32.12,Main,the doctors.
+Dialogue: 0,0:01:32.12,0:01:35.36,Main,They look at the
+Dialogue: 0,0:01:35.36,0:01:40.09,Main,dancers and give their
+Dialogue: 0,0:01:40.09,0:01:41.59,Main,answer.
+Dialogue: 0,0:01:41.59,0:01:43.58,Main,The cause,
+Dialogue: 0,0:01:43.58,0:01:45.32,Main,they say,
+Dialogue: 0,0:01:45.32,0:01:47.82,Main,is {\c&H0000D4FF}hot blood{\c&H00FFFFFF}.
+Dialogue: 0,0:01:47.82,0:01:52.30,Main,Too much heat trapped
+Dialogue: 0,0:01:52.30,0:01:55.54,Main,inside the body.
+Dialogue: 0,0:01:37.69,0:01:41.94,Main,And their cure is the
+Dialogue: 0,0:01:41.94,0:01:45.44,Main,strangest one in
+Dialogue: 0,0:01:45.44,0:01:47.19,Main,history.
+Dialogue: 0,0:01:47.19,0:01:51.44,Main,Let them dance it out.
+Dialogue: 0,0:01:51.44,0:01:54.19,Main,{\c&H0000D4FF}More dancing{\c&H00FFFFFF}.
+Dialogue: 0,0:01:54.19,0:01:58.44,Main,And the city leaders
+Dialogue: 0,0:01:58.44,0:01:59.69,Main,agree.
+Dialogue: 0,0:01:46.86,0:01:51.02,Main,They clear two large
+Dialogue: 0,0:01:51.02,0:01:52.25,Main,halls.
+Dialogue: 0,0:01:52.25,0:01:56.17,Main,They build a wooden
+Dialogue: 0,0:01:56.17,0:01:57.39,Main,stage.
+Dialogue: 0,0:01:57.39,0:02:01.56,Main,They hire pipers and
+Dialogue: 0,0:02:01.56,0:02:03.52,Main,drummers.
+Dialogue: 0,0:02:03.52,0:02:07.68,Main,They even pay strong
+Dialogue: 0,0:02:07.68,0:02:10.62,Main,men to hold the
+Dialogue: 0,0:02:10.62,0:02:14.54,Main,dancers up and keep
+Dialogue: 0,0:02:14.54,0:02:16.99,Main,them moving.
+Dialogue: 0,0:01:58.77,0:02:02.96,Main,You would think more
+Dialogue: 0,0:02:02.96,0:02:07.15,Main,dancing would end it.
+Dialogue: 0,0:02:07.15,0:02:11.09,Main,It did the opposite.
+Dialogue: 0,0:02:11.09,0:02:14.05,Main,The crowd grew.
+Dialogue: 0,0:02:14.05,0:02:17.25,Main,And now the real
+Dialogue: 0,0:02:17.25,0:02:21.44,Main,question was not why
+Dialogue: 0,0:02:21.44,0:02:23.91,Main,they danced.
+Dialogue: 0,0:02:23.91,0:02:28.10,Main,It was how many would
+Dialogue: 0,0:02:28.10,0:02:30.07,Main,die first.
+Dialogue: 0,0:02:11.13,0:02:15.82,Main,Writers from that time
+Dialogue: 0,0:02:15.82,0:02:20.02,Main,say that at the worst
+Dialogue: 0,0:02:20.02,0:02:21.25,Main,point,
+Dialogue: 0,0:02:21.25,0:02:24.96,Main,as many as fifteen
+Dialogue: 0,0:02:24.96,0:02:29.65,Main,people were dying each
+Dialogue: 0,0:02:29.65,0:02:30.39,Main,day.
+Dialogue: 0,0:02:30.39,0:02:34.34,Main,From heart failure.
+Dialogue: 0,0:02:34.34,0:02:37.06,Main,From strokes.
+Dialogue: 0,0:02:37.06,0:02:41.50,Main,From pure exhaustion.
+Dialogue: 0,0:02:22.97,0:02:27.02,Main,The city panics and
+Dialogue: 0,0:02:27.02,0:02:30.56,Main,changes its mind.
+Dialogue: 0,0:02:30.56,0:02:33.85,Main,The music stops.
+Dialogue: 0,0:02:33.85,0:02:38.15,Main,The stage comes down.
+Dialogue: 0,0:02:38.15,0:02:41.94,Main,{\c&H0000D4FF}Dancing is banned{\c&H00FFFFFF}.
+Dialogue: 0,0:02:32.07,0:02:35.94,Main,They load the worst
+Dialogue: 0,0:02:35.94,0:02:40.06,Main,cases onto carts and
+Dialogue: 0,0:02:40.06,0:02:43.45,Main,carry them up to a
+Dialogue: 0,0:02:43.45,0:02:46.84,Main,mountain shrine.
+Dialogue: 0,0:02:46.84,0:02:50.47,Main,A small chapel for
+Dialogue: 0,0:02:50.47,0:02:52.89,Main,Saint Vitus.
+Dialogue: 0,0:02:52.89,0:02:56.76,Main,The same saint they
+Dialogue: 0,0:02:56.76,0:03:01.12,Main,believed could curse
+Dialogue: 0,0:03:01.12,0:03:05.23,Main,people with endless
+Dialogue: 0,0:03:05.23,0:03:06.93,Main,dancing.
+Dialogue: 0,0:03:06.93,0:03:11.04,Main,And maybe lift it too.
+Dialogue: 0,0:02:45.94,0:02:50.50,Main,They give each dancer
+Dialogue: 0,0:02:50.50,0:02:54.81,Main,a small cross and red
+Dialogue: 0,0:02:54.81,0:02:56.07,Main,shoes,
+Dialogue: 0,0:02:56.07,0:02:59.88,Main,and pray over them.
+Dialogue: 0,0:02:59.88,0:03:02.16,Main,And slowly,
+Dialogue: 0,0:03:02.16,0:03:04.44,Main,over weeks,
+Dialogue: 0,0:03:04.44,0:03:08.24,Main,the dancing fades.
+Dialogue: 0,0:03:08.24,0:03:11.02,Main,By September,
+Dialogue: 0,0:03:11.02,0:03:13.05,Main,it is over.
+Dialogue: 0,0:02:57.37,0:03:01.56,Main,Hundreds had danced.
+Dialogue: 0,0:03:01.56,0:03:05.01,Main,We do not know how
+Dialogue: 0,0:03:05.01,0:03:09.20,Main,many never went home.
+Dialogue: 0,0:03:09.20,0:03:13.39,Main,And for five hundred
+Dialogue: 0,0:03:13.39,0:03:17.33,Main,years one question
+Dialogue: 0,0:03:17.33,0:03:20.04,Main,would not die.
+Dialogue: 0,0:03:20.04,0:03:24.48,Main,What really happened?
+Dialogue: 0,0:03:07.72,0:03:10.69,Main,For a long time,
+Dialogue: 0,0:03:10.69,0:03:13.90,Main,people blamed a
+Dialogue: 0,0:03:13.90,0:03:15.38,Main,poison.
+Dialogue: 0,0:03:15.38,0:03:19.34,Main,A mold called ergot
+Dialogue: 0,0:03:19.34,0:03:23.54,Main,that grows on wet rye
+Dialogue: 0,0:03:23.54,0:03:27.99,Main,and can make you shake
+Dialogue: 0,0:03:27.99,0:03:30.95,Main,and see things.
+Dialogue: 0,0:03:30.95,0:03:33.67,Main,A tidy answer.
+Dialogue: 0,0:03:18.02,0:03:21.71,Main,But {\c&H0000D4FF}it falls apart{\c&H00FFFFFF}.
+Dialogue: 0,0:03:21.71,0:03:25.41,Main,That mold cuts the
+Dialogue: 0,0:03:25.41,0:03:29.10,Main,blood flow to your
+Dialogue: 0,0:03:29.10,0:03:31.81,Main,arms and legs.
+Dialogue: 0,0:03:31.81,0:03:35.01,Main,It makes smooth
+Dialogue: 0,0:03:35.01,0:03:38.21,Main,dancing almost
+Dialogue: 0,0:03:38.21,0:03:40.67,Main,impossible.
+Dialogue: 0,0:03:40.67,0:03:44.61,Main,This was not one bad
+Dialogue: 0,0:03:44.61,0:03:47.32,Main,loaf of bread.
+Dialogue: 0,0:03:47.32,0:03:50.52,Main,It was a growing
+Dialogue: 0,0:03:50.52,0:03:51.75,Main,crowd,
+Dialogue: 0,0:03:51.75,0:03:53.97,Main,over weeks.
+Dialogue: 0,0:03:33.02,0:03:36.19,Main,The answer most
+Dialogue: 0,0:03:36.19,0:03:40.57,Main,historians trust now
+Dialogue: 0,0:03:40.57,0:03:43.01,Main,is stranger,
+Dialogue: 0,0:03:43.01,0:03:46.67,Main,and far more human.
+Dialogue: 0,0:03:46.67,0:03:50.32,Main,It was {\c&H0000D4FF}fear itself{\c&H00FFFFFF}.
+Dialogue: 0,0:03:50.32,0:03:54.71,Main,Stress so strong that
+Dialogue: 0,0:03:54.71,0:03:57.63,Main,it broke out as
+Dialogue: 0,0:03:57.63,0:04:02.51,Main,something their bodies
+Dialogue: 0,0:04:02.51,0:04:03.24,Main,did.
+Dialogue: 0,0:04:03.24,0:04:06.89,Main,And it spread from
+Dialogue: 0,0:04:06.89,0:04:10.30,Main,person to person,
+Dialogue: 0,0:04:10.30,0:04:14.69,Main,like panic you cannot
+Dialogue: 0,0:04:14.69,0:04:16.64,Main,shake off.
+Dialogue: 0,0:03:48.63,0:03:53.31,Main,Strasbourg in 1518 was
+Dialogue: 0,0:03:53.31,0:03:57.00,Main,a pot about to boil
+Dialogue: 0,0:03:57.00,0:03:57.99,Main,over.
+Dialogue: 0,0:03:57.99,0:03:59.47,Main,Hunger.
+Dialogue: 0,0:03:59.47,0:04:01.44,Main,Sickness.
+Dialogue: 0,0:04:01.44,0:04:02.67,Main,Dread.
+Dialogue: 0,0:04:02.67,0:04:06.61,Main,And this region had
+Dialogue: 0,0:04:06.61,0:04:10.06,Main,one special fear.
+Dialogue: 0,0:04:10.06,0:04:13.75,Main,The old story that
+Dialogue: 0,0:04:13.75,0:04:17.20,Main,Saint Vitus made
+Dialogue: 0,0:04:17.20,0:04:20.15,Main,sinners dance.
+Dialogue: 0,0:04:20.15,0:04:23.85,Main,Believe that hard
+Dialogue: 0,0:04:23.85,0:04:25.33,Main,enough,
+Dialogue: 0,0:04:25.33,0:04:29.76,Main,in a frightened crowd,
+Dialogue: 0,0:04:29.76,0:04:33.45,Main,and one dancer can
+Dialogue: 0,0:04:33.45,0:04:36.90,Main,become a hundred.
+Dialogue: 0,0:04:09.54,0:04:12.29,Main,They were not
+Dialogue: 0,0:04:12.29,0:04:14.29,Main,poisoned.
+Dialogue: 0,0:04:14.29,0:04:17.79,Main,{\c&H0000D4FF}They were pushed{\c&H00FFFFFF}.
+Dialogue: 0,0:04:17.79,0:04:19.79,Main,By hunger.
+Dialogue: 0,0:04:19.79,0:04:21.29,Main,By fear.
+Dialogue: 0,0:04:21.29,0:04:25.54,Main,By a belief shared so
+Dialogue: 0,0:04:25.54,0:04:30.29,Main,strongly that it moved
+Dialogue: 0,0:04:30.29,0:04:34.79,Main,their bodies for them.
+Dialogue: 0,0:04:20.53,0:04:22.28,Main,No virus.
+Dialogue: 0,0:04:22.28,0:04:23.77,Main,No drug.
+Dialogue: 0,0:04:23.77,0:04:27.76,Main,Just the human mind,
+Dialogue: 0,0:04:27.76,0:04:32.01,Main,under enough weight,
+Dialogue: 0,0:04:32.01,0:04:36.00,Main,doing something we
+Dialogue: 0,0:04:36.00,0:04:39.74,Main,still do not fully
+Dialogue: 0,0:04:39.74,0:04:42.23,Main,understand.
+Dialogue: 0,0:04:42.23,0:04:46.23,Main,And in towns before
+Dialogue: 0,0:04:46.23,0:04:48.72,Main,Strasbourg,
+Dialogue: 0,0:04:48.72,0:04:51.96,Main,it had happened
+Dialogue: 0,0:04:51.96,0:04:53.46,Main,before.
