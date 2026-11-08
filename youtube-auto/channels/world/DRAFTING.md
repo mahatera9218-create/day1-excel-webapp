@@ -138,19 +138,31 @@ Write **2 purpose-built teaser scripts** in `plan["shorts"]`. Each is **self-con
 
 Half the effort goes here. A perfect script with a weak title/thumbnail gets zero views.
 
-- **`title` — HARD, bold hooks with attitude. DO NOT start every title with "What if".** Push
-  it as provocative/scandalous as the TRUE story allows. Rotate hook styles so the feed never
-  looks repetitive: a shock claim (*"This Emperor Declared WAR on the Ocean"*), a taboo tease
-  (*"Rome's Most Powerful 'Man' Was a Horse"* / *"The Queen Who Had 900 Lovers Killed"*), a
-  cheeky question (*"Why Did They Dig Up a Dead Pope to Put Him on Trial?"*), a "The ___ who ___"
-  (*"The King Who Literally Laughed Himself to Death"*), a number (*"The War That Lasted 38
-  Minutes"*), or a dare (*"They Don't Teach You This Because It's Too Insane"*). Keep a `|`
-  subtitle (required). Must PAY OFF — bold but never a lie, never explicit/gory wording. At most
-  ~1 in 5 titles may use "What if".
-- **`thumbnail_prompt` — over-invest, this is #1.** One split-second-arresting visual: usually a
-  dramatic CLOSE-UP of a face mid-emotion (shock, mischief, fear, awe) with intense eye contact,
-  bold cinematic light, shallow depth of field, rich detail — something you can't scroll past.
-  Ad-safe; no on-screen text, no logos, no real living people.
+> **THE ONE RULE: provoke curiosity, NEVER reveal the answer.** The title and thumbnail open a
+> loop in the viewer's head — a question, a mystery, an "wait, HOW/WHY/WHO?!" — and the video
+> is the only place to close it. Never give away the punchline, the reveal, or the resolution in
+> the title or the image. If someone could read the title and feel "ok, got it" without
+> clicking, it has FAILED. Make them NEED to watch to find out.
+> *Bad (spoils): "Rome's Most Powerful Senator Was a Horse."* →
+> *Good (withholds): "Rome's Most Powerful Senator Wasn't Even Human."*
+> *Bad: "They Dug Up a Dead Pope to Put Him on Trial."* →
+> *Good: "They Put a Rotting Corpse on Trial — the Verdict Changed Everything."*
+
+- **`title` — HARD, bold hooks that WITHHOLD the answer. DO NOT start every title with "What
+  if".** Push it as provocative as the TRUE story allows, but open a loop and never close it.
+  Rotate hook styles so the feed never looks repetitive — all of these tease without spoiling:
+  a withholding claim (*"This Emperor Declared War on Something That Can't Fight Back"*), a taboo
+  tease (*"Rome's Most Powerful Senator Wasn't Even Human"*), a cheeky question (*"Why Would
+  Anyone Put a 400-Year-Old Corpse on Trial?"*), a "The ___ who ___" with the twist hidden
+  (*"The King Whose Own Joke Killed Him"*), a number (*"The War That Was Over Before Breakfast"*),
+  or a dare (*"They Don't Teach You This Because It's Too Insane"*). Keep a `|` subtitle
+  (required). Bold but never a lie, never explicit/gory wording, and **never the answer.** ≤1 in
+  5 may use "What if".
+- **`thumbnail_prompt` — over-invest, this is #1.** One split-second-arresting visual that
+  **poses a question, never answers it.** Usually a dramatic CLOSE-UP of a face mid-emotion
+  (shock, mischief, fear, awe) with intense eye contact, bold cinematic light, shallow depth of
+  field — a moment that makes you go "wait, what's happening here?!", not the resolution. Show
+  the intrigue, hide the payoff. Ad-safe; no on-screen text, no logos, no real living people.
 - **`thumbnail_text`** — `""` by default (image-first). `thumbnail_scene` — fallback index.
 
 ## What to produce each run
