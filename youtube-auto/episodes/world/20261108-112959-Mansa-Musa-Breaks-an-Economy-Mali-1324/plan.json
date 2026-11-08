@@ -1,0 +1,53 @@
+{
+  "topic": "Mansa Musa Breaks an Economy (Mali, 1324)",
+  "continent": "Africa",
+  "content_type": "true",
+  "angle": "The richest person in history wrecked a city's economy by accident, through pure generosity",
+  "format": "narration",
+  "title": "The Richest Man in History Broke an Economy by Being Too Kind | Mali, 1324",
+  "thumbnail_prompt": "a regal medieval West African emperor in rich robes riding at the head of a vast camel caravan across golden desert dunes, gold glinting, dramatic sunset, cinematic",
+  "thumbnail_text": "TOO RICH",
+  "thumbnail_scene": 1,
+  "description": "Mansa Musa of Mali may be the richest person who ever lived. In 1324 he set out on a journey so lavish that he accidentally damaged the economy of one of the world's greatest cities, just by being generous. This is his true story.\n\n100% true history, told like a drama.",
+  "tags": ["history", "Mansa Musa", "Mali empire", "Africa", "true story", "Timbuktu", "richest man in history", "medieval history"],
+  "shorts": [
+    {
+      "title": "He was so rich he broke a city by accident #shorts",
+      "description": "The richest man in history gave away so much gold that he wrecked a great city's economy, without even trying. Full story on the channel. #shorts #history",
+      "narration": "He may be the richest person who ever lived. And he was so rich that, just by being generous, he accidentally broke the economy of one of the greatest cities in the world. He did not even notice.",
+      "scenes": [1, 9, 13],
+      "highlight": ["broke the economy", "did not even notice"],
+      "cta": "▶  FULL STORY — link in description"
+    },
+    {
+      "title": "Too much gold is a real problem #shorts",
+      "description": "What happens when one man hands out gold to a whole city? Something nobody expected. #shorts #history",
+      "narration": "What happens when the richest man alive hands out gold to a whole city, street after street? Something nobody expects. The gold itself starts to lose its value, and ordinary families pay the price.",
+      "scenes": [9, 11, 12],
+      "highlight": ["lose its value"],
+      "cta": "▶  FULL STORY — link in description"
+    }
+  ],
+  "scenes": [
+    { "narration": "Imagine being so rich that you could break a whole city's money, just by being kind. About seven hundred years ago, one man did exactly that. And the strangest part is, he never meant to.", "highlight": ["break a whole city's money"], "image_prompt": "a regal medieval West African emperor in golden robes at the head of a vast caravan in the desert, radiant and powerful, cinematic", "motion": "video", "role": "hook", "is_key": true, "sfx": "warm desert wind" },
+    { "narration": "His name was Mansa Musa, the ruler of the empire of Mali in West Africa. Many people call him the richest person who has ever lived. But the truly strange story is what all that wealth actually did.", "highlight": ["richest person who has ever lived"], "image_ref": 1, "motion": "kenburns_in", "role": "loop_q", "sfx": "soft low drone" },
+    { "narration": "Mali sat on top of something the whole world wanted. Gold. The empire was full of it. It also controlled salt, which back then was so useful it was traded almost like treasure.", "highlight": ["Gold"], "image_prompt": "a bustling medieval West African market with traders weighing gold dust and blocks of salt, rich colors, warm light", "motion": "kenburns_pan", "role": "setup", "sfx": "market murmur" },
+    { "narration": "Every trade route that crossed this part of Africa passed through his lands and paid him. His wealth grew so vast that even the people of the time could not really put a number on it.", "highlight": ["could not put a number on it"], "image_prompt": "long camel trade caravans crossing golden desert dunes toward a grand African city, epic scale, sunset", "motion": "kenburns_in", "role": "setup", "sfx": "distant caravan bells" },
+    { "narration": "But a ruler can be rich and still be unknown to the wider world. In the year 1324, Mansa Musa decided to do something that would put both him and Mali onto the map, quite literally.", "highlight": ["onto the map"], "image_prompt": "Mansa Musa standing on a palace balcony looking east toward the horizon, thoughtful, golden morning light", "motion": "kenburns_in", "role": "loop_q", "sfx": "gentle wind" },
+    { "narration": "As a devoted Muslim, he set out on the long holy journey to Mecca, far to the east. But this was no quiet trip for one man. It was more like a city on the move.", "highlight": ["a city on the move"], "image_prompt": "an enormous procession of people, camels and horses setting out from a grand African city into the desert, vast scale", "motion": "kenburns_pan", "role": "setup", "sfx": "crowd and hooves" },
+    { "narration": "By some accounts, tens of thousands of people walked with him. Servants, soldiers, and officials. Camels and horses carried food, supplies, and a truly astonishing amount of gold.", "highlight": ["tens of thousands"], "image_prompt": "a massive caravan of tens of thousands crossing the desert, camels loaded with gold, banners, dust and grandeur", "motion": "video", "role": "loop_problem", "is_key": false, "sfx": "thousands marching" },
+    { "narration": "Everywhere he stopped, he gave gold away. To the poor people he met. To whole towns along the road. To anyone who impressed him. The further he travelled, the more generous he became.", "highlight": ["gave gold away"], "image_prompt": "the emperor handing out gold coins to crowds of grateful poor people in a desert town, warm light, moving scene", "motion": "kenburns_in", "role": "context", "sfx": "grateful crowd" },
+    { "narration": "Then his caravan reached Cairo, one of the greatest cities in the entire world. And here, in the richest and busiest of markets, his kindness turned into a problem no one saw coming.", "highlight": ["a problem no one saw coming"], "image_prompt": "the grand medieval city of Cairo with crowded markets and mosques, a royal caravan arriving, bustling and majestic", "motion": "video", "role": "turn", "is_key": true, "sfx": "busy city gates" },
+    { "narration": "Mansa Musa handed out gold in Cairo as if it were nothing at all. So much gold, to so many people, that something very strange slowly began to happen to the city itself.", "highlight": ["as if it were nothing"], "image_ref": 9, "motion": "kenburns_in", "role": "second_hook", "is_key": true, "sfx": "tense rising tone" },
+    { "narration": "Here is the simple rule he ran into. When something is suddenly everywhere, it stops being special. With gold flooding the markets, the value of gold in Cairo started to drop. And it kept dropping.", "highlight": ["it stops being special"], "image_prompt": "market scales overflowing with gold while merchants look worried, symbolic image of value falling, dramatic", "motion": "kenburns_pan", "role": "loop_problem", "sfx": "uneasy strings" },
+    { "narration": "As gold became cheaper, the prices of everything else climbed. The money and savings that families already had were suddenly worth less. This generous visitor had quietly made daily life harder for everyone.", "highlight": ["worth less"], "image_prompt": "ordinary families in a Cairo market looking anxious at rising prices, bread and goods, worried faces, warm but tense", "motion": "kenburns_in", "role": "loop_problem", "sfx": "murmuring worry" },
+    { "narration": "And that is the twist. The richest man alive had damaged a great city's economy. Not with an army. Not with greed. But with pure, open-handed generosity. And the damage lingered for years.", "highlight": ["pure generosity"], "image_prompt": "a wide view of Cairo at dusk, beautiful but troubled, the royal caravan small in the distance, reflective mood", "motion": "kenburns_in", "role": "turn", "is_key": true, "sfx": "low somber chord" },
+    { "narration": "On his way home, the story goes, Mansa Musa actually tried to fix it. He borrowed and bought back as much gold as he could, to pull some of it out of the markets. It was a remarkably modern idea for the time.", "highlight": ["tried to fix it"], "image_prompt": "the emperor meeting with merchants to buy back gold, serious negotiation, lamplight, thoughtful mood", "motion": "kenburns_pan", "role": "loop_reveal", "sfx": "quiet negotiation" },
+    { "narration": "But the real story of Mansa Musa is not the mess he accidentally left behind in Cairo. It is what he chose to bring back home with him.", "highlight": ["bring back home"], "image_prompt": "the great caravan returning westward across the desert at sunrise, hopeful and grand, new beginnings", "motion": "kenburns_in", "role": "payoff", "sfx": "hopeful soft horn" },
+    { "narration": "He returned with scholars, poets, and builders. He poured his wealth into learning instead of war. Under him, the city of Timbuktu grew into one of the great centres of knowledge in the world.", "highlight": ["centres of knowledge"], "image_prompt": "the great mud-brick mosque and university of Timbuktu, scholars with books, golden desert city, majestic", "motion": "kenburns_pan", "role": "payoff", "is_key": true, "sfx": "calm, reverent" },
+    { "narration": "Students travelled from far away to study there. Libraries filled with thousands of books. A city in the heart of Africa became a place the whole world came to respect.", "highlight": ["from far away"], "image_ref": 16, "motion": "kenburns_in", "role": "setup", "sfx": "quiet study hall" },
+    { "narration": "And the gold he had scattered across his long journey did one more thing. Word of the emperor who gave away fortunes spread outward, all the way to distant Europe.", "highlight": ["all the way to Europe"], "image_prompt": "medieval European traders and mapmakers hearing tales of a golden African king, candlelit workshop, wonder", "motion": "kenburns_in", "role": "payoff", "sfx": "soft wonder" },
+    { "narration": "Years later, a famous map showed a single African ruler seated in the desert, holding up a lump of gold, looking out toward the traders of the world. That ruler was Mansa Musa.", "highlight": ["holding up a lump of gold"], "image_prompt": "an old medieval map illustration of an African king seated holding a gold nugget, aged parchment, iconic", "motion": "kenburns_in", "role": "context", "sfx": "parchment, soft note" },
+    { "narration": "He may be the only person in history to crash an economy by being too kind. And to be remembered, seven hundred years on, above all for the gold he was willing to give away.", "highlight": ["too kind"], "image_ref": 1, "motion": "kenburns_in", "role": "button", "is_key": true, "sfx": "single warm note, fade" }
+  ]
+}

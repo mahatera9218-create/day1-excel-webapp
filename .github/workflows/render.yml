@@ -17,9 +17,10 @@ on:
         description: "유튜브 자동 업로드 (기본 true=비공개 업로드; false=렌더만)"
         required: false
         default: "true"
-  # 매일 자동으로 2편 렌더·업로드 (10:17 UTC = 한국 19:17). 그날 아침 작성·검수된 2편.
+  # 매일 자동으로 2편 렌더·업로드 (03:50 UTC ≈ 한국 12:50, 오후 1시경). 그날 아침 작성·검수된 2편.
+  # (GitHub 예약은 UTC만 쓰고 정각엔 지연이 잦아, 13시보다 살짝 앞으로 당겨둠)
   schedule:
-    - cron: "17 10 * * *"      # 매일 19:17 KST: 승인된 2편 렌더 + 유튜브 비공개 업로드
+    - cron: "50 3 * * *"      # 매일 약 12:50 KST(오후 1시경): 승인된 2편 렌더 + 유튜브 비공개 업로드
 
 concurrency:
   group: render-${{ github.event.inputs.channel || 'all' }}
