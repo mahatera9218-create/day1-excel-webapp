@@ -13,11 +13,14 @@ batch of episodes as `plan.json` files, ready for the human to review. **Never a
 the **angle is the product.** Two formats, same goal (make someone think "I never thought
 about it that way"):
 
-> **THIS IS A HISTORY CHANNEL — made fun, clever, cheeky and a little outrageous.** Keep the
-> SUBJECT historical (people, empires, events, the world's past). Don't switch to science /
-> animals / everyday trivia. What changes is the TREATMENT: bold, witty, playful, "wait, that
-> really happened?!" — never a dry documentary. Mostly light & cheeky (~3 of 4), with the
-> occasional deeper/meatier history episode (~1 in 4) for variety. Don't make it all one note.
+> **THIS IS A HISTORY CHANNEL — made OUTRAGEOUS, bold and deliciously cheeky.** Tabloid
+> energy, documentary truth. Keep the SUBJECT historical (people, empires, events) — don't
+> switch to science/animals/everyday trivia. Crank the TREATMENT as BOLD, provocative and
+> taboo-flirting as you can: sex, scandal, gore, madness, greed, betrayal are great HOOKS —
+> but **two hard limits: (1) 100% TRUE, never invent; (2) advertiser-safe — imply the dark/
+> racy bits, never show gore or anything explicit.** The sweet spot is "I can't believe
+> they're allowed to tell me this… and it's REAL." Mostly light & cheeky (~3 of 4), ~1 in 4
+> deeper for variety. Never dry, never a lecture.
 
 - **Format B — "What If" history (PRIMARY, `content_type: "what_if"`).** A cheeky, irresistible
   historical premise — real fact up to the branch, then playful, plausible speculation.
@@ -135,13 +138,15 @@ Write **2 purpose-built teaser scripts** in `plan["shorts"]`. Each is **self-con
 
 Half the effort goes here. A perfect script with a weak title/thumbnail gets zero views.
 
-- **`title` — strong, varied hooks. DO NOT start every title with "What if".** Rotate hook
-  styles so the feed doesn't look repetitive: a shocking claim (*"Napoleon Wasn't Short — Here's
-  the Real Reason Everyone Thinks So"*), a cheeky question (*"Why Did a Roman Emperor Make His
-  Horse a Senator?"*), a "The ___ who ___" (*"The Town That Put a Pig on Trial"*), a number
-  (*"The 38-Minute War"*), or a bold tease (*"They Erased Her From History. We Found Out Why."*).
-  Keep a `|` subtitle for context (the `|` is required). Tease, don't spoil; no clickbait lies
-  (it must pay off). At most ~1 in 5 titles may use the "What if" phrasing.
+- **`title` — HARD, bold hooks with attitude. DO NOT start every title with "What if".** Push
+  it as provocative/scandalous as the TRUE story allows. Rotate hook styles so the feed never
+  looks repetitive: a shock claim (*"This Emperor Declared WAR on the Ocean"*), a taboo tease
+  (*"Rome's Most Powerful 'Man' Was a Horse"* / *"The Queen Who Had 900 Lovers Killed"*), a
+  cheeky question (*"Why Did They Dig Up a Dead Pope to Put Him on Trial?"*), a "The ___ who ___"
+  (*"The King Who Literally Laughed Himself to Death"*), a number (*"The War That Lasted 38
+  Minutes"*), or a dare (*"They Don't Teach You This Because It's Too Insane"*). Keep a `|`
+  subtitle (required). Must PAY OFF — bold but never a lie, never explicit/gory wording. At most
+  ~1 in 5 titles may use "What if".
 - **`thumbnail_prompt` — over-invest, this is #1.** One split-second-arresting visual: usually a
   dramatic CLOSE-UP of a face mid-emotion (shock, mischief, fear, awe) with intense eye contact,
   bold cinematic light, shallow depth of field, rich detail — something you can't scroll past.
