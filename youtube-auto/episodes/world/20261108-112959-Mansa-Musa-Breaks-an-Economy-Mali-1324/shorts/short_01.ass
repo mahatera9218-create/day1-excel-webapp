@@ -1,0 +1,27 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,64,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,360
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.00,0:00:04.13,Main,He may be the richest
+Dialogue: 0,0:00:04.13,0:00:08.51,Main,person who ever lived.
+Dialogue: 0,0:00:08.51,0:00:11.92,Main,And he was so rich
+Dialogue: 0,0:00:11.92,0:00:12.89,Main,that,
+Dialogue: 0,0:00:12.89,0:00:15.56,Main,just by being
+Dialogue: 0,0:00:15.56,0:00:17.51,Main,generous,
+Dialogue: 0,0:00:17.51,0:00:22.13,Main,he accidentally broke
+Dialogue: 0,0:00:22.13,0:00:26.26,Main,the economy of one of
+Dialogue: 0,0:00:26.26,0:00:30.89,Main,the greatest cities in
+Dialogue: 0,0:00:30.89,0:00:32.83,Main,the world.
+Dialogue: 0,0:00:32.83,0:00:35.75,Main,He did not even
+Dialogue: 0,0:00:35.75,0:00:37.21,Main,notice.
+Dialogue: 0,0:00:37.21,0:00:41.10,Main,The full story is in
+Dialogue: 0,0:00:41.10,0:00:45.72,Main,the description below.

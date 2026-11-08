@@ -1,0 +1,26 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,64,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,360
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.00,0:00:04.37,Main,What happens when the
+Dialogue: 0,0:00:04.37,0:00:08.01,Main,richest man alive
+Dialogue: 0,0:00:08.01,0:00:11.66,Main,hands out gold to a
+Dialogue: 0,0:00:11.66,0:00:13.84,Main,whole city,
+Dialogue: 0,0:00:13.84,0:00:17.97,Main,street after street?
+Dialogue: 0,0:00:17.97,0:00:21.61,Main,Something nobody
+Dialogue: 0,0:00:21.61,0:00:23.31,Main,expects.
+Dialogue: 0,0:00:23.31,0:00:27.93,Main,The gold itself starts
+Dialogue: 0,0:00:27.93,0:00:31.33,Main,to {\c&H0000D4FF}lose its value{\c&H00FFFFFF},
+Dialogue: 0,0:00:31.33,0:00:35.94,Main,and ordinary families
+Dialogue: 0,0:00:35.94,0:00:38.61,Main,pay the price.
+Dialogue: 0,0:00:38.61,0:00:42.50,Main,The full story is in
+Dialogue: 0,0:00:42.50,0:00:47.11,Main,the description below.

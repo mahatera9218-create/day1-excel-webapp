@@ -1,0 +1,26 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,64,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,360
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.00,0:00:03.25,Main,In 1932,
+Dialogue: 0,0:00:03.25,0:00:07.19,Main,Australia sent real
+Dialogue: 0,0:00:07.19,0:00:11.60,Main,soldiers with machine
+Dialogue: 0,0:00:11.60,0:00:15.78,Main,guns to fight an enemy
+Dialogue: 0,0:00:15.78,0:00:19.73,Main,that {\c&H0000D4FF}cannot even fly{\c&H00FFFFFF}.
+Dialogue: 0,0:00:19.73,0:00:23.21,Main,On paper it looked
+Dialogue: 0,0:00:23.21,0:00:24.14,Main,easy.
+Dialogue: 0,0:00:24.14,0:00:28.78,Main,What actually happened
+Dialogue: 0,0:00:28.78,0:00:32.96,Main,became one of the most
+Dialogue: 0,0:00:32.96,0:00:37.14,Main,{\c&H0000D4FF}embarrassing{\c&H00FFFFFF} days in
+Dialogue: 0,0:00:37.14,0:00:40.62,Main,military history.
+Dialogue: 0,0:00:40.62,0:00:44.33,Main,The full story is in
+Dialogue: 0,0:00:44.33,0:00:48.74,Main,the description below.

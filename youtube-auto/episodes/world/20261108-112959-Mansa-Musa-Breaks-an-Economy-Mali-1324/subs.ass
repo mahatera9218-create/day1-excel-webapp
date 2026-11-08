@@ -1,0 +1,224 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,42,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,90
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.70,0:00:05.16,Main,Imagine being so rich
+Dialogue: 0,0:00:05.16,0:00:09.62,Main,that you could break a
+Dialogue: 0,0:00:09.62,0:00:13.34,Main,whole city's money,
+Dialogue: 0,0:00:13.34,0:00:17.06,Main,just by being kind.
+Dialogue: 0,0:00:17.06,0:00:21.27,Main,About seven hundred
+Dialogue: 0,0:00:21.27,0:00:23.25,Main,years ago,
+Dialogue: 0,0:00:23.25,0:00:27.22,Main,one man did exactly
+Dialogue: 0,0:00:27.22,0:00:28.21,Main,that.
+Dialogue: 0,0:00:28.21,0:00:32.92,Main,And the strangest part
+Dialogue: 0,0:00:32.92,0:00:33.41,Main,is,
+Dialogue: 0,0:00:33.41,0:00:36.88,Main,he never meant to.
+Dialogue: 0,0:00:13.79,0:00:17.42,Main,His name was Mansa
+Dialogue: 0,0:00:17.42,0:00:18.39,Main,Musa,
+Dialogue: 0,0:00:18.39,0:00:21.54,Main,the ruler of the
+Dialogue: 0,0:00:21.54,0:00:25.90,Main,empire of Mali in West
+Dialogue: 0,0:00:25.90,0:00:27.36,Main,Africa.
+Dialogue: 0,0:00:27.36,0:00:31.48,Main,Many people call him
+Dialogue: 0,0:00:31.48,0:00:36.08,Main,the richest person who
+Dialogue: 0,0:00:36.08,0:00:38.99,Main,has ever lived.
+Dialogue: 0,0:00:38.99,0:00:43.35,Main,But the truly strange
+Dialogue: 0,0:00:43.35,0:00:47.71,Main,story is what all that
+Dialogue: 0,0:00:47.71,0:00:51.83,Main,wealth actually did.
+Dialogue: 0,0:00:27.10,0:00:30.53,Main,Mali sat on top of
+Dialogue: 0,0:00:30.53,0:00:34.70,Main,something the whole
+Dialogue: 0,0:00:34.70,0:00:37.40,Main,world wanted.
+Dialogue: 0,0:00:37.40,0:00:38.38,Main,{\c&H0000D4FF}Gold{\c&H00FFFFFF}.
+Dialogue: 0,0:00:38.38,0:00:42.80,Main,The empire was full of
+Dialogue: 0,0:00:42.80,0:00:43.29,Main,it.
+Dialogue: 0,0:00:43.29,0:00:47.21,Main,It also controlled
+Dialogue: 0,0:00:47.21,0:00:48.19,Main,salt,
+Dialogue: 0,0:00:48.19,0:00:52.61,Main,which back then was so
+Dialogue: 0,0:00:52.61,0:00:56.78,Main,useful it was traded
+Dialogue: 0,0:00:56.78,0:01:01.19,Main,almost like treasure.
+Dialogue: 0,0:00:39.98,0:00:44.54,Main,Every trade route that
+Dialogue: 0,0:00:44.54,0:00:48.62,Main,crossed this part of
+Dialogue: 0,0:00:48.62,0:00:53.17,Main,Africa passed through
+Dialogue: 0,0:00:53.17,0:00:56.77,Main,his lands and paid
+Dialogue: 0,0:00:56.77,0:00:57.49,Main,him.
+Dialogue: 0,0:00:57.49,0:01:01.09,Main,His wealth grew so
+Dialogue: 0,0:01:01.09,0:01:04.69,Main,vast that even the
+Dialogue: 0,0:01:04.69,0:01:08.28,Main,people of the time
+Dialogue: 0,0:01:08.28,0:01:12.60,Main,could not really put a
+Dialogue: 0,0:01:12.60,0:01:15.00,Main,number on it.
+Dialogue: 0,0:00:50.31,0:00:53.53,Main,But a ruler can be
+Dialogue: 0,0:00:53.53,0:00:56.76,Main,rich and still be
+Dialogue: 0,0:00:56.76,0:01:00.67,Main,unknown to the wider
+Dialogue: 0,0:01:00.67,0:01:01.83,Main,world.
+Dialogue: 0,0:01:01.83,0:01:06.66,Main,In the year 1324,
+Dialogue: 0,0:01:06.66,0:01:10.81,Main,Mansa Musa decided to
+Dialogue: 0,0:01:10.81,0:01:14.26,Main,do something that
+Dialogue: 0,0:01:14.26,0:01:18.41,Main,would put both him and
+Dialogue: 0,0:01:18.41,0:01:21.64,Main,Mali {\c&H0000D4FF}onto the map{\c&H00FFFFFF},
+Dialogue: 0,0:01:21.64,0:01:24.86,Main,quite literally.
+Dialogue: 0,0:01:02.25,0:01:06.21,Main,As a devoted Muslim,
+Dialogue: 0,0:01:06.21,0:01:10.41,Main,he set out on the long
+Dialogue: 0,0:01:10.41,0:01:14.86,Main,holy journey to Mecca,
+Dialogue: 0,0:01:14.86,0:01:17.83,Main,far to the east.
+Dialogue: 0,0:01:17.83,0:01:22.03,Main,But this was no quiet
+Dialogue: 0,0:01:22.03,0:01:25.24,Main,trip for one man.
+Dialogue: 0,0:01:25.24,0:01:28.71,Main,It was more like a
+Dialogue: 0,0:01:28.71,0:01:31.92,Main,city on the move.
+Dialogue: 0,0:01:14.00,0:01:17.50,Main,By some accounts,
+Dialogue: 0,0:01:17.50,0:01:21.74,Main,{\c&H0000D4FF}tens of thousands{\c&H00FFFFFF} of
+Dialogue: 0,0:01:21.74,0:01:25.73,Main,people walked with
+Dialogue: 0,0:01:25.73,0:01:26.48,Main,him.
+Dialogue: 0,0:01:26.48,0:01:28.48,Main,Servants,
+Dialogue: 0,0:01:28.48,0:01:30.48,Main,soldiers,
+Dialogue: 0,0:01:30.48,0:01:33.47,Main,and officials.
+Dialogue: 0,0:01:33.47,0:01:37.22,Main,Camels and horses
+Dialogue: 0,0:01:37.22,0:01:39.96,Main,carried food,
+Dialogue: 0,0:01:39.96,0:01:41.96,Main,supplies,
+Dialogue: 0,0:01:41.96,0:01:44.21,Main,and a truly
+Dialogue: 0,0:01:44.21,0:01:48.95,Main,astonishing amount of
+Dialogue: 0,0:01:48.95,0:01:49.95,Main,gold.
+Dialogue: 0,0:01:27.50,0:01:32.21,Main,Everywhere he stopped,
+Dialogue: 0,0:01:32.21,0:01:35.69,Main,he {\c&H0000D4FF}gave gold away{\c&H00FFFFFF}.
+Dialogue: 0,0:01:35.69,0:01:39.90,Main,To the poor people he
+Dialogue: 0,0:01:39.90,0:01:40.65,Main,met.
+Dialogue: 0,0:01:40.65,0:01:44.86,Main,To whole towns along
+Dialogue: 0,0:01:44.86,0:01:46.60,Main,the road.
+Dialogue: 0,0:01:46.60,0:01:49.33,Main,To anyone who
+Dialogue: 0,0:01:49.33,0:01:52.31,Main,impressed him.
+Dialogue: 0,0:01:52.31,0:01:55.28,Main,The further he
+Dialogue: 0,0:01:55.28,0:01:57.51,Main,travelled,
+Dialogue: 0,0:01:57.51,0:02:01.73,Main,the more generous he
+Dialogue: 0,0:02:01.73,0:02:03.22,Main,became.
+Dialogue: 0,0:01:41.93,0:01:45.36,Main,Then his caravan
+Dialogue: 0,0:01:45.36,0:01:48.29,Main,reached Cairo,
+Dialogue: 0,0:01:48.29,0:01:52.21,Main,one of the greatest
+Dialogue: 0,0:01:52.21,0:01:56.37,Main,cities in the entire
+Dialogue: 0,0:01:56.37,0:01:57.59,Main,world.
+Dialogue: 0,0:01:57.59,0:01:59.30,Main,And here,
+Dialogue: 0,0:01:59.30,0:02:02.97,Main,in the richest and
+Dialogue: 0,0:02:02.97,0:02:06.89,Main,busiest of markets,
+Dialogue: 0,0:02:06.89,0:02:11.05,Main,his kindness turned
+Dialogue: 0,0:02:11.05,0:02:15.21,Main,into a problem no one
+Dialogue: 0,0:02:15.21,0:02:17.41,Main,saw coming.
+Dialogue: 0,0:01:53.70,0:01:58.09,Main,Mansa Musa handed out
+Dialogue: 0,0:01:58.09,0:02:02.24,Main,gold in Cairo as if it
+Dialogue: 0,0:02:02.24,0:02:06.15,Main,were nothing at all.
+Dialogue: 0,0:02:06.15,0:02:08.59,Main,So much gold,
+Dialogue: 0,0:02:08.59,0:02:12.00,Main,to so many people,
+Dialogue: 0,0:02:12.00,0:02:16.15,Main,that something very
+Dialogue: 0,0:02:16.15,0:02:20.55,Main,strange slowly began
+Dialogue: 0,0:02:20.55,0:02:24.70,Main,to happen to the city
+Dialogue: 0,0:02:24.70,0:02:26.16,Main,itself.
+Dialogue: 0,0:02:05.07,0:02:08.75,Main,Here is the simple
+Dialogue: 0,0:02:08.75,0:02:11.94,Main,rule he ran into.
+Dialogue: 0,0:02:11.94,0:02:15.62,Main,When something is
+Dialogue: 0,0:02:15.62,0:02:20.03,Main,suddenly everywhere,
+Dialogue: 0,0:02:20.03,0:02:22.98,Main,it stops being
+Dialogue: 0,0:02:22.98,0:02:24.69,Main,special.
+Dialogue: 0,0:02:24.69,0:02:29.35,Main,With gold flooding the
+Dialogue: 0,0:02:29.35,0:02:31.07,Main,markets,
+Dialogue: 0,0:02:31.07,0:02:34.99,Main,the value of gold in
+Dialogue: 0,0:02:34.99,0:02:39.41,Main,Cairo started to drop.
+Dialogue: 0,0:02:39.41,0:02:43.58,Main,And it kept dropping.
+Dialogue: 0,0:02:19.36,0:02:22.26,Main,As gold became
+Dialogue: 0,0:02:22.26,0:02:23.95,Main,cheaper,
+Dialogue: 0,0:02:23.95,0:02:26.61,Main,the prices of
+Dialogue: 0,0:02:26.61,0:02:29.99,Main,everything else
+Dialogue: 0,0:02:29.99,0:02:31.68,Main,climbed.
+Dialogue: 0,0:02:31.68,0:02:36.02,Main,The money and savings
+Dialogue: 0,0:02:36.02,0:02:40.61,Main,that families already
+Dialogue: 0,0:02:40.61,0:02:44.24,Main,had were suddenly
+Dialogue: 0,0:02:44.24,0:02:46.41,Main,{\c&H0000D4FF}worth less{\c&H00FFFFFF}.
+Dialogue: 0,0:02:46.41,0:02:51.00,Main,This generous visitor
+Dialogue: 0,0:02:51.00,0:02:55.59,Main,had quietly made daily
+Dialogue: 0,0:02:55.59,0:02:58.73,Main,life harder for
+Dialogue: 0,0:02:58.73,0:03:00.66,Main,everyone.
+Dialogue: 0,0:02:32.86,0:02:37.13,Main,And that is the twist.
+Dialogue: 0,0:02:37.13,0:02:41.64,Main,The richest man alive
+Dialogue: 0,0:02:41.64,0:02:45.66,Main,had damaged a great
+Dialogue: 0,0:02:45.66,0:02:48.67,Main,city's economy.
+Dialogue: 0,0:02:48.67,0:02:51.93,Main,Not with an army.
+Dialogue: 0,0:02:51.93,0:02:54.94,Main,Not with greed.
+Dialogue: 0,0:02:54.94,0:02:57.70,Main,But with pure,
+Dialogue: 0,0:02:57.70,0:03:00.21,Main,open-handed
+Dialogue: 0,0:03:00.21,0:03:02.72,Main,generosity.
+Dialogue: 0,0:03:02.72,0:03:05.73,Main,And the damage
+Dialogue: 0,0:03:05.73,0:03:09.74,Main,lingered for years.
+Dialogue: 0,0:02:48.76,0:02:51.70,Main,On his way home,
+Dialogue: 0,0:02:51.70,0:02:54.64,Main,the story goes,
+Dialogue: 0,0:02:54.64,0:02:58.80,Main,Mansa Musa actually
+Dialogue: 0,0:02:58.80,0:03:01.75,Main,{\c&H0000D4FF}tried to fix it{\c&H00FFFFFF}.
+Dialogue: 0,0:03:01.75,0:03:06.40,Main,He borrowed and bought
+Dialogue: 0,0:03:06.40,0:03:10.32,Main,back as much gold as
+Dialogue: 0,0:03:10.32,0:03:12.04,Main,he could,
+Dialogue: 0,0:03:12.04,0:03:16.20,Main,to pull some of it out
+Dialogue: 0,0:03:16.20,0:03:19.14,Main,of the markets.
+Dialogue: 0,0:03:19.14,0:03:23.06,Main,It was a remarkably
+Dialogue: 0,0:03:23.06,0:03:26.98,Main,modern idea for the
+Dialogue: 0,0:03:26.98,0:03:27.96,Main,time.
+Dialogue: 0,0:03:02.98,0:03:07.10,Main,But the real story of
+Dialogue: 0,0:03:07.10,0:03:11.23,Main,Mansa Musa is not the
+Dialogue: 0,0:03:11.23,0:03:15.60,Main,mess he accidentally
+Dialogue: 0,0:03:15.60,0:03:19.72,Main,left behind in Cairo.
+Dialogue: 0,0:03:19.72,0:03:23.85,Main,It is what he chose to
+Dialogue: 0,0:03:23.85,0:03:27.97,Main,{\c&H0000D4FF}bring back home{\c&H00FFFFFF} with
+Dialogue: 0,0:03:27.97,0:03:28.70,Main,him.
+Dialogue: 0,0:03:11.58,0:03:15.02,Main,He returned with
+Dialogue: 0,0:03:15.02,0:03:16.98,Main,scholars,
+Dialogue: 0,0:03:16.98,0:03:18.21,Main,poets,
+Dialogue: 0,0:03:18.21,0:03:20.91,Main,and builders.
+Dialogue: 0,0:03:20.91,0:03:25.09,Main,He poured his wealth
+Dialogue: 0,0:03:25.09,0:03:29.76,Main,into learning instead
+Dialogue: 0,0:03:29.76,0:03:30.98,Main,of war.
+Dialogue: 0,0:03:30.98,0:03:32.95,Main,Under him,
+Dialogue: 0,0:03:32.95,0:03:37.12,Main,the city of Timbuktu
+Dialogue: 0,0:03:37.12,0:03:41.05,Main,grew into one of the
+Dialogue: 0,0:03:41.05,0:03:44.49,Main,great centres of
+Dialogue: 0,0:03:44.49,0:03:47.93,Main,knowledge in the
+Dialogue: 0,0:03:47.93,0:03:49.16,Main,world.
+Dialogue: 0,0:03:24.29,0:03:28.41,Main,Students travelled
+Dialogue: 0,0:03:28.41,0:03:32.76,Main,{\c&H0000D4FF}from far away{\c&H00FFFFFF} to study
+Dialogue: 0,0:03:32.76,0:03:33.98,Main,there.
+Dialogue: 0,0:03:33.98,0:03:38.58,Main,Libraries filled with
+Dialogue: 0,0:03:38.58,0:03:42.45,Main,thousands of books.
+Dialogue: 0,0:03:42.45,0:03:46.57,Main,A city in the heart of
+Dialogue: 0,0:03:46.57,0:03:50.92,Main,Africa became a place
+Dialogue: 0,0:03:50.92,0:03:55.04,Main,the whole world came
+Dialogue: 0,0:03:55.04,0:03:57.22,Main,to respect.
+Dialogue: 0,0:03:35.61,0:03:39.25,Main,And the gold he had
+Dialogue: 0,0:03:39.25,0:03:43.61,Main,scattered across his
+Dialogue: 0,0:03:43.61,0:03:47.73,Main,long journey did one
+Dialogue: 0,0:03:47.73,0:03:49.91,Main,more thing.
+Dialogue: 0,0:03:49.91,0:03:53.79,Main,Word of the emperor
+Dialogue: 0,0:03:53.79,0:03:58.40,Main,who gave away fortunes
+Dialogue: 0,0:03:58.40,0:04:01.55,Main,spread outward,
+Dialogue: 0,0:04:01.55,0:04:05.92,Main,all the way to distant
+Dialogue: 0,0:04:05.92,0:04:07.37,Main,Europe.
+Dialogue: 0,0:03:45.36,0:03:47.81,Main,Years later,
+Dialogue: 0,0:03:47.81,0:03:51.98,Main,a famous map showed a
+Dialogue: 0,0:03:51.98,0:03:56.40,Main,single African ruler
+Dialogue: 0,0:03:56.40,0:04:00.57,Main,seated in the desert,
+Dialogue: 0,0:04:00.57,0:04:04.49,Main,holding up a lump of
+Dialogue: 0,0:04:04.49,0:04:05.47,Main,gold,
+Dialogue: 0,0:04:05.47,0:04:10.13,Main,looking out toward the
+Dialogue: 0,0:04:10.13,0:04:14.30,Main,traders of the world.
+Dialogue: 0,0:04:14.30,0:04:18.47,Main,That ruler was Mansa
+Dialogue: 0,0:04:18.47,0:04:19.45,Main,Musa.
+Dialogue: 0,0:03:56.82,0:04:00.23,Main,He may be the only
+Dialogue: 0,0:04:00.23,0:04:04.38,Main,person in history to
+Dialogue: 0,0:04:04.38,0:04:08.28,Main,crash an economy by
+Dialogue: 0,0:04:08.28,0:04:11.21,Main,being {\c&H0000D4FF}too kind{\c&H00FFFFFF}.
+Dialogue: 0,0:04:11.21,0:04:15.36,Main,And to be remembered,
+Dialogue: 0,0:04:15.36,0:04:19.51,Main,seven hundred years
+Dialogue: 0,0:04:19.51,0:04:19.99,Main,on,
+Dialogue: 0,0:04:19.99,0:04:24.38,Main,above all for the gold
+Dialogue: 0,0:04:24.38,0:04:28.77,Main,he was willing to give
+Dialogue: 0,0:04:28.77,0:04:29.75,Main,away.

@@ -1,0 +1,247 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,42,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,90
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.70,0:00:03.52,Main,It is November,
+Dialogue: 0,0:00:03.52,0:00:06.33,Main,1932.
+Dialogue: 0,0:00:06.33,0:00:10.09,Main,In a dry wheat field
+Dialogue: 0,0:00:10.09,0:00:14.32,Main,in Western Australia,
+Dialogue: 0,0:00:14.32,0:00:18.54,Main,soldiers are quietly
+Dialogue: 0,0:00:18.54,0:00:22.54,Main,setting up a machine
+Dialogue: 0,0:00:22.54,0:00:23.24,Main,gun.
+Dialogue: 0,0:00:23.24,0:00:27.23,Main,Their enemy is not an
+Dialogue: 0,0:00:27.23,0:00:28.17,Main,army.
+Dialogue: 0,0:00:28.17,0:00:31.22,Main,It is not a rival
+Dialogue: 0,0:00:31.22,0:00:32.87,Main,country.
+Dialogue: 0,0:00:32.87,0:00:35.92,Main,It is a bird that
+Dialogue: 0,0:00:35.92,0:00:38.97,Main,{\c&H0000D4FF}cannot even fly{\c&H00FFFFFF}.
+Dialogue: 0,0:00:17.27,0:00:21.03,Main,The plan is simple.
+Dialogue: 0,0:00:21.03,0:00:23.78,Main,Point the gun.
+Dialogue: 0,0:00:23.78,0:00:26.04,Main,Win in a day.
+Dialogue: 0,0:00:26.04,0:00:28.80,Main,Go home a hero.
+Dialogue: 0,0:00:28.80,0:00:32.55,Main,It does not go that
+Dialogue: 0,0:00:32.55,0:00:34.56,Main,way at all.
+Dialogue: 0,0:00:34.56,0:00:36.06,Main,In fact,
+Dialogue: 0,0:00:36.06,0:00:40.32,Main,it may be the only war
+Dialogue: 0,0:00:40.32,0:00:44.83,Main,a modern army has ever
+Dialogue: 0,0:00:44.83,0:00:48.34,Main,{\c&H0000D4FF}lost to an animal{\c&H00FFFFFF}.
+Dialogue: 0,0:00:32.38,0:00:35.36,Main,To see how this
+Dialogue: 0,0:00:35.36,0:00:37.34,Main,happened,
+Dialogue: 0,0:00:37.34,0:00:41.06,Main,go back a few years.
+Dialogue: 0,0:00:41.06,0:00:45.03,Main,After the Great War,
+Dialogue: 0,0:00:45.03,0:00:48.75,Main,Australia handed
+Dialogue: 0,0:00:48.75,0:00:53.47,Main,farmland to returning
+Dialogue: 0,0:00:53.47,0:00:55.45,Main,soldiers.
+Dialogue: 0,0:00:55.45,0:00:57.69,Main,It was hard,
+Dialogue: 0,0:00:57.69,0:01:01.66,Main,dry ground out west.
+Dialogue: 0,0:01:01.66,0:01:06.12,Main,The men {\c&H0000D4FF}planted wheat{\c&H00FFFFFF},
+Dialogue: 0,0:01:06.12,0:01:10.59,Main,and they hoped for the
+Dialogue: 0,0:01:10.59,0:01:11.58,Main,best.
+Dialogue: 0,0:00:47.68,0:00:51.41,Main,Then the emus came.
+Dialogue: 0,0:00:51.41,0:00:56.38,Main,Nearly {\c&H0000D4FF}twenty thousand{\c&H00FFFFFF}
+Dialogue: 0,0:00:56.38,0:00:57.87,Main,of them,
+Dialogue: 0,0:00:57.87,0:01:01.84,Main,walking in from the
+Dialogue: 0,0:01:01.84,0:01:06.57,Main,dry interior in search
+Dialogue: 0,0:01:06.57,0:01:10.05,Main,of food and water.
+Dialogue: 0,0:01:10.05,0:01:13.03,Main,Tall as a grown
+Dialogue: 0,0:01:13.03,0:01:14.52,Main,person.
+Dialogue: 0,0:01:14.52,0:01:15.51,Main,Fast.
+Dialogue: 0,0:01:15.51,0:01:16.26,Main,And,
+Dialogue: 0,0:01:16.26,0:01:20.48,Main,as the army was about
+Dialogue: 0,0:01:20.48,0:01:22.22,Main,to learn,
+Dialogue: 0,0:01:22.22,0:01:25.95,Main,incredibly tough.
+Dialogue: 0,0:01:03.65,0:01:07.77,Main,Picture standing at
+Dialogue: 0,0:01:07.77,0:01:12.13,Main,the edge of your field
+Dialogue: 0,0:01:12.13,0:01:13.59,Main,at dawn.
+Dialogue: 0,0:01:13.59,0:01:17.95,Main,You have poured a year
+Dialogue: 0,0:01:17.95,0:01:21.35,Main,of work into this
+Dialogue: 0,0:01:21.35,0:01:22.32,Main,crop.
+Dialogue: 0,0:01:22.32,0:01:26.68,Main,And you watch a moving
+Dialogue: 0,0:01:26.68,0:01:30.32,Main,wall of tall birds
+Dialogue: 0,0:01:30.32,0:01:34.68,Main,come straight for all
+Dialogue: 0,0:01:34.68,0:01:35.65,Main,of it.
+Dialogue: 0,0:01:14.27,0:01:18.65,Main,They smashed through
+Dialogue: 0,0:01:18.65,0:01:23.03,Main,fences like they were
+Dialogue: 0,0:01:23.03,0:01:25.95,Main,made of string.
+Dialogue: 0,0:01:25.95,0:01:29.60,Main,They ate the wheat.
+Dialogue: 0,0:01:29.60,0:01:33.25,Main,And the holes they
+Dialogue: 0,0:01:33.25,0:01:37.63,Main,left in the fences let
+Dialogue: 0,0:01:37.63,0:01:41.28,Main,rabbits pour in to
+Dialogue: 0,0:01:41.28,0:01:45.42,Main,finish whatever was
+Dialogue: 0,0:01:45.42,0:01:46.40,Main,left.
+Dialogue: 0,0:01:46.40,0:01:49.56,Main,For the farmers,
+Dialogue: 0,0:01:49.56,0:01:51.99,Main,it was a slow
+Dialogue: 0,0:01:51.99,0:01:53.94,Main,disaster.
+Dialogue: 0,0:01:28.16,0:01:31.10,Main,So the farmers,
+Dialogue: 0,0:01:31.10,0:01:35.01,Main,many of them former
+Dialogue: 0,0:01:35.01,0:01:39.42,Main,soldiers themselves,
+Dialogue: 0,0:01:39.42,0:01:43.82,Main,asked the government
+Dialogue: 0,0:01:43.82,0:01:45.53,Main,for help.
+Dialogue: 0,0:01:45.53,0:01:49.45,Main,And the government
+Dialogue: 0,0:01:49.45,0:01:53.36,Main,sent the last thing
+Dialogue: 0,0:01:53.36,0:01:57.77,Main,you would expect for a
+Dialogue: 0,0:01:57.77,0:02:00.46,Main,bird problem.
+Dialogue: 0,0:02:00.46,0:02:03.64,Main,It sent {\c&H0000D4FF}the army{\c&H00FFFFFF}.
+Dialogue: 0,0:01:39.69,0:01:42.89,Main,The Minister of
+Dialogue: 0,0:01:42.89,0:01:47.57,Main,Defence agreed to send
+Dialogue: 0,0:01:47.57,0:01:49.53,Main,soldiers,
+Dialogue: 0,0:01:49.53,0:01:52.98,Main,{\c&H0000D4FF}two machine guns{\c&H00FFFFFF},
+Dialogue: 0,0:01:52.98,0:01:56.43,Main,and ten thousand
+Dialogue: 0,0:01:56.43,0:02:00.86,Main,rounds of ammunition.
+Dialogue: 0,0:02:00.86,0:02:05.53,Main,A major named Meredith
+Dialogue: 0,0:02:05.53,0:02:08.98,Main,was put in charge.
+Dialogue: 0,0:02:08.98,0:02:10.70,Main,On paper,
+Dialogue: 0,0:02:10.70,0:02:14.89,Main,it looked almost too
+Dialogue: 0,0:02:14.89,0:02:15.87,Main,easy.
+Dialogue: 0,0:01:53.07,0:01:57.52,Main,Machine guns against
+Dialogue: 0,0:01:57.52,0:01:58.50,Main,slow,
+Dialogue: 0,0:01:58.50,0:02:02.21,Main,flightless birds.
+Dialogue: 0,0:02:02.21,0:02:06.41,Main,Everyone pictured a
+Dialogue: 0,0:02:06.41,0:02:07.64,Main,quick,
+Dialogue: 0,0:02:07.64,0:02:09.62,Main,clean job.
+Dialogue: 0,0:02:09.62,0:02:13.82,Main,A few days of work and
+Dialogue: 0,0:02:13.82,0:02:17.77,Main,a good story to tell.
+Dialogue: 0,0:02:17.77,0:02:22.22,Main,Nobody imagined what
+Dialogue: 0,0:02:22.22,0:02:26.67,Main,the emus were about to
+Dialogue: 0,0:02:26.67,0:02:27.16,Main,do.
+Dialogue: 0,0:02:06.83,0:02:10.72,Main,The very first time
+Dialogue: 0,0:02:10.72,0:02:14.86,Main,the soldiers opened
+Dialogue: 0,0:02:14.86,0:02:15.83,Main,fire,
+Dialogue: 0,0:02:15.83,0:02:20.46,Main,the emus did something
+Dialogue: 0,0:02:20.46,0:02:24.11,Main,no one had planned
+Dialogue: 0,0:02:24.11,0:02:24.84,Main,for.
+Dialogue: 0,0:02:24.84,0:02:28.00,Main,They scattered.
+Dialogue: 0,0:02:28.00,0:02:32.14,Main,Instead of standing
+Dialogue: 0,0:02:32.14,0:02:36.03,Main,together in one big
+Dialogue: 0,0:02:36.03,0:02:37.25,Main,flock,
+Dialogue: 0,0:02:37.25,0:02:41.39,Main,they broke into tiny
+Dialogue: 0,0:02:41.39,0:02:42.85,Main,groups,
+Dialogue: 0,0:02:42.85,0:02:47.23,Main,each sprinting off in
+Dialogue: 0,0:02:47.23,0:02:51.85,Main,a different direction.
+Dialogue: 0,0:02:21.58,0:02:25.24,Main,Now the guns could
+Dialogue: 0,0:02:25.24,0:02:29.38,Main,barely hit anything.
+Dialogue: 0,0:02:29.38,0:02:33.53,Main,Emus can run at fifty
+Dialogue: 0,0:02:33.53,0:02:38.16,Main,kilometres an hour and
+Dialogue: 0,0:02:38.16,0:02:41.82,Main,turn almost on the
+Dialogue: 0,0:02:41.82,0:02:42.79,Main,spot.
+Dialogue: 0,0:02:42.79,0:02:46.45,Main,One of the machine
+Dialogue: 0,0:02:46.45,0:02:48.89,Main,guns jammed.
+Dialogue: 0,0:02:48.89,0:02:53.28,Main,The birds just kept on
+Dialogue: 0,0:02:53.28,0:02:54.74,Main,coming.
+Dialogue: 0,0:02:34.58,0:02:39.22,Main,But the strangest part
+Dialogue: 0,0:02:39.22,0:02:43.38,Main,was not how fast they
+Dialogue: 0,0:02:43.38,0:02:44.11,Main,ran.
+Dialogue: 0,0:02:44.11,0:02:48.03,Main,It was how hard they
+Dialogue: 0,0:02:48.03,0:02:51.69,Main,were to bring down.
+Dialogue: 0,0:02:51.69,0:02:54.38,Main,Hit after hit,
+Dialogue: 0,0:02:54.38,0:02:58.78,Main,these birds seemed to
+Dialogue: 0,0:02:58.78,0:03:02.94,Main,shake it off and keep
+Dialogue: 0,0:03:02.94,0:03:04.16,Main,going,
+Dialogue: 0,0:03:04.16,0:03:07.58,Main,as if they simply
+Dialogue: 0,0:03:07.58,0:03:10.76,Main,{\c&H0000D4FF}refused to fall{\c&H00FFFFFF}.
+Dialogue: 0,0:02:47.12,0:02:51.52,Main,The soldiers tried to
+Dialogue: 0,0:02:51.52,0:02:53.48,Main,be clever.
+Dialogue: 0,0:02:53.48,0:02:57.64,Main,They set an ambush by
+Dialogue: 0,0:02:57.64,0:02:58.62,Main,a dam.
+Dialogue: 0,0:02:58.62,0:03:02.77,Main,More than a thousand
+Dialogue: 0,0:03:02.77,0:03:07.42,Main,emus walked right into
+Dialogue: 0,0:03:07.42,0:03:09.13,Main,the trap.
+Dialogue: 0,0:03:09.13,0:03:11.82,Main,The gun fired,
+Dialogue: 0,0:03:11.82,0:03:16.47,Main,then jammed after only
+Dialogue: 0,0:03:16.47,0:03:19.16,Main,a dozen shots.
+Dialogue: 0,0:03:19.16,0:03:23.32,Main,The rest of the birds
+Dialogue: 0,0:03:23.32,0:03:27.72,Main,simply strolled away.
+Dialogue: 0,0:03:03.02,0:03:07.39,Main,They even bolted a gun
+Dialogue: 0,0:03:07.39,0:03:10.79,Main,onto the back of a
+Dialogue: 0,0:03:10.79,0:03:14.91,Main,truck and gave chase.
+Dialogue: 0,0:03:14.91,0:03:18.31,Main,The ground was so
+Dialogue: 0,0:03:18.31,0:03:21.22,Main,rough that the
+Dialogue: 0,0:03:21.22,0:03:25.84,Main,soldiers could not aim
+Dialogue: 0,0:03:25.84,0:03:27.05,Main,at all,
+Dialogue: 0,0:03:27.05,0:03:30.93,Main,and the emus easily
+Dialogue: 0,0:03:30.93,0:03:34.33,Main,{\c&H0000D4FF}outran the truck{\c&H00FFFFFF}.
+Dialogue: 0,0:03:34.33,0:03:38.46,Main,It was turning into a
+Dialogue: 0,0:03:38.46,0:03:39.43,Main,joke.
+Dialogue: 0,0:03:15.68,0:03:19.42,Main,After about a week,
+Dialogue: 0,0:03:19.42,0:03:23.40,Main,the numbers told an
+Dialogue: 0,0:03:23.40,0:03:27.64,Main,embarrassing story.
+Dialogue: 0,0:03:27.64,0:03:31.88,Main,Thousands of rounds
+Dialogue: 0,0:03:31.88,0:03:33.12,Main,spent.
+Dialogue: 0,0:03:33.12,0:03:37.36,Main,Only a small handful
+Dialogue: 0,0:03:37.36,0:03:41.10,Main,of birds actually
+Dialogue: 0,0:03:41.10,0:03:42.09,Main,down.
+Dialogue: 0,0:03:42.09,0:03:44.84,Main,A modern army,
+Dialogue: 0,0:03:44.84,0:03:48.57,Main,with machine guns,
+Dialogue: 0,0:03:48.57,0:03:50.82,Main,was losing.
+Dialogue: 0,0:03:50.82,0:03:52.56,Main,To birds.
+Dialogue: 0,0:03:31.29,0:03:35.42,Main,The newspapers had a
+Dialogue: 0,0:03:35.42,0:03:37.36,Main,field day.
+Dialogue: 0,0:03:37.36,0:03:41.73,Main,People joked that the
+Dialogue: 0,0:03:41.73,0:03:45.37,Main,{\c&H0000D4FF}emus had won{\c&H00FFFFFF} their
+Dialogue: 0,0:03:45.37,0:03:49.49,Main,first war and should
+Dialogue: 0,0:03:49.49,0:03:52.65,Main,be given medals.
+Dialogue: 0,0:03:52.65,0:03:56.29,Main,The story reached
+Dialogue: 0,0:03:56.29,0:03:58.72,Main,parliament,
+Dialogue: 0,0:03:58.72,0:04:01.63,Main,where awkward
+Dialogue: 0,0:04:01.63,0:04:06.00,Main,questions were asked
+Dialogue: 0,0:04:06.00,0:04:07.70,Main,out loud.
+Dialogue: 0,0:03:43.08,0:03:44.82,Main,Quietly,
+Dialogue: 0,0:03:44.82,0:03:48.55,Main,the soldiers were
+Dialogue: 0,0:03:48.55,0:03:50.78,Main,{\c&H0000D4FF}pulled out{\c&H00FFFFFF}.
+Dialogue: 0,0:03:50.78,0:03:55.01,Main,They came back later
+Dialogue: 0,0:03:55.01,0:03:55.75,Main,and,
+Dialogue: 0,0:03:55.75,0:03:58.74,Main,with practice,
+Dialogue: 0,0:03:58.74,0:04:02.71,Main,did a little better.
+Dialogue: 0,0:04:02.71,0:04:06.19,Main,But the truth was
+Dialogue: 0,0:04:06.19,0:04:07.43,Main,plain.
+Dialogue: 0,0:04:07.43,0:04:11.91,Main,Guns were never going
+Dialogue: 0,0:04:11.91,0:04:15.14,Main,to clear twenty
+Dialogue: 0,0:04:15.14,0:04:18.12,Main,thousand fast,
+Dialogue: 0,0:04:18.12,0:04:21.35,Main,stubborn birds.
+Dialogue: 0,0:03:57.28,0:04:01.72,Main,By the official count,
+Dialogue: 0,0:04:01.72,0:04:05.17,Main,after nearly ten
+Dialogue: 0,0:04:05.17,0:04:08.62,Main,thousand rounds,
+Dialogue: 0,0:04:08.62,0:04:13.06,Main,fewer than a thousand
+Dialogue: 0,0:04:13.06,0:04:16.01,Main,emus were down.
+Dialogue: 0,0:04:16.01,0:04:19.96,Main,That is roughly ten
+Dialogue: 0,0:04:19.96,0:04:23.66,Main,bullets for every
+Dialogue: 0,0:04:23.66,0:04:26.12,Main,single bird.
+Dialogue: 0,0:04:26.12,0:04:28.83,Main,And the crops?
+Dialogue: 0,0:04:28.83,0:04:32.53,Main,Still being eaten.
+Dialogue: 0,0:04:10.90,0:04:12.87,Main,In the end,
+Dialogue: 0,0:04:12.87,0:04:16.33,Main,guns were not the
+Dialogue: 0,0:04:16.33,0:04:19.04,Main,answer at all.
+Dialogue: 0,0:04:19.04,0:04:23.24,Main,What finally helped
+Dialogue: 0,0:04:23.24,0:04:26.45,Main,the farmers was
+Dialogue: 0,0:04:26.45,0:04:30.40,Main,something far more
+Dialogue: 0,0:04:30.40,0:04:31.88,Main,boring.
+Dialogue: 0,0:04:31.88,0:04:35.58,Main,A small reward for
+Dialogue: 0,0:04:35.58,0:04:39.77,Main,each bird brought in,
+Dialogue: 0,0:04:39.77,0:04:41.99,Main,and taller,
+Dialogue: 0,0:04:41.99,0:04:45.45,Main,stronger fences.
+Dialogue: 0,0:04:23.44,0:04:26.72,Main,The emus had not
+Dialogue: 0,0:04:26.72,0:04:30.51,Main,really out-fought
+Dialogue: 0,0:04:30.51,0:04:32.02,Main,anyone.
+Dialogue: 0,0:04:32.02,0:04:36.31,Main,They had simply done
+Dialogue: 0,0:04:36.31,0:04:40.86,Main,what they have always
+Dialogue: 0,0:04:40.86,0:04:41.87,Main,done.
+Dialogue: 0,0:04:41.87,0:04:44.14,Main,Spread out,
+Dialogue: 0,0:04:44.14,0:04:45.90,Main,run fast,
+Dialogue: 0,0:04:45.90,0:04:47.92,Main,take a hit,
+Dialogue: 0,0:04:47.92,0:04:51.71,Main,and {\c&H0000D4FF}refuse to quit{\c&H00FFFFFF}.
+Dialogue: 0,0:04:34.25,0:04:38.36,Main,And that is how a bird
+Dialogue: 0,0:04:38.36,0:04:42.96,Main,that cannot fly earned
+Dialogue: 0,0:04:42.96,0:04:47.55,Main,a strange little place
+Dialogue: 0,0:04:47.55,0:04:49.73,Main,in history.
+Dialogue: 0,0:04:49.73,0:04:54.32,Main,As the unlikely winner
+Dialogue: 0,0:04:54.32,0:04:58.43,Main,of a war that a modern
+Dialogue: 0,0:04:58.43,0:05:02.06,Main,army {\c&H0000D4FF}could not win{\c&H00FFFFFF}.
