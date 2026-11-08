@@ -16,7 +16,7 @@ from ..render.subtitles import build_ass
 from ..render.util import probe_duration, run
 from .compose import XFADE, _kenburns_vf
 
-DEFAULT_CTA = "▶  Full story on the channel"
+DEFAULT_CTA = "▶  FULL STORY — link in description"
 
 
 def _esc(t: str) -> str:

@@ -20,13 +20,16 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict, shorts: bool = True) -> None
         from ..engines.youtube import upload
         vid = upload(final, plan, cfg)
         (run_dir / "youtube_id.txt").write_text(vid, encoding="utf-8")
-        print(f"      롱폼 → https://youtu.be/{vid}  (비공개/임시저장)")
+        long_url = f"https://youtu.be/{vid}"
+        print(f"      롱폼 → {long_url}  (비공개/임시저장)")
         if shorts:
             specs = plan.get("shorts") or []
             for i, sp_file in enumerate(sorted((run_dir / "shorts").glob("short_*.mp4"))):
                 meta = specs[i] if i < len(specs) else {}
                 stitle = (meta.get("title") or f"{plan['title']} #Shorts")[:100]
                 sdesc = (meta.get("description") or plan.get("description", "")).strip()
+                # 쇼츠 → 롱폼 유입: 설명 맨 위에 '풀스토리' 링크를 박는다
+                sdesc = f"▶ FULL STORY: {long_url}\n\n{sdesc}"
                 short_plan = {**plan, "title": stitle, "description": sdesc}
                 sv = upload(sp_file, short_plan, cfg)
                 print(f"      쇼츠 {sp_file.name} → https://youtu.be/{sv}  (비공개)")

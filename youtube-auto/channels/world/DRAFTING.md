@@ -131,8 +131,15 @@ Write **2 purpose-built teaser scripts** in `plan["shorts"]`. Each is **self-con
 - **Each short gets its OWN `title` and `description`** (it's uploaded separately to YouTube).
   Title: a short curiosity-gap line ending with `#shorts`. Description: 1–2 lines + a CTA to the
   full video + a couple of hashtags (e.g. `#shorts #history`). Keep both plain-language.
-- **`highlight`:** 1–2 punchy phrases to color. **`cta`** optional (on-screen end card; defaults
-  to a channel CTA). Never resolve the mystery — the point is to send viewers to the full video.
+- **`highlight`:** 1–2 punchy phrases to color. **`cta`** optional (on-screen end card; default
+  points to the description link). Never resolve the mystery — the whole point is the FUNNEL.
+- **SHORTS → LONG-FORM FUNNEL (why shorts exist).** A short's job is to make the viewer NEED the
+  answer, then send them to the full video. So: (1) tease the exact mystery the long-form pays
+  off (same hook, no answer); (2) end on a CTA pointing to the full video — the uploader auto-
+  puts the long-form link at the TOP of each short's description, so the CTA card should say
+  "link in description" / "full story below"; (3) keep it under ~45s and punchy. (The owner can
+  also add the long-form as the Short's native "Related video" in Studio — the strongest link —
+  since the API can't set that automatically.)
 
 ```json
 "shorts": [

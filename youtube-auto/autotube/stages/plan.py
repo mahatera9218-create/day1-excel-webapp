@@ -53,11 +53,11 @@ def mock_plan(cfg: dict, topic: str) -> dict:
             {"title": "The question almost no one asks #shorts",
              "description": "A quick what-if that might change how you see it. Full story on the channel. #shorts #history",
              "narration": "Here is a question almost no one asks. And the answer might change how you see everything.",
-             "scenes": [1, 3, 4], "highlight": ["almost no one asks"], "cta": "▶  Full story on the channel"},
+             "scenes": [1, 3, 4], "highlight": ["almost no one asks"], "cta": "▶  FULL STORY — link in description"},
             {"title": "The part nobody talks about #shorts",
              "description": "Everyone thinks they know this story. They don't. Full story on the channel. #shorts #history",
              "narration": "Everyone thinks they know this story. But the strangest part is the one nobody talks about.",
-             "scenes": [1, 4, 5], "highlight": ["nobody talks about"], "cta": "▶  Watch the full story"},
+             "scenes": [1, 4, 5], "highlight": ["nobody talks about"], "cta": "▶  FULL STORY — link in description"},
         ],
         "scenes": scenes,
     }
