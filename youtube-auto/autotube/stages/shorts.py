@@ -17,6 +17,7 @@ from ..render.util import probe_duration, run
 from .compose import XFADE, _kenburns_vf
 
 DEFAULT_CTA = "▶  FULL STORY — link in description"
+VERBAL_CTA = "The full story is in the description below."  # 쇼츠 끝에 음성으로도 유도
 
 
 def _esc(t: str) -> str:
@@ -52,8 +53,13 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
             continue
 
         # 1) 티저 나레이션 → 무료 목소리(한 번 호출로 mp3 + 자막 타이밍 둘 다)
+        #    끝에 '설명 링크' 유도 멘트를 자동으로 붙여 음성·자막·끝카드가 맞물리게 한다.
+        narr = short["narration"].strip()
+        if narr and narr[-1] not in ".!?":
+            narr += "."
+        narr = f"{narr} {VERBAL_CTA}"
         saud = out_dir / f"short_{n:02}.mp3"
-        tdict = engines.voice({"narration": short["narration"], "highlight": short.get("highlight", [])}, saud)
+        tdict = engines.voice({"narration": narr, "highlight": short.get("highlight", [])}, saud)
         dur = probe_duration(saud)
         ass = out_dir / f"short_{n:02}.ass"
         build_ass(tdict["chunks"], sub_cfg, size, ass)

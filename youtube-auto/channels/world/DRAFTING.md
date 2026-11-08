@@ -137,7 +137,9 @@ Write **2 purpose-built teaser scripts** in `plan["shorts"]`. Each is **self-con
   answer, then send them to the full video. So: (1) tease the exact mystery the long-form pays
   off (same hook, no answer); (2) end on a CTA pointing to the full video — the uploader auto-
   puts the long-form link at the TOP of each short's description, so the CTA card should say
-  "link in description" / "full story below"; (3) keep it under ~45s and punchy. (The owner can
+  "link in description" / "full story below"; (3) keep it under ~45s and punchy. The renderer
+  AUTO-APPENDS a spoken "full story is in the description" line to the end of every short, so do
+  NOT write that CTA into the short `narration` yourself (it would double up). (The owner can
   also add the long-form as the Short's native "Related video" in Studio — the strongest link —
   since the API can't set that automatically.)
 
