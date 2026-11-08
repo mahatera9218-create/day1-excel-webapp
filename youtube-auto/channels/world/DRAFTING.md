@@ -13,25 +13,29 @@ batch of episodes as `plan.json` files, ready for the human to review. **Never a
 the **angle is the product.** Two formats, same goal (make someone think "I never thought
 about it that way"):
 
-> **KEEP IT LIGHT AND FUN — this is the #1 note.** The goal is a grin and a "whoa, cool,"
-> not a serious lecture. Avoid heavy, grim, dense topics (plagues, mass death, economics,
-> geopolitics, war logistics). Lead with **wonder, play and imagination.** Think fun first.
+> **MOSTLY LIGHT AND FUN, with variety — this is the #1 note.** The default is a grin and a
+> "whoa, cool" — wonder, play and imagination, not a dry lecture. Make **~3 of every 4**
+> episodes light and fun. But **keep variety: about 1 in 4 can be a deeper, meatier,
+> thought-provoking episode** (a weighty history or big-consequence what-if, treasure-fleet /
+> Black-Death style). Don't make the whole batch one note, and don't make it all heavy either.
 
 - **Format B — "What If" (PRIMARY, `content_type: "what_if"`).** A fun, imaginative premise,
   grounded in one real fact up to the branch, then **playful, plausible speculation** that's
   a joy to picture. Favor **vivid, daydream-y "what ifs"** — science, nature, animals, the
   cosmos, everyday life, wild hypotheticals. Examples: *What if the dinosaurs never went
   extinct? What if the Moon vanished tomorrow? What if humans had tails? What if the Earth
-  stopped spinning for five seconds? What if everyone spoke one language?* (NOT dense history
-  like "Black Death economics.")
+  stopped spinning for five seconds? What if everyone spoke one language?* For the occasional
+  deeper episode (~1 in 4), a weightier history/consequence what-if is welcome too (e.g. the
+  treasure-fleet or Black-Death style) — just keep it a minority, not the default.
 - **Format A — "The Untold Angle" (secondary, `content_type: "true"`).** A real story seen
   through a **fun, surprising lens** nobody covers — a wild detail, a "wait, really?" fact.
   Example: not "the Titanic," but *"the band kept playing — here's the song."* Keep it light.
 
-**Theme is open, but the FEEL must be fun and curious**, not heavy. Science, nature, animals,
-space, everyday wonders and playful hypotheticals beat grim history. **Tone: light, warm,
-conversational, a little playful** — short punchy lines, lots of vivid images, never an
-academic lecture. If a topic can only be told in a heavy/depressing way, skip it.
+**Theme is open; most episodes should FEEL fun and curious.** Science, nature, animals, space,
+everyday wonders and playful hypotheticals are the staple. **Default tone: light, warm, a
+little playful** — short punchy lines, vivid images, not an academic lecture. For the ~1-in-4
+deeper episode, a more serious tone is fine — but still plain language and a strong hook, never
+dry or depressing for its own sake. Avoid purely grim/hopeless topics with no wonder in them.
 
 ### The niche rule (required on every episode)
 
