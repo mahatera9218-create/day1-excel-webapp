@@ -142,9 +142,13 @@ Real history: Admiral Zheng He's seven voyages (1405-1433) under the Ming empero
 ## 쇼츠 티저 (2편)
 
 ### 쇼츠 1  ·  장면 [1, 5, 13]  ·  CTA: ▶  Full story on the channel
+- 제목: China had the biggest ships on Earth — then let them rot #shorts
+- 설명: Six hundred years ago China ruled the seas, then simply walked away. Why? Full story on the channel. #shorts #history #china
 - 나레이션: Six hundred years ago, the biggest ships on Earth were not European. They belonged to China. So why did China let that giant fleet rot away? The choice may have handed the whole world to someone else.
 - 강조: handed the whole world
 
 ### 쇼츠 2  ·  장면 [7, 5, 18]  ·  CTA: ▶  Watch the full story
+- 제목: China beat Columbus by 80 years — then quit #shorts
+- 설명: They reached Africa and brought home a giraffe, then stopped for good. Why? Full story on the channel. #shorts #history #china
 - 나레이션: China sailed all the way to Africa and brought home a giraffe, long before Columbus was even born. They had already won the race to explore the world. Then they simply stopped. Why anyone would throw that away is one of history's strangest choices.
 - 강조: one of history's strangest choices

@@ -88,6 +88,10 @@ def lint_plan(plan: dict) -> tuple[list[str], list[str]]:
         snar = (sh.get("narration") or "").strip()
         if not snar:
             errors.append(f"쇼츠 {si}: narration 이 비어 있습니다.")
+        if not (sh.get("title") or "").strip():
+            errors.append(f"쇼츠 {si}: title(쇼츠 전용 제목)이 비어 있습니다.")
+        if not (sh.get("description") or "").strip():
+            errors.append(f"쇼츠 {si}: description(쇼츠 전용 설명)이 비어 있습니다.")
         shard = sorted({w for w in re.findall(r"[a-zA-Z]+", snar.lower()) if w in HARD_WORDS})
         if shard:
             errors.append(f"쇼츠 {si}: 어려운 단어 {shard} — 쉬운 말로.")

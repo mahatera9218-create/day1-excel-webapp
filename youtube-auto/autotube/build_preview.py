@@ -32,10 +32,22 @@ def _item(ep: Path, media: Path, repo: str, branch: str, ep_prefix: str) -> str:
     tags = ", ".join(plan.get("tags", []))
     e = html.escape
     remove_url = f"https://github.com/{repo}/delete/{branch}/{ep_prefix}/{folder}/status.json"
-    short_dl = "".join(
-        f'<a class="dl alt" download href="media/{folder}/shorts/{s.name}">⬇ 쇼츠 {n}</a>'
-        for n, s in enumerate(shorts, 1)
-    )
+
+    # 쇼츠별 블록: 자기 영상 다운로드 + 자기 제목·설명 복사
+    specs = plan.get("shorts") or []
+    short_blocks = ""
+    for n, s in enumerate(shorts, 1):
+        sp = specs[n - 1] if n - 1 < len(specs) else {}
+        st = sp.get("title") or f"{title} #shorts"
+        sd = (sp.get("description", "").strip() or f"{title}") + "\n\n" + AI_NOTICE + " #shorts"
+        short_blocks += f"""
+      <div class="short">
+        <div class="shead">🎬 쇼츠 {n}</div>
+        <div class="row"><a class="dl alt" download href="media/{folder}/shorts/{s.name}">⬇ 쇼츠 {n} 영상</a></div>
+        <div class="box"><button class="copy" data-t="st{n}-{folder}">쇼츠{n} 제목 복사</button><pre id="st{n}-{folder}">{e(st)}</pre></div>
+        <div class="box"><button class="copy" data-t="sd{n}-{folder}">쇼츠{n} 설명 복사</button><pre id="sd{n}-{folder}">{e(sd)}</pre></div>
+      </div>"""
+
     return f"""
   <details class="item">
     <summary>
@@ -44,15 +56,16 @@ def _item(ep: Path, media: Path, repo: str, branch: str, ep_prefix: str) -> str:
       <span class="chev">▸</span>
     </summary>
     <div class="detail">
+      <div class="shead">▶ 롱폼</div>
       <video controls preload="none" poster="media/{folder}/thumbnail.jpg" src="media/{folder}/final.mp4"></video>
       <div class="row">
         <a class="dl" download href="media/{folder}/final.mp4">⬇ 영상</a>
         <a class="dl alt" download href="media/{folder}/thumbnail.jpg">⬇ 썸네일</a>
-        {short_dl}
       </div>
       <div class="box"><button class="copy" data-t="t-{folder}">제목 복사</button><pre id="t-{folder}">{e(title)}</pre></div>
       <div class="box"><button class="copy" data-t="d-{folder}">설명 복사</button><pre id="d-{folder}">{e(desc)}</pre></div>
       <div class="box"><button class="copy" data-t="g-{folder}">태그 복사</button><pre id="g-{folder}">{e(tags)}</pre></div>
+      {short_blocks}
       <a class="remove" href="{remove_url}" target="_blank" rel="noopener">✓ 업로드함 — 목록에서 제거</a>
     </div>
   </details>"""
@@ -98,6 +111,8 @@ def build(channel_dir: Path, site: Path, channel_title: str,
   .box pre {{ margin:0; white-space:pre-wrap; word-break:break-word; font-size:.86rem; color:#dfe3ea; }}
   .copy {{ position:absolute; top:8px; right:8px; background:#334155; color:#fff; border:0; border-radius:8px; padding:6px 10px; font-size:.78rem; cursor:pointer; }}
   .remove {{ display:inline-block; margin-top:6px; background:#7f1d1d; color:#fff; text-decoration:none; padding:11px 14px; border-radius:10px; font-weight:600; font-size:.9rem; }}
+  .shead {{ font-weight:700; font-size:.82rem; color:#93c5fd; margin:14px 0 2px; letter-spacing:.02em; }}
+  .short {{ border-left:3px solid #1e3a5f; padding-left:10px; margin:8px 0; }}
   footer {{ color:#6b7280; font-size:.75rem; margin:2rem 0 1rem; text-align:center; }}
 </style></head>
 <body><div class="wrap">

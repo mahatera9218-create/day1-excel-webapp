@@ -107,14 +107,21 @@ Write **2 purpose-built teaser scripts** in `plan["shorts"]`. Each is **self-con
   biggest twist ("the strangest part"). Don't just reword the same thing.
 - **`scenes`:** 3–4 of the episode's strongest images to show, by scene number (reuses the
   long video's images → no extra image cost). Prefer `is_key` scenes.
-- **`highlight`:** 1–2 punchy phrases to color. **`cta`** optional (defaults to a channel CTA).
-- Never resolve the mystery — the whole point is to send viewers to the full video.
+- **Each short gets its OWN `title` and `description`** (it's uploaded separately to YouTube).
+  Title: a short curiosity-gap line ending with `#shorts`. Description: 1–2 lines + a CTA to the
+  full video + a couple of hashtags (e.g. `#shorts #history`). Keep both plain-language.
+- **`highlight`:** 1–2 punchy phrases to color. **`cta`** optional (on-screen end card; defaults
+  to a channel CTA). Never resolve the mystery — the point is to send viewers to the full video.
 
 ```json
 "shorts": [
-  { "narration": "What if the one choice that saved a nation… was the one that doomed it?",
+  { "title": "The choice that doomed a nation #shorts",
+    "description": "A grounded what-if. Full story on the channel. #shorts #history",
+    "narration": "What if the one choice that saved a nation… was the one that doomed it?",
     "scenes": [1, 6, 8], "highlight": ["doomed it"], "cta": "▶  Full story on the channel" },
-  { "narration": "Everyone thinks they know how this ended. They are wrong about the strangest part.",
+  { "title": "Everyone's wrong about how this ended #shorts",
+    "description": "The strangest part no one talks about. Full story on the channel. #shorts #history",
+    "narration": "Everyone thinks they know how this ended. They are wrong about the strangest part.",
     "scenes": [14, 19, 23], "highlight": ["the strangest part"], "cta": "▶  Watch the full story" }
 ]
 ```

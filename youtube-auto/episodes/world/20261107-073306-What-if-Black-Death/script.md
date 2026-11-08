@@ -142,9 +142,13 @@ Factual spine: the Black Death (c.1347-1351), the post-plague labor shortage and
 ## 쇼츠 티저 (2편)
 
 ### 쇼츠 1  ·  장면 [1, 3, 5]  ·  CTA: ▶  Full story on the channel
+- 제목: What if the Black Death never happened? #shorts
+- 설명: You'd expect a golden age. History hints at the exact opposite. Full story on the channel. #shorts #history
 - 나레이션: The Black Death wiped out as many as half the people in Europe. Now imagine it never happened. You would expect a golden age. History hints at the exact opposite.
 - 강조: the exact opposite
 
 ### 쇼츠 2  ·  장면 [14, 20, 23]  ·  CTA: ▶  Watch the full story
+- 제목: The deadliest disaster may have set us free #shorts
+- 설명: The plague may have broken the old world and built the modern one. Full story on the channel. #shorts #history
 - 나레이션: What if the deadliest disaster in history was secretly the thing that set us free? The dying may have broken the old world and built the modern one. Erase it, and we might all still be stuck.
 - 강조: set us free
