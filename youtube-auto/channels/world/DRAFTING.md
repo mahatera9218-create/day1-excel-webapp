@@ -124,6 +124,16 @@ AI image generation will NOT draw the same person the same way twice, so repeate
 Aim to **generate only the 4–6 `is_key` scenes richly**, and lean on reuse + simpler prompts
 for the rest.
 
+**Shoot MOMENTS, not portraits (free drama).** Write every `image_prompt` as a dramatic instant
+caught mid-action or mid-emotion — a hand flinging gold, a face frozen in shock, a figure lunging,
+smoke curling, a blade half-drawn — with tight cinematic framing (a close or dynamic angle, strong
+directional light, shallow focus), as if it were a still pulled from a film. Avoid flat, posed
+portraits and plain wide "establishing" shots; even a setup scene should have tension in it.
+**Front-load the drama:** the first 2–3 scenes (the cold-open / hook, the opening ~10–15 seconds)
+must be your MOST arresting, highest-energy images of the whole episode — the single motion scene,
+if any, usually belongs here. Hook the eye before the viewer can even think about scrolling, and
+save the calmer, wider shots for the middle.
+
 **Real motion (`motion: "video"`) — decide per episode, by the story.** Most scenes stay stills
 with free camera movement (`kenburns_in` / `kenburns_pan`); figures don't actually move there.
 A scene marked `motion: "video"` becomes a real ~5s moving clip (a figure genuinely dances,
