@@ -1,0 +1,50 @@
+name: 화풍 미리보기
+
+# "Run workflow" 버튼을 누르면, 같은 역사 장면을 4가지 그림체로 1장씩 생성해
+# GitHub Pages 에 비교 페이지로 올립니다. (영상 없음 → 1~2분, 크레딧 소량)
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    defaults:
+      run:
+        working-directory: youtube-auto
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 패키지 설치
+        run: pip install -r requirements.txt
+
+      - name: 화풍 샘플 4장 생성 + 비교 페이지 빌드
+        env:
+          PIKA_API_KEY: ${{ secrets.PIKA_API_KEY }}
+        run: python -m autotube.style_preview "$GITHUB_WORKSPACE/site"
+
+      - name: Pages 설정
+        uses: actions/configure-pages@v5
+
+      - name: 페이지 아티팩트 업로드
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: GitHub Pages 배포
+        id: deployment
+        uses: actions/deploy-pages@v4
