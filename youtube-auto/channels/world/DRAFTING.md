@@ -112,6 +112,14 @@ AI image generation will NOT draw the same person the same way twice, so repeate
    detail (a crown, a letter, a weapon) rather than a repeated front-on face. When a prompt does
    show a person, describe them concretely (era, clothing, hair, build) so separate generations
    at least rhyme. Don't scatter many different front-on close-ups of the same named person.
+3. **Lock a REAL person's real appearance — and repeat it in EVERY prompt they appear in.**
+   For an actual historical figure, decide their documented look up front (skin tone / ethnicity,
+   age, build, hair, signature dress) and paste that SAME short description into every scene
+   prompt that shows them. Never write a bare "the emperor" / "the king" — the AI will fill in a
+   random (often wrong) ethnicity and flip it shot to shot. Getting a real person's race wrong is
+   both inaccurate and offensive, so this is non-negotiable. Example lock: *"Mansa Musa, a
+   dark-skinned West African man in his 40s, richly robed in gold-trimmed cloth and turban"* —
+   use it verbatim in each of his scenes, and reuse one hero image via `image_ref` on top of that.
 
 Aim to **generate only the 4–6 `is_key` scenes richly**, and lean on reuse + simpler prompts
 for the rest.
@@ -124,8 +132,9 @@ Judge each script on its own:
 - Put `motion: "video"` **only where real movement carries the meaning** — a decisive action,
   the cold-open hook, the `turn`, a moment of motion the story is literally about (a battle, a
   dance, a chase, a collapse). If a scene works fine as a held image, leave it a still.
-- **Rough budget: ~2–4 video scenes per episode.** An action-heavy story leans to 4; a quiet,
-  reflective one may need only 1–2. Never make it the default for every scene.
+- **Rough budget: ~1–2 video scenes per episode (cost control).** Reserve motion for the single
+  moment that most needs to move (usually the hook or the turn). Only an unusually action-driven
+  story goes to 3; never more. Everything else is stills + camera move. (Video is the costly part.)
 - Pick video scenes from the `is_key` beats where you can, and **never** put `motion: "video"`
   on an `image_ref`/reuse scene or a purely expository one.
 - Lip-sync isn't done, so don't rely on a talking mouth — choose body/scene motion, not dialogue.
