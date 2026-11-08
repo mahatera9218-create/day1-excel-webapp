@@ -28,7 +28,7 @@ def _item(ep: Path, media: Path, repo: str, branch: str, ep_prefix: str) -> str:
         shutil.copy(s, dst / "shorts" / s.name)
 
     title = plan.get("title", folder)
-    desc = plan.get("description", "").strip() + "\n\n" + AI_NOTICE
+    desc = plan.get("description", "").strip()
     tags = ", ".join(plan.get("tags", []))
     e = html.escape
     remove_url = f"https://github.com/{repo}/delete/{branch}/{ep_prefix}/{folder}/status.json"
@@ -39,7 +39,7 @@ def _item(ep: Path, media: Path, repo: str, branch: str, ep_prefix: str) -> str:
     for n, s in enumerate(shorts, 1):
         sp = specs[n - 1] if n - 1 < len(specs) else {}
         st = sp.get("title") or f"{title} #shorts"
-        sd = (sp.get("description", "").strip() or f"{title}") + "\n\n" + AI_NOTICE + " #shorts"
+        sd = sp.get("description", "").strip() or f"{title} #shorts"
         short_blocks += f"""
       <div class="short">
         <div class="shead">🎬 쇼츠 {n}</div>

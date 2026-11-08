@@ -79,6 +79,7 @@ shorts:
 
 youtube:
   privacy: private
-  category_id: "24"
+  category_id: "24"          # 24=엔터테인먼트 (27=교육, 25=뉴스·정치)
   made_for_kids: false
+  ai_disclosure: false       # AI 제작 표시(설명 문구 + 합성콘텐츠 플래그) 끔
   client_secret_file: client_secret.json

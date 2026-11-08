@@ -62,7 +62,8 @@ def upload(video: Path, plan: dict, cfg: dict) -> str:
     yt = cfg["youtube"]
     creds = _credentials(cfg["_dir"], yt["client_secret_file"])
     service = build("youtube", "v3", credentials=creds)
-    desc = f"{plan['description'].strip()}\n\n{AI_NOTICE}"
+    disclose = yt.get("ai_disclosure", True)
+    desc = plan["description"].strip() + (f"\n\n{AI_NOTICE}" if disclose else "")
     lang = LANG_CODE.get(cfg.get("language", ""), "en")
     body = {
         "snippet": {
@@ -76,7 +77,7 @@ def upload(video: Path, plan: dict, cfg: dict) -> str:
         "status": {
             "privacyStatus": yt["privacy"],
             "selfDeclaredMadeForKids": bool(yt["made_for_kids"]),
-            "containsSyntheticMedia": True,
+            "containsSyntheticMedia": bool(disclose),
         },
     }
     req = service.videos().insert(part="snippet,status", body=body,
