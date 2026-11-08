@@ -170,6 +170,20 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
 > *Bad: "They Dug Up a Dead Pope to Put Him on Trial."* →
 > *Good: "They Put a Rotting Corpse on Trial — the Verdict Changed Everything."*
 
+**Proven hook patterns — steal these. Each opens a loop and refuses to close it:**
+- **Concrete anomaly.** Start from one weird, specific, everyday detail that shouldn't exist, and
+  make *that* the mystery — *"A smell of smoke, in a house where no one had ever lit a fire."* The
+  oddity demands an explanation the title never gives.
+- **"The culprit was…".** Frame it as a whodunit, then cut away right before the reveal — *"Thousands
+  vanished, and the thing to blame was something no one thought to suspect."*
+- **Paradox / broken expectation.** State a contradiction, withhold the why — *"Roman concrete lasts
+  2,000 years. We forgot how to make it."*
+- **Personal stake.** Put a real person in a gut-punch — *"He won the entire war in 38 minutes. It
+  destroyed him."*
+- **Designed cutoff.** YouTube truncates titles (~first 45–55 chars on mobile) — front-load the hook
+  so even the cut-off version still teases, and let the sentence trail toward the mystery, not the
+  answer.
+
 - **`title` — HARD, bold hooks that WITHHOLD the answer. DO NOT start every title with "What
   if".** Push it as provocative as the TRUE story allows, but open a loop and never close it.
   Rotate hook styles so the feed never looks repetitive — all of these tease without spoiling:
@@ -184,8 +198,12 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
   **poses a question, never answers it.** Usually a dramatic CLOSE-UP of a face mid-emotion
   (shock, mischief, fear, awe) with intense eye contact, bold cinematic light, shallow depth of
   field — a moment that makes you go "wait, what's happening here?!", not the resolution. Show
-  the intrigue, hide the payoff. Ad-safe; no on-screen text, no logos, no real living people.
-- **`thumbnail_text`** — `""` by default (image-first). `thumbnail_scene` — fallback index.
+  the intrigue, hide the payoff. Ad-safe; **no baked-in words** (text is overlaid separately, so
+  don't ask the image for any), no logos, no real living people.
+- **`thumbnail_text` — FILL IT, don't leave it empty.** A punchy **2–4 word** hook, drawn BIG over
+  the image, that teases without spoiling: *"NOT HUMAN"*, *"38 MINUTES"*, *"THE WRONG BODY"*, *"STILL
+  THERE"*. Keep it **≤ ~18 characters** so it stays huge and thumb-readable; put the mystery in it,
+  never the answer. `thumbnail_scene` — fallback scene index when there's no prompt.
 
 ## What to produce each run
 

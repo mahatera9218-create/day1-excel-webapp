@@ -2,7 +2,7 @@
 
 - plan 에 thumbnail_prompt 가 있으면 그걸로 전용 썸네일 이미지를 새로 생성.
 - 없으면 thumbnail_scene(기본 1) 장면 그림을 사용.
-- thumbnail_text 가 있으면 아래쪽에 '작게' 한 줄만 얹는다(선택). 없으면 글자 없음.
+- thumbnail_text 가 있으면 위쪽에 '크고 굵게' 훅 한 줄(2~4단어)을 얹는다. 없으면 글자 없음.
 """
 
 import textwrap
@@ -43,10 +43,11 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     # 3) (선택) 작은 캡션 — 있으면 '위쪽'에 (아래는 브랜드 워드마크 자리)
     caption = (plan.get("thumbnail_text") or "").strip()
     if caption:
-        line = textwrap.shorten(caption.upper(), width=22, placeholder="")
-        vf += (f",drawtext=fontfile='{FONT}':text='{_esc(line)}':fontcolor=white:fontsize=58:"
-               f"borderw=5:bordercolor=black@0.85:shadowx=3:shadowy=3:shadowcolor=black@0.7:"
-               f"x=50:y=48")
+        line = _esc(textwrap.shorten(caption.upper(), width=20, placeholder=""))
+        # 큰 훅 한 줄: 화면 위쪽 가운데, 두꺼운 외곽선+그림자 (피사체 얼굴은 보통 중앙이라 상단 배치)
+        vf += (f",drawtext=fontfile='{FONT}':text='{line}':fontcolor=white:fontsize=104:"
+               f"borderw=9:bordercolor=black:shadowx=4:shadowy=4:shadowcolor=black@0.8:"
+               f"x=(w-tw)/2:y=58")
 
     # 4) Mr.Untold 브랜드 워드마크를 항상 얹는다
     if BRAND.exists():
