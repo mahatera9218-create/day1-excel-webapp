@@ -8,15 +8,15 @@ from ..render.kenburns import FPS
 from ..render.subtitles import build_ass
 from ..render.util import frame_size, probe_duration, run
 
-XFADE = 0.5  # 장면 전환 길이(초)
-# 밋밋하지 않게, 장면마다 전환 방식을 순환 (은은한 것들 위주)
-TRANSITIONS = ["fade", "dissolve", "fadeblack", "smoothleft", "smoothright", "wiperight", "fadegrays"]
+XFADE = 0.3  # 장면 전환 길이(초) — 짧게 해서 전환이 빠릿하게
+# 빠릿한 전환 위주(슬라이드/와이프 같은 굼뜬 건 뺐다)
+TRANSITIONS = ["fade", "fadeblack", "dissolve"]
 FX_DIR = FONT_DIR.parent / "fx"
 MOTES = FX_DIR / "motes.png"  # 떠다니는 빛 입자(보케/먼지) 오버레이
 BRAND_DIR = FONT_DIR.parent / "brand"
 INTRO_CARD = BRAND_DIR / "intro_card.png"
 OUTRO_CARD = BRAND_DIR / "outro_card.png"
-INTRO_DUR = 1.8   # 브랜드 인트로 길이(초)
+INTRO_DUR = 1.0   # 브랜드 인트로 길이(초) — 훅이 빨리 터지게 짧게
 OUTRO_DUR = 3.5   # 구독 아웃트로 길이(초)
 
 
@@ -39,17 +39,17 @@ def _kenburns_vf(idx: int, frames: int, w: int, h: int) -> str:
     base = f"scale={w*2}:{h*2}:force_original_aspect_ratio=increase,crop={w*2}:{h*2}"
     cxy = "x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
     v = idx % 4
-    if v == 0:    # 천천히 확대
-        z = f"1.0+0.30*on/{frames}"
+    if v == 0:    # 확대 (강하게)
+        z = f"1.0+0.45*on/{frames}"
         xy = cxy
-    elif v == 1:  # 천천히 축소
-        z = f"1.30-0.30*on/{frames}"
+    elif v == 1:  # 축소 (강하게)
+        z = f"1.45-0.45*on/{frames}"
         xy = cxy
-    elif v == 2:  # 좌 → 우 팬
-        z = "1.14"
+    elif v == 2:  # 좌 → 우 팬 (넓게)
+        z = "1.30"
         xy = f"x='(iw-iw/zoom)*on/{frames}':y='ih/2-(ih/zoom/2)'"
-    else:         # 우 → 좌 팬
-        z = "1.14"
+    else:         # 우 → 좌 팬 (넓게)
+        z = "1.30"
         xy = f"x='(iw-iw/zoom)*(1-on/{frames})':y='ih/2-(ih/zoom/2)'"
     return f"{base},zoompan=z='{z}':{xy}:d={frames}:s={w}x{h}:fps={FPS},format=yuv420p"
 
@@ -149,7 +149,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
         aprev = f"[a{k}]"
 
     # ---- 영상 마감: 시작/끝 페이드 + 자막 + 영화 같은 색보정·비네트·필름 그레인 ----
-    vchain = f"{vprev}fade=t=in:st=0:d=0.6,fade=t=out:st={max(0.0, total-0.6):.3f}:d=0.6"
+    vchain = f"{vprev}fade=t=in:st=0:d=0.3,fade=t=out:st={max(0.0, total-0.6):.3f}:d=0.6"
     if subs_on:
         vchain += f",subtitles=subs.ass:fontsdir={FONT_DIR}"
     # 색보정+비네트만(가벼움). 프레임별 노이즈/빛입자 오버레이는 CI에서 너무 느려 제외.

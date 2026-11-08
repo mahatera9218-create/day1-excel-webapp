@@ -74,11 +74,17 @@ class EdgeEngine:
         raise RuntimeError(f"edge-tts 실패: {last_err}")
 
 
-def _timing(scene: dict, words: list) -> dict:
-    """자막 조각 타이밍을 '실제 발화 구간'에 글자 수 비례로 배분한다.
+def _spoken_weight(chunk: str) -> int:
+    """조각의 '발화 길이' 추정치. 숫자는 글자보다 길게 읽히므로(5→five, 0→oh) 자리당 가중치를 더 준다."""
+    return max(1, sum(3 if ch.isdigit() else 1 for ch in _norm(chunk)))
 
-    단어 수 매칭은 edge-tts가 숫자("1405"→"fourteen oh five")·약어 등을 여러 단어로 읽어
-    조각 단어 수와 어긋나며 뒤로 갈수록 밀린다. 비례 배분은 그런 영향이 없어 안 밀린다.
+
+def _timing(scene: dict, words: list) -> dict:
+    """자막 조각 타이밍을 '실제 발화 구간'에 발화길이 비례로 배분한다.
+
+    실제 단어 시작~끝 구간[t0,t1] 안에서 조각별 '발화 길이'(숫자 가중 포함)에 비례해 나눈다.
+    단어 수 매칭은 edge-tts가 숫자("1518"→"fifteen eighteen")·약어를 여러 단어로 읽어 어긋나
+    뒤로 밀리지만, 비례 배분은 매 장면의 실제 구간에 고정돼 누적 오차가 없다.
     """
     chunks = chunk_narration(scene["narration"])
     highlight = scene.get("highlight", [])
@@ -87,7 +93,7 @@ def _timing(scene: dict, words: list) -> dict:
     else:
         t0, t1 = 0.0, estimate_seconds(scene["narration"])
     span = max(t1 - t0, 0.5)
-    weights = [max(1, len(_norm(c.replace(" ", "")))) for c in chunks]  # 조각별 발화 글자 수
+    weights = [_spoken_weight(c) for c in chunks]
     tot = sum(weights)
     entries, acc = [], 0
     for c, wgt in zip(chunks, weights):
