@@ -14,9 +14,9 @@ on:
         required: false
         default: ""
       upload:
-        description: "유튜브 업로드 (기본 false=렌더만 하고 업로드 키트로 검토 후 수동 업로드)"
+        description: "유튜브 자동 업로드 (기본 true=비공개 업로드; false=렌더만)"
         required: false
-        default: "false"
+        default: "true"
   # 매일 자동으로 2편 생성 (10:17 UTC = 한국 19:17). 업로드 키트에 올라옴.
   # 올린 편을 '목록에서 제거'(status.json 삭제)하지 않으면 다음날 또 만들어지니 주의.
   schedule:
@@ -73,7 +73,7 @@ jobs:
           UPLOAD: ${{ github.event.inputs.upload }}
         run: |
           NOUP=""
-          if [ "$UPLOAD" != "true" ]; then NOUP="--no-upload"; fi   # 명시적 true 일 때만 업로드(스케줄 포함 기본 렌더만)
+          if [ "$UPLOAD" = "false" ]; then NOUP="--no-upload"; fi   # 기본은 자동 업로드(스케줄 포함); false면 렌더만
           if [ -n "$EPISODE" ]; then
             python -m autotube render "$CHANNEL" --yes --episode "$EPISODE" $NOUP
           else

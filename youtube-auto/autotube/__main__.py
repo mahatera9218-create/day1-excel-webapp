@@ -138,6 +138,15 @@ def cmd_render(cfg: dict, yes: bool, episode: str | None = None, count: int = 1,
         _render_one(cfg, d, yes, upload=upload)
 
 
+def cmd_auth(cfg: dict) -> None:
+    """유튜브 1회 로그인 → channels/<채널>/token.json 생성 (PC에서 1번만)."""
+    from .engines.youtube import _credentials
+    _credentials(cfg["_dir"], cfg["youtube"]["client_secret_file"])
+    tok = cfg["_dir"] / "token.json"
+    print(f"[완료] {tok} 생성됨. 이 파일 내용을 GitHub Secret 'YOUTUBE_TOKEN_JSON' 에,")
+    print(f"       {cfg['_dir'] / cfg['youtube']['client_secret_file']} 내용을 'CLIENT_SECRET_JSON' 에 넣으세요.")
+
+
 def cmd_status(run_dir: Path) -> None:
     status = json.loads((run_dir / "status.json").read_text(encoding="utf-8"))
     print(f"승인: {status['approved']}")
@@ -167,6 +176,8 @@ def main() -> None:
             sp.add_argument("--yes", action="store_true")
         if name == "approve":
             sp.add_argument("--force", action="store_true")
+    ap = sub.add_parser("auth")
+    ap.add_argument("channel")
     sub.add_parser("list")
 
     args = p.parse_args()
@@ -175,6 +186,9 @@ def main() -> None:
     if args.cmd == "list":
         for d in sorted(CHANNELS.glob("*/channel.yaml")):
             print(d.parent.name)
+        return
+    if args.cmd == "auth":
+        cmd_auth(load_channel(args.channel))
         return
     if args.cmd in ("new", "run"):
         cfg = load_channel(args.channel)
