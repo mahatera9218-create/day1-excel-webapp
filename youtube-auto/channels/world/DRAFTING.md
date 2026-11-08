@@ -130,6 +130,23 @@ Judge each script on its own:
   on an `image_ref`/reuse scene or a purely expository one.
 - Lip-sync isn't done, so don't rely on a talking mouth — choose body/scene motion, not dialogue.
 
+**Voices — narration vs drama (you decide per episode, like an editor).** By default the whole
+episode is read by ONE narrator (documentary voice-over). Give a scene a different `voice` only
+when the episode is genuinely built on spoken exchange — then characters sound distinct and it
+plays like a drama. Let the format decide:
+- **Narration-only (no `voice` fields) — the default and the majority.** Eyewitness, essay-style
+  mysteries, butterfly, "if they saw us now", most true stories. One steady voice carries them.
+- **Drama (multiple voices) — the dialogue formats:** mock interview with the dead, two-hander,
+  era crossover, and any scene that is a real spoken exchange. Set `voice` on each speaking scene
+  so each character is consistent; keep the narrator for the connective lines between them.
+- **Voice palette (free edge-tts):** `narrator` (default channel voice), plus `m1` `m2` `m3`
+  (distinct male) and `f1` `f2` `f3` (distinct female). Keep one alias per character for the
+  whole episode. A raw edge voice name (e.g. `en-GB-RyanNeural`) also works if you need a specific
+  accent.
+- Same rails: **TRUE** → a character may only speak words that are actually documented; **WHAT-IF**
+  → imagined lines are fine (the disclaimer covers it). No lip-sync, so write lines that land as
+  pure audio, and don't turn every narration line into a character — most lines stay the narrator's.
+
 ## Shorts — 2 dedicated teasers per episode
 
 Shorts are **not** sliced from the long video (that gives weird, context-less fragments).
@@ -306,7 +323,8 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
 Per scene: `narration` (English, spoken, accurate on the factual parts), `highlight` (1–2
 punchy phrases), `image_prompt` (English, concrete, era/field appropriate; no text/logos/real
 living people — the channel visual_style is appended) **or** `image_ref` to reuse, optional
-`image_lib`, `role`, `is_key`, `motion`, optional `sfx`.
+`image_lib`, `role`, `is_key`, `motion`, optional `sfx`, optional `voice` (character voice — see
+"Voices"; omit for the narrator).
 
 ## The approval gate (automatic — do not bypass)
 

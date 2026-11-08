@@ -16,20 +16,44 @@ def _norm(tok: str) -> str:
     return re.sub(r"[^0-9a-z]+", "", tok.lower())
 
 
+# 캐릭터 보이스 팔레트(무료 edge-tts). 작가가 장면의 "voice" 에 이 별칭을 넣으면 그 목소리로 읽는다.
+# 억양을 섞어 인물이 서로 다르게 들리게 했다. 'narrator' 는 채널 기본 목소리로 해석.
+VOICE_ALIASES = {
+    "m1": "en-GB-RyanNeural",      # 영국 남성
+    "m2": "en-US-EricNeural",      # 미국 남성(묵직)
+    "m3": "en-AU-WilliamNeural",   # 호주 남성
+    "f1": "en-US-JennyNeural",     # 미국 여성
+    "f2": "en-GB-SoniaNeural",     # 영국 여성
+    "f3": "en-US-AriaNeural",      # 미국 여성(다른 톤)
+}
+
+
 class EdgeEngine:
     name = "edge"
 
     def __init__(self, cfg: dict):
         self.voice_name = cfg.get("engines", {}).get("edge_voice", "en-US-ChristopherNeural")
 
+    def _resolve(self, scene: dict) -> str:
+        """장면의 voice 지정을 실제 edge 목소리 이름으로. 없거나 narrator 면 채널 기본."""
+        v = (scene.get("voice") or "").strip()
+        if not v or v == "narrator":
+            return self.voice_name
+        if v in VOICE_ALIASES:
+            return VOICE_ALIASES[v]
+        if "Neural" in v:  # 원시 edge 목소리 이름을 직접 넣은 경우
+            return v
+        return self.voice_name
+
     def voice(self, scene: dict, out: Path) -> dict:
         import edge_tts
 
         text = scene["narration"].strip()
+        voice_name = self._resolve(scene)
         words: list[tuple[str, float, float]] = []
 
         async def run() -> None:
-            comm = edge_tts.Communicate(text, self.voice_name)
+            comm = edge_tts.Communicate(text, voice_name)
             with open(out, "wb") as f:
                 async for chunk in comm.stream():
                     if chunk["type"] == "audio":
