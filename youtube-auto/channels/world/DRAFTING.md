@@ -100,6 +100,19 @@ Don't redraw what you can reuse. Two mechanisms, both understood by the lint and
   shots, recurring motifs). Keep an `image_prompt` too as a fallback for when the key isn't
   in the library yet. See that folder's README for naming.
 
+### Character consistency (important — the AI redraws faces differently each time)
+
+AI image generation will NOT draw the same person the same way twice, so repeated close-ups of
+"the same character" look like different people and break immersion. Two fixes, use both:
+1. **Reuse ONE hero image for a recurring person.** Generate that character's image once (a
+   strong portrait), then on every later scene where they appear, set `image_ref` to that
+   scene. The face stays identical (it's literally the same image, with a fresh Ken Burns move).
+2. **Lean on identity-light shots.** Favor scenes where exact likeness doesn't matter: wide
+   shots, silhouettes, from behind, hands/objects/symbols, crowds, places, close-ups of a
+   detail (a crown, a letter, a weapon) rather than a repeated front-on face. When a prompt does
+   show a person, describe them concretely (era, clothing, hair, build) so separate generations
+   at least rhyme. Don't scatter many different front-on close-ups of the same named person.
+
 Aim to **generate only the 4–6 `is_key` scenes richly**, and lean on reuse + simpler prompts
 for the rest. Put `motion: video` on **only ~1 scene in 8** (video frames are the expensive
 part); everything else uses free `kenburns_in` / `kenburns_pan`.

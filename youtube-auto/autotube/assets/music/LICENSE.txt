@@ -1,0 +1,3 @@
+ambient_folk.mp3 — original ambient pad, synthesized from scratch with code
+(numpy additive synthesis). No samples, no third-party audio. Copyright-free:
+created for this channel, safe from Content ID / copyright claims. Reusable freely.

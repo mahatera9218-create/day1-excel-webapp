@@ -13,6 +13,25 @@ XFADE = 0.5  # 장면 전환 길이(초)
 TRANSITIONS = ["fade", "dissolve", "fadeblack", "smoothleft", "smoothright", "wiperight", "fadegrays"]
 FX_DIR = FONT_DIR.parent / "fx"
 MOTES = FX_DIR / "motes.png"  # 떠다니는 빛 입자(보케/먼지) 오버레이
+BRAND_DIR = FONT_DIR.parent / "brand"
+INTRO_CARD = BRAND_DIR / "intro_card.png"
+OUTRO_CARD = BRAND_DIR / "outro_card.png"
+INTRO_DUR = 1.8   # 브랜드 인트로 길이(초)
+OUTRO_DUR = 3.5   # 구독 아웃트로 길이(초)
+
+
+def _card_clip(img: Path, dur: float, size: tuple[int, int], out: Path, zoom_in: bool) -> None:
+    """브랜드 카드(인트로/아웃트로) → 무음 오디오 포함 세로맞춤 클립."""
+    w, h = size
+    frames = max(int(dur * FPS), 1)
+    z = f"1.0+0.06*on/{frames}" if zoom_in else f"1.06-0.06*on/{frames}"
+    vf = (f"scale={w*2}:{h*2}:force_original_aspect_ratio=increase,crop={w*2}:{h*2},"
+          f"zoompan=z='{z}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s={w}x{h}:fps={FPS},"
+          f"format=yuv420p")
+    run(["-loop", "1", "-i", str(img), "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
+         "-t", f"{dur:.3f}", "-vf", vf, "-map", "0:v", "-map", "1:a",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-shortest", str(out)])
 
 
 def _kenburns_vf(idx: int, frames: int, w: int, h: int) -> str:
@@ -74,6 +93,24 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
                             "end": round(ch["end"] + soff, 2), "highlight": ch.get("highlight", [])})
         durs.append(dur)
         cum += dur
+
+    # ---- 브랜드 인트로/아웃트로를 앞뒤에 끼운다 (있으면). 자막은 인트로만큼 뒤로 민다 ----
+    if INTRO_CARD.exists():
+        intro = comp / "intro.mp4"
+        if not intro.exists():
+            _card_clip(INTRO_CARD, INTRO_DUR, size, intro, zoom_in=True)
+        clip_files.insert(0, intro)
+        durs.insert(0, INTRO_DUR)
+        shift = INTRO_DUR - XFADE  # 인트로가 XFADE만큼 겹치므로
+        for e in entries:
+            e["start"] = round(e["start"] + shift, 2)
+            e["end"] = round(e["end"] + shift, 2)
+    if OUTRO_CARD.exists():
+        outro = comp / "outro.mp4"
+        if not outro.exists():
+            _card_clip(OUTRO_CARD, OUTRO_DUR, size, outro, zoom_in=False)
+        clip_files.append(outro)
+        durs.append(OUTRO_DUR)
 
     n = len(clip_files)
     total = sum(durs) - (n - 1) * XFADE
