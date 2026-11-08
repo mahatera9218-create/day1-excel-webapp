@@ -189,13 +189,13 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
 
 ## What to produce each run
 
-- Draft **14 episodes** (one week: 2/day × 7). **Mostly what-if**, a few untold-angle facts.
-- **Continental rotation (required).** Every episode sets `continent` to one of **Asia,
-  Europe, Americas, Africa, Oceania**. Balance the batch across all five and **do not cluster
-  on one country** — check the `continent` of episodes already drafted and spread out. (Pure
-  "what-if-science/nature" ideas: tag the continent most tied to the story, or where the real
-  events happened.)
-- Spread across **different subjects and eras** too.
+- Draft **2 episodes per run (daily)** — small, steady batches, not a weekly pile.
+- **Keep the running mix ~3:1** light/cheeky to deeper: most days both are light & fun; roughly
+  **every 4th day make one of the two a deeper/meatier episode.**
+- **Continental rotation (required).** Every episode sets `continent` to one of **Asia, Europe,
+  Americas, Africa, Oceania**. Rotate day to day and **don't repeat the same continent/country
+  as the last few days** — look at recent episodes under `episodes/world/` and spread out.
+- Spread across **different subjects and eras** too; don't repeat a topic already drafted.
 - Pull ideas from `channels/world/topics.txt`, or research a fresh one.
 
 ## Steps per episode
