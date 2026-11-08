@@ -114,8 +114,21 @@ AI image generation will NOT draw the same person the same way twice, so repeate
    at least rhyme. Don't scatter many different front-on close-ups of the same named person.
 
 Aim to **generate only the 4–6 `is_key` scenes richly**, and lean on reuse + simpler prompts
-for the rest. Put `motion: video` on **only ~1 scene in 8** (video frames are the expensive
-part); everything else uses free `kenburns_in` / `kenburns_pan`.
+for the rest.
+
+**Real motion (`motion: "video"`) — decide per episode, by the story.** Most scenes stay stills
+with free camera movement (`kenburns_in` / `kenburns_pan`); figures don't actually move there.
+A scene marked `motion: "video"` becomes a real ~5s moving clip (a figure genuinely dances,
+walks, turns) — but video frames are the **expensive, slow** part, so spend them deliberately.
+Judge each script on its own:
+- Put `motion: "video"` **only where real movement carries the meaning** — a decisive action,
+  the cold-open hook, the `turn`, a moment of motion the story is literally about (a battle, a
+  dance, a chase, a collapse). If a scene works fine as a held image, leave it a still.
+- **Rough budget: ~2–4 video scenes per episode.** An action-heavy story leans to 4; a quiet,
+  reflective one may need only 1–2. Never make it the default for every scene.
+- Pick video scenes from the `is_key` beats where you can, and **never** put `motion: "video"`
+  on an `image_ref`/reuse scene or a purely expository one.
+- Lip-sync isn't done, so don't rely on a talking mouth — choose body/scene motion, not dialogue.
 
 ## Shorts — 2 dedicated teasers per episode
 
