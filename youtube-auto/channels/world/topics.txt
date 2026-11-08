@@ -1,33 +1,36 @@
-# Mr.Untold 소재 — 호기심 격차 중심. 메인=사실 기반 "만약에?"(what_if), 일부=안 흔한 사실 앵글(true).
-# '#' 줄 무시. 핵심은 '주제'가 아니라 '앵글': 흔한 상식과 다른 지점을 잡아라.
-# 사실 토대는 검증, 분기 이후는 '추정'임을 명시. 노골적 성·고어·최근 실제범죄 금지.
+# Mr.Untold 소재 — 가볍고 재미있는 "만약에?" 위주. 무겁고 어두운 역사·경제·정치는 피한다.
+# 핵심: "우와 신기해/재밌다" 가 나오는 상상. 과학·자연·동물·우주·일상·모험.
+# '#' 줄 무시. 사실 토대는 검증, 분기 이후는 '추정'임을 명시. 쉬운 말.
+# (continent 는 이야기와 가장 관련 깊은 대륙으로 태깅 — 지구 전체면 사건 배경 기준.)
 
-# === WHAT-IF · 역사 (메인) ===
+# === 과학 · 우주 (재미/경이) ===
+What if the Moon suddenly vanished? (space / Earth)
+What if the Earth stopped spinning for five seconds? (space / Earth)
+What if Earth had rings like Saturn? (space / Earth)
+What if a day lasted 48 hours? (space / Earth)
+What if gravity were only half as strong? (science / Earth)
+What if humans could photosynthesize like plants? (science / Earth)
+What if the oceans were made of fresh water? (nature / oceans)
+What if the Sahara were still a green jungle? (nature / Africa)
+
+# === 동물 · 자연 (재미/경이) ===
+What if the dinosaurs never went extinct? (nature / deep time)
+What if humans had tails? (biology)
+What if cats were the size of tigers? (animals)
+What if insects grew as big as dogs? (animals)
+What if we could understand what animals are saying? (animals)
+What if whales walked back onto land? (nature / oceans)
+
+# === 일상 · 사람 (가벼운 상상) ===
+What if we never needed to sleep? (everyday)
+What if everyone on Earth jumped at the exact same time? (everyday / Earth)
+What if the whole world spoke one language? (society)
+What if humans could breathe underwater? (biology / oceans)
+What if we never invented the wheel? (everyday / tech)
+
+# === 역사·모험 (가볍고 신나는 각도만) ===
+What if China's giant treasure fleet never stopped sailing? (China / Asia)
+What if the Vikings had settled America for good? (Norse / Americas)
+What if the Great Pyramid still had its shiny white casing today? (Egypt / Africa)
 What if the Library of Alexandria never burned? (Egypt / knowledge)
-What if the Black Death never happened? (Europe / demographics)
-What if Rome never fell? (Rome / civilization)
-What if the Mongols had not turned back from Europe? (Eurasia)
-What if the Soviets had reached the Moon first? (Cold War / space)
-What if Zheng He's fleet had kept exploring? (Ming China / oceans)
-What if the printing press was invented 500 years earlier? (media)
-What if Tesla, not Edison, had won the current war? (electricity)
-What if the Great Fire of London never happened? (England / cities)
-What if the Louisiana Purchase had failed? (USA / France)
-
-# === WHAT-IF · 과학 · 자연 · 문명 (메인) ===
-What if humans never discovered fire? (anthropology)
-What if the dinosaurs never went extinct? (deep time)
-What if Earth had two moons? (astronomy)
-What if antibiotics were never discovered? (medicine)
-What if the Sahara were still green? (climate / Africa)
-What if oil had never been used as fuel? (energy)
-What if the internet had stayed decentralized? (technology)
-
-# === THE UNTOLD ANGLE · 안 흔한 사실 앵글 (보조, content_type: true) ===
-Why the Titanic's lifeboats rowed away half-empty (1912)
-The map error that gave Brazil its language (Treaty of Tordesillas)
-The clerk whose typo nearly started a war (Cold War near-misses)
-The woman who edited the atomic bomb reports out of history (Lise Meitner)
-The forgotten reason clocks run clockwise (sundials / hemisphere)
-The single mistranslation behind a famous "canal" on Mars
-The accountant who saved the Eiffel Tower from demolition
+What if Australia's giant animals never disappeared? (Australia / Oceania)

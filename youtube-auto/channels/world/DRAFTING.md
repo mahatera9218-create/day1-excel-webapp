@@ -13,20 +13,25 @@ batch of episodes as `plan.json` files, ready for the human to review. **Never a
 the **angle is the product.** Two formats, same goal (make someone think "I never thought
 about it that way"):
 
-- **Format B — "What If" (PRIMARY, `content_type: "what_if"`).** A real turning point,
-  grounded in fact up to the branch, then **disciplined, plausible speculation** about how
-  the world changes. This is the channel's main output and its niche: the most rigorous,
-  cinematic "what if?" out there. Examples: *What if the Library of Alexandria never
-  burned? What if the Black Death never happened? What if the Soviets reached the Moon
-  first?*
-- **Format A — "The Untold Angle" (secondary, `content_type: "true"`).** A real story seen
-  through a **specific overlooked lens** nobody covers — a detail, a minor figure, a single
-  decision. Use when a genuinely fresh factual angle exists. Example: not "the Titanic," but
-  *"why the Titanic's lifeboats rowed away half-empty."*
+> **KEEP IT LIGHT AND FUN — this is the #1 note.** The goal is a grin and a "whoa, cool,"
+> not a serious lecture. Avoid heavy, grim, dense topics (plagues, mass death, economics,
+> geopolitics, war logistics). Lead with **wonder, play and imagination.** Think fun first.
 
-**Theme is open.** Anything people have secretly wondered about — history, science,
-civilization, nature, lost things, near-misses. Not limited to scandal. **Tone follows the
-subject** (awe for a cosmic what-if, dread for a plague, intimacy for a love story).
+- **Format B — "What If" (PRIMARY, `content_type: "what_if"`).** A fun, imaginative premise,
+  grounded in one real fact up to the branch, then **playful, plausible speculation** that's
+  a joy to picture. Favor **vivid, daydream-y "what ifs"** — science, nature, animals, the
+  cosmos, everyday life, wild hypotheticals. Examples: *What if the dinosaurs never went
+  extinct? What if the Moon vanished tomorrow? What if humans had tails? What if the Earth
+  stopped spinning for five seconds? What if everyone spoke one language?* (NOT dense history
+  like "Black Death economics.")
+- **Format A — "The Untold Angle" (secondary, `content_type: "true"`).** A real story seen
+  through a **fun, surprising lens** nobody covers — a wild detail, a "wait, really?" fact.
+  Example: not "the Titanic," but *"the band kept playing — here's the song."* Keep it light.
+
+**Theme is open, but the FEEL must be fun and curious**, not heavy. Science, nature, animals,
+space, everyday wonders and playful hypotheticals beat grim history. **Tone: light, warm,
+conversational, a little playful** — short punchy lines, lots of vivid images, never an
+academic lecture. If a topic can only be told in a heavy/depressing way, skip it.
 
 ### The niche rule (required on every episode)
 
