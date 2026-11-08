@@ -101,5 +101,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
                         "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-threads", "0",
                         "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", final.name]
         run(cmd, cwd=out_dir)
+        for c in clips:  # 중간 조각 정리 (업로드 키트가 최종본만 집도록)
+            c.unlink(missing_ok=True)
         made.append(final)
     return made

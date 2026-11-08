@@ -51,22 +51,25 @@ class EdgeEngine:
 
 
 def _timing(scene: dict, words: list) -> dict:
+    """자막 조각 타이밍을 '실제 발화 구간'에 글자 수 비례로 배분한다.
+
+    단어 수 매칭은 edge-tts가 숫자("1405"→"fourteen oh five")·약어 등을 여러 단어로 읽어
+    조각 단어 수와 어긋나며 뒤로 갈수록 밀린다. 비례 배분은 그런 영향이 없어 안 밀린다.
+    """
     chunks = chunk_narration(scene["narration"])
     highlight = scene.get("highlight", [])
-    total = words[-1][2] if words else estimate_seconds(scene["narration"])
-    # edge-tts가 실제로 발화 이벤트를 준 단어만 (시작, 끝) 으로. 부호 전용 토큰은 edge도 안 주고
-    # 아래 조각 토큰 셈에서도 빼므로, 양쪽 개수가 맞아 싱크가 밀리지 않는다.
-    spoken = [(s, e) for (t, s, e) in words if _norm(t)]
-    entries, wi = [], 0
-    for c in chunks:
-        ntok = sum(1 for t in c.split() if _norm(t))  # 발화되는 단어 수만
-        seg = spoken[wi:wi + ntok]
-        wi += ntok
-        if seg:
-            start, end = seg[0][0], seg[-1][1]
-        else:
-            start = entries[-1]["end"] if entries else 0.0
-            end = start + 1.0
+    if words:
+        t0, t1 = words[0][1], words[-1][2]          # 첫 단어 시작 ~ 마지막 단어 끝
+    else:
+        t0, t1 = 0.0, estimate_seconds(scene["narration"])
+    span = max(t1 - t0, 0.5)
+    weights = [max(1, len(_norm(c.replace(" ", "")))) for c in chunks]  # 조각별 발화 글자 수
+    tot = sum(weights)
+    entries, acc = [], 0
+    for c, wgt in zip(chunks, weights):
+        start = t0 + span * acc / tot
+        acc += wgt
+        end = t0 + span * acc / tot
         entries.append({"text": c, "start": round(start, 2), "end": round(end, 2),
                         "highlight": [w for w in highlight if w in c]})
-    return {"duration": round(total + 0.3, 2), "chunks": entries}
+    return {"duration": round(t1 + 0.3, 2), "chunks": entries}

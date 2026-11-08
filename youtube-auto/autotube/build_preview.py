@@ -23,7 +23,7 @@ def _item(ep: Path, media: Path, repo: str, branch: str, ep_prefix: str) -> str:
     for name in ("final.mp4", "thumbnail.jpg"):
         if (ep / name).exists():
             shutil.copy(ep / name, dst / name)
-    shorts = sorted((ep / "shorts").glob("*.mp4")) if (ep / "shorts").exists() else []
+    shorts = sorted((ep / "shorts").glob("short_*.mp4")) if (ep / "shorts").exists() else []
     for s in shorts:
         shutil.copy(s, dst / "shorts" / s.name)
 
