@@ -81,10 +81,9 @@ class PikaEngine:
             img_b64 = base64.b64encode(f.read()).decode()
         body = {
             "prompt": scene.get("video_prompt") or scene["image_prompt"],
-            "image": f"data:image/png;base64,{img_b64}",
-            "duration": max(5, min(15, round(duration))),
-            "aspect_ratio": _aspect(self.e),
-            "resolution": self.e.get("video_resolution", "480p"),
+            "first_frame_image": f"data:image/png;base64,{img_b64}",
+            "duration": max(5, min(10, round(duration))),
+            "resolution": self.e.get("video_resolution", "768P"),
             **(self.e.get("video_extra") or {}),
         }
         job = self._job(self.e["video_model"], body)

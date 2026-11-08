@@ -79,5 +79,9 @@ def run(run_dir: Path, plan: dict, cfg: dict) -> None:
             continue
         dur = timing[f"{i:02}"]["duration"]
         print(f"      장면 {i} 영상 변환 ({dur:.1f}초)")
-        engines.video({**scene, "_label": f"#{i}", "_style": style},
-                      images / f"scene_{i:02}.png", clip, dur)
+        try:
+            engines.video({**scene, "_label": f"#{i}", "_style": style},
+                          images / f"scene_{i:02}.png", clip, dur)
+        except Exception as e:  # noqa: BLE001 — 영상 변환 실패가 전체 렌더를 죽이지 않게(그 장면은 스틸+켄번스로 폴백)
+            clip.unlink(missing_ok=True)
+            print(f"      [경고] 장면 {i} 영상 변환 실패 → 스틸로 대체: {e}")

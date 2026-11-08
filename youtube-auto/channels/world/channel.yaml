@@ -55,7 +55,7 @@ engines:
   image_model: bytedance/seedream-5.0-pro/text-to-image
   video_model: minimax/h3/image-to-video
   image_resolution: "1024"
-  video_resolution: 480p
+  video_resolution: 768P
   price_per_image_usd: 0.04
   price_per_video_second_usd: 0.02
   max_cost_usd: 8
