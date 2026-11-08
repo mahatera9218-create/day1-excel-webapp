@@ -31,6 +31,15 @@ def _seg_clip(img: Path, idx: int, dur: float, size: tuple[int, int], out: Path)
          "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", str(out)])
 
 
+def _seg_from_clip(clip: Path, dur: float, size: tuple[int, int], out: Path) -> None:
+    """본편에서 이미 만든 '움직이는 클립'을 세로로 꽉 채워 재활용(추가 비용 0, 쇼츠도 실제로 움직임)."""
+    w, h = size
+    vf = (f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},"
+          f"fps={FPS},format=yuv420p")
+    run(["-stream_loop", "-1", "-i", str(clip), "-t", f"{dur:.3f}", "-vf", vf, "-an",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", str(out)])
+
+
 def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
     sh = cfg.get("shorts", {})
     specs = plan.get("shorts") or []
@@ -64,19 +73,30 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
         ass = out_dir / f"short_{n:02}.ass"
         build_ass(tdict["chunks"], sub_cfg, size, ass)
 
-        # 2) 그림: 본편 장면 재사용 (없으면 1번)
+        # 2) 그림: 본편 장면 재사용. 움직이는 클립이 있으면 그걸(무료 움직임), 없으면 스틸.
         refs = [int(s) for s in (short.get("scenes") or []) if str(s).isdigit()]
-        imgs = [run_dir / "images" / f"scene_{r:02}.png" for r in refs]
-        imgs = [p for p in imgs if p.exists()] or [run_dir / "images" / "scene_01.png"]
-        nimg = len(imgs)
+        srcs = []  # (kind, path)
+        for r in refs:
+            vclip = run_dir / "clips" / f"scene_{r:02}.mp4"
+            still = run_dir / "images" / f"scene_{r:02}.png"
+            if vclip.exists():
+                srcs.append(("video", vclip))
+            elif still.exists():
+                srcs.append(("still", still))
+        if not srcs:
+            srcs = [("still", run_dir / "images" / "scene_01.png")]
+        nimg = len(srcs)
 
-        # 3) 장면별 세로 켄번스 클립 (전환 겹침만큼 약간 길게)
+        # 3) 장면별 세로 클립 (전환 겹침만큼 약간 길게) — 모션 장면은 실제 영상, 그 외는 켄번스
         seg = dur / nimg + (XFADE if nimg > 1 else 0)
         clips = []
-        for k, img in enumerate(imgs):
+        for k, (kind, path) in enumerate(srcs):
             sc = out_dir / f"_s{n}_{k:02}.mp4"
             if not sc.exists():
-                _seg_clip(img, k, seg, size, sc)
+                if kind == "video":
+                    _seg_from_clip(path, seg, size, sc)
+                else:
+                    _seg_clip(path, k, seg, size, sc)
             clips.append(sc)
 
         # 4) 합성: 전환 + 색보정/비네트 + 자막 + (what-if 라벨) + 끝 CTA + 오디오

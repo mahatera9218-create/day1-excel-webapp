@@ -179,8 +179,12 @@ Write **2 purpose-built teaser scripts** in `plan["shorts"]`. Each is **self-con
   moment from the middle (a strange object, a baffling tactic, one vivid beat). If you could swap
   their titles and nobody would notice, rewrite one. And **neither may reveal the outcome/answer**
   (e.g. don't say who won or how it ended) — both only open the loop, like the long-form title.
-- **`scenes`:** 3–4 of the episode's strongest images to show, by scene number (reuses the
-  long video's images → no extra image cost). Prefer `is_key` scenes.
+- **`scenes` — pick the episode's most ARRESTING, high-drama moments only (3–4), by scene
+  number.** This reuses the long video's assets → no extra cost. Prioritise any `motion: "video"`
+  scene (it now plays as REAL movement in the short, free) and the strongest `is_key` moments;
+  **lead with the single most eye-catching one in the first second.** Skip calm, wide, or
+  setup-style scenes — a short lives or dies on its opening frame. The two shorts must lead on
+  DIFFERENT scenes (the lint enforces this).
 - **Each short gets its OWN `title` and `description`** (it's uploaded separately to YouTube).
   Title: a short curiosity-gap line ending with `#shorts`. Description: 1–2 lines + a CTA to the
   full video + a couple of hashtags (e.g. `#shorts #history`). Keep both plain-language.
