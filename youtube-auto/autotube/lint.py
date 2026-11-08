@@ -35,6 +35,12 @@ HARD_WORDS = {
     "suffrage", "regicide", "usurp", "usurped", "dynastic", "patronage",
     "dowry", "primogeniture", "schism", "theological", "mercantile",
 }
+
+# 쇼츠에서 결말을 흘리는 전형적 표현(경고). 티저는 결과를 말하면 안 된다.
+SPOILER_WORDS = {
+    "won", "lost", "winner", "loser", "winners", "losers", "defeated",
+    "survived", "died", "killed", "verdict",
+}
 MAX_SENTENCE_WORDS = 28  # 쉬운 말 = 짧은 문장
 
 
@@ -99,6 +105,25 @@ def lint_plan(plan: dict) -> tuple[list[str], list[str]]:
         good = [r for r in srefs if isinstance(r, int) and 1 <= r <= nsc]
         if not good:
             errors.append(f"쇼츠 {si}: scenes(보여줄 본편 장면 번호 1~{nsc})가 없습니다/잘못됐습니다.")
+        # 정답 흘림 경고(쇼츠는 절대 결말을 미리 말하면 안 됨)
+        spoil = sorted({w for w in re.findall(r"[a-z']+", snar.lower()) if w in SPOILER_WORDS})
+        if spoil:
+            warnings.append(f"쇼츠 {si}: 정답을 흘릴 수 있는 표현 {spoil} — 결과/결말은 숨기세요(훅만).")
+
+    # 두 쇼츠가 '같은 걸 두 번'이면 막는다 — 각도가 겹치면 유입이 안 는다(편집 판단을 기계로 백업).
+    if len(shorts) >= 2:
+        s0, s1 = shorts[0], shorts[1]
+        lead0 = (s0.get("scenes") or [None])[0]
+        lead1 = (s1.get("scenes") or [None])[0]
+        if lead0 is not None and lead0 == lead1:
+            errors.append("쇼츠 2개가 같은 장면으로 시작합니다 — 서로 다른 장면/각도로 여세요 "
+                          "(하나는 전제, 하나는 중간의 기이한 디테일).")
+        if (s0.get("title") or "").strip().lower() == (s1.get("title") or "").strip().lower():
+            errors.append("쇼츠 2개의 제목이 동일합니다 — 각각 달라야 합니다.")
+        wa = {w for w in re.findall(r"[a-z]+", (s0.get("narration") or "").lower()) if len(w) > 3}
+        wb = {w for w in re.findall(r"[a-z]+", (s1.get("narration") or "").lower()) if len(w) > 3}
+        if wa and wb and len(wa & wb) / len(wa | wb) >= 0.55:
+            errors.append("쇼츠 2개 나레이션이 거의 같습니다 — 다른 각도로 새로 쓰세요.")
 
     scenes = plan.get("scenes") or []
     n = len(scenes)
