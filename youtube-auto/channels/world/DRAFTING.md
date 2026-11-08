@@ -154,8 +154,12 @@ Write **2 purpose-built teaser scripts** in `plan["shorts"]`. Each is **self-con
 
 - **Structure:** a punchy hook question → 1–2 lines that deepen the mystery → **do NOT give the
   answer** → it ends on a CTA card automatically. ~**30–45s** (≈ 80–110 words), plain language.
-- **Two different angles:** e.g. teaser 1 leads with the premise/hook; teaser 2 leads with the
-  biggest twist ("the strangest part"). Don't just reword the same thing.
+- **Two genuinely DIFFERENT angles — this is a hard rule, not a nicety.** The two teasers must
+  not feel like the same short twice: use a different hook TYPE and different scenes for each.
+  Teaser 1 opens on the absurd/intriguing PREMISE; teaser 2 opens on a specific weird DETAIL or
+  moment from the middle (a strange object, a baffling tactic, one vivid beat). If you could swap
+  their titles and nobody would notice, rewrite one. And **neither may reveal the outcome/answer**
+  (e.g. don't say who won or how it ended) — both only open the loop, like the long-form title.
 - **`scenes`:** 3–4 of the episode's strongest images to show, by scene number (reuses the
   long video's images → no extra image cost). Prefer `is_key` scenes.
 - **Each short gets its OWN `title` and `description`** (it's uploaded separately to YouTube).
