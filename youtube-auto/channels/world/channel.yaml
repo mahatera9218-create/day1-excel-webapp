@@ -33,8 +33,8 @@ continents:
   - Oceania
 
 visual_style: >
-  cinematic historical illustration, warm painterly tone, era-accurate detail,
-  documentary mood, dramatic natural lighting, no text, no logos, no modern objects
+  hyperreal cinematic film still, dramatic chiaroscuro lighting, 35mm, shallow depth
+  of field, photorealistic detail, rich filmic color, moody atmosphere, no text, no logos
 
 # 기본 제공(premade) 목소리는 무료 플랜 API 로도 사용 가능.
 # 보이스 라이브러리 목소리는 유료(Starter 이상) 필요.

@@ -156,6 +156,45 @@ Write **2 purpose-built teaser scripts** in `plan["shorts"]`. Each is **self-con
 ]
 ```
 
+## Formats — the show's DNA (this is what makes us different)
+
+Mr.Untold doesn't *explain* history — it drops the viewer **inside** it. Every script is part
+documentary, part drama, part thought-experiment. Two drama techniques are **always on**, and
+every episode is built on **one format** chosen from the lists below.
+
+**Always-on (bake into every episode):**
+- **Cold open — scene 1 (`hook`) opens IN the moment, not with narration.** A tense beat, a
+  sensory detail, present tense, 1–2 lines; make them feel they walked in on something.
+- **Second-person pull.** Use "you" to drop the viewer into the scene wherever it fits ("You're
+  standing in the Senate when…"). Immersion over lecture.
+
+**Pick ONE format per episode and rotate (don't reuse the same format two days running):**
+
+*TRUE formats — 100% real, `content_type: "true"`, no invented facts:*
+- **Eyewitness time-traveler.** "You just landed in [real place], [real moment]" → show what you'd
+  *actually* see, smell, hear. Time-travel is only the camera; every detail stays real.
+- **Mock interview with the dead.** On-screen questions; the figure "answers" using only their REAL
+  documented words/positions. Cheeky framing, sourced content.
+- **Diary / letter.** Narrate a real surviving letter or diary in-character, scenes underneath.
+- **History on trial.** Put a real person/act on trial; withhold the verdict until the `payoff`.
+- **Two-hander.** Reenact a documented real conversation or confrontation as a scene.
+
+*WHAT-IF formats — imaginative, `content_type: "what_if"` + `disclaimer`. The person's real
+traits/achievements stay accurate; only the SITUATION is moved, and you say so in one line.
+Ad-safe; anachronisms are allowed here (that collision IS the fun):*
+- **Fish out of water.** Drop a real figure into another era; let their true character react
+  (*"Caligula with a Twitter account"*).
+- **Right person, wrong time.** A real genius with a tool from another age (*"Da Vinci + one laptop"*).
+- **Era crossover.** Two real figures from different times meet or clash, each using their real methods.
+- **If they saw us now.** A figure judges the modern world through their real values.
+- **Butterfly effect.** Change ONE real decision at a real turning point; dramatize the ripple.
+
+**Serialized seasons (occasional).** Connect 3–5 episodes into an arc (e.g. *"The Mad Emperors"*),
+reuse the hero image via `image_ref`, and end each on a cliffhanger for the next.
+
+**Anachronism rule.** TRUE formats stay era-accurate — no modern objects. WHAT-IF displacement
+formats *should* mix eras on purpose. Either way, the person's documented facts never change.
+
 ## Title & thumbnail — HOOKING IS LIFE (the make-or-break)
 
 Half the effort goes here. A perfect script with a weak title/thumbnail gets zero views.
@@ -214,6 +253,9 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
   Americas, Africa, Oceania**. Rotate day to day and **don't repeat the same continent/country
   as the last few days** — look at recent episodes under `episodes/world/` and spread out.
 - Spread across **different subjects and eras** too; don't repeat a topic already drafted.
+- **Rotate formats (see "Formats — the show's DNA").** Build each episode on one format and vary
+  them day to day — never the same format two days running. Cold-open + second-person stay on for
+  all of them. Keep the ~3:1 light:deep mix across the format rotation.
 - Pull ideas from `channels/world/topics.txt`, or research a fresh one.
 
 ## Steps per episode
