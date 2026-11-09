@@ -17,10 +17,16 @@ on:
         description: "유튜브 자동 업로드 (기본 true=비공개 업로드; false=렌더만)"
         required: false
         default: "true"
-  # 매일 자동으로 2편 렌더·업로드 (03:50 UTC ≈ 한국 12:50, 오후 1시경). 그날 아침 작성·검수된 2편.
-  # (GitHub 예약은 UTC만 쓰고 정각엔 지연이 잦아, 13시보다 살짝 앞으로 당겨둠)
+  # ★ 주 트리거: 검수가 끝나면 youtube-auto/.render-queue 에 한 줄 추가·push → '즉시' 렌더.
+  # (GitHub schedule 은 자주 지연·누락돼서 믿을 수 없다. push 이벤트는 바로 뜬다.)
+  push:
+    branches: [main]
+    paths:
+      - "youtube-auto/episodes/world/**"   # 드래퍼/검수가 새 에피소드를 push하면 즉시 렌더
+      - "youtube-auto/.render-queue"        # 수동으로 렌더를 걸고 싶을 때 이 파일에 한 줄 추가·push
+  # 백업 스케줄 (push 를 놓쳤을 때 대비). 03:50 UTC ≈ 한국 12:50.
   schedule:
-    - cron: "50 3 * * *"      # 매일 약 12:50 KST(오후 1시경): 승인된 2편 렌더 + 유튜브 비공개 업로드
+    - cron: "50 3 * * *"      # 백업: 승인된 2편 렌더 + 유튜브 비공개 업로드
 
 concurrency:
   group: render-${{ github.event.inputs.channel || 'all' }}
