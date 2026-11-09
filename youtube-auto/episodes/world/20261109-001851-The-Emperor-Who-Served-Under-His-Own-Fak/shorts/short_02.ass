@@ -1,0 +1,33 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,64,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,360
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.00,0:00:03.84,Main,Imagine being a top
+Dialogue: 0,0:00:03.84,0:00:05.53,Main,advisor,
+Dialogue: 0,0:00:05.53,0:00:09.13,Main,forced to fill out
+Dialogue: 0,0:00:09.13,0:00:12.97,Main,serious paperwork
+Dialogue: 0,0:00:12.97,0:00:16.82,Main,handing medals and
+Dialogue: 0,0:00:16.82,0:00:21.14,Main,promotions to a brave
+Dialogue: 0,0:00:21.14,0:00:22.82,Main,general.
+Dialogue: 0,0:00:22.82,0:00:26.91,Main,Now imagine knowing
+Dialogue: 0,0:00:26.91,0:00:31.47,Main,that general is really
+Dialogue: 0,0:00:31.47,0:00:35.80,Main,just your emperor in a
+Dialogue: 0,0:00:35.80,0:00:37.48,Main,costume,
+Dialogue: 0,0:00:37.48,0:00:41.56,Main,and you must pretend
+Dialogue: 0,0:00:41.56,0:00:44.68,Main,you cannot tell.
+Dialogue: 0,0:00:44.68,0:00:47.57,Main,That actually
+Dialogue: 0,0:00:47.57,0:00:49.49,Main,happened.
+Dialogue: 0,0:00:49.49,0:00:53.81,Main,How far one ruler took
+Dialogue: 0,0:00:53.81,0:00:57.90,Main,this game is the part
+Dialogue: 0,0:00:57.90,0:01:01.26,Main,nobody believes.
+Dialogue: 0,0:01:01.26,0:01:05.11,Main,The full story is in
+Dialogue: 0,0:01:05.11,0:01:09.67,Main,the description below.

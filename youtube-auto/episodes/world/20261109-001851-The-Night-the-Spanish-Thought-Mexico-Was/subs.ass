@@ -1,0 +1,297 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,42,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,90
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.70,0:00:04.91,Main,You are standing on a
+Dialogue: 0,0:00:04.91,0:00:08.63,Main,narrow stone road,
+Dialogue: 0,0:00:08.63,0:00:12.84,Main,straight as an arrow,
+Dialogue: 0,0:00:12.84,0:00:17.05,Main,built right across a
+Dialogue: 0,0:00:17.05,0:00:18.04,Main,lake.
+Dialogue: 0,0:00:18.04,0:00:21.75,Main,Water lies on both
+Dialogue: 0,0:00:21.75,0:00:24.23,Main,sides of you.
+Dialogue: 0,0:00:24.23,0:00:26.21,Main,And ahead,
+Dialogue: 0,0:00:26.21,0:00:29.92,Main,rising out of that
+Dialogue: 0,0:00:29.92,0:00:31.16,Main,water,
+Dialogue: 0,0:00:31.16,0:00:34.63,Main,is a whole city of
+Dialogue: 0,0:00:34.63,0:00:37.35,Main,white towers,
+Dialogue: 0,0:00:37.35,0:00:41.07,Main,shining in the sun.
+Dialogue: 0,0:00:15.57,0:00:19.21,Main,You are one of a few
+Dialogue: 0,0:00:19.21,0:00:22.60,Main,hundred Spanish
+Dialogue: 0,0:00:22.60,0:00:24.54,Main,soldiers.
+Dialogue: 0,0:00:24.54,0:00:28.67,Main,You have marched for
+Dialogue: 0,0:00:28.67,0:00:32.79,Main,months and seen hard
+Dialogue: 0,0:00:32.79,0:00:34.25,Main,things.
+Dialogue: 0,0:00:34.25,0:00:37.40,Main,But nothing has
+Dialogue: 0,0:00:37.40,0:00:41.77,Main,prepared you for this.
+Dialogue: 0,0:00:41.77,0:00:44.92,Main,A man beside you
+Dialogue: 0,0:00:44.92,0:00:49.04,Main,quietly asks if this
+Dialogue: 0,0:00:49.04,0:00:52.68,Main,{\c&H0000D4FF}can really be true{\c&H00FFFFFF}.
+Dialogue: 0,0:00:29.19,0:00:32.63,Main,They would write,
+Dialogue: 0,0:00:32.63,0:00:35.09,Main,years later,
+Dialogue: 0,0:00:35.09,0:00:39.03,Main,that it looked like
+Dialogue: 0,0:00:39.03,0:00:40.26,Main,magic.
+Dialogue: 0,0:00:40.26,0:00:44.68,Main,Some of them honestly
+Dialogue: 0,0:00:44.68,0:00:49.11,Main,wondered if they were
+Dialogue: 0,0:00:49.11,0:00:53.29,Main,{\c&H0000D4FF}asleep and dreaming{\c&H00FFFFFF}.
+Dialogue: 0,0:00:53.29,0:00:56.98,Main,So how could a real
+Dialogue: 0,0:00:56.98,0:01:00.67,Main,city sit on top of a
+Dialogue: 0,0:01:00.67,0:01:01.65,Main,lake?
+Dialogue: 0,0:00:40.17,0:00:44.10,Main,Rewind a few months.
+Dialogue: 0,0:00:44.10,0:00:48.03,Main,These men landed on
+Dialogue: 0,0:00:48.03,0:00:52.20,Main,the coast with their
+Dialogue: 0,0:00:52.20,0:00:53.67,Main,leader,
+Dialogue: 0,0:00:53.67,0:00:55.15,Main,Cortes.
+Dialogue: 0,0:00:55.15,0:00:58.09,Main,They had heard
+Dialogue: 0,0:00:58.09,0:01:01.78,Main,whispers of a rich
+Dialogue: 0,0:01:01.78,0:01:05.70,Main,city hidden inland.
+Dialogue: 0,0:01:05.70,0:01:09.88,Main,So they burned their
+Dialogue: 0,0:01:09.88,0:01:11.84,Main,own boats,
+Dialogue: 0,0:01:11.84,0:01:16.02,Main,and started walking
+Dialogue: 0,0:01:16.02,0:01:17.98,Main,toward it.
+Dialogue: 0,0:00:53.72,0:00:57.40,Main,They climbed cold
+Dialogue: 0,0:00:57.40,0:01:02.06,Main,mountains and crossed
+Dialogue: 0,0:01:02.06,0:01:04.27,Main,hot plains.
+Dialogue: 0,0:01:04.27,0:01:08.68,Main,Local people said the
+Dialogue: 0,0:01:08.68,0:01:11.38,Main,city was huge,
+Dialogue: 0,0:01:11.38,0:01:15.31,Main,the greatest in the
+Dialogue: 0,0:01:15.31,0:01:16.53,Main,world.
+Dialogue: 0,0:01:16.53,0:01:20.70,Main,The soldiers nodded
+Dialogue: 0,0:01:20.70,0:01:22.66,Main,politely.
+Dialogue: 0,0:01:22.66,0:01:25.85,Main,In their hearts,
+Dialogue: 0,0:01:25.85,0:01:30.27,Main,most did not believe a
+Dialogue: 0,0:01:30.27,0:01:32.23,Main,word of it.
+Dialogue: 0,0:01:07.94,0:01:11.91,Main,Then they came over
+Dialogue: 0,0:01:11.91,0:01:16.38,Main,the last ridge and saw
+Dialogue: 0,0:01:16.38,0:01:18.12,Main,the lake.
+Dialogue: 0,0:01:18.12,0:01:22.10,Main,And in the middle of
+Dialogue: 0,0:01:22.10,0:01:22.59,Main,it,
+Dialogue: 0,0:01:22.59,0:01:27.06,Main,the thing the stories
+Dialogue: 0,0:01:27.06,0:01:29.80,Main,had promised.
+Dialogue: 0,0:01:29.80,0:01:32.53,Main,Not a village.
+Dialogue: 0,0:01:32.53,0:01:34.52,Main,Not a town.
+Dialogue: 0,0:01:34.52,0:01:38.74,Main,An ocean of rooftops,
+Dialogue: 0,0:01:38.74,0:01:42.96,Main,sitting on the water.
+Dialogue: 0,0:01:22.04,0:01:25.71,Main,Here is what their
+Dialogue: 0,0:01:25.71,0:01:28.89,Main,minds could not
+Dialogue: 0,0:01:28.89,0:01:30.35,Main,accept.
+Dialogue: 0,0:01:30.35,0:01:32.31,Main,Back home,
+Dialogue: 0,0:01:32.31,0:01:36.47,Main,a big city might hold
+Dialogue: 0,0:01:36.47,0:01:40.87,Main,a few thousand people.
+Dialogue: 0,0:01:40.87,0:01:45.27,Main,This one held far more
+Dialogue: 0,0:01:45.27,0:01:49.68,Main,than any city they had
+Dialogue: 0,0:01:49.68,0:01:52.61,Main,ever walked in.
+Dialogue: 0,0:01:52.61,0:01:56.03,Main,How was that even
+Dialogue: 0,0:01:56.03,0:01:57.99,Main,possible?
+Dialogue: 0,0:01:35.20,0:01:38.88,Main,The lake was alive.
+Dialogue: 0,0:01:38.88,0:01:42.80,Main,Thousands of small
+Dialogue: 0,0:01:42.80,0:01:47.45,Main,canoes slid across the
+Dialogue: 0,0:01:47.45,0:01:48.68,Main,water,
+Dialogue: 0,0:01:48.68,0:01:51.62,Main,carrying food,
+Dialogue: 0,0:01:51.62,0:01:53.33,Main,flowers,
+Dialogue: 0,0:01:53.33,0:01:55.29,Main,and goods.
+Dialogue: 0,0:01:55.29,0:01:59.95,Main,People in bright cloth
+Dialogue: 0,0:01:59.95,0:02:04.11,Main,lined the stone road
+Dialogue: 0,0:02:04.11,0:02:07.79,Main,just to look at the
+Dialogue: 0,0:02:07.79,0:02:12.20,Main,strangers walking in.
+Dialogue: 0,0:02:12.20,0:02:16.61,Main,Everyone was staring
+Dialogue: 0,0:02:16.61,0:02:19.06,Main,at everyone.
+Dialogue: 0,0:01:51.24,0:01:52.98,Main,Up close,
+Dialogue: 0,0:01:52.98,0:01:57.72,Main,the towers were bright
+Dialogue: 0,0:01:57.72,0:01:58.96,Main,white,
+Dialogue: 0,0:01:58.96,0:02:03.19,Main,painted in deep reds
+Dialogue: 0,0:02:03.19,0:02:05.19,Main,and blues.
+Dialogue: 0,0:02:05.19,0:02:09.67,Main,Temples rose in giant
+Dialogue: 0,0:02:09.67,0:02:13.90,Main,steps toward the sky.
+Dialogue: 0,0:02:13.90,0:02:15.15,Main,Clean,
+Dialogue: 0,0:02:15.15,0:02:16.89,Main,planned,
+Dialogue: 0,0:02:16.89,0:02:19.13,Main,beautiful.
+Dialogue: 0,0:02:19.13,0:02:23.37,Main,The soldiers simply
+Dialogue: 0,0:02:23.37,0:02:27.85,Main,did not have words for
+Dialogue: 0,0:02:27.85,0:02:28.35,Main,it.
+Dialogue: 0,0:02:05.92,0:02:10.54,Main,But the strangest part
+Dialogue: 0,0:02:10.54,0:02:14.18,Main,of that day was not
+Dialogue: 0,0:02:14.18,0:02:18.07,Main,the size of the city.
+Dialogue: 0,0:02:18.07,0:02:22.44,Main,It was who was waiting
+Dialogue: 0,0:02:22.44,0:02:26.57,Main,at the end of the long
+Dialogue: 0,0:02:26.57,0:02:28.76,Main,stone road.
+Dialogue: 0,0:02:28.76,0:02:32.41,Main,A man carried high
+Dialogue: 0,0:02:32.41,0:02:35.57,Main,above the crowd,
+Dialogue: 0,0:02:35.57,0:02:39.70,Main,under a roof of green
+Dialogue: 0,0:02:39.70,0:02:41.64,Main,feathers.
+Dialogue: 0,0:02:18.34,0:02:22.32,Main,He stepped down and
+Dialogue: 0,0:02:22.32,0:02:25.56,Main,walked forward.
+Dialogue: 0,0:02:25.56,0:02:29.54,Main,This was Moctezuma,
+Dialogue: 0,0:02:29.54,0:02:33.28,Main,the ruler of it all.
+Dialogue: 0,0:02:33.28,0:02:37.26,Main,A Nahua man of about
+Dialogue: 0,0:02:37.26,0:02:38.51,Main,fifty,
+Dialogue: 0,0:02:38.51,0:02:42.24,Main,copper-brown skin,
+Dialogue: 0,0:02:42.24,0:02:46.23,Main,a thin sparse beard.
+Dialogue: 0,0:02:46.23,0:02:50.21,Main,He wore a turquoise
+Dialogue: 0,0:02:50.21,0:02:53.45,Main,band on his brow,
+Dialogue: 0,0:02:53.45,0:02:56.68,Main,a cloak of green
+Dialogue: 0,0:02:56.68,0:02:58.68,Main,feathers,
+Dialogue: 0,0:02:58.68,0:03:02.66,Main,and gold at his ears.
+Dialogue: 0,0:02:35.54,0:02:39.44,Main,The two leaders met
+Dialogue: 0,0:02:39.44,0:02:41.88,Main,face to face.
+Dialogue: 0,0:02:41.88,0:02:46.27,Main,Cortes with his small
+Dialogue: 0,0:02:46.27,0:02:49.69,Main,band of tired men.
+Dialogue: 0,0:02:49.69,0:02:54.08,Main,Moctezuma with a city
+Dialogue: 0,0:02:54.08,0:02:58.23,Main,of countless people
+Dialogue: 0,0:02:58.23,0:03:00.42,Main,behind him.
+Dialogue: 0,0:03:00.42,0:03:04.81,Main,They traded gifts and
+Dialogue: 0,0:03:04.81,0:03:07.50,Main,polite words,
+Dialogue: 0,0:03:07.50,0:03:12.13,Main,each one measuring the
+Dialogue: 0,0:03:12.13,0:03:13.35,Main,other.
+Dialogue: 0,0:02:49.73,0:02:53.92,Main,And here is the thing
+Dialogue: 0,0:02:53.92,0:02:58.60,Main,the soldiers tried not
+Dialogue: 0,0:02:58.60,0:03:01.55,Main,to think about.
+Dialogue: 0,0:03:01.55,0:03:05.99,Main,They were a handful of
+Dialogue: 0,0:03:05.99,0:03:06.73,Main,men.
+Dialogue: 0,0:03:06.73,0:03:09.93,Main,They had walked,
+Dialogue: 0,0:03:09.93,0:03:12.14,Main,on purpose,
+Dialogue: 0,0:03:12.14,0:03:16.33,Main,into the middle of an
+Dialogue: 0,0:03:16.33,0:03:18.79,Main,island city,
+Dialogue: 0,0:03:18.79,0:03:22.98,Main,with the water as its
+Dialogue: 0,0:03:22.98,0:03:24.21,Main,walls.
+Dialogue: 0,0:03:24.21,0:03:27.66,Main,If anything went
+Dialogue: 0,0:03:27.66,0:03:28.89,Main,wrong,
+Dialogue: 0,0:03:28.89,0:03:33.08,Main,there was no easy way
+Dialogue: 0,0:03:33.08,0:03:33.82,Main,out.
+Dialogue: 0,0:03:05.90,0:03:09.96,Main,They were shown the
+Dialogue: 0,0:03:09.96,0:03:12.75,Main,great market.
+Dialogue: 0,0:03:12.75,0:03:16.05,Main,Row after row of
+Dialogue: 0,0:03:16.05,0:03:17.57,Main,stalls.
+Dialogue: 0,0:03:17.57,0:03:18.59,Main,Gold,
+Dialogue: 0,0:03:18.59,0:03:19.60,Main,jade,
+Dialogue: 0,0:03:19.60,0:03:20.87,Main,cloth,
+Dialogue: 0,0:03:20.87,0:03:23.16,Main,chocolate,
+Dialogue: 0,0:03:23.16,0:03:24.42,Main,fruit,
+Dialogue: 0,0:03:24.42,0:03:26.45,Main,medicine,
+Dialogue: 0,0:03:26.45,0:03:28.99,Main,everything.
+Dialogue: 0,0:03:28.99,0:03:32.80,Main,By their own count,
+Dialogue: 0,0:03:32.80,0:03:37.62,Main,{\c&H0000D4FF}tens of thousands{\c&H00FFFFFF} came
+Dialogue: 0,0:03:37.62,0:03:41.43,Main,to buy and sell in a
+Dialogue: 0,0:03:41.43,0:03:43.71,Main,single day.
+Dialogue: 0,0:03:21.68,0:03:24.88,Main,Out on the water
+Dialogue: 0,0:03:24.88,0:03:28.83,Main,floated long green
+Dialogue: 0,0:03:28.83,0:03:30.56,Main,gardens.
+Dialogue: 0,0:03:30.56,0:03:34.50,Main,People grew food on
+Dialogue: 0,0:03:34.50,0:03:38.69,Main,little islands they
+Dialogue: 0,0:03:38.69,0:03:43.13,Main,had built themselves,
+Dialogue: 0,0:03:43.13,0:03:46.58,Main,right on the lake.
+Dialogue: 0,0:03:46.58,0:03:49.05,Main,Vegetables,
+Dialogue: 0,0:03:49.05,0:03:50.77,Main,flowers,
+Dialogue: 0,0:03:50.77,0:03:53.48,Main,whole fields,
+Dialogue: 0,0:03:53.48,0:03:57.92,Main,drifting on the water.
+Dialogue: 0,0:03:57.92,0:04:01.62,Main,Nothing in Europe
+Dialogue: 0,0:04:01.62,0:04:05.07,Main,worked like this.
+Dialogue: 0,0:03:37.38,0:03:41.53,Main,Clean water ran into
+Dialogue: 0,0:03:41.53,0:03:45.19,Main,the city through a
+Dialogue: 0,0:03:45.19,0:03:49.59,Main,raised stone channel
+Dialogue: 0,0:03:49.59,0:03:52.51,Main,from the hills.
+Dialogue: 0,0:03:52.51,0:03:55.93,Main,The streets were
+Dialogue: 0,0:03:55.93,0:03:57.15,Main,swept.
+Dialogue: 0,0:03:57.15,0:04:01.30,Main,Workers carried the
+Dialogue: 0,0:04:01.30,0:04:05.45,Main,waste away every day.
+Dialogue: 0,0:04:05.45,0:04:09.60,Main,For men used to muddy,
+Dialogue: 0,0:04:09.60,0:04:13.26,Main,smelly towns back
+Dialogue: 0,0:04:13.26,0:04:14.24,Main,home,
+Dialogue: 0,0:04:14.24,0:04:18.39,Main,it felt like another
+Dialogue: 0,0:04:18.39,0:04:19.61,Main,world.
+Dialogue: 0,0:03:52.64,0:03:56.56,Main,They were led up the
+Dialogue: 0,0:03:56.56,0:04:00.73,Main,steps of the tallest
+Dialogue: 0,0:04:00.73,0:04:02.20,Main,temple.
+Dialogue: 0,0:04:02.20,0:04:05.63,Main,From the very top,
+Dialogue: 0,0:04:05.63,0:04:09.06,Main,the whole valley
+Dialogue: 0,0:04:09.06,0:04:12.73,Main,opened below them.
+Dialogue: 0,0:04:12.73,0:04:14.20,Main,Cities,
+Dialogue: 0,0:04:14.20,0:04:18.12,Main,long roads over the
+Dialogue: 0,0:04:18.12,0:04:19.35,Main,water,
+Dialogue: 0,0:04:19.35,0:04:23.27,Main,the lake shining in
+Dialogue: 0,0:04:23.27,0:04:26.70,Main,every direction.
+Dialogue: 0,0:04:26.70,0:04:31.35,Main,One soldier wrote that
+Dialogue: 0,0:04:31.35,0:04:35.27,Main,he could not take it
+Dialogue: 0,0:04:35.27,0:04:36.50,Main,all in.
+Dialogue: 0,0:04:08.10,0:04:10.77,Main,From up there,
+Dialogue: 0,0:04:10.77,0:04:14.41,Main,the truth finally
+Dialogue: 0,0:04:14.41,0:04:15.87,Main,landed.
+Dialogue: 0,0:04:15.87,0:04:19.75,Main,This was not a lucky
+Dialogue: 0,0:04:19.75,0:04:23.88,Main,village that got big.
+Dialogue: 0,0:04:23.88,0:04:27.04,Main,It was one of the
+Dialogue: 0,0:04:27.04,0:04:31.41,Main,largest cities on the
+Dialogue: 0,0:04:31.41,0:04:35.54,Main,whole planet at that
+Dialogue: 0,0:04:35.54,0:04:36.99,Main,moment.
+Dialogue: 0,0:04:36.99,0:04:41.61,Main,More people lived here
+Dialogue: 0,0:04:41.61,0:04:45.49,Main,than in any city the
+Dialogue: 0,0:04:45.49,0:04:49.86,Main,Spanish had ever seen.
+Dialogue: 0,0:04:22.49,0:04:26.20,Main,And it had all been
+Dialogue: 0,0:04:26.20,0:04:28.92,Main,built by hand,
+Dialogue: 0,0:04:28.92,0:04:31.39,Main,on an island,
+Dialogue: 0,0:04:31.39,0:04:33.62,Main,on purpose.
+Dialogue: 0,0:04:33.62,0:04:37.33,Main,The roads over the
+Dialogue: 0,0:04:37.33,0:04:38.56,Main,water,
+Dialogue: 0,0:04:38.56,0:04:41.78,Main,the fresh-water
+Dialogue: 0,0:04:41.78,0:04:43.51,Main,channel,
+Dialogue: 0,0:04:43.51,0:04:47.72,Main,the floating fields.
+Dialogue: 0,0:04:47.72,0:04:51.92,Main,People had looked at
+Dialogue: 0,0:04:51.92,0:04:55.38,Main,an empty lake and
+Dialogue: 0,0:04:55.38,0:04:58.60,Main,decided to put a
+Dialogue: 0,0:04:58.60,0:05:02.80,Main,wonder in the middle
+Dialogue: 0,0:05:02.80,0:05:03.79,Main,of it.
+Dialogue: 0,0:04:36.33,0:04:39.72,Main,So why did it look
+Dialogue: 0,0:04:39.72,0:04:43.83,Main,impossible to those
+Dialogue: 0,0:04:43.83,0:04:46.73,Main,men on the road?
+Dialogue: 0,0:04:46.73,0:04:50.61,Main,Because nothing in
+Dialogue: 0,0:04:50.61,0:04:54.72,Main,their lives had ever
+Dialogue: 0,0:04:54.72,0:04:56.90,Main,come close.
+Dialogue: 0,0:04:56.90,0:05:01.01,Main,Their minds reached
+Dialogue: 0,0:05:01.01,0:05:04.64,Main,for the only words
+Dialogue: 0,0:05:04.64,0:05:06.33,Main,they had,
+Dialogue: 0,0:05:06.33,0:05:10.45,Main,and the closest word
+Dialogue: 0,0:05:10.45,0:05:14.32,Main,they could find was
+Dialogue: 0,0:05:14.32,0:05:15.53,Main,magic.
+Dialogue: 0,0:04:49.18,0:04:53.59,Main,One of those soldiers,
+Dialogue: 0,0:04:53.59,0:04:58.00,Main,an ordinary man named
+Dialogue: 0,0:04:58.00,0:05:00.44,Main,Bernal Diaz,
+Dialogue: 0,0:05:00.44,0:05:04.61,Main,grew old and wrote it
+Dialogue: 0,0:05:04.61,0:05:06.32,Main,all down.
+Dialogue: 0,0:05:06.32,0:05:09.75,Main,Even as an old man,
+Dialogue: 0,0:05:09.75,0:05:12.69,Main,decades later,
+Dialogue: 0,0:05:12.69,0:05:16.61,Main,he said he still did
+Dialogue: 0,0:05:16.61,0:05:20.77,Main,not have the words to
+Dialogue: 0,0:05:20.77,0:05:24.93,Main,describe what he saw
+Dialogue: 0,0:05:24.93,0:05:28.85,Main,that first morning.
+Dialogue: 0,0:05:02.51,0:05:03.75,Main,Today,
+Dialogue: 0,0:05:03.75,0:05:07.73,Main,most of that lake is
+Dialogue: 0,0:05:07.73,0:05:08.72,Main,gone,
+Dialogue: 0,0:05:08.72,0:05:13.20,Main,drained away over the
+Dialogue: 0,0:05:13.20,0:05:15.43,Main,centuries.
+Dialogue: 0,0:05:15.43,0:05:19.41,Main,A giant modern city
+Dialogue: 0,0:05:19.41,0:05:23.38,Main,sits right on top of
+Dialogue: 0,0:05:23.38,0:05:23.88,Main,it.
+Dialogue: 0,0:05:23.88,0:05:27.61,Main,Under the streets,
+Dialogue: 0,0:05:27.61,0:05:31.09,Main,the old wonder is
+Dialogue: 0,0:05:31.09,0:05:33.82,Main,still buried,
+Dialogue: 0,0:05:33.82,0:05:37.30,Main,just out of sight.
+Dialogue: 0,0:05:15.41,0:05:19.85,Main,So picture it one more
+Dialogue: 0,0:05:19.85,0:05:20.83,Main,time.
+Dialogue: 0,0:05:20.83,0:05:23.79,Main,A few tired men,
+Dialogue: 0,0:05:23.79,0:05:27.73,Main,a road across a lake,
+Dialogue: 0,0:05:27.73,0:05:31.68,Main,and a city so bright
+Dialogue: 0,0:05:31.68,0:05:34.88,Main,it looked like a
+Dialogue: 0,0:05:34.88,0:05:36.12,Main,dream.
+Dialogue: 0,0:05:36.12,0:05:38.33,Main,It was real.
+Dialogue: 0,0:05:38.33,0:05:41.79,Main,And for one quiet
+Dialogue: 0,0:05:41.79,0:05:43.51,Main,morning,
+Dialogue: 0,0:05:43.51,0:05:48.44,Main,the mightiest soldiers
+Dialogue: 0,0:05:48.44,0:05:52.39,Main,in the world forgot
+Dialogue: 0,0:05:52.39,0:05:54.85,Main,how to speak.

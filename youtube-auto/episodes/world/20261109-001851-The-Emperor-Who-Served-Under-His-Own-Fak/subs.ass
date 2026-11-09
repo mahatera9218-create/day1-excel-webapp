@@ -1,0 +1,295 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,42,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,90
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.70,0:00:04.85,Main,A general rides hard
+Dialogue: 0,0:00:04.85,0:00:08.99,Main,toward the northern
+Dialogue: 0,0:00:08.99,0:00:10.46,Main,border,
+Dialogue: 0,0:00:10.46,0:00:13.87,Main,armour rattling,
+Dialogue: 0,0:00:13.87,0:00:17.78,Main,helmet low over his
+Dialogue: 0,0:00:17.78,0:00:18.75,Main,eyes.
+Dialogue: 0,0:00:18.75,0:00:22.65,Main,Soldiers cheer his
+Dialogue: 0,0:00:22.65,0:00:23.63,Main,name.
+Dialogue: 0,0:00:23.63,0:00:28.02,Main,But under that helmet
+Dialogue: 0,0:00:28.02,0:00:32.41,Main,is a secret so strange
+Dialogue: 0,0:00:32.41,0:00:36.07,Main,it is almost a joke.
+Dialogue: 0,0:00:36.07,0:00:39.97,Main,This general is the
+Dialogue: 0,0:00:39.97,0:00:43.39,Main,emperor himself.
+Dialogue: 0,0:00:16.24,0:00:19.70,Main,Meet the Zhengde
+Dialogue: 0,0:00:19.70,0:00:21.43,Main,Emperor,
+Dialogue: 0,0:00:21.43,0:00:25.39,Main,a Han Chinese man in
+Dialogue: 0,0:00:25.39,0:00:28.85,Main,his mid-twenties,
+Dialogue: 0,0:00:28.85,0:00:30.82,Main,pale skin,
+Dialogue: 0,0:00:30.82,0:00:35.27,Main,a thin dark moustache
+Dialogue: 0,0:00:35.27,0:00:38.74,Main,and a short wispy
+Dialogue: 0,0:00:38.74,0:00:39.97,Main,beard.
+Dialogue: 0,0:00:39.97,0:00:44.17,Main,In the early fifteen
+Dialogue: 0,0:00:44.17,0:00:48.13,Main,hundreds he ruled a
+Dialogue: 0,0:00:48.13,0:00:49.12,Main,huge,
+Dialogue: 0,0:00:49.12,0:00:51.10,Main,rich land.
+Dialogue: 0,0:00:51.10,0:00:55.55,Main,And he was hopelessly
+Dialogue: 0,0:00:55.55,0:00:57.77,Main,bored of it.
+Dialogue: 0,0:00:31.18,0:00:35.61,Main,Being emperor sounds
+Dialogue: 0,0:00:35.61,0:00:38.06,Main,like a dream.
+Dialogue: 0,0:00:38.06,0:00:41.26,Main,For him it meant
+Dialogue: 0,0:00:41.26,0:00:44.21,Main,sitting still,
+Dialogue: 0,0:00:44.21,0:00:47.41,Main,reading papers,
+Dialogue: 0,0:00:47.41,0:00:51.83,Main,nodding at old men all
+Dialogue: 0,0:00:51.83,0:00:52.57,Main,day.
+Dialogue: 0,0:00:52.57,0:00:56.99,Main,So he did something no
+Dialogue: 0,0:00:56.99,0:01:01.17,Main,ruler had ever tried.
+Dialogue: 0,0:01:01.17,0:01:05.11,Main,He invented a whole
+Dialogue: 0,0:01:05.11,0:01:07.81,Main,other person.
+Dialogue: 0,0:01:07.81,0:01:11.50,Main,Hold that thought,
+Dialogue: 0,0:01:11.50,0:01:14.69,Main,because it gets
+Dialogue: 0,0:01:14.69,0:01:16.66,Main,stranger.
+Dialogue: 0,0:00:48.30,0:00:49.53,Main,First,
+Dialogue: 0,0:00:49.53,0:00:54.22,Main,understand how much he
+Dialogue: 0,0:00:54.22,0:00:57.43,Main,hated the rules.
+Dialogue: 0,0:00:57.43,0:01:01.63,Main,The palace was a cage
+Dialogue: 0,0:01:01.63,0:01:04.59,Main,of ceremonies.
+Dialogue: 0,0:01:04.59,0:01:08.79,Main,Every hour had a task.
+Dialogue: 0,0:01:08.79,0:01:12.74,Main,Officials told him
+Dialogue: 0,0:01:12.74,0:01:16.44,Main,where to stand and
+Dialogue: 0,0:01:16.44,0:01:18.66,Main,what to say.
+Dialogue: 0,0:01:18.66,0:01:22.86,Main,For a restless young
+Dialogue: 0,0:01:22.86,0:01:23.60,Main,man,
+Dialogue: 0,0:01:23.60,0:01:26.81,Main,torture in silk.
+Dialogue: 0,0:01:04.30,0:01:08.75,Main,So he built himself an
+Dialogue: 0,0:01:08.75,0:01:10.23,Main,escape.
+Dialogue: 0,0:01:10.23,0:01:14.18,Main,A private pleasure
+Dialogue: 0,0:01:14.18,0:01:18.63,Main,quarter full of music,
+Dialogue: 0,0:01:18.63,0:01:19.87,Main,games,
+Dialogue: 0,0:01:19.87,0:01:24.07,Main,even wild animals in
+Dialogue: 0,0:01:24.07,0:01:25.31,Main,cages.
+Dialogue: 0,0:01:25.31,0:01:29.51,Main,His own little world,
+Dialogue: 0,0:01:29.51,0:01:33.46,Main,far from the boring
+Dialogue: 0,0:01:33.46,0:01:35.93,Main,throne room.
+Dialogue: 0,0:01:35.93,0:01:39.89,Main,The officials were
+Dialogue: 0,0:01:39.89,0:01:42.11,Main,horrified.
+Dialogue: 0,0:01:18.86,0:01:23.30,Main,They begged him to act
+Dialogue: 0,0:01:23.30,0:01:26.51,Main,like an emperor.
+Dialogue: 0,0:01:26.51,0:01:29.97,Main,Sit on the throne.
+Dialogue: 0,0:01:29.97,0:01:34.16,Main,Lead the ceremonies.
+Dialogue: 0,0:01:34.16,0:01:38.36,Main,Be the calm father of
+Dialogue: 0,0:01:38.36,0:01:40.08,Main,the land.
+Dialogue: 0,0:01:40.08,0:01:44.28,Main,But he did not want to
+Dialogue: 0,0:01:44.28,0:01:47.24,Main,be a figure on a
+Dialogue: 0,0:01:47.24,0:01:48.47,Main,chair.
+Dialogue: 0,0:01:48.47,0:01:51.68,Main,He wanted to be a
+Dialogue: 0,0:01:51.68,0:01:53.41,Main,soldier.
+Dialogue: 0,0:01:33.58,0:01:37.75,Main,A real emperor could
+Dialogue: 0,0:01:37.75,0:01:41.43,Main,not just run off to
+Dialogue: 0,0:01:41.43,0:01:43.15,Main,the army.
+Dialogue: 0,0:01:43.15,0:01:47.56,Main,So he found a loophole
+Dialogue: 0,0:01:47.56,0:01:51.00,Main,that is honestly
+Dialogue: 0,0:01:51.00,0:01:53.21,Main,brilliant.
+Dialogue: 0,0:01:53.21,0:01:57.38,Main,If the emperor could
+Dialogue: 0,0:01:57.38,0:02:00.57,Main,not be a general,
+Dialogue: 0,0:02:00.57,0:02:05.23,Main,he would simply create
+Dialogue: 0,0:02:05.23,0:02:05.96,Main,one.
+Dialogue: 0,0:02:05.96,0:02:08.91,Main,A brand new man,
+Dialogue: 0,0:02:08.91,0:02:11.85,Main,out of thin air.
+Dialogue: 0,0:01:47.85,0:01:51.81,Main,He gave this made-up
+Dialogue: 0,0:01:51.81,0:01:55.77,Main,general a name and a
+Dialogue: 0,0:01:55.77,0:01:58.74,Main,soldier's rank.
+Dialogue: 0,0:01:58.74,0:02:00.48,Main,On paper,
+Dialogue: 0,0:02:00.48,0:02:04.93,Main,a brave new commander
+Dialogue: 0,0:02:04.93,0:02:07.41,Main,now existed,
+Dialogue: 0,0:02:07.41,0:02:11.12,Main,ready to serve the
+Dialogue: 0,0:02:11.12,0:02:12.61,Main,throne.
+Dialogue: 0,0:02:12.61,0:02:17.06,Main,Only one small detail.
+Dialogue: 0,0:02:17.06,0:02:21.27,Main,This general and the
+Dialogue: 0,0:02:21.27,0:02:25.97,Main,emperor were the exact
+Dialogue: 0,0:02:25.97,0:02:28.45,Main,same person.
+Dialogue: 0,0:02:03.10,0:02:07.06,Main,Now here is the part
+Dialogue: 0,0:02:07.06,0:02:10.52,Main,that breaks your
+Dialogue: 0,0:02:10.52,0:02:11.75,Main,brain.
+Dialogue: 0,0:02:11.75,0:02:15.46,Main,He did not keep the
+Dialogue: 0,0:02:15.46,0:02:18.68,Main,joke to himself.
+Dialogue: 0,0:02:18.68,0:02:21.65,Main,He made his own
+Dialogue: 0,0:02:21.65,0:02:26.10,Main,government treat the
+Dialogue: 0,0:02:26.10,0:02:30.30,Main,fake general as real.
+Dialogue: 0,0:02:30.30,0:02:31.79,Main,Orders,
+Dialogue: 0,0:02:31.79,0:02:33.52,Main,salutes,
+Dialogue: 0,0:02:33.52,0:02:35.74,Main,paperwork,
+Dialogue: 0,0:02:35.74,0:02:39.45,Main,all for a man never
+Dialogue: 0,0:02:39.45,0:02:40.44,Main,born.
+Dialogue: 0,0:02:17.32,0:02:20.98,Main,He would sit as the
+Dialogue: 0,0:02:20.98,0:02:24.89,Main,emperor and write a
+Dialogue: 0,0:02:24.89,0:02:27.82,Main,grand command.
+Dialogue: 0,0:02:27.82,0:02:30.27,Main,March north.
+Dialogue: 0,0:02:30.27,0:02:33.44,Main,Lead the troops.
+Dialogue: 0,0:02:33.44,0:02:37.11,Main,Defend the border.
+Dialogue: 0,0:02:37.11,0:02:39.79,Main,The order was
+Dialogue: 0,0:02:39.79,0:02:43.21,Main,addressed to his
+Dialogue: 0,0:02:43.21,0:02:46.88,Main,invented general,
+Dialogue: 0,0:02:46.88,0:02:50.05,Main,in full serious
+Dialogue: 0,0:02:50.05,0:02:52.01,Main,language.
+Dialogue: 0,0:02:52.01,0:02:54.45,Main,So would the
+Dialogue: 0,0:02:54.45,0:02:59.33,Main,government really obey
+Dialogue: 0,0:02:59.33,0:03:02.51,Main,a man who did not
+Dialogue: 0,0:03:02.51,0:03:03.73,Main,exist?
+Dialogue: 0,0:02:35.26,0:02:39.68,Main,Then he would take off
+Dialogue: 0,0:02:39.68,0:02:42.87,Main,the yellow robe,
+Dialogue: 0,0:02:42.87,0:02:45.57,Main,put on armour,
+Dialogue: 0,0:02:45.57,0:02:48.75,Main,and become that
+Dialogue: 0,0:02:48.75,0:02:50.47,Main,general.
+Dialogue: 0,0:02:50.47,0:02:54.64,Main,The same man who gave
+Dialogue: 0,0:02:54.64,0:02:59.06,Main,the order now stepped
+Dialogue: 0,0:02:59.06,0:03:02.74,Main,forward to obey it,
+Dialogue: 0,0:03:02.74,0:03:06.18,Main,with a perfectly
+Dialogue: 0,0:03:06.18,0:03:09.12,Main,straight face.
+Dialogue: 0,0:02:46.10,0:02:50.00,Main,The officials were
+Dialogue: 0,0:02:50.00,0:02:52.44,Main,caught in an
+Dialogue: 0,0:02:52.44,0:02:55.85,Main,impossible game.
+Dialogue: 0,0:02:55.85,0:03:00.24,Main,They had to salute the
+Dialogue: 0,0:03:00.24,0:03:04.87,Main,general and praise his
+Dialogue: 0,0:03:04.87,0:03:06.58,Main,courage.
+Dialogue: 0,0:03:06.58,0:03:10.23,Main,All while knowing,
+Dialogue: 0,0:03:10.23,0:03:12.91,Main,every second,
+Dialogue: 0,0:03:12.91,0:03:17.30,Main,that they were bowing
+Dialogue: 0,0:03:17.30,0:03:21.45,Main,to their own emperor
+Dialogue: 0,0:03:21.45,0:03:23.88,Main,in a costume.
+Dialogue: 0,0:03:23.88,0:03:27.78,Main,Nobody dared say it
+Dialogue: 0,0:03:27.78,0:03:29.49,Main,out loud.
+Dialogue: 0,0:03:01.06,0:03:05.24,Main,And this was not only
+Dialogue: 0,0:03:05.24,0:03:07.94,Main,a game at home.
+Dialogue: 0,0:03:07.94,0:03:12.11,Main,Out in the real world,
+Dialogue: 0,0:03:12.11,0:03:15.55,Main,raiders from the
+Dialogue: 0,0:03:15.55,0:03:19.97,Main,northern steppe were
+Dialogue: 0,0:03:19.97,0:03:24.39,Main,pushing at the border.
+Dialogue: 0,0:03:24.39,0:03:27.59,Main,Genuine danger,
+Dialogue: 0,0:03:27.59,0:03:30.53,Main,real soldiers,
+Dialogue: 0,0:03:30.53,0:03:34.46,Main,a real fight coming.
+Dialogue: 0,0:03:34.46,0:03:38.88,Main,The costume was about
+Dialogue: 0,0:03:38.88,0:03:43.06,Main,to meet {\c&H0000D4FF}an actual war{\c&H00FFFFFF}.
+Dialogue: 0,0:03:15.95,0:03:18.67,Main,So out he rode,
+Dialogue: 0,0:03:18.67,0:03:21.63,Main,as the general,
+Dialogue: 0,0:03:21.63,0:03:25.09,Main,all the way to the
+Dialogue: 0,0:03:25.09,0:03:27.07,Main,frontier.
+Dialogue: 0,0:03:27.07,0:03:31.02,Main,Not watching from a
+Dialogue: 0,0:03:31.02,0:03:33.25,Main,safe tower,
+Dialogue: 0,0:03:33.25,0:03:37.20,Main,but out with the men
+Dialogue: 0,0:03:37.20,0:03:41.16,Main,in the cold and dust.
+Dialogue: 0,0:03:41.16,0:03:45.60,Main,Whatever else you say
+Dialogue: 0,0:03:45.60,0:03:47.58,Main,about him,
+Dialogue: 0,0:03:47.58,0:03:51.04,Main,he went where the
+Dialogue: 0,0:03:51.04,0:03:53.76,Main,fighting was.
+Dialogue: 0,0:03:29.19,0:03:33.54,Main,There was a real clash
+Dialogue: 0,0:03:33.54,0:03:37.90,Main,with the raiders near
+Dialogue: 0,0:03:37.90,0:03:40.08,Main,the border,
+Dialogue: 0,0:03:40.08,0:03:44.43,Main,and he was right there
+Dialogue: 0,0:03:44.43,0:03:45.40,Main,in it.
+Dialogue: 0,0:03:45.40,0:03:49.03,Main,He later spoke of a
+Dialogue: 0,0:03:49.03,0:03:51.93,Main,great victory.
+Dialogue: 0,0:03:51.93,0:03:56.04,Main,The careful truth is
+Dialogue: 0,0:03:56.04,0:04:00.64,Main,that historians still
+Dialogue: 0,0:04:00.64,0:04:04.51,Main,argue about how big
+Dialogue: 0,0:04:04.51,0:04:08.86,Main,that fight really was.
+Dialogue: 0,0:03:42.26,0:03:45.94,Main,Now watch the loop
+Dialogue: 0,0:03:45.94,0:03:49.38,Main,close in the most
+Dialogue: 0,0:03:49.38,0:03:52.57,Main,ridiculous way.
+Dialogue: 0,0:03:52.57,0:03:55.76,Main,After the fight,
+Dialogue: 0,0:03:55.76,0:03:59.94,Main,the general wanted a
+Dialogue: 0,0:03:59.94,0:04:01.41,Main,reward.
+Dialogue: 0,0:04:01.41,0:04:04.36,Main,So the emperor,
+Dialogue: 0,0:04:04.36,0:04:06.81,Main,the same man,
+Dialogue: 0,0:04:06.81,0:04:10.99,Main,ordered the court to
+Dialogue: 0,0:04:10.99,0:04:14.42,Main,honour the brave
+Dialogue: 0,0:04:14.42,0:04:16.14,Main,general.
+Dialogue: 0,0:04:16.14,0:04:20.56,Main,He was asking himself
+Dialogue: 0,0:04:20.56,0:04:24.49,Main,to {\c&H0000D4FF}promote himself{\c&H00FFFFFF}.
+Dialogue: 0,0:03:57.51,0:04:00.18,Main,And it worked.
+Dialogue: 0,0:04:00.18,0:04:04.31,Main,The court was made to
+Dialogue: 0,0:04:04.31,0:04:08.19,Main,grant the invented
+Dialogue: 0,0:04:08.19,0:04:12.32,Main,general new honours
+Dialogue: 0,0:04:12.32,0:04:15.72,Main,and a higher rank.
+Dialogue: 0,0:04:15.72,0:04:19.12,Main,Somewhere in the
+Dialogue: 0,0:04:19.12,0:04:22.76,Main,records of a great
+Dialogue: 0,0:04:22.76,0:04:23.73,Main,land,
+Dialogue: 0,0:04:23.73,0:04:28.10,Main,a brave commander was
+Dialogue: 0,0:04:28.10,0:04:32.23,Main,climbing the ladder.
+Dialogue: 0,0:04:32.23,0:04:36.11,Main,A commander who was
+Dialogue: 0,0:04:36.11,0:04:39.51,Main,{\c&H0000D4FF}never real at all{\c&H00FFFFFF}.
+Dialogue: 0,0:04:11.85,0:04:15.25,Main,Picture the poor
+Dialogue: 0,0:04:15.25,0:04:16.71,Main,clerks.
+Dialogue: 0,0:04:16.71,0:04:20.84,Main,Trained for years to
+Dialogue: 0,0:04:20.84,0:04:23.76,Main,be careful and
+Dialogue: 0,0:04:23.76,0:04:25.46,Main,correct.
+Dialogue: 0,0:04:25.46,0:04:30.08,Main,Now spending real days
+Dialogue: 0,0:04:30.08,0:04:34.94,Main,writing careful praise
+Dialogue: 0,0:04:34.94,0:04:38.58,Main,for a soldier they
+Dialogue: 0,0:04:38.58,0:04:42.23,Main,knew did not exist.
+Dialogue: 0,0:04:42.23,0:04:46.36,Main,They could not laugh
+Dialogue: 0,0:04:46.36,0:04:48.30,Main,or refuse.
+Dialogue: 0,0:04:48.30,0:04:51.22,Main,They just kept
+Dialogue: 0,0:04:51.22,0:04:52.92,Main,writing.
+Dialogue: 0,0:04:27.56,0:04:31.72,Main,So why on earth did he
+Dialogue: 0,0:04:31.72,0:04:33.93,Main,do all this?
+Dialogue: 0,0:04:33.93,0:04:37.60,Main,We cannot read his
+Dialogue: 0,0:04:37.60,0:04:38.58,Main,mind,
+Dialogue: 0,0:04:38.58,0:04:41.77,Main,so this part is a
+Dialogue: 0,0:04:41.77,0:04:44.46,Main,gentle guess.
+Dialogue: 0,0:04:44.46,0:04:47.65,Main,Maybe he wanted
+Dialogue: 0,0:04:47.65,0:04:49.36,Main,freedom.
+Dialogue: 0,0:04:49.36,0:04:53.04,Main,Maybe glory he had
+Dialogue: 0,0:04:53.04,0:04:56.47,Main,actually earned.
+Dialogue: 0,0:04:56.47,0:05:00.39,Main,Maybe the man on the
+Dialogue: 0,0:05:00.39,0:05:04.80,Main,throne just wanted to
+Dialogue: 0,0:05:04.80,0:05:07.00,Main,feel alive.
+Dialogue: 0,0:04:43.14,0:04:47.05,Main,The strange double
+Dialogue: 0,0:04:47.05,0:04:50.47,Main,life did not last
+Dialogue: 0,0:04:50.47,0:04:51.45,Main,long.
+Dialogue: 0,0:04:51.45,0:04:55.36,Main,A few years later he
+Dialogue: 0,0:04:55.36,0:04:58.78,Main,fell ill after an
+Dialogue: 0,0:04:58.78,0:05:03.18,Main,accident on the water.
+Dialogue: 0,0:05:03.18,0:05:05.87,Main,He died young,
+Dialogue: 0,0:05:05.87,0:05:10.02,Main,with no son to follow.
+Dialogue: 0,0:05:10.02,0:05:13.44,Main,And the invented
+Dialogue: 0,0:05:13.44,0:05:17.84,Main,general quietly went
+Dialogue: 0,0:05:17.84,0:05:19.55,Main,with him.
+Dialogue: 0,0:04:56.79,0:05:01.17,Main,But the fake man never
+Dialogue: 0,0:05:01.17,0:05:05.06,Main,fully disappeared.
+Dialogue: 0,0:05:05.06,0:05:09.44,Main,His name still sits in
+Dialogue: 0,0:05:09.44,0:05:12.60,Main,the old records,
+Dialogue: 0,0:05:12.60,0:05:16.74,Main,with real orders and
+Dialogue: 0,0:05:16.74,0:05:20.88,Main,real honours next to
+Dialogue: 0,0:05:20.88,0:05:21.36,Main,it.
+Dialogue: 0,0:05:21.36,0:05:24.77,Main,A general who was
+Dialogue: 0,0:05:24.77,0:05:26.96,Main,never born,
+Dialogue: 0,0:05:26.96,0:05:31.34,Main,preserved forever in
+Dialogue: 0,0:05:31.34,0:05:35.23,Main,the paperwork of an
+Dialogue: 0,0:05:35.23,0:05:36.69,Main,empire.
+Dialogue: 0,0:05:10.50,0:05:12.21,Main,Even now,
+Dialogue: 0,0:05:12.21,0:05:16.61,Main,people who study this
+Dialogue: 0,0:05:16.61,0:05:21.25,Main,time argue about where
+Dialogue: 0,0:05:21.25,0:05:25.64,Main,the game ended and the
+Dialogue: 0,0:05:25.64,0:05:29.55,Main,real soldier began.
+Dialogue: 0,0:05:29.55,0:05:33.70,Main,How much was serious,
+Dialogue: 0,0:05:33.70,0:05:37.12,Main,how much was play.
+Dialogue: 0,0:05:37.12,0:05:41.76,Main,Everyone agrees on one
+Dialogue: 0,0:05:41.76,0:05:42.98,Main,thing.
+Dialogue: 0,0:05:42.98,0:05:47.62,Main,Nobody else ever tried
+Dialogue: 0,0:05:47.62,0:05:51.77,Main,anything quite like
+Dialogue: 0,0:05:51.77,0:05:52.26,Main,it.
+Dialogue: 0,0:05:25.78,0:05:30.23,Main,So here is the thought
+Dialogue: 0,0:05:30.23,0:05:32.71,Main,that sticks.
+Dialogue: 0,0:05:32.71,0:05:36.17,Main,A man had the most
+Dialogue: 0,0:05:36.17,0:05:39.88,Main,power in the world,
+Dialogue: 0,0:05:39.88,0:05:43.10,Main,every door open,
+Dialogue: 0,0:05:43.10,0:05:47.06,Main,every wish granted.
+Dialogue: 0,0:05:47.06,0:05:50.77,Main,And what he wanted
+Dialogue: 0,0:05:50.77,0:05:54.48,Main,most was to take it
+Dialogue: 0,0:05:54.48,0:05:55.96,Main,all off,
+Dialogue: 0,0:05:55.96,0:05:58.93,Main,put on a helmet,
+Dialogue: 0,0:05:58.93,0:06:02.89,Main,and {\c&H0000D4FF}be someone else{\c&H00FFFFFF}.

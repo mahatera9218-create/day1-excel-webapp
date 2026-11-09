@@ -1,0 +1,33 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,64,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,360
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.00,0:00:04.59,Main,A real Chinese emperor
+Dialogue: 0,0:00:04.59,0:00:08.45,Main,got bored of his own
+Dialogue: 0,0:00:08.45,0:00:09.90,Main,throne.
+Dialogue: 0,0:00:09.90,0:00:13.04,Main,So he invented a
+Dialogue: 0,0:00:13.04,0:00:16.90,Main,general who did not
+Dialogue: 0,0:00:16.90,0:00:18.11,Main,exist,
+Dialogue: 0,0:00:18.11,0:00:21.73,Main,gave the fake man a
+Dialogue: 0,0:00:21.73,0:00:25.59,Main,name and a soldier's
+Dialogue: 0,0:00:25.59,0:00:26.56,Main,rank,
+Dialogue: 0,0:00:26.56,0:00:30.42,Main,and then went off to
+Dialogue: 0,0:00:30.42,0:00:33.56,Main,serve under him.
+Dialogue: 0,0:00:33.56,0:00:37.91,Main,His own officials had
+Dialogue: 0,0:00:37.91,0:00:42.01,Main,to {\c&H0000D4FF}bow to a person{\c&H00FFFFFF} who
+Dialogue: 0,0:00:42.01,0:00:46.36,Main,was secretly just the
+Dialogue: 0,0:00:46.36,0:00:50.22,Main,emperor in a helmet.
+Dialogue: 0,0:00:50.22,0:00:53.84,Main,Why he did it is the
+Dialogue: 0,0:00:53.84,0:00:56.98,Main,part that stuns
+Dialogue: 0,0:00:56.98,0:00:58.43,Main,people.
+Dialogue: 0,0:00:58.43,0:01:02.29,Main,The full story is in
+Dialogue: 0,0:01:02.29,0:01:06.88,Main,the description below.
