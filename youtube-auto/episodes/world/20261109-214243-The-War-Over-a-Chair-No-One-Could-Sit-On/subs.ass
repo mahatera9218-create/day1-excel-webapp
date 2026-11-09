@@ -1,0 +1,253 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,42,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,90
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.70,0:00:04.80,Main,A man in a crisp white
+Dialogue: 0,0:00:04.80,0:00:09.62,Main,uniform lowers himself
+Dialogue: 0,0:00:09.62,0:00:13.47,Main,onto a plain wooden
+Dialogue: 0,0:00:13.47,0:00:17.57,Main,chair in a grand West
+Dialogue: 0,0:00:17.57,0:00:20.22,Main,African hall.
+Dialogue: 0,0:00:20.22,0:00:24.08,Main,He looks around the
+Dialogue: 0,0:00:24.08,0:00:28.17,Main,silent room and asks
+Dialogue: 0,0:00:28.17,0:00:32.03,Main,for the one thing he
+Dialogue: 0,0:00:32.03,0:00:33.72,Main,is never,
+Dialogue: 0,0:00:33.72,0:00:37.33,Main,ever meant to have.
+Dialogue: 0,0:00:37.33,0:00:41.91,Main,That question is about
+Dialogue: 0,0:00:41.91,0:00:44.56,Main,to start a war.
+Dialogue: 0,0:00:15.52,0:00:19.43,Main,The place is Kumasi,
+Dialogue: 0,0:00:19.43,0:00:23.59,Main,the proud capital of
+Dialogue: 0,0:00:23.59,0:00:27.51,Main,the Asante kingdom,
+Dialogue: 0,0:00:27.51,0:00:31.42,Main,in what is now Ghana.
+Dialogue: 0,0:00:31.42,0:00:35.83,Main,For two hundred years
+Dialogue: 0,0:00:35.83,0:00:39.74,Main,the Asante had been
+Dialogue: 0,0:00:39.74,0:00:43.41,Main,one of the richest,
+Dialogue: 0,0:00:43.41,0:00:47.57,Main,strongest powers in
+Dialogue: 0,0:00:47.57,0:00:51.24,Main,all of West Africa.
+Dialogue: 0,0:00:27.39,0:00:31.82,Main,Their wealth came from
+Dialogue: 0,0:00:31.82,0:00:32.76,Main,gold,
+Dialogue: 0,0:00:32.76,0:00:36.02,Main,so much gold that
+Dialogue: 0,0:00:36.02,0:00:39.29,Main,chiefs wore it in
+Dialogue: 0,0:00:39.29,0:00:43.26,Main,thick bands on their
+Dialogue: 0,0:00:43.26,0:00:44.19,Main,arms.
+Dialogue: 0,0:00:44.19,0:00:48.16,Main,But by 1900,
+Dialogue: 0,0:00:48.16,0:00:52.59,Main,a bigger empire wanted
+Dialogue: 0,0:00:52.59,0:00:56.80,Main,to {\c&H0000D4FF}swallow them whole{\c&H00FFFFFF}.
+Dialogue: 0,0:00:56.80,0:01:00.76,Main,The British had come,
+Dialogue: 0,0:01:00.76,0:01:03.80,Main,and they wanted
+Dialogue: 0,0:01:03.80,0:01:06.13,Main,everything.
+Dialogue: 0,0:00:41.15,0:00:45.58,Main,The British governor,
+Dialogue: 0,0:00:45.58,0:00:50.25,Main,Sir Frederick Hodgson,
+Dialogue: 0,0:00:50.25,0:00:54.43,Main,thought taking over
+Dialogue: 0,0:00:54.43,0:00:58.36,Main,the Asante would be
+Dialogue: 0,0:00:58.36,0:00:59.84,Main,simple.
+Dialogue: 0,0:00:59.84,0:01:03.04,Main,Just find their
+Dialogue: 0,0:01:03.04,0:01:04.51,Main,throne,
+Dialogue: 0,0:01:04.51,0:01:08.94,Main,their symbol of power,
+Dialogue: 0,0:01:08.94,0:01:11.40,Main,and claim it.
+Dialogue: 0,0:01:11.40,0:01:15.09,Main,But he was about to
+Dialogue: 0,0:01:15.09,0:01:18.53,Main,make a mistake he
+Dialogue: 0,0:01:18.53,0:01:22.22,Main,could not imagine.
+Dialogue: 0,0:00:54.51,0:00:56.02,Main,You see,
+Dialogue: 0,0:00:56.02,0:01:00.30,Main,the Asante did have a
+Dialogue: 0,0:01:00.30,0:01:03.32,Main,kind of throne.
+Dialogue: 0,0:01:03.32,0:01:04.83,Main,A small,
+Dialogue: 0,0:01:04.83,0:01:08.35,Main,beautiful stool,
+Dialogue: 0,0:01:08.35,0:01:12.38,Main,covered all over in
+Dialogue: 0,0:01:12.38,0:01:14.39,Main,pure gold.
+Dialogue: 0,0:01:14.39,0:01:18.16,Main,They called it the
+Dialogue: 0,0:01:18.16,0:01:20.93,Main,Golden Stool.
+Dialogue: 0,0:01:20.93,0:01:23.70,Main,And it was not
+Dialogue: 0,0:01:23.70,0:01:25.96,Main,furniture.
+Dialogue: 0,0:01:25.96,0:01:27.47,Main,To them,
+Dialogue: 0,0:01:27.47,0:01:29.99,Main,{\c&H0000D4FF}it was alive{\c&H00FFFFFF}.
+Dialogue: 0,0:01:09.76,0:01:13.95,Main,The people believed
+Dialogue: 0,0:01:13.95,0:01:18.38,Main,the Golden Stool held
+Dialogue: 0,0:01:18.38,0:01:22.81,Main,the very soul of their
+Dialogue: 0,0:01:22.81,0:01:25.52,Main,whole nation.
+Dialogue: 0,0:01:25.52,0:01:28.22,Main,Every person,
+Dialogue: 0,0:01:28.22,0:01:31.43,Main,living and dead,
+Dialogue: 0,0:01:31.43,0:01:35.86,Main,was somehow inside it.
+Dialogue: 0,0:01:35.86,0:01:40.04,Main,It was so holy that no
+Dialogue: 0,0:01:40.04,0:01:40.78,Main,one,
+Dialogue: 0,0:01:40.78,0:01:44.23,Main,not even the king,
+Dialogue: 0,0:01:44.23,0:01:48.17,Main,was ever allowed to
+Dialogue: 0,0:01:48.17,0:01:49.89,Main,sit on it.
+Dialogue: 0,0:01:23.98,0:01:27.43,Main,Think about that.
+Dialogue: 0,0:01:27.43,0:01:31.38,Main,The most important
+Dialogue: 0,0:01:31.38,0:01:35.82,Main,object in the kingdom,
+Dialogue: 0,0:01:35.82,0:01:40.27,Main,and its own king could
+Dialogue: 0,0:01:40.27,0:01:43.97,Main,only be held in the
+Dialogue: 0,0:01:43.97,0:01:46.43,Main,air above it,
+Dialogue: 0,0:01:46.43,0:01:50.14,Main,{\c&H0000D4FF}never touching it{\c&H00FFFFFF}.
+Dialogue: 0,0:01:50.14,0:01:53.10,Main,It was guarded,
+Dialogue: 0,0:01:53.10,0:01:54.58,Main,hidden,
+Dialogue: 0,0:01:54.58,0:01:58.28,Main,and honored like a
+Dialogue: 0,0:01:58.28,0:02:01.98,Main,living king of its
+Dialogue: 0,0:02:01.98,0:02:02.72,Main,own.
+Dialogue: 0,0:01:36.90,0:01:40.11,Main,Now back to that
+Dialogue: 0,0:01:40.11,0:01:42.59,Main,silent hall.
+Dialogue: 0,0:01:42.59,0:01:47.04,Main,Governor Hodgson did
+Dialogue: 0,0:01:47.04,0:01:51.49,Main,not understand any of
+Dialogue: 0,0:01:51.49,0:01:52.48,Main,this,
+Dialogue: 0,0:01:52.48,0:01:55.44,Main,or did not care.
+Dialogue: 0,0:01:55.44,0:01:59.65,Main,He was handed a plain
+Dialogue: 0,0:01:59.65,0:02:02.61,Main,chair to sit on.
+Dialogue: 0,0:02:02.61,0:02:06.57,Main,And {\c&H0000D4FF}he was insulted{\c&H00FFFFFF}.
+Dialogue: 0,0:01:48.92,0:01:53.10,Main,He is remembered for
+Dialogue: 0,0:01:53.10,0:01:55.31,Main,demanding,
+Dialogue: 0,0:01:55.31,0:01:57.77,Main,more or less,
+Dialogue: 0,0:01:57.77,0:02:02.20,Main,why had they given him
+Dialogue: 0,0:02:02.20,0:02:06.38,Main,this ordinary chair?
+Dialogue: 0,0:02:06.38,0:02:09.57,Main,Why had they not
+Dialogue: 0,0:02:09.57,0:02:14.24,Main,brought out the Golden
+Dialogue: 0,0:02:14.24,0:02:16.95,Main,Stool for him,
+Dialogue: 0,0:02:16.95,0:02:21.37,Main,the most powerful man
+Dialogue: 0,0:02:21.37,0:02:23.59,Main,in the land,
+Dialogue: 0,0:02:23.59,0:02:25.80,Main,{\c&H0000D4FF}to sit upon{\c&H00FFFFFF}?
+Dialogue: 0,0:02:00.71,0:02:05.12,Main,You could have heard a
+Dialogue: 0,0:02:05.12,0:02:06.84,Main,pin drop.
+Dialogue: 0,0:02:06.84,0:02:09.53,Main,To the Asante,
+Dialogue: 0,0:02:09.53,0:02:13.45,Main,he had just asked to
+Dialogue: 0,0:02:13.45,0:02:17.62,Main,plant himself on top
+Dialogue: 0,0:02:17.62,0:02:21.54,Main,of the soul of their
+Dialogue: 0,0:02:21.54,0:02:23.74,Main,ancestors.
+Dialogue: 0,0:02:23.74,0:02:27.42,Main,It was the deepest
+Dialogue: 0,0:02:27.42,0:02:31.09,Main,insult they could
+Dialogue: 0,0:02:31.09,0:02:32.81,Main,imagine.
+Dialogue: 0,0:02:32.81,0:02:35.99,Main,But they did not
+Dialogue: 0,0:02:35.99,0:02:37.22,Main,shout.
+Dialogue: 0,0:02:37.22,0:02:41.14,Main,They simply smiled,
+Dialogue: 0,0:02:41.14,0:02:44.57,Main,and said nothing.
+Dialogue: 0,0:02:16.97,0:02:21.35,Main,So picture the choice
+Dialogue: 0,0:02:21.35,0:02:24.52,Main,in front of them.
+Dialogue: 0,0:02:24.52,0:02:27.44,Main,A stranger has
+Dialogue: 0,0:02:27.44,0:02:30.86,Main,demanded the one
+Dialogue: 0,0:02:30.86,0:02:35.00,Main,sacred thing you are
+Dialogue: 0,0:02:35.00,0:02:38.41,Main,sworn to protect.
+Dialogue: 0,0:02:38.41,0:02:42.30,Main,Do you hand over the
+Dialogue: 0,0:02:42.30,0:02:46.20,Main,soul of your people?
+Dialogue: 0,0:02:46.20,0:02:49.37,Main,Or do you make it
+Dialogue: 0,0:02:49.37,0:02:50.83,Main,vanish?
+Dialogue: 0,0:02:28.98,0:02:30.69,Main,Quietly,
+Dialogue: 0,0:02:30.69,0:02:34.37,Main,the Asante hid the
+Dialogue: 0,0:02:34.37,0:02:39.02,Main,real Golden Stool deep
+Dialogue: 0,0:02:39.02,0:02:43.68,Main,away where no outsider
+Dialogue: 0,0:02:43.68,0:02:47.35,Main,could ever find it.
+Dialogue: 0,0:02:47.35,0:02:51.76,Main,When the British went
+Dialogue: 0,0:02:51.76,0:02:53.48,Main,looking,
+Dialogue: 0,0:02:53.48,0:02:57.40,Main,they {\c&H0000D4FF}found nothing{\c&H00FFFFFF}.
+Dialogue: 0,0:02:57.40,0:03:01.32,Main,And that is when the
+Dialogue: 0,0:03:01.32,0:03:05.73,Main,governor made things
+Dialogue: 0,0:03:05.73,0:03:06.46,Main,far,
+Dialogue: 0,0:03:06.46,0:03:08.42,Main,far worse.
+Dialogue: 0,0:02:42.24,0:02:45.94,Main,British soldiers
+Dialogue: 0,0:02:45.94,0:02:50.13,Main,hunted for the stool,
+Dialogue: 0,0:02:50.13,0:02:54.32,Main,pushing into sacred
+Dialogue: 0,0:02:54.32,0:02:55.80,Main,places,
+Dialogue: 0,0:02:55.80,0:02:58.02,Main,demanding,
+Dialogue: 0,0:02:58.02,0:03:00.73,Main,threatening.
+Dialogue: 0,0:03:00.73,0:03:03.69,Main,For the Asante,
+Dialogue: 0,0:03:03.69,0:03:07.39,Main,this was no longer
+Dialogue: 0,0:03:07.39,0:03:11.58,Main,about taxes or power.
+Dialogue: 0,0:03:11.58,0:03:16.02,Main,A stranger was trying
+Dialogue: 0,0:03:16.02,0:03:19.96,Main,to steal their very
+Dialogue: 0,0:03:19.96,0:03:20.95,Main,soul.
+Dialogue: 0,0:03:20.95,0:03:25.14,Main,Someone had to stand
+Dialogue: 0,0:03:25.14,0:03:25.63,Main,up.
+Dialogue: 0,0:02:58.02,0:03:01.22,Main,And someone did.
+Dialogue: 0,0:03:01.22,0:03:04.43,Main,Her name was Yaa
+Dialogue: 0,0:03:04.43,0:03:06.65,Main,Asantewaa,
+Dialogue: 0,0:03:06.65,0:03:11.09,Main,a dark-skinned Asante
+Dialogue: 0,0:03:11.09,0:03:15.28,Main,woman in her sixties,
+Dialogue: 0,0:03:15.28,0:03:19.47,Main,the queen mother of a
+Dialogue: 0,0:03:19.47,0:03:23.17,Main,town called Ejisu.
+Dialogue: 0,0:03:23.17,0:03:26.37,Main,As queen mother,
+Dialogue: 0,0:03:26.37,0:03:30.56,Main,she was the official
+Dialogue: 0,0:03:30.56,0:03:35.25,Main,guardian of the Golden
+Dialogue: 0,0:03:35.25,0:03:36.48,Main,Stool.
+Dialogue: 0,0:03:36.48,0:03:40.42,Main,This was her sacred
+Dialogue: 0,0:03:40.42,0:03:41.41,Main,duty.
+Dialogue: 0,0:03:13.85,0:03:17.48,Main,Some of the chiefs
+Dialogue: 0,0:03:17.48,0:03:19.66,Main,hesitated,
+Dialogue: 0,0:03:19.66,0:03:23.28,Main,afraid of British
+Dialogue: 0,0:03:23.28,0:03:24.25,Main,guns.
+Dialogue: 0,0:03:24.25,0:03:28.12,Main,The story goes that
+Dialogue: 0,0:03:28.12,0:03:32.48,Main,Yaa Asantewaa rose up
+Dialogue: 0,0:03:32.48,0:03:35.62,Main,and shamed them.
+Dialogue: 0,0:03:35.62,0:03:39.98,Main,She is remembered for
+Dialogue: 0,0:03:39.98,0:03:44.33,Main,saying that if the men
+Dialogue: 0,0:03:44.33,0:03:47.48,Main,would not go and
+Dialogue: 0,0:03:47.48,0:03:48.69,Main,fight,
+Dialogue: 0,0:03:48.69,0:03:52.80,Main,then the women would
+Dialogue: 0,0:03:52.80,0:03:56.91,Main,fight the strangers
+Dialogue: 0,0:03:56.91,0:03:59.33,Main,themselves.
+Dialogue: 0,0:03:28.10,0:03:31.98,Main,Her words lit a fire.
+Dialogue: 0,0:03:31.98,0:03:36.11,Main,Thousands of Asante
+Dialogue: 0,0:03:36.11,0:03:37.57,Main,rose up,
+Dialogue: 0,0:03:37.57,0:03:41.45,Main,with Yaa Asantewaa
+Dialogue: 0,0:03:41.45,0:03:45.58,Main,helping to lead them.
+Dialogue: 0,0:03:45.58,0:03:49.71,Main,They surrounded the
+Dialogue: 0,0:03:49.71,0:03:54.32,Main,British fort in Kumasi
+Dialogue: 0,0:03:54.32,0:03:57.48,Main,and trapped the
+Dialogue: 0,0:03:57.48,0:04:00.87,Main,soldiers and the
+Dialogue: 0,0:04:00.87,0:04:04.27,Main,governor inside.
+Dialogue: 0,0:04:04.27,0:04:08.16,Main,The war over a chair
+Dialogue: 0,0:04:08.16,0:04:10.10,Main,had begun.
+Dialogue: 0,0:03:42.89,0:03:47.06,Main,The siege dragged on
+Dialogue: 0,0:03:47.06,0:03:49.02,Main,for weeks.
+Dialogue: 0,0:03:49.02,0:03:53.43,Main,It was brutal and hard
+Dialogue: 0,0:03:53.43,0:03:56.13,Main,on both sides.
+Dialogue: 0,0:03:56.13,0:03:58.09,Main,In the end,
+Dialogue: 0,0:03:58.09,0:04:02.01,Main,the British sent in
+Dialogue: 0,0:04:02.01,0:04:06.43,Main,far more soldiers and
+Dialogue: 0,0:04:06.43,0:04:08.63,Main,heavy guns,
+Dialogue: 0,0:04:08.63,0:04:12.80,Main,and the uprising was
+Dialogue: 0,0:04:12.80,0:04:15.99,Main,slowly crushed.
+Dialogue: 0,0:04:15.99,0:04:19.67,Main,Yaa Asantewaa was
+Dialogue: 0,0:04:19.67,0:04:21.63,Main,captured.
+Dialogue: 0,0:03:57.90,0:04:02.32,Main,The British took full
+Dialogue: 0,0:04:02.32,0:04:06.73,Main,control of the Asante
+Dialogue: 0,0:04:06.73,0:04:10.90,Main,kingdom and sent Yaa
+Dialogue: 0,0:04:10.90,0:04:14.82,Main,Asantewaa far away,
+Dialogue: 0,0:04:14.82,0:04:18.26,Main,to islands in the
+Dialogue: 0,0:04:18.26,0:04:20.96,Main,Indian Ocean,
+Dialogue: 0,0:04:20.96,0:04:24.88,Main,where she lived out
+Dialogue: 0,0:04:24.88,0:04:26.60,Main,her days.
+Dialogue: 0,0:04:26.60,0:04:28.32,Main,On paper,
+Dialogue: 0,0:04:28.32,0:04:31.99,Main,the empire had won
+Dialogue: 0,0:04:31.99,0:04:34.45,Main,everything.
+Dialogue: 0,0:04:34.45,0:04:36.41,Main,But {\c&H0000D4FF}had it?{\c&H00FFFFFF}
+Dialogue: 0,0:04:11.14,0:04:15.35,Main,Here is the twist the
+Dialogue: 0,0:04:15.35,0:04:19.31,Main,governor never saw
+Dialogue: 0,0:04:19.31,0:04:20.80,Main,coming.
+Dialogue: 0,0:04:20.80,0:04:24.76,Main,The British had won
+Dialogue: 0,0:04:24.76,0:04:27.49,Main,the fighting.
+Dialogue: 0,0:04:27.49,0:04:31.94,Main,But the one thing they
+Dialogue: 0,0:04:31.94,0:04:33.68,Main,came for,
+Dialogue: 0,0:04:33.68,0:04:37.15,Main,the Golden Stool,
+Dialogue: 0,0:04:37.15,0:04:40.61,Main,{\c&H0000D4FF}they never found{\c&H00FFFFFF}.
+Dialogue: 0,0:04:40.61,0:04:44.08,Main,It stayed hidden,
+Dialogue: 0,0:04:44.08,0:04:45.07,Main,safe,
+Dialogue: 0,0:04:45.07,0:04:49.53,Main,exactly as the Asante
+Dialogue: 0,0:04:49.53,0:04:51.51,Main,had sworn.
+Dialogue: 0,0:04:26.22,0:04:28.42,Main,To this day,
+Dialogue: 0,0:04:28.42,0:04:32.59,Main,that stool survives,
+Dialogue: 0,0:04:32.59,0:04:36.50,Main,and no outsider has
+Dialogue: 0,0:04:36.50,0:04:39.20,Main,ever sat on it.
+Dialogue: 0,0:04:39.20,0:04:43.36,Main,An empire went to war
+Dialogue: 0,0:04:43.36,0:04:47.28,Main,over a single chair,
+Dialogue: 0,0:04:47.28,0:04:51.20,Main,and the one chair it
+Dialogue: 0,0:04:51.20,0:04:53.89,Main,truly wanted,
+Dialogue: 0,0:04:53.89,0:04:58.05,Main,it {\c&H0000D4FF}never got to touch{\c&H00FFFFFF}.
+Dialogue: 0,0:04:58.05,0:05:02.21,Main,Sometimes the thing
+Dialogue: 0,0:05:02.21,0:05:06.62,Main,you cannot grab is the
+Dialogue: 0,0:05:06.62,0:05:10.54,Main,thing you want most.

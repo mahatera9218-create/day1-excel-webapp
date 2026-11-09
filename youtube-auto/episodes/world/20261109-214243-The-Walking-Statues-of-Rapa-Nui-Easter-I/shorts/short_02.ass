@@ -1,0 +1,30 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,64,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,360
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.00,0:00:04.35,Main,Picture a stone giant
+Dialogue: 0,0:00:04.35,0:00:08.23,Main,taller than a house
+Dialogue: 0,0:00:08.23,0:00:12.34,Main,and heavier than ten
+Dialogue: 0,0:00:12.34,0:00:13.31,Main,cars.
+Dialogue: 0,0:00:13.31,0:00:16.94,Main,Now move it across
+Dialogue: 0,0:00:16.94,0:00:21.29,Main,miles of rocky ground.
+Dialogue: 0,0:00:21.29,0:00:24.92,Main,You have no wheels,
+Dialogue: 0,0:00:24.92,0:00:26.85,Main,no cranes,
+Dialogue: 0,0:00:26.85,0:00:30.97,Main,and no big animals to
+Dialogue: 0,0:00:30.97,0:00:32.42,Main,pull it.
+Dialogue: 0,0:00:32.42,0:00:36.05,Main,The people who did
+Dialogue: 0,0:00:36.05,0:00:40.40,Main,this left one strange
+Dialogue: 0,0:00:40.40,0:00:44.27,Main,clue in the shape of
+Dialogue: 0,0:00:44.27,0:00:46.69,Main,the statues
+Dialogue: 0,0:00:46.69,0:00:49.11,Main,themselves.
+Dialogue: 0,0:00:49.11,0:00:52.98,Main,The full story is in
+Dialogue: 0,0:00:52.98,0:00:57.58,Main,the description below.

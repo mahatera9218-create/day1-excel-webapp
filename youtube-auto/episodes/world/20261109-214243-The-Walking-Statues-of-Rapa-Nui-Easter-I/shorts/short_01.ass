@@ -1,0 +1,30 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
+Style: Main,Noto Sans KR,64,&H00FFFFFF,&H00000000,&H00000000,1,4,0,2,80,80,360
+
+[Events]
+Format: Layer, Start, End, Style, Text
+Dialogue: 0,0:00:00.00,0:00:04.33,Main,For hundreds of years,
+Dialogue: 0,0:00:04.33,0:00:07.94,Main,the people of this
+Dialogue: 0,0:00:07.94,0:00:11.55,Main,island said their
+Dialogue: 0,0:00:11.55,0:00:15.64,Main,giant stone statues
+Dialogue: 0,0:00:15.64,0:00:19.49,Main,{\c&H0000D4FF}walked to the sea{\c&H00FFFFFF} by
+Dialogue: 0,0:00:19.49,0:00:21.89,Main,themselves.
+Dialogue: 0,0:00:21.89,0:00:26.22,Main,Everyone who visited
+Dialogue: 0,0:00:26.22,0:00:30.31,Main,was sure it was just a
+Dialogue: 0,0:00:30.31,0:00:33.20,Main,bedtime story.
+Dialogue: 0,0:00:33.20,0:00:37.77,Main,But the islanders were
+Dialogue: 0,0:00:37.77,0:00:40.90,Main,not speaking in
+Dialogue: 0,0:00:40.90,0:00:42.58,Main,riddles.
+Dialogue: 0,0:00:42.58,0:00:46.91,Main,They were telling you
+Dialogue: 0,0:00:46.91,0:00:50.52,Main,exactly how it was
+Dialogue: 0,0:00:50.52,0:00:51.48,Main,done.
+Dialogue: 0,0:00:51.48,0:00:55.33,Main,The full story is in
+Dialogue: 0,0:00:55.33,0:00:59.90,Main,the description below.
