@@ -1,3 +1,4 @@
 # 이 파일에 줄이 추가되고 main에 push되면 '영상 만들기' 워크플로가 즉시 렌더한다.
 # (검수 자동작업이 승인을 마친 뒤 날짜를 한 줄 추가해서 렌더를 건다. GitHub schedule 불안정 대비.)
 2026-11-09T04:20Z  manual: 오늘 2편(Tenochtitlan, Zhengde) 렌더 트리거
+2026-11-09T04:23Z  manual: fire render for today (2nd push, trigger now live)
