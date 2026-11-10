@@ -134,7 +134,8 @@ def cmd_render(cfg: dict, yes: bool, episode: str | None = None, count: int = 1,
         if len(picks) >= max(1, count):
             break
     if not picks:
-        raise SystemExit(f"[오류] {cfg['_name']} 에 아직 안 올린 승인 편이 없습니다.")
+        print(f"[정보] {cfg['_name']} 에 새로 올릴 승인 편이 없습니다 — 할 일 없음(정상 종료).")
+        return
     for d in picks:
         _render_one(cfg, d, yes, upload=upload)
 
