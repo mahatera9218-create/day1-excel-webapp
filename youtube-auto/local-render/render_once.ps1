@@ -19,7 +19,7 @@ if (Test-Path "$repo\youtube-auto\.env") {
     }
   }
 }
-$env:AUTOTUBE_IMAGE_ENGINE = "comfy"
+$env:AUTOTUBE_IMAGE_ENGINE = "mix"
 
 # 1) latest code + episodes
 Set-Location $repo

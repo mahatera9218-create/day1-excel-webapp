@@ -19,7 +19,7 @@ if (Test-Path "$repo\youtube-auto\.env") {
     }
   }
 }
-$env:AUTOTUBE_IMAGE_ENGINE = "comfy"
+$env:AUTOTUBE_IMAGE_ENGINE = "mix"
 
 Write-Host "Starting ComfyUI (first time can take ~1 min)..." -ForegroundColor Cyan
 $proc = Start-Process -FilePath "$comfy\run_nvidia_gpu.bat" -WorkingDirectory $comfy -PassThru -WindowStyle Minimized

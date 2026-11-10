@@ -29,13 +29,22 @@ class Engines:
             else:
                 self._m = None
 
-            # 이미지: 기본 Pika, "comfy"/"local" 이면 본인 GPU(ComfyUI/SDXL) — 추가 비용 0.
-            # ★ 클라우드(GitHub)는 channel.yaml 그대로 pika, 로컬 PC 는 AUTOTUBE_IMAGE_ENGINE=comfy 로만 전환.
+            # 이미지 엔진. 클라우드(GitHub)는 channel.yaml 그대로 pika, 로컬 PC 는 환경변수로 전환.
+            #   pika  : 전부 Pika(유료, 고품질)
+            #   comfy : 전부 로컬 SDXL/ComfyUI(공짜)
+            #   mix   : 핵심 장면(is_key)·썸네일만 Pika, 나머진 로컬 → 품질은 필요한 데만, 비용 최소
             img_engine = (os.environ.get("AUTOTUBE_IMAGE_ENGINE")
                           or cfg["engines"].get("image") or "pika").lower()
+            self._mix = False
+            self._i_pika = None
             if img_engine in ("comfy", "local"):
                 from .local import LocalComfyEngine
                 self._i = LocalComfyEngine(cfg)
+            elif img_engine == "mix":
+                from .local import LocalComfyEngine
+                self._i = LocalComfyEngine(cfg)   # 기본(자잘한 장면) = 로컬 공짜
+                self._mix = True
+                self._i_pika = self._m            # 핵심 장면 = Pika(키 있을 때만, 없으면 전부 로컬)
             elif self._m is not None:
                 self._i = self._m          # Pika 가 이미지도 담당(키 재사용)
             else:
@@ -46,7 +55,12 @@ class Engines:
         return self._v.voice(scene, out)
 
     def image(self, scene, out):
-        return self._i.image(scene, out)
+        eng = self._i
+        # mix: 핵심 장면(is_key)·썸네일(_label=='T')·명시 지정은 Pika, 나머진 로컬
+        if self._mix and self._i_pika is not None:
+            if scene.get("is_key") or scene.get("img_engine") == "pika" or scene.get("_label") == "T":
+                eng = self._i_pika
+        return eng.image(scene, out)
 
     def video(self, scene, image, out, duration):
         if self._m is None:
