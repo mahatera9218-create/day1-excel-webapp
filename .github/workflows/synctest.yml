@@ -1,0 +1,51 @@
+name: 자막 싱크 테스트 (무료)
+
+# "Run workflow" 를 누르면, Pika 없이(돈 0) 목소리+자막만으로 짧은 영상을 만들어
+# GitHub Pages 에 올립니다. 폰에서 보고 자막이 목소리와 맞는지 확인하는 용도.
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  synctest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    defaults:
+      run:
+        working-directory: youtube-auto
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ffmpeg 설치
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 패키지 설치
+        run: pip install -r requirements.txt
+
+      - name: 싱크 테스트 영상 생성 (Pika 없음, 무료)
+        run: python -m autotube.synctest "$GITHUB_WORKSPACE/site"
+
+      - name: Pages 설정
+        uses: actions/configure-pages@v5
+
+      - name: 페이지 아티팩트 업로드
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: GitHub Pages 배포
+        id: deployment
+        uses: actions/deploy-pages@v4

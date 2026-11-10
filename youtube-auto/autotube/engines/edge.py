@@ -80,26 +80,47 @@ def _spoken_weight(chunk: str) -> int:
 
 
 def _timing(scene: dict, words: list) -> dict:
-    """자막 조각 타이밍을 '실제 발화 구간'에 발화길이 비례로 배분한다.
+    """자막 줄을 '실제 단어 타임스탬프'로 만든다 → 오디오와 그대로 동기.
 
-    실제 단어 시작~끝 구간[t0,t1] 안에서 조각별 '발화 길이'(숫자 가중 포함)에 비례해 나눈다.
-    단어 수 매칭은 edge-tts가 숫자("1518"→"fifteen eighteen")·약어를 여러 단어로 읽어 어긋나
-    뒤로 밀리지만, 비례 배분은 매 장면의 실제 구간에 고정돼 누적 오차가 없다.
+    edge-tts 가 주는 단어별 (텍스트, 시작, 끝) 을 그대로 묶어 줄을 만든다. 각 줄의 시작·끝이
+    '그 단어들을 실제로 말하는 시각'이라 밀리지 않는다(숫자를 여러 단어로 읽어도 그 단어들의
+    실제 시각을 쓰므로 어긋나지 않음). 단어 경계가 없을 때만 글자수 비례로 폴백한다.
     """
-    chunks = chunk_narration(scene["narration"])
     highlight = scene.get("highlight", [])
-    if words:
-        t0, t1 = words[0][1], words[-1][2]          # 첫 단어 시작 ~ 마지막 단어 끝
-    else:
-        t0, t1 = 0.0, estimate_seconds(scene["narration"])
+    if not words:
+        return _by_proportion(chunk_narration(scene["narration"]), highlight,
+                              0.0, estimate_seconds(scene["narration"]))
+    chunks = []
+    cur, start, end = [], None, None
+    for text, s, e in words:
+        if start is None:
+            start = s
+        cur.append(text)
+        end = e
+        line = " ".join(cur)
+        if len(line) >= 42 or text[-1:] in ".!?,;:":   # 길이 or 문장부호에서 줄 끊기
+            chunks.append(_line(line, start, end, highlight))
+            cur, start, end = [], None, None
+    if cur:
+        chunks.append(_line(" ".join(cur), start, end, highlight))
+    return {"duration": round(words[-1][2] + 0.3, 2), "chunks": chunks}
+
+
+def _line(text: str, start: float, end: float, highlight: list) -> dict:
+    return {"text": text, "start": round(start, 2), "end": round(max(end, start + 0.2), 2),
+            "highlight": [h for h in highlight if h.lower() in text.lower()]}
+
+
+def _by_proportion(chunks: list, highlight: list, t0: float, t1: float) -> dict:
+    """폴백: 단어 경계가 없을 때만 글자수 비례."""
     span = max(t1 - t0, 0.5)
     weights = [_spoken_weight(c) for c in chunks]
     tot = sum(weights)
-    entries, acc = [], 0
+    out, acc = [], 0
     for c, wgt in zip(chunks, weights):
-        start = t0 + span * acc / tot
+        a = t0 + span * acc / tot
         acc += wgt
-        end = t0 + span * acc / tot
-        entries.append({"text": c, "start": round(start, 2), "end": round(end, 2),
-                        "highlight": [w for w in highlight if w in c]})
-    return {"duration": round(t1 + 0.3, 2), "chunks": entries}
+        b = t0 + span * acc / tot
+        out.append({"text": c, "start": round(a, 2), "end": round(b, 2),
+                    "highlight": [w for w in highlight if w in c]})
+    return {"duration": round(t1 + 0.3, 2), "chunks": out}
