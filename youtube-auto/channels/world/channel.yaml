@@ -62,7 +62,7 @@ engines:
   max_cost_usd: 8
 
 subtitles:
-  enabled: true
+  enabled: false                # 번인 자막 OFF (싱크 불안정 → 깔끔하게 뺌). 유튜브 자동 CC 로 대체.
   font: "Noto Sans KR"          # 이 폰트는 영문 글자도 포함합니다.
   font_size: 42
   primary_color: "FFFFFF"
