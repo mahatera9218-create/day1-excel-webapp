@@ -37,8 +37,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
 
     # 2) 꽉 채우기 + 영화 같은 보정(대비/채도/비네트)
     vf = ("scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,"
-          "eq=contrast=1.1:saturation=1.22:brightness=-0.02,"
-          "vignette=PI/5")
+          "eq=contrast=1.14:saturation=1.3:brightness=0.03,unsharp=5:5:0.9:5:5:0.0")
 
     # 3) (선택) 작은 캡션 — 있으면 '위쪽'에 (아래는 브랜드 워드마크 자리)
     caption = (plan.get("thumbnail_text") or "").strip()

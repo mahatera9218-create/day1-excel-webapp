@@ -127,8 +127,12 @@ for the rest.
 **Shoot MOMENTS, not portraits (free drama).** Write every `image_prompt` as a dramatic instant
 caught mid-action or mid-emotion — a hand flinging gold, a face frozen in shock, a figure lunging,
 smoke curling, a blade half-drawn — with tight cinematic framing (a close or dynamic angle, strong
-directional light, shallow focus), as if it were a still pulled from a film. Avoid flat, posed
+clear light, sharp focus), as if it were a still pulled from a film. Avoid flat, posed
 portraits and plain wide "establishing" shots; even a setup scene should have tension in it.
+**Keep it BRIGHT, VIVID and SHARP — like real, high-quality footage.** Prefer clear natural or
+bright directional light and true, saturated color. Do NOT describe scenes as hazy, foggy, dim,
+murky, grey, washed-out, muted, desaturated or "moody/filtered" unless the real moment truly
+demands it — that look reads as a cheap filter, not real filming.
 **Front-load the drama:** the first 2–3 scenes (the cold-open / hook, the opening ~10–15 seconds)
 must be your MOST arresting, highest-energy images of the whole episode — the single motion scene,
 if any, usually belongs here. Hook the eye before the viewer can even think about scrolling, and

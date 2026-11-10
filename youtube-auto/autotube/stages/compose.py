@@ -153,7 +153,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     if subs_on:
         vchain += f",subtitles=subs.ass:fontsdir={FONT_DIR}"
     # 색보정+비네트만(가벼움). 프레임별 노이즈/빛입자 오버레이는 CI에서 너무 느려 제외.
-    vchain += ",eq=contrast=1.05:saturation=1.08:gamma=0.98,vignette=PI/6"
+    vchain += ",eq=contrast=1.12:saturation=1.22:gamma=1.0:brightness=0.03,unsharp=5:5:0.8:5:5:0.0"
     # What-if(가상 시나리오)는 신뢰·광고 안전을 위해 작은 상시 라벨을 항상 표기
     if plan.get("content_type") == "what_if":
         fnt = FONT_DIR / "NotoSansKR.ttf"
