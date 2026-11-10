@@ -34,6 +34,22 @@ def main(out_dir: str) -> int:
     print("목소리 생성(edge-tts, 무료)...", flush=True)
     timing = eng.voice({"narration": SAMPLE, "highlight": ["could not stop", "four hundred"]}, audio)
     dur = probe_duration(audio)
+
+    # ── 진단: edge 가 준 '원시 단어 시각' vs 실제 음성 길이 vs 자막 줄 ──
+    words = getattr(eng, "last_words", [])
+    print("=== SYNC DEBUG ===", flush=True)
+    print(f"mp3 실제 길이(probe) = {dur:.3f}s")
+    if words:
+        print(f"단어 {len(words)}개. 첫 단어 offset={words[0][1]:.3f}s  "
+              f"마지막 단어 끝={words[-1][2]:.3f}s")
+        for t, s, e in words[:6]:
+            print(f"   word  {s:7.3f}-{e:7.3f}  {t!r}")
+        print(f"   ... (마지막) {words[-1][0]!r} {words[-1][1]:.3f}-{words[-1][2]:.3f}")
+    print("자막 줄:")
+    for c in timing["chunks"]:
+        print(f"   line  {c['start']:7.3f}-{c['end']:7.3f}  {c['text']!r}")
+    print("=== /SYNC DEBUG ===", flush=True)
+
     ass = site / "sync.ass"
     build_ass(timing["chunks"], cfg["subtitles"], (1280, 720), ass)
 

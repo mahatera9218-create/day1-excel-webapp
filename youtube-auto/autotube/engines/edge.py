@@ -68,6 +68,7 @@ class EdgeEngine:
                 words.clear()
                 asyncio.run(run())
                 if out.exists() and out.stat().st_size > 0:
+                    self.last_words = list(words)   # 디버그/검증용 원시 단어 타임스탬프
                     return _timing(scene, words)
             except Exception as e:  # noqa: BLE001
                 last_err = e
