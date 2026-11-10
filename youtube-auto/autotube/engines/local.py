@@ -31,12 +31,13 @@ class LocalComfyEngine:
     def __init__(self, cfg: dict):
         e = cfg.get("engines", {})
         self.base = (e.get("comfy_url") or os.environ.get("COMFY_URL") or "http://127.0.0.1:8188").rstrip("/")
-        self.ckpt = e.get("comfy_ckpt") or os.environ.get("COMFY_CKPT") or "sd_xl_base_1.0.safetensors"
-        self.steps = int(e.get("comfy_steps", 28))
-        self.cfg_scale = float(e.get("comfy_cfg", 6.5))
+        self.ckpt = e.get("comfy_ckpt") or os.environ.get("COMFY_CKPT") or "RealVisXL_V4.0.safetensors"
+        self.steps = int(e.get("comfy_steps", 30))
+        self.cfg_scale = float(e.get("comfy_cfg", 5.5))
         self.neg = e.get("comfy_negative",
                          "text, watermark, signature, logo, blurry, lowres, deformed, "
-                         "extra fingers, bad anatomy, jpeg artifacts, ugly")
+                         "extra fingers, extra limbs, fused fingers, bad hands, bad anatomy, "
+                         "mutated, melted face, distorted face, disfigured, jpeg artifacts, ugly")
         wf = e.get("comfy_workflow")
         self.wf_path = Path(wf) if wf else DEFAULT_WORKFLOW
         self.client_id = uuid.uuid4().hex

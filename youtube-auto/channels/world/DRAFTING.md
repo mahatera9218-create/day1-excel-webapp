@@ -133,6 +133,10 @@ portraits and plain wide "establishing" shots; even a setup scene should have te
 bright directional light and true, saturated color. Do NOT describe scenes as hazy, foggy, dim,
 murky, grey, washed-out, muted, desaturated or "moody/filtered" unless the real moment truly
 demands it — that look reads as a cheap filter, not real filming.
+**Keep compositions clean — ONE or TWO clear subjects up front.** Many sharp faces or many hands
+in one frame come out melted and distorted, so avoid big in-focus crowds: put the drama on a face
+or two, and keep any crowd small, distant, or softly blurred in the background. Favor close or
+medium shots of a single person, hands, an object, or a two-person exchange over wide group shots.
 **Front-load the drama:** the first 2–3 scenes (the cold-open / hook, the opening ~10–15 seconds)
 must be your MOST arresting, highest-energy images of the whole episode — the single motion scene,
 if any, usually belongs here. Hook the eye before the viewer can even think about scrolling, and

@@ -27,9 +27,10 @@ if (!(Test-Path "$Base\ComfyUI_windows_portable")) {
 Write-Host "== 4/5 Download SDXL model (~6.9GB, takes a while) ==" -ForegroundColor Cyan
 $ckptDir = "$Base\ComfyUI_windows_portable\ComfyUI\models\checkpoints"
 New-Item -ItemType Directory -Force -Path $ckptDir | Out-Null
-$ckpt = "$ckptDir\sd_xl_base_1.0.safetensors"
+$ckpt = "$ckptDir\RealVisXL_V4.0.safetensors"
 if (!(Test-Path $ckpt)) {
-  curl.exe -L -o $ckpt "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors?download=true"
+  Write-Host "Downloading RealVisXL V4.0 (realistic model) ..."
+  curl.exe -L -o $ckpt "https://huggingface.co/SG161222/RealVisXL_V4.0/resolve/main/RealVisXL_V4.0.safetensors?download=true"
 } else { Write-Host "already present - skip" }
 
 Write-Host "== 5/5 Install python deps into ComfyUI's Python ==" -ForegroundColor Cyan

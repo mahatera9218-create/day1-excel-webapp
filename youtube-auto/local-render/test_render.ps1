@@ -31,7 +31,10 @@ for ($i=0; $i -lt 120; $i++) {
 if (-not $ok) { Write-Host "[warn] ComfyUI not responding - will try anyway" -ForegroundColor Yellow }
 
 $ep = Get-ChildItem "$repo\youtube-auto\episodes\world" -Directory | Sort-Object Name -Descending | Select-Object -First 1
-Write-Host ("Rendering (local images, NO upload): " + $ep.Name) -ForegroundColor Cyan
+# force a fresh render (regenerate images with the current model/settings)
+Remove-Item -Recurse -Force "$($ep.FullName)\images","$($ep.FullName)\compose","$($ep.FullName)\clips" -ErrorAction SilentlyContinue
+Remove-Item -Force "$($ep.FullName)\final.mp4","$($ep.FullName)\thumbnail.jpg" -ErrorAction SilentlyContinue
+Write-Host ("Rendering FRESH (local images, NO upload): " + $ep.Name) -ForegroundColor Cyan
 Set-Location "$repo\youtube-auto"
 & $PY -m autotube render world --yes --episode $ep.Name --no-upload
 
