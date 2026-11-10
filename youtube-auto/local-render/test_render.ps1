@@ -6,6 +6,7 @@ $Base  = "C:\mruntold"
 $repo  = "$Base\day1-excel-webapp"
 $comfy = "$Base\ComfyUI_windows_portable"
 $PY    = "$comfy\python_embeded\python.exe"
+$env:PYTHONPATH = "$repo\youtube-auto"
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
 Set-Location $repo

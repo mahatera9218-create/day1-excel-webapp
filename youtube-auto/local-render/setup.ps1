@@ -44,6 +44,13 @@ if (!(Test-Path $PY)) {
   }
   & $PY -m pip install --upgrade pip
   & $PY -m pip install -r "$Base\day1-excel-webapp\youtube-auto\requirements.txt"
+  # make 'autotube' importable by ComfyUI's embedded Python (it uses a ._pth file)
+  $pth = Get-ChildItem "$Base\ComfyUI_windows_portable\python_embeded" -Filter "python*._pth" | Select-Object -First 1
+  $ytdir = "$Base\day1-excel-webapp\youtube-auto"
+  if ($pth -and -not (Select-String -Path $pth.FullName -SimpleMatch $ytdir -Quiet)) {
+    Add-Content -Path $pth.FullName -Value $ytdir
+    Write-Host ("Registered autotube path in " + $pth.Name)
+  }
 }
 
 $envPath = "$Base\day1-excel-webapp\youtube-auto\.env"
