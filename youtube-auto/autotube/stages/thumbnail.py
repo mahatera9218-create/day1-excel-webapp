@@ -10,7 +10,7 @@ from pathlib import Path
 
 from ..config import FONT_DIR
 from ..engines import Engines
-from ..render.util import run
+from ..render.util import ffpath, run
 
 FONT = FONT_DIR / "NotoSansKR.ttf"
 BRAND = FONT_DIR.parent / "brand" / "brand_overlay.png"  # Mr.Untold 워드마크(1280x720 투명)
@@ -44,7 +44,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     if caption:
         line = _esc(textwrap.shorten(caption.upper(), width=20, placeholder=""))
         # 큰 훅 한 줄: 화면 위쪽 가운데, 두꺼운 외곽선+그림자 (피사체 얼굴은 보통 중앙이라 상단 배치)
-        vf += (f",drawtext=fontfile='{FONT}':text='{line}':fontcolor=white:fontsize=104:"
+        vf += (f",drawtext=fontfile={ffpath(FONT)}:text='{line}':fontcolor=white:fontsize=104:"
                f"borderw=9:bordercolor=black:shadowx=4:shadowy=4:shadowcolor=black@0.8:"
                f"x=(w-tw)/2:y=58")
 

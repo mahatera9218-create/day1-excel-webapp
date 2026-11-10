@@ -6,7 +6,7 @@ from pathlib import Path
 from ..config import FONT_DIR
 from ..render.kenburns import FPS
 from ..render.subtitles import build_ass
-from ..render.util import frame_size, probe_duration, run
+from ..render.util import ffpath, frame_size, probe_duration, run
 
 XFADE = 0.3  # 장면 전환 길이(초) — 짧게 해서 전환이 빠릿하게
 # 빠릿한 전환 위주(슬라이드/와이프 같은 굼뜬 건 뺐다)
@@ -151,13 +151,13 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     # ---- 영상 마감: 시작/끝 페이드 + 자막 + 영화 같은 색보정·비네트·필름 그레인 ----
     vchain = f"{vprev}fade=t=in:st=0:d=0.3,fade=t=out:st={max(0.0, total-0.6):.3f}:d=0.6"
     if subs_on:
-        vchain += f",subtitles=subs.ass:fontsdir={FONT_DIR}"
+        vchain += f",subtitles=subs.ass:fontsdir={ffpath(FONT_DIR)}"
     # 색보정+비네트만(가벼움). 프레임별 노이즈/빛입자 오버레이는 CI에서 너무 느려 제외.
     vchain += ",eq=contrast=1.12:saturation=1.22:gamma=1.0:brightness=0.03,unsharp=5:5:0.8:5:5:0.0"
     # What-if(가상 시나리오)는 신뢰·광고 안전을 위해 작은 상시 라벨을 항상 표기
     if plan.get("content_type") == "what_if":
         fnt = FONT_DIR / "NotoSansKR.ttf"
-        vchain += (f",drawtext=fontfile='{fnt}':text='WHAT-IF SCENARIO':fontcolor=white@0.55:"
+        vchain += (f",drawtext=fontfile={ffpath(fnt)}:text='WHAT-IF SCENARIO':fontcolor=white@0.55:"
                    f"fontsize=22:x=w-tw-28:y=h-th-26:box=1:boxcolor=black@0.28:boxborderw=8")
 
     if motes_idx is not None:

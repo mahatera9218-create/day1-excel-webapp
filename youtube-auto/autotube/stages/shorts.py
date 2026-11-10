@@ -13,7 +13,7 @@ from ..config import FONT_DIR
 from ..engines import Engines
 from ..render.kenburns import FPS
 from ..render.subtitles import build_ass
-from ..render.util import probe_duration, run
+from ..render.util import ffpath, probe_duration, run
 from .compose import XFADE, _kenburns_vf
 
 DEFAULT_CTA = "▶  FULL STORY — link in description"
@@ -112,13 +112,13 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
             vprev = f"[v{k}]"
         vchain = (f"{vprev}fade=t=in:st=0:d=0.4,"
                   f"eq=contrast=1.12:saturation=1.22:gamma=1.0:brightness=0.03,unsharp=5:5:0.8:5:5:0.0,"
-                  f"subtitles={ass.name}:fontsdir={FONT_DIR}")
+                  f"subtitles={ass.name}:fontsdir={ffpath(FONT_DIR)}")
         if is_whatif:
-            vchain += (f",drawtext=fontfile='{fnt}':text='WHAT-IF SCENARIO':fontcolor=white@0.55:"
+            vchain += (f",drawtext=fontfile={ffpath(fnt)}:text='WHAT-IF SCENARIO':fontcolor=white@0.55:"
                        f"fontsize=30:x=w-tw-28:y=36:box=1:boxcolor=black@0.28:boxborderw=8")
         cta = _esc(short.get("cta") or DEFAULT_CTA)
         cta_from = max(0.0, dur - 3.0)
-        vchain += (f",drawtext=fontfile='{fnt}':text='{cta}':fontcolor=white:fontsize=58:"
+        vchain += (f",drawtext=fontfile={ffpath(fnt)}:text='{cta}':fontcolor=white:fontsize=58:"
                    f"borderw=6:bordercolor=black@0.85:x=(w-tw)/2:y=h*0.68:"
                    f"box=1:boxcolor=black@0.35:boxborderw=18:enable='gte(t,{cta_from:.2f})'")
         parts.append(f"{vchain}[vout]")
