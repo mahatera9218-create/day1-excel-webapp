@@ -111,7 +111,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
             parts.append(f"{vprev}[{k}:v]xfade=transition=fade:duration={XFADE}:offset={off:.3f}[v{k}]")
             vprev = f"[v{k}]"
         vchain = (f"{vprev}fade=t=in:st=0:d=0.4,"
-                  f"eq=contrast=1.08:saturation=1.16:gamma=0.98,vignette=PI/6,"
+                  f"eq=contrast=1.12:saturation=1.22:gamma=1.0:brightness=0.03,unsharp=5:5:0.8:5:5:0.0,"
                   f"subtitles={ass.name}:fontsdir={FONT_DIR}")
         if is_whatif:
             vchain += (f",drawtext=fontfile='{fnt}':text='WHAT-IF SCENARIO':fontcolor=white@0.55:"

@@ -33,8 +33,9 @@ continents:
   - Oceania
 
 visual_style: >
-  hyperreal cinematic film still, dramatic chiaroscuro lighting, 35mm, shallow depth
-  of field, photorealistic detail, rich filmic color, moody atmosphere, no text, no logos
+  ultra-realistic cinematic photograph, bright natural lighting, crisp sharp focus edge
+  to edge, vivid true-to-life color, high clarity, fine realistic detail, shot on a
+  professional camera, looks like real footage, no haze, no text, no logos
 
 # 기본 제공(premade) 목소리는 무료 플랜 API 로도 사용 가능.
 # 보이스 라이브러리 목소리는 유료(Starter 이상) 필요.
