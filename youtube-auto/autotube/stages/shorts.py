@@ -28,16 +28,16 @@ def _seg_clip(img: Path, idx: int, dur: float, size: tuple[int, int], out: Path)
     w, h = size
     vf = _kenburns_vf(idx, max(int(dur * FPS), 1), w, h)
     run(["-loop", "1", "-i", str(img), "-t", f"{dur:.3f}", "-vf", vf, "-an",
-         "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", str(out)])
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", str(out)])
 
 
 def _seg_from_clip(clip: Path, dur: float, size: tuple[int, int], out: Path) -> None:
     """본편에서 이미 만든 '움직이는 클립'을 세로로 꽉 채워 재활용(추가 비용 0, 쇼츠도 실제로 움직임)."""
     w, h = size
-    vf = (f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},"
+    vf = (f"scale={w}:{h}:force_original_aspect_ratio=increase:flags=lanczos,crop={w}:{h},"
           f"fps={FPS},format=yuv420p")
     run(["-stream_loop", "-1", "-i", str(clip), "-t", f"{dur:.3f}", "-vf", vf, "-an",
-         "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", str(out)])
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", str(out)])
 
 
 def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
@@ -111,7 +111,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
             parts.append(f"{vprev}[{k}:v]xfade=transition=fade:duration={XFADE}:offset={off:.3f}[v{k}]")
             vprev = f"[v{k}]"
         vchain = (f"{vprev}fade=t=in:st=0:d=0.4,"
-                  f"eq=contrast=1.12:saturation=1.22:gamma=1.0:brightness=0.03,unsharp=5:5:0.8:5:5:0.0,"
+                  f"eq=contrast=1.12:saturation=1.15:gamma=1.0:brightness=0.03,unsharp=5:5:1.1:5:5:0.0,"
                   f"subtitles={ass.name}:fontsdir={ffpath(FONT_DIR)}")
         if is_whatif:
             vchain += (f",drawtext=fontfile={ffpath(fnt)}:text='WHAT-IF SCENARIO':fontcolor=white@0.55:"
@@ -124,7 +124,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
         parts.append(f"{vchain}[vout]")
 
         cmd = inputs + ["-filter_complex", ";".join(parts), "-map", "[vout]", "-map", f"{aidx}:a",
-                        "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-threads", "0",
+                        "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-threads", "0",
                         "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
                         "-shortest", "-movflags", "+faststart", final.name]
         run(cmd, cwd=out_dir)

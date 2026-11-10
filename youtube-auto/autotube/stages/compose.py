@@ -25,18 +25,18 @@ def _card_clip(img: Path, dur: float, size: tuple[int, int], out: Path, zoom_in:
     w, h = size
     frames = max(int(dur * FPS), 1)
     z = f"1.0+0.06*on/{frames}" if zoom_in else f"1.06-0.06*on/{frames}"
-    vf = (f"scale={w*2}:{h*2}:force_original_aspect_ratio=increase,crop={w*2}:{h*2},"
+    vf = (f"scale={w*2}:{h*2}:force_original_aspect_ratio=increase:flags=lanczos,crop={w*2}:{h*2},"
           f"zoompan=z='{z}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s={w}x{h}:fps={FPS},"
           f"format=yuv420p")
     run(["-loop", "1", "-i", str(img), "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
          "-t", f"{dur:.3f}", "-vf", vf, "-map", "0:v", "-map", "1:a",
-         "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
          "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-shortest", str(out)])
 
 
 def _kenburns_vf(idx: int, frames: int, w: int, h: int) -> str:
     """장면마다 다른 카메라 무빙 (확대/축소/좌우 팬)."""
-    base = f"scale={w*2}:{h*2}:force_original_aspect_ratio=increase,crop={w*2}:{h*2}"
+    base = f"scale={w*2}:{h*2}:force_original_aspect_ratio=increase:flags=lanczos,crop={w*2}:{h*2}"
     cxy = "x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
     v = idx % 4
     if v == 0:    # 확대 (강하게)
@@ -58,14 +58,14 @@ def _scene_clip(scene: dict, idx: int, image: Path, clip: Path | None, audio: Pa
                 dur: float, size: tuple[int, int], out: Path) -> None:
     w, h = size
     if clip and clip.exists():
-        vf = (f"scale={w}:{h}:force_original_aspect_ratio=decrease,"
+        vf = (f"scale={w}:{h}:force_original_aspect_ratio=decrease:flags=lanczos,"
               f"pad={w}:{h}:(ow-iw)/2:(oh-ih)/2,fps={FPS},format=yuv420p")
         src = ["-stream_loop", "-1", "-i", str(clip)]
     else:
         vf = _kenburns_vf(idx, max(int(dur * FPS), 1), w, h)
         src = ["-loop", "1", "-i", str(image)]
     run([*src, "-i", str(audio), "-t", f"{dur:.3f}", "-vf", vf,
-         "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+         "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
          "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-shortest", str(out)])
 
 
@@ -153,7 +153,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     if subs_on:
         vchain += f",subtitles=subs.ass:fontsdir={ffpath(FONT_DIR)}"
     # 색보정+비네트만(가벼움). 프레임별 노이즈/빛입자 오버레이는 CI에서 너무 느려 제외.
-    vchain += ",eq=contrast=1.12:saturation=1.22:gamma=1.0:brightness=0.03,unsharp=5:5:0.8:5:5:0.0"
+    vchain += ",eq=contrast=1.12:saturation=1.15:gamma=1.0:brightness=0.03,unsharp=5:5:1.1:5:5:0.0"
     # What-if(가상 시나리오)는 신뢰·광고 안전을 위해 작은 상시 라벨을 항상 표기
     if plan.get("content_type") == "what_if":
         fnt = FONT_DIR / "NotoSansKR.ttf"
@@ -185,7 +185,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
         amap = aprev
 
     cmd = inputs + ["-filter_complex", ";".join(parts), "-map", "[vout]", "-map", amap,
-                    "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-threads", "0",
+                    "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-threads", "0",
                     "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
                     "-movflags", "+faststart", "final.mp4"]
     run(cmd, cwd=run_dir)
