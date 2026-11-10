@@ -186,6 +186,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
 
     cmd = inputs + ["-filter_complex", ";".join(parts), "-map", "[vout]", "-map", amap,
                     "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-threads", "0",
-                    "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", "final.mp4"]
+                    "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
+                    "-movflags", "+faststart", "final.mp4"]
     run(cmd, cwd=run_dir)
     return run_dir / "final.mp4"

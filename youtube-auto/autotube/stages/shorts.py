@@ -125,7 +125,8 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
 
         cmd = inputs + ["-filter_complex", ";".join(parts), "-map", "[vout]", "-map", f"{aidx}:a",
                         "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-threads", "0",
-                        "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", final.name]
+                        "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
+                        "-shortest", "-movflags", "+faststart", final.name]
         run(cmd, cwd=out_dir)
         for c in clips:  # 중간 조각 정리 (업로드 키트가 최종본만 집도록)
             c.unlink(missing_ok=True)
