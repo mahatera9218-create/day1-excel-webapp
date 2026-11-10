@@ -1,15 +1,16 @@
-# Quick LOCAL test: render the newest episode using local SDXL images, NO upload, NO shutdown.
-# Lets you SEE the look before wiring up the automation.
+# Quick LOCAL test: render the newest episode with local SDXL images, NO upload, NO shutdown.
+# Uses ComfyUI's bundled Python (no Windows Python needed).
 # Run:  powershell -ExecutionPolicy Bypass -File test_render.ps1
 $ErrorActionPreference = "Continue"
 $Base  = "C:\mruntold"
 $repo  = "$Base\day1-excel-webapp"
 $comfy = "$Base\ComfyUI_windows_portable"
+$PY    = "$comfy\python_embeded\python.exe"
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
 Set-Location $repo
 git pull --ff-only
 
-# load .env (PIKA key is optional - only for motion clips)
 if (Test-Path "$repo\youtube-auto\.env") {
   Get-Content "$repo\youtube-auto\.env" | ForEach-Object {
     if ($_ -match '^\s*([^#=]+)=(.*)$') {
@@ -31,7 +32,7 @@ if (-not $ok) { Write-Host "[warn] ComfyUI not responding - will try anyway" -Fo
 $ep = Get-ChildItem "$repo\youtube-auto\episodes\world" -Directory | Sort-Object Name -Descending | Select-Object -First 1
 Write-Host ("Rendering (local images, NO upload): " + $ep.Name) -ForegroundColor Cyan
 Set-Location "$repo\youtube-auto"
-python -m autotube render world --yes --episode $ep.Name --no-upload
+& $PY -m autotube render world --yes --episode $ep.Name --no-upload
 
 if ($proc) { Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue }
 Get-Process | Where-Object { $_.Path -like "*ComfyUI_windows_portable*" } | Stop-Process -Force -ErrorAction SilentlyContinue
