@@ -24,9 +24,9 @@ on:
     paths:
       - "youtube-auto/episodes/world/**"   # 드래퍼/검수가 새 에피소드를 push하면 즉시 렌더
       - "youtube-auto/.render-queue"        # 수동으로 렌더를 걸고 싶을 때 이 파일에 한 줄 추가·push
-  # 백업 스케줄 (push 를 놓쳤을 때 대비). 03:50 UTC ≈ 한국 12:50.
-  schedule:
-    - cron: "50 3 * * *"      # 백업: 승인된 2편 렌더 + 유튜브 비공개 업로드
+  # 백업 스케줄 임시 중단 — 내일 '선명도 버전 1편만' 검토용. 판단 끝나면 아래 주석 해제해 복구.
+  # schedule:
+  #   - cron: "50 3 * * *"      # 백업: 승인된 편 렌더 + 유튜브 비공개 업로드
 
 concurrency:
   group: render-${{ github.event.inputs.channel || 'all' }}
@@ -83,7 +83,7 @@ jobs:
           if [ -n "$EPISODE" ]; then
             python -m autotube render "$CHANNEL" --yes --episode "$EPISODE" $NOUP
           else
-            python -m autotube render "$CHANNEL" --yes --count 2 $NOUP
+            python -m autotube render "$CHANNEL" --yes --count 1 $NOUP
           fi
 
       - name: 업로드 표식 커밋 (중복 업로드 방지)
