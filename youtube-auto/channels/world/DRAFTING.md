@@ -63,6 +63,36 @@ the hook with that angle.
    land and poor farmers worked it"). Keep sentences short (lint warns past ~28 words). Never
    dumb down the *facts* — just the words.
 
+## ⚡ Intensity — CRANK IT (this is the brand, don't play it safe)
+
+Tame = dead. Every episode must lead with the **most shocking, taboo-flirting, "wait, am I
+allowed to hear this?"** angle you can find — **sex, scandal, betrayal, greed, madness, obsession,
+cruelty, death, revenge** are the HOOKS. Go as hard as the two guardrails allow, not one notch
+softer.
+
+- **The nervous test.** If the title/hook doesn't make you a little nervous ("can we even say
+  that?"), it's TOO SOFT — push it harder. The sweet spot is *"I can't believe they're telling me
+  this… and it's REAL."*
+- **Lead with the darkest defensible truth.** Find the single most jaw-dropping, scandalous, or
+  disturbing *documented* detail and open on it. Never bury the shocking part.
+- **Edgy exemplars (this is the level):** a dead pope dug up and put on trial; an emperor who made
+  his horse a priest and declared war on the sea; the man who scared off an army with what he left
+  in the forest; one man who fathered 16 million descendants *on purpose*; poisoned-shot-beaten-
+  drowned and still wouldn't die; the queen who ran an empire from the bedroom.
+
+**Guardrails (bolder must still be SAFE — these keep ad money on):**
+1. **100% TRUE.** The shock must be real and sourced. Separate fact from legend; if the juicy bit
+   is only a rumor, say "the legend says…" — never state it as fact.
+2. **Imply, never SHOW.** Dark/violent/sexual themes are hooks, but the words and images only
+   *suggest* — no graphic gore, no explicit sex, no describing how to harm anyone.
+3. **Demonetization landmines — AVOID as subjects/treatment:** Nazis/Hitler/genocide (and any
+   glorification of them), modern/recent tragedies (~last 75 years of real deaths, terrorism,
+   named victims), hateful or demeaning framing of a real group, child harm, and defaming a living
+   person. Plenty of outrageous, SAFE history exists — use it.
+
+> Rule of thumb: **maximum shock in the HOOK and ANGLE, maximum restraint in what you actually
+> depict.** That combination is exactly what gets clicks AND keeps the ads.
+
 ## The mandatory skeleton — the "open loop" engine
 
 Every episode is **20–34 scenes (~5 min, ~700–800 words)**, a new image every ~8–10s
