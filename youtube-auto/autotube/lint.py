@@ -12,6 +12,9 @@ from pathlib import Path
 CHARACTER_VOICES = {"m1", "m2", "m3", "f1", "f2", "f3"}
 # 드라마 편 기준: 인물 대사 장면이 이 개수 이상.
 DRAMA_MIN_SCENES = 4
+# what_if(사실+공상)가 핵심 — '실화(true)'는 what_if 가 이만큼 연속된 뒤에만 가끔 허용.
+# 높일수록 what_if 비중↑ (4 ≈ 최소 80% what_if, 999 ≈ 사실상 전부 what_if).
+WHATIF_TRUE_GAP = 4
 
 
 def _recent_plans(run_dir, limit: int) -> list[dict]:
@@ -225,16 +228,22 @@ def lint_plan(plan: dict, run_dir=None) -> tuple[list[str], list[str]]:
 
     # ---- 편 간 로테이션 강제(기획 DNA): 실화만 쭉 / 나레이션만 쭉 가는 드리프트를 막는다 ----
     if run_dir is not None:
-        # (A) '만약(what_if)'은 이 채널의 PRIMARY 포맷(실화는 보조) — 최근 4편(이 편 포함)의
-        #     '절반 이상'이 what_if 여야 한다. 미달이면 이 편을 what_if 로 만들게 막는다.
-        win4 = _recent_plans(run_dir, 3) + [plan]
-        if len(win4) >= 4:
-            wif = sum(1 for p in win4 if p.get("content_type") == "what_if")
-            if wif < 2:
-                errors.append(
-                    "기획상 '만약(what_if)'이 메인 포맷이고 실화는 보조인데, 최근 4편 중 what_if 가 "
-                    f"{wif}개뿐입니다 — 이 편을 content_type='what_if'(사실에 공상을 더함: 분기점까지 "
-                    "사실 + 그 뒤 근거 있는 상상 + disclaimer)로 만드세요. 최소 절반은 '만약'이어야 합니다.")
+        # (A) 'what_if'(사실+공상)이 이 채널의 핵심 포맷 — 거의 모든 편이 what_if 여야 한다.
+        #     '실화(true)'는 what_if 가 여러 편 연속된 뒤에만 '가끔' 허용(= 드물게).
+        #     규칙은 항상 '이 편을 what_if 로' 만들면 통과된다(과거 때문에 영영 막히지 않음).
+        prior = _recent_plans(run_dir, WHATIF_TRUE_GAP)
+        streak = 0
+        for p in reversed(prior):   # 이 편 바로 앞부터 연속된 what_if 수
+            if p.get("content_type") == "what_if":
+                streak += 1
+            else:
+                break
+        if prior and plan.get("content_type") != "what_if" and streak < WHATIF_TRUE_GAP:
+            errors.append(
+                "이 채널은 '만약(what_if = 사실+공상)'이 핵심 포맷입니다 — 이 편을 "
+                "content_type='what_if'(분기점까지 사실 + 그 뒤 근거 있는 상상 + disclaimer)로 "
+                f"만드세요. 실화(true)는 what_if 가 {WHATIF_TRUE_GAP}편 연속된 뒤에만 가끔 허용됩니다 "
+                f"(지금 직전 연속 what_if = {streak}편).")
         # (B) 드라마 주기: 최근 6편(이 편 포함)에 '인물 대사(드라마)' 편이 하나도 없으면 막는다.
         win6 = _recent_plans(run_dir, 5) + [plan]
         if len(win6) >= 6 and not any(_is_drama(p) for p in win6):

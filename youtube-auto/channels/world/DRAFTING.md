@@ -327,12 +327,15 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
 The lint now mechanically fails `approve` if the channel drifts into all-true, all-narration. So
 on **every run, first look at the last several episodes under `episodes/world/`** and make sure the
 new batch keeps these true:
-1. **"What-if" is the PRIMARY format — it must be the MAJORITY, not a sprinkle.** The channel
-   sells *fact + imagination*; true stories are the SECONDARY flavour. Lint fails `approve` unless
-   **at least half of every 4 episodes are `content_type: "what_if"`** (aim ~60%). A what_if =
-   real fact up to the branch point, then plausible imagination, with a `disclaimer`. Use the
-   WHAT-IF formats (fish-out-of-water, right-person-wrong-time, era crossover, if-they-saw-us-now,
-   butterfly, time-travel/displacement). Most days, at least one of the two episodes is a what_if.
+1. **"What-if" (fact + imagination) is the CORE — default EVERY episode to `what_if`.** This
+   channel is fact-grounded imagination; a plain fact-only episode is not what we make. Lint fails
+   `approve` on a `true` episode unless the **4 episodes before it were all `what_if`** — i.e. a
+   true story is a RARE treat (~1 in 5 at most), used only when it's a genuinely jaw-dropping "I
+   can't believe it's REAL". Otherwise make it a `what_if`: real fact up to the branch point, then
+   plausible imagination, with a `disclaimer`. Use the WHAT-IF formats (fish-out-of-water,
+   right-person-wrong-time, era crossover, if-they-saw-us-now, butterfly, time-travel/displacement).
+   Even the occasional true story must be an IMMERSIVE format (eyewitness time-traveler,
+   interview-the-dead, drama) — never a flat narration fact-dump.
 2. **A DRAMA episode (character voices) at least every 6 episodes.** A "drama" episode = **≥4
    scenes** that each carry a character `voice` (`m1`–`m3` / `f1`–`f3`) whose `narration` is that
    person's actual spoken line. Use it for the dialogue formats (interview-the-dead, two-hander,
