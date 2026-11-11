@@ -225,12 +225,16 @@ def lint_plan(plan: dict, run_dir=None) -> tuple[list[str], list[str]]:
 
     # ---- 편 간 로테이션 강제(기획 DNA): 실화만 쭉 / 나레이션만 쭉 가는 드리프트를 막는다 ----
     if run_dir is not None:
-        # (A) '만약(what_if)' 주기: 최근 5편(이 편 포함)에 what_if 가 하나도 없으면 막는다.
-        win5 = _recent_plans(run_dir, 4) + [plan]
-        if len(win5) >= 5 and not any(p.get("content_type") == "what_if" for p in win5):
-            errors.append(
-                "최근 5편이 전부 '실화'입니다 — 이 편을 content_type='what_if'(사실 기반 '만약')로 "
-                "만들거나 포맷을 바꾸세요. 기획 DNA: 실화와 '만약/시간여행'을 섞어야 합니다.")
+        # (A) '만약(what_if)'은 이 채널의 PRIMARY 포맷(실화는 보조) — 최근 4편(이 편 포함)의
+        #     '절반 이상'이 what_if 여야 한다. 미달이면 이 편을 what_if 로 만들게 막는다.
+        win4 = _recent_plans(run_dir, 3) + [plan]
+        if len(win4) >= 4:
+            wif = sum(1 for p in win4 if p.get("content_type") == "what_if")
+            if wif < 2:
+                errors.append(
+                    "기획상 '만약(what_if)'이 메인 포맷이고 실화는 보조인데, 최근 4편 중 what_if 가 "
+                    f"{wif}개뿐입니다 — 이 편을 content_type='what_if'(사실에 공상을 더함: 분기점까지 "
+                    "사실 + 그 뒤 근거 있는 상상 + disclaimer)로 만드세요. 최소 절반은 '만약'이어야 합니다.")
         # (B) 드라마 주기: 최근 6편(이 편 포함)에 '인물 대사(드라마)' 편이 하나도 없으면 막는다.
         win6 = _recent_plans(run_dir, 5) + [plan]
         if len(win6) >= 6 and not any(_is_drama(p) for p in win6):

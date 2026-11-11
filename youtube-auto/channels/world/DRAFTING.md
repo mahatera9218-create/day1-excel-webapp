@@ -327,10 +327,12 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
 The lint now mechanically fails `approve` if the channel drifts into all-true, all-narration. So
 on **every run, first look at the last several episodes under `episodes/world/`** and make sure the
 new batch keeps these true:
-1. **"What-if" at least every 5 episodes.** If the last 5 are all `content_type: "true"`, the next
-   one **must** be a `what_if` (fact-grounded "what if / time-travel / displacement" — see the
-   WHAT-IF formats). what_if episodes also need a `disclaimer`. Aim for roughly **1 in 3** being
-   what-if, not a rare exception.
+1. **"What-if" is the PRIMARY format — it must be the MAJORITY, not a sprinkle.** The channel
+   sells *fact + imagination*; true stories are the SECONDARY flavour. Lint fails `approve` unless
+   **at least half of every 4 episodes are `content_type: "what_if"`** (aim ~60%). A what_if =
+   real fact up to the branch point, then plausible imagination, with a `disclaimer`. Use the
+   WHAT-IF formats (fish-out-of-water, right-person-wrong-time, era crossover, if-they-saw-us-now,
+   butterfly, time-travel/displacement). Most days, at least one of the two episodes is a what_if.
 2. **A DRAMA episode (character voices) at least every 6 episodes.** A "drama" episode = **≥4
    scenes** that each carry a character `voice` (`m1`–`m3` / `f1`–`f3`) whose `narration` is that
    person's actual spoken line. Use it for the dialogue formats (interview-the-dead, two-hander,
