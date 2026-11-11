@@ -386,25 +386,18 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
   all of them. Keep the ~3:1 light:deep mix across the format rotation.
 - Pull ideas from `channels/world/topics.txt`, or research a fresh one.
 
-### ⛔ LINT-ENFORCED rotation (the approve step BLOCKS you otherwise — this is not optional)
-The lint now mechanically fails `approve` if the channel drifts into all-true, all-narration. So
-on **every run, first look at the last several episodes under `episodes/world/`** and make sure the
-new batch keeps these true:
-1. **"What-if" (fact + imagination) is the CORE — default EVERY episode to `what_if`.** This
-   channel is fact-grounded imagination; a plain fact-only episode is not what we make. Lint fails
-   `approve` on a `true` episode unless the **4 episodes before it were all `what_if`** — i.e. a
-   true story is a RARE treat (~1 in 5 at most), used only when it's a genuinely jaw-dropping "I
-   can't believe it's REAL". Otherwise make it a `what_if`: real fact up to the branch point, then
-   plausible imagination, with a `disclaimer`. Use the WHAT-IF formats (fish-out-of-water,
-   right-person-wrong-time, era crossover, if-they-saw-us-now, butterfly, time-travel/displacement).
-   Even the occasional true story must be an IMMERSIVE format (eyewitness time-traveler,
-   interview-the-dead, drama) — never a flat narration fact-dump.
-2. **A DRAMA episode (character voices) at least every 6 episodes.** A "drama" episode = **≥4
-   scenes** that each carry a character `voice` (`m1`–`m3` / `f1`–`f3`) whose `narration` is that
-   person's actual spoken line. Use it for the dialogue formats (interview-the-dead, two-hander,
-   era crossover, a trial). If the last 6 have no drama episode, make this one a drama.
-3. Keep genuinely rotating the TRUE sub-formats too (eyewitness, diary, trial, two-hander…) — don't
-   just stamp `format: "narration"` every time.
+### ⛔ LINT-ENFORCED rules (the approve step BLOCKS you otherwise — not optional)
+The lint mechanically fails `approve` unless:
+1. **EVERY episode is `content_type: "what_if"` (fact + imagination).** This channel is 100%
+   what-if — **no true-only / documentary episodes.** Real fact up to the branch point, then bold
+   imagination, with a `disclaimer`. Use the WHAT-IF formats (fish-out-of-water, right-person-
+   wrong-time, era crossover, if-they-saw-us-now, butterfly, time-travel/displacement). Rotate the
+   formats — don't reuse the same one two days running.
+2. **Every episode carries `whatif_intensity` = `"wild"` or `"max"`, alternated ~1:1** (lint blocks
+   3 of the same tier in a row). See the intensity tiers above.
+
+(Character `voice`s are still allowed if a what-if plays as a spoken scene — just no longer
+required. Plain fact-dump true stories are gone.)
 
 **Daily feel to aim for:** across a week, a healthy spread like true-eyewitness, a what-if, a
 drama two-hander, true-trial, a time-travel what-if, true-diary… — NOT seven flat narrations.

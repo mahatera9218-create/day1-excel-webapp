@@ -8,13 +8,9 @@ import json
 import re
 from pathlib import Path
 
-# 캐릭터 보이스(드라마). 장면의 voice 에 이 별칭을 넣으면 인물 목소리로 읽힌다(edge 엔진).
+# 캐릭터 보이스(선택). 장면의 voice 에 이 별칭을 넣으면 인물 목소리로 읽힌다(edge 엔진).
+# (드라마 강제는 없앴지만, 쓰고 싶으면 여전히 유효한 값이어야 한다.)
 CHARACTER_VOICES = {"m1", "m2", "m3", "f1", "f2", "f3"}
-# 드라마 편 기준: 인물 대사 장면이 이 개수 이상.
-DRAMA_MIN_SCENES = 4
-# what_if(사실+공상)가 핵심 — '실화(true)'는 what_if 가 이만큼 연속된 뒤에만 가끔 허용.
-# 높일수록 what_if 비중↑ (4 ≈ 최소 80% what_if, 999 ≈ 사실상 전부 what_if).
-WHATIF_TRUE_GAP = 4
 # 상상 강도 두 단계 — 'wild'(과감하되 그럴듯) 와 'max'(거의 공상과학, 재미/충격 우선)를 1:1로.
 WHATIF_INTENSITIES = {"wild", "max"}
 
@@ -34,11 +30,6 @@ def _recent_plans(run_dir, limit: int) -> list[dict]:
         except Exception:  # noqa: BLE001
             pass
     return out
-
-
-def _is_drama(plan: dict) -> bool:
-    return sum(1 for s in (plan.get("scenes") or [])
-               if (s.get("voice") or "") in CHARACTER_VOICES) >= DRAMA_MIN_SCENES
 
 
 # 장면 역할 — 대본 뼈대를 기계가 알아볼 수 있게 태깅한다.
@@ -234,41 +225,22 @@ def lint_plan(plan: dict, run_dir=None) -> tuple[list[str], list[str]]:
     if words and not (600 <= words <= 900):
         warnings.append(f"전체 {words}단어 — ~5분 목표면 700~800단어 권장.")
 
-    # ---- 편 간 로테이션 강제(기획 DNA): 실화만 쭉 / 나레이션만 쭉 가는 드리프트를 막는다 ----
+    # ---- 편 간 로테이션 강제(기획 DNA): 100% 만약(what_if) + 상상 강도 wild:max 1:1 ----
     if run_dir is not None:
-        # (A) 'what_if'(사실+공상)이 이 채널의 핵심 포맷 — 거의 모든 편이 what_if 여야 한다.
-        #     '실화(true)'는 what_if 가 여러 편 연속된 뒤에만 '가끔' 허용(= 드물게).
-        #     규칙은 항상 '이 편을 what_if 로' 만들면 통과된다(과거 때문에 영영 막히지 않음).
-        prior = _recent_plans(run_dir, WHATIF_TRUE_GAP)
-        streak = 0
-        for p in reversed(prior):   # 이 편 바로 앞부터 연속된 what_if 수
-            if p.get("content_type") == "what_if":
-                streak += 1
-            else:
-                break
-        if prior and plan.get("content_type") != "what_if" and streak < WHATIF_TRUE_GAP:
+        # (A) 이 채널은 100% '만약(what_if = 사실+공상)' — 실화 단독 편은 쓰지 않는다.
+        if plan.get("content_type") != "what_if":
             errors.append(
-                "이 채널은 '만약(what_if = 사실+공상)'이 핵심 포맷입니다 — 이 편을 "
-                "content_type='what_if'(분기점까지 사실 + 그 뒤 근거 있는 상상 + disclaimer)로 "
-                f"만드세요. 실화(true)는 what_if 가 {WHATIF_TRUE_GAP}편 연속된 뒤에만 가끔 허용됩니다 "
-                f"(지금 직전 연속 what_if = {streak}편).")
+                "이 채널은 100% '만약(what_if = 사실+공상)'입니다 — 이 편도 "
+                "content_type='what_if'(분기점까지 사실 + 그 뒤 상상 + disclaimer)로 만드세요.")
 
-        # (A2) 상상 강도 1:1 — what_if 는 'wild'↔'max' 를 번갈아. 같은 tier 3연속이면 막는다.
-        if plan.get("content_type") == "what_if":
-            tier = (plan.get("whatif_intensity") or "").strip().lower()
-            prior_wif = [p for p in _recent_plans(run_dir, 6) if p.get("content_type") == "what_if"]
-            last2 = [(p.get("whatif_intensity") or "").strip().lower() for p in prior_wif[-2:]]
-            if tier in WHATIF_INTENSITIES and len(last2) == 2 and last2[0] == last2[1] == tier:
-                other = "max" if tier == "wild" else "wild"
-                errors.append(
-                    f"상상 강도 '{tier}' 가 3편 연속입니다 — 이 편은 '{other}'로 (wild↔max 를 1:1로 번갈아).")
-        # (B) 드라마 주기: 최근 6편(이 편 포함)에 '인물 대사(드라마)' 편이 하나도 없으면 막는다.
-        win6 = _recent_plans(run_dir, 5) + [plan]
-        if len(win6) >= 6 and not any(_is_drama(p) for p in win6):
+        # (A2) 상상 강도 1:1 — 'wild'↔'max' 를 번갈아. 같은 tier 가 직전 2편과 같으면 막는다.
+        tier = (plan.get("whatif_intensity") or "").strip().lower()
+        prior_wif = [p for p in _recent_plans(run_dir, 6) if p.get("content_type") == "what_if"]
+        last2 = [(p.get("whatif_intensity") or "").strip().lower() for p in prior_wif[-2:]]
+        if tier in WHATIF_INTENSITIES and len(last2) == 2 and last2[0] == last2[1] == tier:
+            other = "max" if tier == "wild" else "wild"
             errors.append(
-                f"최근 6편에 드라마(인물 대사) 편이 없습니다 — 이 편을 드라마로: 장면 "
-                f"{DRAMA_MIN_SCENES}개 이상에 voice(m1~m3/f1~f3)와 그 인물의 대사를 narration 에 "
-                "넣으세요. 기획 DNA: 편마다 드라마/나레이션을 번갈아야 합니다.")
+                f"상상 강도 '{tier}' 가 3편 연속입니다 — 이 편은 '{other}'로 (wild↔max 를 1:1로 번갈아).")
 
     return errors, warnings
 
