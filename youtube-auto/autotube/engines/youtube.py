@@ -99,3 +99,14 @@ def upload(video: Path, plan: dict, cfg: dict, thumbnail: Path | None = None) ->
         except Exception as e:  # noqa: BLE001
             print(f"      [경고] 커스텀 썸네일 설정 실패(채널 전화 인증 필요?): {e}")
     return vid
+
+
+def set_thumbnail(cfg: dict, video_id: str, thumb: Path) -> None:
+    """이미 올라간 영상의 '썸네일만' 교체한다(영상 재업로드 없음). 채널 전화 인증 필요."""
+    from googleapiclient.discovery import build
+    from googleapiclient.http import MediaFileUpload
+
+    creds = _credentials(cfg["_dir"], cfg["youtube"]["client_secret_file"])
+    service = build("youtube", "v3", credentials=creds)
+    service.thumbnails().set(
+        videoId=video_id, media_body=MediaFileUpload(str(thumb))).execute()

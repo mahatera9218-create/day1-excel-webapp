@@ -80,19 +80,23 @@ jobs:
           NOUP=""
           if [ "$UPLOAD" = "false" ]; then NOUP="--no-upload"; fi   # 기본은 자동 업로드(스케줄 포함); false면 렌더만
           EPISODE="$(printf '%s' "$EPISODE" | xargs)"   # 복붙 시 앞뒤 공백 제거(입력 실수 방지)
-          # .render-queue 에서 '실재하는 에피소드 폴더명' 줄만 골라낸다(날짜/주석 줄은 폴더가 아니라 무시됨).
-          # 이런 줄이 있으면 그 편들을 '다시' 렌더·업로드한다(--episode = 중복검사 우회). 하위호환.
-          RERUN=""
-          for tok in $(grep -vE '^[[:space:]]*(#|$)' .render-queue 2>/dev/null | awk '{print $1}'); do
-            [ -d "episodes/$CHANNEL/$tok" ] && RERUN="$RERUN $tok"
-          done
+          # .render-queue 해석 (날짜/주석 줄은 폴더가 아니라 무시됨 — 하위호환):
+          #   'thumb: <폴더>'  -> 그 편 '썸네일만' 교체(재렌더 X, 거의 공짜)
+          #   '<폴더>'         -> 그 편 전체 재렌더+업로드(--episode = 중복검사 우회)
+          THUMB=""; RERUN=""
+          while IFS= read -r raw; do
+            line="$(printf '%s' "$raw" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+            case "$line" in
+              ''|\#*) ;;
+              thumb:*) ep="$(printf '%s' "${line#thumb:}" | xargs)"; [ -d "episodes/$CHANNEL/$ep" ] && THUMB="$THUMB $ep" ;;
+              *) ep="$(printf '%s' "$line" | awk '{print $1}')"; [ -d "episodes/$CHANNEL/$ep" ] && RERUN="$RERUN $ep" ;;
+            esac
+          done < .render-queue
           if [ -n "$EPISODE" ]; then
             python -m autotube render "$CHANNEL" --yes --episode "$EPISODE" $NOUP
-          elif [ -n "$RERUN" ]; then
-            for ep in $RERUN; do
-              echo "[rerender] $ep"
-              python -m autotube render "$CHANNEL" --yes --episode "$ep"   # 지정 편 다시 렌더+업로드
-            done
+          elif [ -n "$THUMB$RERUN" ]; then
+            for ep in $THUMB; do echo "[thumb] $ep"; python -m autotube thumb "$CHANNEL" --episode "$ep"; done
+            for ep in $RERUN; do echo "[rerender] $ep"; python -m autotube render "$CHANNEL" --yes --episode "$ep"; done
           else
             python -m autotube render "$CHANNEL" --yes --count 2 $NOUP
           fi
@@ -104,14 +108,17 @@ jobs:
           # 이게 없으면 다음 실행이 깨끗한 체크아웃에서 같은 편을 또 렌더·업로드해 중복이 난다.
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # 리렌더 큐에 '에피소드 폴더' 줄이 있었으면 처리됐으니 큐를 비운다(다음 push 때 또 안 돌게).
-          for tok in $(grep -vE '^[[:space:]]*(#|$)' .render-queue 2>/dev/null | awk '{print $1}'); do
-            if [ -d "episodes/$CHANNEL/$tok" ]; then
-              printf '# 리렌더 큐: 에피소드 폴더명을 한 줄씩 넣고 push 하면 그 편만 다시 렌더·업로드. 처리 후 자동 비움.\n' > .render-queue
-              git add .render-queue
-              break
-            fi
-          done
+          # 큐에 '에피소드' 줄(thumb: 포함)이 있었으면 처리됐으니 큐를 비운다(다음 push 때 또 안 돌게).
+          CLEARQ=""
+          while IFS= read -r raw; do
+            line="$(printf '%s' "$raw" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+            case "$line" in ''|\#*) ep="" ;; thumb:*) ep="$(printf '%s' "${line#thumb:}" | xargs)" ;; *) ep="$(printf '%s' "$line" | awk '{print $1}')" ;; esac
+            [ -n "$ep" ] && [ -d "episodes/$CHANNEL/$ep" ] && CLEARQ=1
+          done < .render-queue
+          if [ -n "$CLEARQ" ]; then
+            printf '# 큐: 폴더명 줄 = 전체 재렌더, "thumb: 폴더명" 줄 = 썸네일만 교체. push 하면 처리 후 자동 비움.\n' > .render-queue
+            git add .render-queue
+          fi
           git add "episodes/$CHANNEL" 2>/dev/null || true   # mp4/png 등 결과물은 .gitignore 처리됨
           if git diff --cached --quiet; then
             echo "커밋할 표식 없음 (렌더만 했거나 변화 없음)."
