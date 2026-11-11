@@ -7,7 +7,6 @@
   (예전엔 '상단 고정'이라 전신/상반신 인물의 머리와 겹치고, 긴 글자는 좌우가 잘렸다.)
 """
 
-import textwrap
 from pathlib import Path
 
 from ..config import FONT_DIR
@@ -23,11 +22,22 @@ def _esc(text: str) -> str:
     return text.replace("\\", "\\\\").replace(":", "\\:").replace("'", "’").replace("%", "\\%")
 
 
-def _fit_fontsize(line: str) -> int:
-    """Pillow 없이 '좌우로 안 잘리는' 글자 크기를 보수적으로 추정한다(대문자 볼드 기준).
-    폭 ~1100px 안에 들어오게. 짧으면 크게(최대 112), 길면 작게(최소 56)."""
-    n = max(1, len(line))
-    return max(56, min(112, int(1100 / (n * 0.62))))
+def _fit_fontsize(line: str, maxw: int = 1130, cap: int = 116, lo: int = 44) -> int:
+    """'좌우로 안 잘리는' 글자 크기를 고른다. Pillow 로 실제 렌더 폭을 재서 maxw 안에 들어오는
+    가장 큰 크기를 찾는다(좌우 80px 여백 확보). Pillow 가 없으면 글자수로 보수적으로 추정."""
+    try:
+        from PIL import ImageFont
+        s = cap
+        while s > lo:
+            f = ImageFont.truetype(str(FONT), s)
+            b = f.getbbox(line)
+            if (b[2] - b[0]) <= maxw:
+                return s
+            s -= 2
+        return lo
+    except Exception:  # noqa: BLE001 — Pillow 없을 때 폴백(넉넉하게)
+        n = max(1, len(line))
+        return max(lo, min(cap, int(maxw / (n * 0.68))))
 
 
 def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
@@ -49,8 +59,9 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     grade = ("scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,"
              "eq=contrast=1.14:saturation=1.3:brightness=0.03,unsharp=5:5:0.9:5:5:0.0")
 
+    # 글자는 통째로 쓴다(단어를 자르지 않는다). 폭은 아래 _fit_fontsize 가 폰트 크기로 맞춘다.
     caption = (plan.get("thumbnail_text") or "").strip()
-    line = _esc(textwrap.shorten(caption.upper(), width=28, placeholder="")) if caption else ""
+    line = _esc(caption.upper()) if caption else ""
 
     # 3) 입력(원본 + 하단 스크림 + 브랜드)을 모아 필터체인을 구성한다.
     inputs = ["-i", str(src)]
