@@ -55,7 +55,7 @@ def cmd_lint(run_dir: Path) -> int:
     """대본 구조 규격 검사. errors 개수를 반환."""
     from . import lint
     plan = pipeline.load_plan(run_dir)
-    errors, warnings = lint.lint_plan(plan)
+    errors, warnings = lint.lint_plan(plan, run_dir)
     print(lint.format_report(errors, warnings))
     return len(errors)
 
@@ -63,7 +63,7 @@ def cmd_lint(run_dir: Path) -> int:
 def cmd_approve(run_dir: Path, force: bool = False) -> None:
     from . import lint
     plan = pipeline.load_plan(run_dir)
-    errors, warnings = lint.lint_plan(plan)
+    errors, warnings = lint.lint_plan(plan, run_dir)
     if errors and not force:
         print(lint.format_report(errors, warnings))
         raise SystemExit("[승인 거부] 위 구조 문제를 고친 뒤 다시 승인하세요. (강제: --force)")

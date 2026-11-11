@@ -4,7 +4,37 @@
 의미(사실성 등)는 사람이 보지만, 구조는 여기서 강제한다.
 """
 
+import json
 import re
+from pathlib import Path
+
+# 캐릭터 보이스(드라마). 장면의 voice 에 이 별칭을 넣으면 인물 목소리로 읽힌다(edge 엔진).
+CHARACTER_VOICES = {"m1", "m2", "m3", "f1", "f2", "f3"}
+# 드라마 편 기준: 인물 대사 장면이 이 개수 이상.
+DRAMA_MIN_SCENES = 4
+
+
+def _recent_plans(run_dir, limit: int) -> list[dict]:
+    """이 편보다 '이전'(폴더명=타임스탬프 사전순)인 형제 편들의 plan 을 최신순으로 limit개."""
+    try:
+        base = Path(run_dir).parent
+        me = Path(run_dir).name
+    except Exception:  # noqa: BLE001
+        return []
+    prior = sorted(p for p in base.glob("*/plan.json") if p.parent.name < me)
+    out = []
+    for p in prior[-limit:]:
+        try:
+            out.append(json.loads(p.read_text(encoding="utf-8")))
+        except Exception:  # noqa: BLE001
+            pass
+    return out
+
+
+def _is_drama(plan: dict) -> bool:
+    return sum(1 for s in (plan.get("scenes") or [])
+               if (s.get("voice") or "") in CHARACTER_VOICES) >= DRAMA_MIN_SCENES
+
 
 # 장면 역할 — 대본 뼈대를 기계가 알아볼 수 있게 태깅한다.
 ROLES = {
@@ -44,8 +74,9 @@ SPOILER_WORDS = {
 MAX_SENTENCE_WORDS = 28  # 쉬운 말 = 짧은 문장
 
 
-def lint_plan(plan: dict) -> tuple[list[str], list[str]]:
-    """(errors, warnings). errors 가 있으면 승인 불가."""
+def lint_plan(plan: dict, run_dir=None) -> tuple[list[str], list[str]]:
+    """(errors, warnings). errors 가 있으면 승인 불가.
+    run_dir 가 주어지면 '편 간 로테이션'(실화/만약 섞기·드라마 주기)도 강제한다."""
     errors: list[str] = []
     warnings: list[str] = []
 
@@ -145,6 +176,10 @@ def lint_plan(plan: dict) -> tuple[list[str], list[str]]:
         if r not in ROLES:
             errors.append(f"장면 {i}: role '{r}' 이(가) 규격 밖입니다. 허용: {sorted(ROLES)}")
         roles.append(r)
+        # 드라마: 장면에 voice 를 지정했으면 허용된 별칭이어야 한다.
+        v = s.get("voice")
+        if v not in (None, "", "narrator") and v not in CHARACTER_VOICES:
+            errors.append(f"장면 {i}: voice '{v}' 는 허용 밖입니다 (narrator 또는 m1~m3/f1~f3).")
         if s.get("is_key"):
             key_count += 1
         # 사실성 경고: 직접 인용부호가 보이면 '문서로 확인된 실제 인용인지' 점검 유도
@@ -187,6 +222,22 @@ def lint_plan(plan: dict) -> tuple[list[str], list[str]]:
     words = sum(len((s.get("narration") or "").split()) for s in scenes)
     if words and not (600 <= words <= 900):
         warnings.append(f"전체 {words}단어 — ~5분 목표면 700~800단어 권장.")
+
+    # ---- 편 간 로테이션 강제(기획 DNA): 실화만 쭉 / 나레이션만 쭉 가는 드리프트를 막는다 ----
+    if run_dir is not None:
+        # (A) '만약(what_if)' 주기: 최근 5편(이 편 포함)에 what_if 가 하나도 없으면 막는다.
+        win5 = _recent_plans(run_dir, 4) + [plan]
+        if len(win5) >= 5 and not any(p.get("content_type") == "what_if" for p in win5):
+            errors.append(
+                "최근 5편이 전부 '실화'입니다 — 이 편을 content_type='what_if'(사실 기반 '만약')로 "
+                "만들거나 포맷을 바꾸세요. 기획 DNA: 실화와 '만약/시간여행'을 섞어야 합니다.")
+        # (B) 드라마 주기: 최근 6편(이 편 포함)에 '인물 대사(드라마)' 편이 하나도 없으면 막는다.
+        win6 = _recent_plans(run_dir, 5) + [plan]
+        if len(win6) >= 6 and not any(_is_drama(p) for p in win6):
+            errors.append(
+                f"최근 6편에 드라마(인물 대사) 편이 없습니다 — 이 편을 드라마로: 장면 "
+                f"{DRAMA_MIN_SCENES}개 이상에 voice(m1~m3/f1~f3)와 그 인물의 대사를 narration 에 "
+                "넣으세요. 기획 DNA: 편마다 드라마/나레이션을 번갈아야 합니다.")
 
     return errors, warnings
 

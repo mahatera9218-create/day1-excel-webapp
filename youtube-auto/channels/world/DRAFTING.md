@@ -323,6 +323,24 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
   all of them. Keep the ~3:1 light:deep mix across the format rotation.
 - Pull ideas from `channels/world/topics.txt`, or research a fresh one.
 
+### ⛔ LINT-ENFORCED rotation (the approve step BLOCKS you otherwise — this is not optional)
+The lint now mechanically fails `approve` if the channel drifts into all-true, all-narration. So
+on **every run, first look at the last several episodes under `episodes/world/`** and make sure the
+new batch keeps these true:
+1. **"What-if" at least every 5 episodes.** If the last 5 are all `content_type: "true"`, the next
+   one **must** be a `what_if` (fact-grounded "what if / time-travel / displacement" — see the
+   WHAT-IF formats). what_if episodes also need a `disclaimer`. Aim for roughly **1 in 3** being
+   what-if, not a rare exception.
+2. **A DRAMA episode (character voices) at least every 6 episodes.** A "drama" episode = **≥4
+   scenes** that each carry a character `voice` (`m1`–`m3` / `f1`–`f3`) whose `narration` is that
+   person's actual spoken line. Use it for the dialogue formats (interview-the-dead, two-hander,
+   era crossover, a trial). If the last 6 have no drama episode, make this one a drama.
+3. Keep genuinely rotating the TRUE sub-formats too (eyewitness, diary, trial, two-hander…) — don't
+   just stamp `format: "narration"` every time.
+
+**Daily feel to aim for:** across a week, a healthy spread like true-eyewitness, a what-if, a
+drama two-hander, true-trial, a time-travel what-if, true-diary… — NOT seven flat narrations.
+
 ## Steps per episode
 
 1. **Research the factual spine** (web search); note 2–3 sources and the real branch point.
