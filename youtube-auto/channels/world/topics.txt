@@ -68,6 +68,33 @@
 [max] Nikola Tesla meets the ancient Egyptians -> the pyramids become wireless power plants (Egypt / Africa)
 [max] The Ottomans invent the jet engine -> a sultan's air empire over three continents (Ottoman / Asia)
 
+# ===================== 여성 주연 (남성 시청자 겨냥 — 권력·유혹·위험, 암시만 / 노출 금지) =====================
+# 'lead' = 그 여성 이름. 썸네일은 품격 있게 매혹적(보석·촛불·위험한 눈빛), 선정적 X.
+[wild] Cleopatra wins at Actium -> the West prays to Egyptian gods (Cleopatra / Africa)
+[wild] Wu Zetian's dynasty never ends -> China ruled by empresses for 500 years (Wu Zetian / Asia)
+[wild] Boudica burns Roman Britain for good -> a Celtic Britain, no Roman rule (Boudica / Europe)
+[wild] Empress Theodora rules Byzantium alone -> a very different empire (Theodora / Europe)
+[wild] Zenobia's desert queendom beats Rome -> a Syrian empress rules the East (Zenobia / Asia)
+[wild] Catherine the Great never stops expanding -> a Russian empire across the Pacific (Catherine / Europe)
+[wild] The Rani of Jhansi wins -> India is free a century early (Lakshmibai / Asia)
+[wild] Nefertiti rules openly as pharaoh -> a dynasty of queens (Nefertiti / Africa)
+[wild] Empress Dowager Cixi modernizes China -> an Asian superpower by 1900 (Cixi / Asia)
+[max] Cleopatra never dies -> Egypt puts a pharaoh on the Moon (Cleopatra / Africa)
+[max] Cleopatra had the internet -> she runs two empires from a golden phone (Cleopatra / Africa)
+[max] Joan of Arc with a modern army -> she crowns herself and conquers Europe (Joan of Arc / Europe)
+[max] Wu Zetian builds an army of automatons -> an unstoppable empress (Wu Zetian / Asia)
+[max] Catherine the Great with tanks -> Russia takes the whole continent (Catherine / Europe)
+The woman who seduced two Roman generals to keep her throne (Cleopatra / Africa)
+The dancer who rose from the stage to rule an empire (Theodora / Europe)
+The concubine who became China's only female emperor — and how (Wu Zetian / Asia)
+Poison, popes, and a family that ran Italy — the real Lucrezia Borgia (Lucrezia Borgia / Europe)
+The dancer-spy who seduced generals on both sides (Mata Hari / Europe)
+She made her son emperor — then he came for her (Agrippina / Europe)
+Genghis Khan's great-granddaughter who beat every suitor at wrestling (Khutulun / Asia)
+The samurai woman who took heads on the battlefield (Tomoe Gozen / Asia)
+Two sisters who led a rebellion against an empire (Trung Sisters / Asia)
+The empress accused of sneaking out to rule Rome's nightlife (Messalina / Europe)
+
 # ===================== 몰입형 TRUE (드문 실화 슬롯 — what_if 여러 편 뒤 가끔) =====================
 # 밋밋한 나레이션 금지. 목격자/죽은 자 인터뷰/재판/2인극 등 '안에 들어간' 형식으로만.
 They dug up a dead pope and put his rotting corpse on trial — you're in the courtroom (Cadaver Synod / Europe)

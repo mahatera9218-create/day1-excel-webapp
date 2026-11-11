@@ -93,6 +93,24 @@ softer.
 > Rule of thumb: **maximum shock in the HOOK and ANGLE, maximum restraint in what you actually
 > depict.** That combination is exactly what gets clicks AND keeps the ads.
 
+## 👑 Women who command the frame (the audience skews male — lean in)
+
+A large share of episodes should **center a powerful, dangerous, or scandalous WOMAN** — queens,
+warriors, spies, seductresses, poisoners, empresses who ran empires from behind the throne. Make
+HER the draw. The pull is her **power, seduction, danger, and scandal**, and history is full of it:
+Cleopatra, Catherine the Great, Wu Zetian, Theodora, Zenobia, Boudica, Lucrezia Borgia, Agrippina,
+Mata Hari, the Rani of Jhansi, Khutulun. Aim for **roughly half** of episodes to have a woman as
+the lead (`lead` field names her).
+
+**Tasteful, not trashy — this is the line that keeps the money on:**
+- The hook sells **allure + power + intrigue**, never nudity or explicit content. *Imply* the
+  seduction/scandal ("she seduced two Roman generals to keep her throne"), never depict sex.
+- Thumbnails & image prompts: **regal, alluring, commanding** — a beautiful, confident woman in
+  control (fine fabrics, jewels, candlelight, a dangerous stare). **No** cleavage-bait, no
+  suggestive poses, no "sexy" framing that triggers YouTube's limited-ads / age-restriction.
+- Same two hard rules apply: 100% true (separate fact from the legend around famous women), and
+  advertiser-safe. Her intelligence and power are the real hook; beauty is the bait, not the point.
+
 ## The mandatory skeleton — the "open loop" engine
 
 Every episode is **20–34 scenes (~5 min, ~700–800 words)**, a new image every ~8–10s
