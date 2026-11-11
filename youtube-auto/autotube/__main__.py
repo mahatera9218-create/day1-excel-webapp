@@ -149,6 +149,23 @@ def cmd_auth(cfg: dict) -> None:
     print(f"       {cfg['_dir'] / cfg['youtube']['client_secret_file']} 내용을 'CLIENT_SECRET_JSON' 에 넣으세요.")
 
 
+def cmd_thumb(cfg: dict, episode: str) -> None:
+    """이미 업로드된 편의 '썸네일만' 다시 만들어 교체한다(영상 재렌더·재업로드 없음, 거의 공짜)."""
+    run_dir = OUTPUT / cfg["_name"] / episode.strip().strip("/")
+    if not (run_dir / "plan.json").exists():
+        raise SystemExit(f"[오류] 그런 편이 없습니다: {run_dir}")
+    mid = run_dir / "youtube_id.txt"
+    if not mid.exists():
+        raise SystemExit(f"[오류] 아직 업로드 안 된 편(youtube_id.txt 없음): {run_dir}")
+    vid = mid.read_text(encoding="utf-8").strip()
+    plan = pipeline.load_plan(run_dir)
+    from .stages import thumbnail
+    thumb = thumbnail.run_stage(run_dir, plan, cfg)   # thumb_src 재생성(Pika ~$0.04) + 합성
+    from .engines.youtube import set_thumbnail
+    set_thumbnail(cfg, vid, thumb)
+    print(f"      썸네일 교체 완료 ✓  https://youtu.be/{vid}")
+
+
 def cmd_status(run_dir: Path) -> None:
     status = json.loads((run_dir / "status.json").read_text(encoding="utf-8"))
     print(f"승인: {status['approved']}")
@@ -178,6 +195,9 @@ def main() -> None:
             sp.add_argument("--yes", action="store_true")
         if name == "approve":
             sp.add_argument("--force", action="store_true")
+    tp = sub.add_parser("thumb")   # 올라간 편의 썸네일만 교체(재렌더 없음)
+    tp.add_argument("channel")
+    tp.add_argument("--episode", required=True)
     ap = sub.add_parser("auth")
     ap.add_argument("channel")
     sub.add_parser("list")
@@ -191,6 +211,9 @@ def main() -> None:
         return
     if args.cmd == "auth":
         cmd_auth(load_channel(args.channel))
+        return
+    if args.cmd == "thumb":
+        cmd_thumb(load_channel(args.channel), args.episode)
         return
     if args.cmd in ("new", "run"):
         cfg = load_channel(args.channel)
