@@ -15,6 +15,8 @@ DRAMA_MIN_SCENES = 4
 # what_if(사실+공상)가 핵심 — '실화(true)'는 what_if 가 이만큼 연속된 뒤에만 가끔 허용.
 # 높일수록 what_if 비중↑ (4 ≈ 최소 80% what_if, 999 ≈ 사실상 전부 what_if).
 WHATIF_TRUE_GAP = 4
+# 상상 강도 두 단계 — 'wild'(과감하되 그럴듯) 와 'max'(거의 공상과학, 재미/충격 우선)를 1:1로.
+WHATIF_INTENSITIES = {"wild", "max"}
 
 
 def _recent_plans(run_dir, limit: int) -> list[dict]:
@@ -112,6 +114,12 @@ def lint_plan(plan: dict, run_dir=None) -> tuple[list[str], list[str]]:
         errors.append(f"content_type '{ctype}' 이(가) 잘못됐습니다. 'what_if' 또는 'true'.")
     if ctype == "what_if" and not (plan.get("disclaimer") or "").strip():
         errors.append("what_if 편은 disclaimer(가상 시나리오 명시)가 필수입니다 — 신뢰·광고 안전.")
+    if ctype == "what_if":
+        wi = (plan.get("whatif_intensity") or "").strip().lower()
+        if wi not in WHATIF_INTENSITIES:
+            errors.append(
+                "what_if 편은 whatif_intensity 가 'wild'(과감하되 그럴듯) 또는 'max'(거의 공상과학, "
+                "재미/충격 우선) 여야 합니다 — 상상의 '결말'이 세야 합니다. 둘을 1:1로 번갈아 쓰세요.")
 
     # 대륙: 발행 로테이션용. 반드시 5개 중 하나.
     cont = plan.get("continent")
@@ -244,6 +252,16 @@ def lint_plan(plan: dict, run_dir=None) -> tuple[list[str], list[str]]:
                 "content_type='what_if'(분기점까지 사실 + 그 뒤 근거 있는 상상 + disclaimer)로 "
                 f"만드세요. 실화(true)는 what_if 가 {WHATIF_TRUE_GAP}편 연속된 뒤에만 가끔 허용됩니다 "
                 f"(지금 직전 연속 what_if = {streak}편).")
+
+        # (A2) 상상 강도 1:1 — what_if 는 'wild'↔'max' 를 번갈아. 같은 tier 3연속이면 막는다.
+        if plan.get("content_type") == "what_if":
+            tier = (plan.get("whatif_intensity") or "").strip().lower()
+            prior_wif = [p for p in _recent_plans(run_dir, 6) if p.get("content_type") == "what_if"]
+            last2 = [(p.get("whatif_intensity") or "").strip().lower() for p in prior_wif[-2:]]
+            if tier in WHATIF_INTENSITIES and len(last2) == 2 and last2[0] == last2[1] == tier:
+                other = "max" if tier == "wild" else "wild"
+                errors.append(
+                    f"상상 강도 '{tier}' 가 3편 연속입니다 — 이 편은 '{other}'로 (wild↔max 를 1:1로 번갈아).")
         # (B) 드라마 주기: 최근 6편(이 편 포함)에 '인물 대사(드라마)' 편이 하나도 없으면 막는다.
         win6 = _recent_plans(run_dir, 5) + [plan]
         if len(win6) >= 6 and not any(_is_drama(p) for p in win6):

@@ -284,6 +284,21 @@ Ad-safe; anachronisms are allowed here (that collision IS the fun):*
 - **If they saw us now.** A figure judges the modern world through their real values.
 - **Butterfly effect.** Change ONE real decision at a real turning point; dramatize the ripple.
 
+**⚡ The IMAGINED payoff must be BOLD — the SPECULATION is the star, not the fact.** Use the real
+fact only as a springboard, then make "what happens next" a jaw-dropping, sweeping, vivid leap.
+Tag every what_if with **`whatif_intensity`**, and **ALTERNATE the two ~1:1** (lint requires the
+tag and blocks 3 of the same in a row):
+- **`"wild"` — audacious but reasoned.** A huge imagined outcome you can still defend in 1–2 "oh…
+  that actually tracks" beats. *If Rome never fell → a 2,000-year-old internet; Genghis Khan with
+  cannons → every ocean is his; China's treasure fleet reaches Europe first → you'd read this in
+  Mandarin; Cleopatra wins Actium → the West prays to Egyptian gods.*
+- **`"max"` — near-sci-fi, fun over realism.** Push past "plausible" into pure spectacle; pick
+  shock and delight over credibility. *Einstein born in ancient Egypt → the pyramids were rockets;
+  if the Library of Alexandria survived → the Moon landing in the year 900; if Napoleon never died
+  → a French empire on Mars.* Still frame it as a scenario (`disclaimer` + the on-screen tag).
+Either way: fact up to the branch, then go as big as the tier allows. A timid "a bit of trade might
+have shifted" ending is a FAIL — the imagined result has to make them gasp.
+
 **Serialized seasons (occasional).** Connect 3–5 episodes into an arc (e.g. *"The Mad Emperors"*),
 reuse the hero image via `image_ref`, and end each on a cliffhanger for the next.
 
@@ -391,6 +406,7 @@ drama two-hander, true-trial, a time-travel what-if, true-diary… — NOT seven
   "topic": "What if the Library of Alexandria never burned? (Egypt / knowledge)",
   "continent": "Africa",
   "content_type": "what_if",
+  "whatif_intensity": "wild",
   "angle": "Not 'what we lost' — what specific technologies arrive centuries early, and who it hurts",
   "disclaimer": "A what-if scenario: real history up to the fire, then informed speculation.",
   "title": "What If the Library of Alexandria Never Burned? | A Different 2,000 Years",
