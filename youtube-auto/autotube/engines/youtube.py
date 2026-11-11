@@ -55,7 +55,7 @@ def uploaded_titles(cfg: dict) -> set[str]:
     return titles
 
 
-def upload(video: Path, plan: dict, cfg: dict) -> str:
+def upload(video: Path, plan: dict, cfg: dict, thumbnail: Path | None = None) -> str:
     from googleapiclient.discovery import build
     from googleapiclient.http import MediaFileUpload
 
@@ -87,4 +87,15 @@ def upload(video: Path, plan: dict, cfg: dict) -> str:
         status, response = req.next_chunk()
         if status:
             print(f"      업로드 {int(status.progress() * 100)}%")
-    return response["id"]
+    vid = response["id"]
+
+    # 커스텀 썸네일 세팅. 유튜브는 '채널 전화 인증'이 돼 있어야 커스텀 썸네일을 허용한다.
+    # 미인증이면 403 이 나는데, 업로드 자체는 성공했으므로 경고만 찍고 넘어간다.
+    if thumbnail is not None and Path(thumbnail).exists():
+        try:
+            service.thumbnails().set(
+                videoId=vid, media_body=MediaFileUpload(str(thumbnail))).execute()
+            print("      썸네일 설정 완료 ✓")
+        except Exception as e:  # noqa: BLE001
+            print(f"      [경고] 커스텀 썸네일 설정 실패(채널 전화 인증 필요?): {e}")
+    return vid

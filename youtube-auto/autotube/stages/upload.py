@@ -18,7 +18,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict, shorts: bool = True) -> None
         return
     try:
         from ..engines.youtube import upload
-        vid = upload(final, plan, cfg)
+        vid = upload(final, plan, cfg, thumbnail=run_dir / "thumbnail.jpg")
         (run_dir / "youtube_id.txt").write_text(vid, encoding="utf-8")
         long_url = f"https://youtu.be/{vid}"
         print(f"      롱폼 → {long_url}  (비공개/임시저장)")
