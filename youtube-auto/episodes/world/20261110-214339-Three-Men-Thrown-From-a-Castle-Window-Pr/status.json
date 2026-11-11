@@ -1,4 +1,10 @@
 {
   "approved": true,
-  "done": {}
+  "done": {
+    "voice": true,
+    "visuals": true,
+    "compose": true,
+    "thumbnail": true,
+    "shorts": true
+  }
 }
