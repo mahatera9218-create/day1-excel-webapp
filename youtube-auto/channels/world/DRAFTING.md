@@ -276,8 +276,15 @@ documentary, part drama, part thought-experiment. Two drama techniques are **alw
 every episode is built on **one format** chosen from the lists below.
 
 **Always-on (bake into every episode):**
-- **Cold open — scene 1 (`hook`) opens IN the moment, not with narration.** A tense beat, a
-  sensory detail, present tense, 1–2 lines; make them feel they walked in on something.
+- **Cold open — the FIRST SENTENCE is the shock, NOT the setup.** Scene 1 (`hook`) opens IN the
+  moment: the single most jaw-dropping line first — a shocking claim, a question, or 2nd-person
+  tension, present tense. **No scene-setting in sentence one** ("The year is 1859…", "It is dawn,
+  a farmer stands…") — that bleeds viewers in the first 3 seconds, which decide retention. For a
+  what-if, open on the wild payoff/premise. The brand pre-roll is GONE, so the hook is literally
+  frame 1 — make it count.
+  - ✅ *"You are falling. Seventy feet of castle stone rushing up to meet you."*
+  - ✅ *"What if the pyramids were never tombs — but launch pads?"*
+  - ❌ *"A man in a white uniform lowers himself onto a plain wooden chair."* (too slow — the shock is buried)
 - **Second-person pull.** Use "you" to drop the viewer into the scene wherever it fits ("You're
   standing in the Senate when…"). Immersion over lecture.
 
@@ -362,11 +369,17 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
   (required). Bold but never a lie, never explicit/gory wording, and **never the answer.** ≤1 in
   5 may use "What if".
 - **`thumbnail_prompt` — over-invest, this is #1.** One split-second-arresting visual that
-  **poses a question, never answers it.** Usually a dramatic CLOSE-UP of a face mid-emotion
+  **poses a question, never answers it.** **Default to a dramatic CLOSE-UP of a FACE mid-emotion**
   (shock, mischief, fear, awe) with intense eye contact, bold cinematic light, shallow depth of
-  field — a moment that makes you go "wait, what's happening here?!", not the resolution. Show
-  the intrigue, hide the payoff. Ad-safe; **no baked-in words** (text is overlaid separately, so
-  don't ask the image for any), no logos, no real living people.
+  field — faces out-click objects. If there is no single person, lead with the **wild what-if
+  visual** (a Roman city with neon, pyramids as launch pads). **Avoid a flat object/wide shot as
+  the thumbnail** (a lone chair, a pig, a scroll) — that was underperforming. Show the intrigue,
+  hide the payoff. Ad-safe; **no baked-in words**, no logos, no real living people.
+  - **Female-lead episodes:** set **`female_lead: true`** and **`thumbnail_framing`** = `"face"`
+    (얼굴 클로즈업) / `"upper"` (상반신) / `"full"` (전신), and **rotate all three** across episodes
+    (lint blocks 3 of the same in a row). Regal, alluring, commanding — fine fabrics, jewels,
+    a dangerous stare; **tasteful, never suggestive/explicit** (keeps YouTube ads on). Write the
+    chosen framing into the prompt too (e.g. "full-length regal portrait of…").
 - **`thumbnail_text` — FILL IT, don't leave it empty.** A punchy **2–4 word** hook, drawn BIG over
   the image, that teases without spoiling: *"NOT HUMAN"*, *"38 MINUTES"*, *"THE WRONG BODY"*, *"STILL
   THERE"*. Keep it **≤ ~18 characters** so it stays huge and thumb-readable; put the mystery in it,
@@ -424,6 +437,8 @@ drama two-hander, true-trial, a time-travel what-if, true-diary… — NOT seven
   "thumbnail_prompt": "cinematic close-up of ancient scrolls glowing in lamplight inside a vast library, embers drifting, awe and tension, shallow depth of field",
   "thumbnail_text": "",
   "thumbnail_scene": 4,
+  "female_lead": false,
+  "thumbnail_framing": "face",
   "description": "2-4 lines that tease it, clearly a what-if. End with a one-line source note.",
   "tags": ["what if","history","alexandria","alternate history","science","..."],
   "shorts": [ {"narration":"...","scenes":[1,6,8],"highlight":["..."],"cta":"..."}, {"...":"..."} ],

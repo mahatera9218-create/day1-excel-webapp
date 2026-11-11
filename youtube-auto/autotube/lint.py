@@ -13,6 +13,8 @@ from pathlib import Path
 CHARACTER_VOICES = {"m1", "m2", "m3", "f1", "f2", "f3"}
 # 상상 강도 두 단계 — 'wild'(과감하되 그럴듯) 와 'max'(거의 공상과학, 재미/충격 우선)를 1:1로.
 WHATIF_INTENSITIES = {"wild", "max"}
+# 여성 주연 편 썸네일 프레이밍 — 얼굴 클로즈업/상반신/전신을 골고루(한 종류 3연속 금지).
+THUMB_FRAMINGS = {"face", "upper", "full"}
 
 
 def _recent_plans(run_dir, limit: int) -> list[dict]:
@@ -91,6 +93,14 @@ def lint_plan(plan: dict, run_dir=None) -> tuple[list[str], list[str]]:
 
     if not (plan.get("thumbnail_prompt") or "").strip():
         errors.append("thumbnail_prompt 가 비어 있습니다. (이미지-우선 전용 썸네일은 필수)")
+
+    # 여성 주연 편이면 썸네일 프레이밍(face/upper/full)을 지정해야 한다(골고루 돌리기 위함).
+    if plan.get("female_lead"):
+        fr = (plan.get("thumbnail_framing") or "").strip().lower()
+        if fr not in THUMB_FRAMINGS:
+            errors.append(
+                "female_lead 편은 thumbnail_framing 이 'face'(얼굴 클로즈업)·'upper'(상반신)·"
+                "'full'(전신) 중 하나여야 합니다 — 셋을 골고루 돌리세요(품격 있게, 선정적 X).")
 
     # 니치: 그 편만의 '안 흔한 앵글' 한 줄이 반드시 있어야 한다.
     angle = (plan.get("angle") or "").strip()
@@ -241,6 +251,16 @@ def lint_plan(plan: dict, run_dir=None) -> tuple[list[str], list[str]]:
             other = "max" if tier == "wild" else "wild"
             errors.append(
                 f"상상 강도 '{tier}' 가 3편 연속입니다 — 이 편은 '{other}'로 (wild↔max 를 1:1로 번갈아).")
+
+        # (A3) 여성 주연 썸네일 프레이밍을 골고루 — 직전 2편의 female_lead 와 같은 프레이밍 3연속이면 막는다.
+        if plan.get("female_lead"):
+            fr = (plan.get("thumbnail_framing") or "").strip().lower()
+            prior_fem = [p for p in _recent_plans(run_dir, 6) if p.get("female_lead")]
+            last2f = [(p.get("thumbnail_framing") or "").strip().lower() for p in prior_fem[-2:]]
+            if fr in THUMB_FRAMINGS and len(last2f) == 2 and last2f[0] == last2f[1] == fr:
+                opts = sorted(THUMB_FRAMINGS - {fr})
+                errors.append(
+                    f"여성 썸네일 프레이밍 '{fr}' 가 3연속입니다 — 이 편은 {opts} 중 하나로 (골고루).")
 
     return errors, warnings
 

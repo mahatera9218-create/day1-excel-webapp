@@ -97,16 +97,8 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
         cum += dur
 
     # ---- 브랜드 인트로/아웃트로를 앞뒤에 끼운다 (있으면). 자막은 인트로만큼 뒤로 민다 ----
-    if INTRO_CARD.exists():
-        intro = comp / "intro.mp4"
-        if not intro.exists():
-            _card_clip(INTRO_CARD, INTRO_DUR, size, intro, zoom_in=True)
-        clip_files.insert(0, intro)
-        durs.insert(0, INTRO_DUR)
-        shift = INTRO_DUR - XFADE  # 인트로가 XFADE만큼 겹치므로
-        for e in entries:
-            e["start"] = round(e["start"] + shift, 2)
-            e["end"] = round(e["end"] + shift, 2)
+    # 브랜드 프리롤(인트로 카드)은 제거했다 — 훅이 '0초(첫 프레임)'에 터져야 초반 이탈이 준다.
+    # 브랜딩은 아웃트로 카드 + 썸네일 워드마크로 충분하다.
     if OUTRO_CARD.exists():
         outro = comp / "outro.mp4"
         if not outro.exists():
