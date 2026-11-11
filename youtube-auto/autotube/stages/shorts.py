@@ -12,7 +12,6 @@ from pathlib import Path
 from ..config import FONT_DIR
 from ..engines import Engines
 from ..render.kenburns import FPS
-from ..render.subtitles import build_ass
 from ..render.util import ffpath, probe_duration, run
 from .compose import XFADE, _kenburns_vf
 
@@ -26,7 +25,7 @@ def _esc(t: str) -> str:
 
 def _seg_clip(img: Path, idx: int, dur: float, size: tuple[int, int], out: Path) -> None:
     w, h = size
-    vf = _kenburns_vf(idx, max(int(dur * FPS), 1), w, h)
+    vf = _kenburns_vf(idx, max(int(dur * FPS), 1), w, h, ss=2)
     run(["-loop", "1", "-i", str(img), "-t", f"{dur:.3f}", "-vf", vf, "-an",
          "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", str(out)])
 
@@ -51,7 +50,6 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
     out_dir.mkdir(exist_ok=True)
     engines = Engines(cfg)
     fnt = FONT_DIR / "NotoSansKR.ttf"
-    sub_cfg = {**cfg["subtitles"], "font_size": 64, "margin_v": 360}
     is_whatif = plan.get("content_type") == "what_if"
     made = []
 
@@ -61,17 +59,15 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
             made.append(final)
             continue
 
-        # 1) 티저 나레이션 → 무료 목소리(한 번 호출로 mp3 + 자막 타이밍 둘 다)
-        #    끝에 '설명 링크' 유도 멘트를 자동으로 붙여 음성·자막·끝카드가 맞물리게 한다.
+        # 1) 티저 나레이션 → 무료 목소리. 끝에 '설명 링크' 유도 멘트를 붙여 음성·끝카드가 맞물리게.
+        #    (번인 자막은 쓰지 않는다 — 본편처럼 깔끔하게 영상만. 필요하면 유튜브 자동 CC.)
         narr = short["narration"].strip()
         if narr and narr[-1] not in ".!?":
             narr += "."
         narr = f"{narr} {VERBAL_CTA}"
         saud = out_dir / f"short_{n:02}.mp3"
-        tdict = engines.voice({"narration": narr, "highlight": short.get("highlight", [])}, saud)
+        engines.voice({"narration": narr, "highlight": short.get("highlight", [])}, saud)
         dur = probe_duration(saud)
-        ass = out_dir / f"short_{n:02}.ass"
-        build_ass(tdict["chunks"], sub_cfg, size, ass)
 
         # 2) 그림: 본편 장면 재사용. 움직이는 클립이 있으면 그걸(무료 움직임), 없으면 스틸.
         refs = [int(s) for s in (short.get("scenes") or []) if str(s).isdigit()]
@@ -99,7 +95,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
                     _seg_clip(path, k, seg, size, sc)
             clips.append(sc)
 
-        # 4) 합성: 전환 + 색보정/비네트 + 자막 + (what-if 라벨) + 끝 CTA + 오디오
+        # 4) 합성: 전환 + 색보정 + (what-if 라벨) + 끝 CTA + 오디오 (번인 자막 없음)
         inputs, parts = [], []
         for c in clips:
             inputs += ["-i", c.name]
@@ -111,8 +107,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> list[Path]:
             parts.append(f"{vprev}[{k}:v]xfade=transition=fade:duration={XFADE}:offset={off:.3f}[v{k}]")
             vprev = f"[v{k}]"
         vchain = (f"{vprev}fade=t=in:st=0:d=0.4,"
-                  f"eq=contrast=1.12:saturation=1.15:gamma=1.0:brightness=0.03,unsharp=5:5:1.1:5:5:0.0,"
-                  f"subtitles={ass.name}:fontsdir={ffpath(FONT_DIR)}")
+                  f"eq=contrast=1.16:saturation=1.20:gamma=1.0:brightness=0.03,unsharp=5:5:1.4:5:5:0.0")
         if is_whatif:
             vchain += (f",drawtext=fontfile={ffpath(fnt)}:text='WHAT-IF SCENARIO':fontcolor=white@0.55:"
                        f"fontsize=30:x=w-tw-28:y=36:box=1:boxcolor=black@0.28:boxborderw=8")

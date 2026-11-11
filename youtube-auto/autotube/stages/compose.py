@@ -34,8 +34,9 @@ def _card_clip(img: Path, dur: float, size: tuple[int, int], out: Path, zoom_in:
          "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-shortest", str(out)])
 
 
-def _kenburns_vf(idx: int, frames: int, w: int, h: int) -> str:
-    """장면마다 다른 카메라 무빙 (확대/축소/좌우 팬)."""
+def _kenburns_vf(idx: int, frames: int, w: int, h: int, ss: int = 1) -> str:
+    """장면마다 다른 카메라 무빙 (확대/축소/좌우 팬).
+    ss>1 이면 줌을 ss배 해상도로 렌더한 뒤 다시 축소 → 재생 중 미세한 떨림(지터)을 줄인다."""
     base = f"scale={w*2}:{h*2}:force_original_aspect_ratio=increase:flags=lanczos,crop={w*2}:{h*2}"
     cxy = "x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
     v = idx % 4
@@ -51,7 +52,8 @@ def _kenburns_vf(idx: int, frames: int, w: int, h: int) -> str:
     else:         # 우 → 좌 팬 (넓게)
         z = "1.30"
         xy = f"x='(iw-iw/zoom)*(1-on/{frames})':y='ih/2-(ih/zoom/2)'"
-    return f"{base},zoompan=z='{z}':{xy}:d={frames}:s={w}x{h}:fps={FPS},format=yuv420p"
+    tail = f",scale={w}:{h}:flags=lanczos" if ss != 1 else ""
+    return f"{base},zoompan=z='{z}':{xy}:d={frames}:s={w*ss}x{h*ss}:fps={FPS}{tail},format=yuv420p"
 
 
 def _scene_clip(scene: dict, idx: int, image: Path, clip: Path | None, audio: Path,
@@ -153,7 +155,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     if subs_on:
         vchain += f",subtitles=subs.ass:fontsdir={ffpath(FONT_DIR)}"
     # 색보정+비네트만(가벼움). 프레임별 노이즈/빛입자 오버레이는 CI에서 너무 느려 제외.
-    vchain += ",eq=contrast=1.12:saturation=1.15:gamma=1.0:brightness=0.03,unsharp=5:5:1.1:5:5:0.0"
+    vchain += ",eq=contrast=1.16:saturation=1.20:gamma=1.0:brightness=0.03,unsharp=5:5:1.4:5:5:0.0"
     # What-if(가상 시나리오)는 신뢰·광고 안전을 위해 작은 상시 라벨을 항상 표기
     if plan.get("content_type") == "what_if":
         fnt = FONT_DIR / "NotoSansKR.ttf"
