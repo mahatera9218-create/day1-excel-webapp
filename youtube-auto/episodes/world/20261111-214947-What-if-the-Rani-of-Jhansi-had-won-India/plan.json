@@ -5,53 +5,276 @@
   "whatif_intensity": "wild",
   "lead": "Rani Lakshmibai of Jhansi",
   "female_lead": true,
-  "thumbnail_framing": "full",
+  "thumbnail_framing": "upper",
   "angle": "Not 'a brave queen who lost' — what if her last charge had broken the British, and the world's biggest empire lost its crown jewel ninety years early?",
   "disclaimer": "A what-if scenario: the real history of the Rani of Jhansi up to 1858, then bold but informed speculation.",
   "title": "What If One Queen on a Horse Toppled the British Empire? | India, 1858",
-  "thumbnail_prompt": "dramatic full-length action shot of a fearless 19th-century Indian warrior queen in a jewelled turban and battle dress, sword raised, charging on a galloping horse through smoke, fierce eyes, bright cinematic light, sharp focus, commanding and regal",
+  "thumbnail_prompt": "ultra-realistic cinematic upper-body portrait of a stunningly beautiful young Indian warrior queen, captivating intense eyes locked straight on the viewer, radiant flawless skin, ornate gold jewellery and a jewelled headpiece, rich crimson-and-gold royal silk with gold embroidery, a faint streak of battle soot on one cheek, defiant alluring expression, dramatic rim lighting, glowing embers behind, shallow depth of field, regal, powerful and magnetic",
   "thumbnail_text": "SHE WINS?",
   "thumbnail_scene": 1,
   "description": "In 1858, a young Indian queen led a last, desperate charge against the British Empire, and died a hero. But what if that charge had worked? What if the largest empire on Earth had lost India ninety years early? A bold what-if about Rani Lakshmibai of Jhansi.\n\nA what-if scenario: real history up to 1858, then informed speculation. Source: historical accounts of the Rani of Jhansi and the 1857 rebellion.",
-  "tags": ["what if", "history", "Rani of Jhansi", "Lakshmibai", "India", "alternate history", "British Empire", "warrior queen"],
+  "tags": [
+    "what if",
+    "history",
+    "Rani of Jhansi",
+    "Lakshmibai",
+    "India",
+    "alternate history",
+    "British Empire",
+    "warrior queen"
+  ],
   "shorts": [
     {
       "title": "What if this queen beat the British Empire #shorts",
       "description": "A bold what-if about India's warrior queen. Full story on the channel. #shorts #history",
       "narration": "What if the most powerful empire in history was brought to its knees, because of one young queen on a horse? In 1858, she led a last, desperate charge against the British army. But imagine her story had gone a very different way. The whole world might look completely different today.",
-      "scenes": [1, 10, 13],
-      "highlight": ["one young queen on a horse", "a very different way"],
+      "scenes": [
+        1,
+        10,
+        13
+      ],
+      "highlight": [
+        "one young queen on a horse",
+        "a very different way"
+      ],
       "cta": "▶  FULL STORY — link in description"
     },
     {
       "title": "She escaped a siege by leaping a wall on horseback #shorts",
       "description": "A real warrior queen, a real daring escape, and one wild what-if. #shorts #history",
       "narration": "Picture a queen trapped inside a burning fort, surrounded by the British army. So she straps her little boy to her back, climbs onto her horse, and leaps straight off the fortress wall to escape. That part is real. Now imagine where her story could have gone next.",
-      "scenes": [9, 11, 12],
-      "highlight": ["leaps straight off the fortress wall", "that part is real"],
+      "scenes": [
+        9,
+        11,
+        12
+      ],
+      "highlight": [
+        "leaps straight off the fortress wall",
+        "that part is real"
+      ],
       "cta": "▶  Watch the full story"
     }
   ],
   "scenes": [
-    { "narration": "What if the biggest empire the world had ever seen lost its most precious land, almost a hundred years early, because of one young woman on a horse? This is a what-if. But it starts with a real queen who truly terrified the British.", "highlight": ["because of one young woman on a horse"], "image_prompt": "dramatic full-length shot of a fearless 19th-century Indian warrior queen in a jewelled turban and battle dress raising a sword on a rearing horse amid smoke, fierce determined eyes, bright cinematic light, sharp focus, regal and commanding", "motion": "video", "role": "hook", "is_key": true, "sfx": "war horn, pounding hooves" },
-    { "narration": "Her name was Lakshmibai, the queen, or Rani, of a kingdom in India called Jhansi. And in the real history, she became one of the bravest rebels the British Empire ever faced. To understand the what-if, you first need the truth.", "highlight": ["the bravest rebels the British Empire ever faced"], "image_prompt": "a regal young 19th-century Indian queen in fine silk robes and jewels standing on a palace balcony overlooking her city, dignified and strong, warm golden light, sharp cinematic portrait", "motion": "kenburns_in", "role": "setup", "is_key": false, "sfx": "soft royal ambience" },
-    { "narration": "In the 1850s, a British company did not just trade in India. It ruled huge parts of it, like a business running whole countries. And it had a greedy rule. If a king died without a son of his own blood, the company simply swallowed his land.", "highlight": ["swallowed his land"], "image_prompt": "stern 19th-century British company officials in formal coats spreading a map of India across a grand table, claiming territory with cold confidence, lamplit room, sharp detail", "motion": "kenburns_pan", "role": "setup", "is_key": false, "sfx": "low ominous tone" },
-    { "narration": "When Lakshmibai's husband died, she had an adopted son, ready to rule. But the company said no. An adopted boy did not count. They told the queen her kingdom was theirs now, and she should quietly step aside. She refused.", "highlight": ["She refused"], "image_prompt": "a defiant young Indian queen in royal dress facing British officials with a fierce steady glare, holding a small child's hand protectively, tension in the room, dramatic sharp light", "motion": "kenburns_in", "role": "loop_q", "is_key": false, "sfx": "tense strings" },
-    { "narration": "Her famous answer became legend across India. She declared that she would not give up her Jhansi. Not the land, not the throne, not her people. The British had just made an enemy out of one of the most fearless rulers in the land.", "highlight": ["she would not give up her Jhansi"], "image_prompt": "a proud Indian queen standing tall before her gathered people and soldiers, raising a hand in defiance, banners behind her, inspiring and powerful, bright heroic light, cinematic", "motion": "kenburns_pan", "role": "loop_problem", "is_key": true, "sfx": "rising heroic swell" },
-    { "narration": "Soon, a huge rebellion swept across India. Ordinary people and soldiers rose up against the company's rule all at once. And in Jhansi, the young queen trained an army, including women, and got ready to fight for her home.", "highlight": ["trained an army, including women"], "image_prompt": "an Indian queen in battle dress inspecting rows of determined soldiers, among them armed women, swords and spears gleaming, a fortress courtyard, bright dramatic daylight, sharp focus", "motion": "kenburns_in", "role": "setup", "is_key": false, "sfx": "drilling soldiers" },
-    { "narration": "The British marched on Jhansi with cannons and surrounded the fort. For days, the walls shook under the blasts. Inside, the queen herself walked the ramparts, handing out supplies, refusing to show a flicker of fear to her people.", "highlight": ["refusing to show a flicker of fear"], "image_prompt": "a resolute Indian queen walking the fort ramparts amid cannon smoke and falling debris, calm and commanding under fire, soldiers rallying around her, intense sharp light, cinematic", "motion": "kenburns_pan", "role": "loop_problem", "is_key": false, "sfx": "booming cannon fire" },
-    { "narration": "But cannons and numbers were against her. The fort could not hold forever. If she stayed, she would be captured, and her rebellion would die inside those walls. So she made a choice so daring it still sounds impossible today.", "highlight": ["so daring it still sounds impossible"], "image_prompt": "an Indian queen at night on a high fortress wall looking down at a terrifying drop, torchlight flickering, a moment of fearless decision, dramatic shadows and sharp highlights", "motion": "kenburns_in", "role": "second_hook", "is_key": false, "sfx": "tense night wind" },
-    { "narration": "In the dead of night, she tied her young son to her back and climbed onto her horse. Then she rode straight off the edge of the fortress wall, down into the dark. She smashed through the enemy lines below. And incredibly, she made it.", "highlight": ["rode straight off the edge of the fortress wall"], "image_prompt": "a breathtaking shot of an Indian warrior queen on horseback leaping off a high fort wall into the night with a child strapped to her back, mid-air and fearless, moonlit, dynamic and dramatic, sharp cinematic", "motion": "video", "role": "loop_reveal", "is_key": true, "sfx": "a great leap, wind rush" },
-    { "narration": "She joined other rebel leaders and kept fighting. Weeks later, near a great fortress city called Gwalior, she led one last furious battle. She fought dressed as a soldier, sword in hand, right at the front. Here is where real history ends.", "highlight": ["one last furious battle"], "image_prompt": "an Indian warrior queen in soldier's dress charging at the front of a cavalry line into battle near a massive hilltop fortress, sword high, fierce and unstoppable, bright dramatic light, sharp action", "motion": "kenburns_pan", "role": "loop_problem", "is_key": true, "sfx": "clashing battle" },
-    { "narration": "In the real world, Lakshmibai died there, fighting to her last breath. Even the British general who beat her called her the bravest of them all. She lost the battle. But now, let us change one single moment.", "highlight": ["let us change one single moment"], "image_prompt": "a symbolic image of a single sword raised against a dramatic sky at the moment of decision, light splitting between dark and bright, a turning point in history, bold cinematic composition", "motion": "kenburns_in", "role": "loop_q", "is_key": false, "sfx": "suspended breath, soft chime" },
-    { "narration": "What if, in our story, her final charge breaks through? What if her side wins at Gwalior, and the queen lives? From this point on, everything you hear is imagination, built on what might have followed. The spark becomes a wildfire.", "highlight": ["the queen lives"], "image_prompt": "a triumphant Indian warrior queen on horseback raising her sword as rebel soldiers cheer and a British line breaks and flees behind her, sunrise breaking through smoke, glorious and bright, sharp cinematic", "motion": "kenburns_pan", "role": "turn", "is_key": true, "sfx": "triumphant roar" },
-    { "narration": "A living, winning queen is a magnet. Across India, wherever people are rising up, they now have a hero who actually beat the British in the field. Fighters who were losing hope flock to her banner. The scattered rebellion becomes one great wave.", "highlight": ["one great wave"], "image_prompt": "vast crowds of Indian rebels from many regions marching and rallying under a single royal banner across a sunlit plain, unstoppable momentum, epic scale with a clear hero figure in front, sharp and bright", "motion": "kenburns_in", "role": "loop_problem", "is_key": false, "sfx": "swelling march" },
-    { "narration": "Picture the news racing around the world by telegraph and ship. The unbeatable British, beaten in India by a queen they tried to erase. In palaces and markets everywhere, people repeat her name. A single victory has become a story the whole world cannot stop telling.", "highlight": ["a story the whole world cannot stop telling"], "image_prompt": "a vivid montage feel of newspapers and telegraph wires carrying word of a stunning victory across a world map, distant crowds reacting with astonishment, bright dramatic light, sharp cinematic", "motion": "kenburns_in", "role": "loop_problem", "is_key": false, "sfx": "telegraph clicks, rising murmur" },
-    { "narration": "The British Empire now faces a nightmare. India was the richest jewel in its crown, the land that made it a superpower. Losing it would not just embarrass Britain. It would shake the money and power the whole empire was built on.", "highlight": ["the richest jewel in its crown"], "image_prompt": "a grand but shaken British imperial map room where officials stare in alarm at a map of India slipping from their grasp, cracks spreading across a crown symbol, dramatic sharp light", "motion": "kenburns_pan", "role": "loop_problem", "is_key": false, "sfx": "uneasy deep drums" },
-    { "narration": "Imagine Britain pouring soldiers and ships into India to hold on, and still losing ground year after year. An empire that looked unbeatable suddenly looks tired, stretched thin, and very, very mortal. The whole world is watching.", "highlight": ["very, very mortal"], "image_prompt": "weary British troops retreating along a dusty Indian road as triumphant rebels watch from the hills, the balance of power visibly shifting, warm dramatic light, sharp cinematic wide shot", "motion": "kenburns_in", "role": "loop_problem", "is_key": false, "sfx": "distant retreat" },
-    { "narration": "And here is the biggest ripple. Other lands under British rule are watching too. If India, the greatest prize of all, can walk free, why not them? The queen's victory could light fires in places the British never expected.", "highlight": ["light fires"], "image_prompt": "a symbolic world map glowing with sparks of rebellion lighting up across many continents one after another, dramatic and sweeping, bright hopeful embers against dark, cinematic", "motion": "kenburns_pan", "role": "loop_reveal", "is_key": false, "sfx": "spreading spark sounds" },
-    { "narration": "A free India, standing on its own almost a hundred years early, could reshape everything. Different borders. Different leaders. A Britain that is powerful, yes, but no longer the giant that bossed a quarter of the planet around.", "highlight": ["reshape everything"], "image_prompt": "a proud imagined early free India with grand flags and a bustling confident capital city blending royal and modern, hopeful and vibrant, bright warm light, sharp cinematic", "motion": "kenburns_in", "role": "payoff", "is_key": false, "sfx": "hopeful anthem tone" },
-    { "narration": "Now, this is a story, not a prophecy. Real rebellions are messy, and winning one battle does not promise a happy ending. But the point stands. History sometimes balances on a single moment, a single brave person who refuses to kneel.", "highlight": ["balances on a single moment"], "image_prompt": "a thoughtful image of a lone statue of a warrior queen on horseback silhouetted against a glowing sky over a modern city, past and future meeting, bright and reflective, sharp cinematic", "motion": "kenburns_in", "role": "payoff", "is_key": false, "sfx": "soft reflective swell" },
-    { "narration": "In our world, the Rani of Jhansi lost her final battle, and still became immortal. So imagine what she might have become if she had won. Sometimes the people empires try hardest to erase are the ones history can never forget.", "highlight": ["history can never forget"], "image_ref": 1, "motion": "kenburns_in", "role": "button", "is_key": true, "sfx": "single lingering note, fade" }
+    {
+      "narration": "What if the biggest empire the world had ever seen lost its most precious land, almost a hundred years early, because of one young woman on a horse? This is a what-if. But it starts with a real queen who truly terrified the British.",
+      "highlight": [
+        "because of one young woman on a horse"
+      ],
+      "image_prompt": "dramatic full-length shot of a fearless 19th-century Indian warrior queen in a jewelled turban and battle dress raising a sword on a rearing horse amid smoke, fierce determined eyes, bright cinematic light, sharp focus, regal and commanding",
+      "motion": "video",
+      "role": "hook",
+      "is_key": true,
+      "sfx": "war horn, pounding hooves"
+    },
+    {
+      "narration": "Her name was Lakshmibai, the queen, or Rani, of a kingdom in India called Jhansi. And in the real history, she became one of the bravest rebels the British Empire ever faced. To understand the what-if, you first need the truth.",
+      "highlight": [
+        "the bravest rebels the British Empire ever faced"
+      ],
+      "image_prompt": "a regal young 19th-century Indian queen in fine silk robes and jewels standing on a palace balcony overlooking her city, dignified and strong, warm golden light, sharp cinematic portrait",
+      "motion": "kenburns_in",
+      "role": "setup",
+      "is_key": false,
+      "sfx": "soft royal ambience"
+    },
+    {
+      "narration": "In the 1850s, a British company did not just trade in India. It ruled huge parts of it, like a business running whole countries. And it had a greedy rule. If a king died without a son of his own blood, the company simply swallowed his land.",
+      "highlight": [
+        "swallowed his land"
+      ],
+      "image_prompt": "stern 19th-century British company officials in formal coats spreading a map of India across a grand table, claiming territory with cold confidence, lamplit room, sharp detail",
+      "motion": "kenburns_pan",
+      "role": "setup",
+      "is_key": false,
+      "sfx": "low ominous tone"
+    },
+    {
+      "narration": "When Lakshmibai's husband died, she had an adopted son, ready to rule. But the company said no. An adopted boy did not count. They told the queen her kingdom was theirs now, and she should quietly step aside. She refused.",
+      "highlight": [
+        "She refused"
+      ],
+      "image_prompt": "a defiant young Indian queen in royal dress facing British officials with a fierce steady glare, holding a small child's hand protectively, tension in the room, dramatic sharp light",
+      "motion": "kenburns_in",
+      "role": "loop_q",
+      "is_key": false,
+      "sfx": "tense strings"
+    },
+    {
+      "narration": "Her famous answer became legend across India. She declared that she would not give up her Jhansi. Not the land, not the throne, not her people. The British had just made an enemy out of one of the most fearless rulers in the land.",
+      "highlight": [
+        "she would not give up her Jhansi"
+      ],
+      "image_prompt": "a proud Indian queen standing tall before her gathered people and soldiers, raising a hand in defiance, banners behind her, inspiring and powerful, bright heroic light, cinematic",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": true,
+      "sfx": "rising heroic swell"
+    },
+    {
+      "narration": "Soon, a huge rebellion swept across India. Ordinary people and soldiers rose up against the company's rule all at once. And in Jhansi, the young queen trained an army, including women, and got ready to fight for her home.",
+      "highlight": [
+        "trained an army, including women"
+      ],
+      "image_prompt": "an Indian queen in battle dress inspecting rows of determined soldiers, among them armed women, swords and spears gleaming, a fortress courtyard, bright dramatic daylight, sharp focus",
+      "motion": "kenburns_in",
+      "role": "setup",
+      "is_key": false,
+      "sfx": "drilling soldiers"
+    },
+    {
+      "narration": "The British marched on Jhansi with cannons and surrounded the fort. For days, the walls shook under the blasts. Inside, the queen herself walked the ramparts, handing out supplies, refusing to show a flicker of fear to her people.",
+      "highlight": [
+        "refusing to show a flicker of fear"
+      ],
+      "image_prompt": "a resolute Indian queen walking the fort ramparts amid cannon smoke and falling debris, calm and commanding under fire, soldiers rallying around her, intense sharp light, cinematic",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "booming cannon fire"
+    },
+    {
+      "narration": "But cannons and numbers were against her. The fort could not hold forever. If she stayed, she would be captured, and her rebellion would die inside those walls. So she made a choice so daring it still sounds impossible today.",
+      "highlight": [
+        "so daring it still sounds impossible"
+      ],
+      "image_prompt": "an Indian queen at night on a high fortress wall looking down at a terrifying drop, torchlight flickering, a moment of fearless decision, dramatic shadows and sharp highlights",
+      "motion": "kenburns_in",
+      "role": "second_hook",
+      "is_key": false,
+      "sfx": "tense night wind"
+    },
+    {
+      "narration": "In the dead of night, she tied her young son to her back and climbed onto her horse. Then she rode straight off the edge of the fortress wall, down into the dark. She smashed through the enemy lines below. And incredibly, she made it.",
+      "highlight": [
+        "rode straight off the edge of the fortress wall"
+      ],
+      "image_prompt": "a breathtaking shot of an Indian warrior queen on horseback leaping off a high fort wall into the night with a child strapped to her back, mid-air and fearless, moonlit, dynamic and dramatic, sharp cinematic",
+      "motion": "video",
+      "role": "loop_reveal",
+      "is_key": true,
+      "sfx": "a great leap, wind rush"
+    },
+    {
+      "narration": "She joined other rebel leaders and kept fighting. Weeks later, near a great fortress city called Gwalior, she led one last furious battle. She fought dressed as a soldier, sword in hand, right at the front. Here is where real history ends.",
+      "highlight": [
+        "one last furious battle"
+      ],
+      "image_prompt": "an Indian warrior queen in soldier's dress charging at the front of a cavalry line into battle near a massive hilltop fortress, sword high, fierce and unstoppable, bright dramatic light, sharp action",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": true,
+      "sfx": "clashing battle"
+    },
+    {
+      "narration": "In the real world, Lakshmibai died there, fighting to her last breath. Even the British general who beat her called her the bravest of them all. She lost the battle. But now, let us change one single moment.",
+      "highlight": [
+        "let us change one single moment"
+      ],
+      "image_prompt": "a symbolic image of a single sword raised against a dramatic sky at the moment of decision, light splitting between dark and bright, a turning point in history, bold cinematic composition",
+      "motion": "kenburns_in",
+      "role": "loop_q",
+      "is_key": false,
+      "sfx": "suspended breath, soft chime"
+    },
+    {
+      "narration": "What if, in our story, her final charge breaks through? What if her side wins at Gwalior, and the queen lives? From this point on, everything you hear is imagination, built on what might have followed. The spark becomes a wildfire.",
+      "highlight": [
+        "the queen lives"
+      ],
+      "image_prompt": "a triumphant Indian warrior queen on horseback raising her sword as rebel soldiers cheer and a British line breaks and flees behind her, sunrise breaking through smoke, glorious and bright, sharp cinematic",
+      "motion": "kenburns_pan",
+      "role": "turn",
+      "is_key": true,
+      "sfx": "triumphant roar"
+    },
+    {
+      "narration": "A living, winning queen is a magnet. Across India, wherever people are rising up, they now have a hero who actually beat the British in the field. Fighters who were losing hope flock to her banner. The scattered rebellion becomes one great wave.",
+      "highlight": [
+        "one great wave"
+      ],
+      "image_prompt": "vast crowds of Indian rebels from many regions marching and rallying under a single royal banner across a sunlit plain, unstoppable momentum, epic scale with a clear hero figure in front, sharp and bright",
+      "motion": "kenburns_in",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "swelling march"
+    },
+    {
+      "narration": "Picture the news racing around the world by telegraph and ship. The unbeatable British, beaten in India by a queen they tried to erase. In palaces and markets everywhere, people repeat her name. A single victory has become a story the whole world cannot stop telling.",
+      "highlight": [
+        "a story the whole world cannot stop telling"
+      ],
+      "image_prompt": "a vivid montage feel of newspapers and telegraph wires carrying word of a stunning victory across a world map, distant crowds reacting with astonishment, bright dramatic light, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "telegraph clicks, rising murmur"
+    },
+    {
+      "narration": "The British Empire now faces a nightmare. India was the richest jewel in its crown, the land that made it a superpower. Losing it would not just embarrass Britain. It would shake the money and power the whole empire was built on.",
+      "highlight": [
+        "the richest jewel in its crown"
+      ],
+      "image_prompt": "a grand but shaken British imperial map room where officials stare in alarm at a map of India slipping from their grasp, cracks spreading across a crown symbol, dramatic sharp light",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "uneasy deep drums"
+    },
+    {
+      "narration": "Imagine Britain pouring soldiers and ships into India to hold on, and still losing ground year after year. An empire that looked unbeatable suddenly looks tired, stretched thin, and very, very mortal. The whole world is watching.",
+      "highlight": [
+        "very, very mortal"
+      ],
+      "image_prompt": "weary British troops retreating along a dusty Indian road as triumphant rebels watch from the hills, the balance of power visibly shifting, warm dramatic light, sharp cinematic wide shot",
+      "motion": "kenburns_in",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "distant retreat"
+    },
+    {
+      "narration": "And here is the biggest ripple. Other lands under British rule are watching too. If India, the greatest prize of all, can walk free, why not them? The queen's victory could light fires in places the British never expected.",
+      "highlight": [
+        "light fires"
+      ],
+      "image_prompt": "a symbolic world map glowing with sparks of rebellion lighting up across many continents one after another, dramatic and sweeping, bright hopeful embers against dark, cinematic",
+      "motion": "kenburns_pan",
+      "role": "loop_reveal",
+      "is_key": false,
+      "sfx": "spreading spark sounds"
+    },
+    {
+      "narration": "A free India, standing on its own almost a hundred years early, could reshape everything. Different borders. Different leaders. A Britain that is powerful, yes, but no longer the giant that bossed a quarter of the planet around.",
+      "highlight": [
+        "reshape everything"
+      ],
+      "image_prompt": "a proud imagined early free India with grand flags and a bustling confident capital city blending royal and modern, hopeful and vibrant, bright warm light, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "payoff",
+      "is_key": false,
+      "sfx": "hopeful anthem tone"
+    },
+    {
+      "narration": "Now, this is a story, not a prophecy. Real rebellions are messy, and winning one battle does not promise a happy ending. But the point stands. History sometimes balances on a single moment, a single brave person who refuses to kneel.",
+      "highlight": [
+        "balances on a single moment"
+      ],
+      "image_prompt": "a thoughtful image of a lone statue of a warrior queen on horseback silhouetted against a glowing sky over a modern city, past and future meeting, bright and reflective, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "payoff",
+      "is_key": false,
+      "sfx": "soft reflective swell"
+    },
+    {
+      "narration": "In our world, the Rani of Jhansi lost her final battle, and still became immortal. So imagine what she might have become if she had won. Sometimes the people empires try hardest to erase are the ones history can never forget.",
+      "highlight": [
+        "history can never forget"
+      ],
+      "image_ref": 1,
+      "motion": "kenburns_in",
+      "role": "button",
+      "is_key": true,
+      "sfx": "single lingering note, fade"
+    }
   ]
 }

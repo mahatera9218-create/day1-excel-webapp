@@ -375,11 +375,18 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
   visual** (a Roman city with neon, pyramids as launch pads). **Avoid a flat object/wide shot as
   the thumbnail** (a lone chair, a pig, a scroll) — that was underperforming. Show the intrigue,
   hide the payoff. Ad-safe; **no baked-in words**, no logos, no real living people.
-  - **Female-lead episodes:** set **`female_lead: true`** and **`thumbnail_framing`** = `"face"`
-    (얼굴 클로즈업) / `"upper"` (상반신) / `"full"` (전신), and **rotate all three** across episodes
-    (lint blocks 3 of the same in a row). Regal, alluring, commanding — fine fabrics, jewels,
-    a dangerous stare; **tasteful, never suggestive/explicit** (keeps YouTube ads on). Write the
-    chosen framing into the prompt too (e.g. "full-length regal portrait of…").
+  - **Female-lead episodes — the WOMAN is the hook, so make her STRIKING.** Set **`female_lead:
+    true`** and **`thumbnail_framing`** = `"face"` (얼굴 클로즈업) / `"upper"` (상반신) / `"full"`
+    (전신), and **rotate all three** (lint blocks 3 of the same in a row). Non-negotiables:
+    - A **stunningly beautiful, captivating** woman with **intense eyes looking straight at the
+      viewer** and **radiant, flawless skin** — she is the scroll-stopper.
+    - **Keep the FACE large and clear even in `upper`/`full`** — never a distant action shot where
+      she's tiny (a queen *charging on a horse through smoke* reads as a dull wide shot; a tight,
+      gorgeous, defiant portrait reads as a HOOK).
+    - **Rich, ornate costume:** jewels, gold, fine silk, headpiece — not plain battle dress.
+    - Regal, alluring, commanding, dramatic lighting. **Tasteful, never suggestive/explicit** — the
+      allure is beauty + power + intensity, which keeps YouTube ads on. Write the framing into the
+      prompt ("ultra-realistic upper-body portrait of a stunningly beautiful…").
 - **`thumbnail_text` — FILL IT, don't leave it empty.** A punchy **2–4 word** hook, drawn BIG over
   the image, that teases without spoiling: *"NOT HUMAN"*, *"38 MINUTES"*, *"THE WRONG BODY"*, *"STILL
   THERE"*. Keep it **≤ ~18 characters** so it stays huge and thumb-readable; put the mystery in it,
