@@ -46,6 +46,7 @@ def run_stage(run_dir: Path, plan: dict, cfg: dict) -> Path:
     tprompt = (plan.get("thumbnail_prompt") or "").strip()
     if tprompt:
         src = run_dir / "images" / "thumb_src.png"
+        src.parent.mkdir(parents=True, exist_ok=True)   # 썸네일만 돌릴 땐 images/ 가 없을 수 있다
         if not src.exists():
             style = cfg["visual_style"].strip()
             Engines(cfg).image({"image_prompt": tprompt, "_style": style, "_label": "T"}, src)
