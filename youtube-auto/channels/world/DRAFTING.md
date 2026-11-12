@@ -406,6 +406,21 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
   all of them. Keep the ~3:1 light:deep mix across the format rotation.
 - Pull ideas from `channels/world/topics.txt`, or research a fresh one.
 
+### 🎯 Pick SCROLL-STOPPER topics (selection is half the battle — don't rely on the thumbnail to rescue a weak subject)
+Before committing to a topic, it must pass ALL of these — if it doesn't, pick a different one:
+1. **One-line test:** can you say it in one line that makes someone go "wait, WHAT?" If the premise
+   needs a paragraph to get interesting, skip it.
+2. **It has a built-in STRIKING IMAGE.** Picture the thumbnail first: is there a single magnetic
+   visual (a stunning face, a jaw-dropping scene, an impossible sight)? A topic whose best image is
+   a dull wide shot is a weak topic. The thumbnail should be *obvious* from the subject.
+3. **Instant, universal intrigue** — no prior knowledge needed. "Rome vs an iPhone" beats an obscure
+   treaty. Famous or instantly-graspable beats niche-but-clever.
+4. **Female-lead topics: pick genuinely ICONIC, magnetic women** whose face + story is itself a
+   scroll-stopper (a legendary beauty, a notorious schemer, a feared ruler). "A queen won a battle"
+   is not enough — the WOMAN has to be a draw on her own.
+Remember: a mediocre subject with a great thumbnail still underperforms. **Choose subjects that are
+hooks before any editing.**
+
 ### ⛔ LINT-ENFORCED rules (the approve step BLOCKS you otherwise — not optional)
 The lint mechanically fails `approve` unless:
 1. **EVERY episode is `content_type: "what_if"` (fact + imagination).** This channel is 100%
