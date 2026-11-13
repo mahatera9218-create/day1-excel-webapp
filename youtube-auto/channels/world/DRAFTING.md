@@ -366,8 +366,14 @@ Half the effort goes here. A perfect script with a weak title/thumbnail gets zer
   Anyone Put a 400-Year-Old Corpse on Trial?"*), a "The ___ who ___" with the twist hidden
   (*"The King Whose Own Joke Killed Him"*), a number (*"The War That Was Over Before Breakfast"*),
   or a dare (*"They Don't Teach You This Because It's Too Insane"*). Keep a `|` subtitle
-  (required). Bold but never a lie, never explicit/gory wording, and **never the answer.** ≤1 in
-  5 may use "What if".
+  (required). Bold but never a lie, never explicit/gory wording, and **never the answer.**
+  - **⛔ The title must NOT start with "What If" (lint blocks it).** The episode is a what-if, but
+    the TITLE hooks with a claim/number/"The ___ who ___"/tease — the "what-if" framing lives in
+    the thumbnail, the cold open, and the description, NOT the title. Convert the premise into a hook:
+    - *"What If the Black Death Never Happened?"* → **"The Plague That Secretly Built the Modern World"**
+    - *"What If China Never Stopped Sailing?"* → **"China Had the Biggest Fleet on Earth — Then Burned It"**
+    - *"What If Cleopatra Had the Internet?"* → **"The Woman Who'd Rule the World From a Single Phone"**
+    - *"What If the Rani of Jhansi Had Won?"* → **"The Queen Who Nearly Ended the British Empire"**
 - **`thumbnail_prompt` — over-invest, this is #1.** One split-second-arresting visual that
   **poses a question, never answers it.** **Default to a dramatic CLOSE-UP of a FACE mid-emotion**
   (shock, mischief, fear, awe) with intense eye contact, bold cinematic light, shallow depth of
