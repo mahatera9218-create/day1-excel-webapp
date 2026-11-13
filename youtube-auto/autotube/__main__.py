@@ -166,6 +166,21 @@ def cmd_thumb(cfg: dict, episode: str) -> None:
     print(f"      썸네일 교체 완료 ✓  https://youtu.be/{vid}")
 
 
+def cmd_retitle(cfg: dict, episode: str) -> None:
+    """이미 업로드된 편의 '제목만' plan.json 의 title 로 교체한다(영상·썸네일 재업로드 없음)."""
+    run_dir = OUTPUT / cfg["_name"] / episode.strip().strip("/")
+    if not (run_dir / "plan.json").exists():
+        raise SystemExit(f"[오류] 그런 편이 없습니다: {run_dir}")
+    mid = run_dir / "youtube_id.txt"
+    if not mid.exists():
+        raise SystemExit(f"[오류] 아직 업로드 안 된 편(youtube_id.txt 없음): {run_dir}")
+    vid = mid.read_text(encoding="utf-8").strip()
+    plan = pipeline.load_plan(run_dir)
+    from .engines.youtube import update_title
+    update_title(cfg, vid, plan)
+    print(f"      제목 교체 완료 ✓  https://youtu.be/{vid}  → {plan['title']}")
+
+
 def cmd_status(run_dir: Path) -> None:
     status = json.loads((run_dir / "status.json").read_text(encoding="utf-8"))
     print(f"승인: {status['approved']}")
@@ -198,6 +213,9 @@ def main() -> None:
     tp = sub.add_parser("thumb")   # 올라간 편의 썸네일만 교체(재렌더 없음)
     tp.add_argument("channel")
     tp.add_argument("--episode", required=True)
+    rtp = sub.add_parser("retitle")   # 올라간 편의 제목만 교체(영상·썸네일 그대로)
+    rtp.add_argument("channel")
+    rtp.add_argument("--episode", required=True)
     ap = sub.add_parser("auth")
     ap.add_argument("channel")
     sub.add_parser("list")
@@ -214,6 +232,9 @@ def main() -> None:
         return
     if args.cmd == "thumb":
         cmd_thumb(load_channel(args.channel), args.episode)
+        return
+    if args.cmd == "retitle":
+        cmd_retitle(load_channel(args.channel), args.episode)
         return
     if args.cmd in ("new", "run"):
         cfg = load_channel(args.channel)

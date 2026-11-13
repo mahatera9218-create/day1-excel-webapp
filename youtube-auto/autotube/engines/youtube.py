@@ -110,3 +110,27 @@ def set_thumbnail(cfg: dict, video_id: str, thumb: Path) -> None:
     service = build("youtube", "v3", credentials=creds)
     service.thumbnails().set(
         videoId=video_id, media_body=MediaFileUpload(str(thumb))).execute()
+
+
+def update_title(cfg: dict, video_id: str, plan: dict) -> None:
+    """이미 올라간 영상의 '제목만' plan['title'] 로 바꾼다(영상·썸네일 그대로).
+    videos().update 는 snippet 을 통째로 덮으므로 설명·태그·카테고리·언어를 원래대로 함께 보낸다."""
+    from googleapiclient.discovery import build
+
+    yt = cfg["youtube"]
+    disclose = yt.get("ai_disclosure", True)
+    desc = plan["description"].strip() + (f"\n\n{AI_NOTICE}" if disclose else "")
+    lang = LANG_CODE.get(cfg.get("language", ""), "en")
+    creds = _credentials(cfg["_dir"], cfg["youtube"]["client_secret_file"])
+    service = build("youtube", "v3", credentials=creds)
+    service.videos().update(part="snippet", body={
+        "id": video_id,
+        "snippet": {
+            "title": plan["title"][:100],
+            "description": desc[:5000],
+            "tags": plan.get("tags", [])[:30],
+            "categoryId": str(yt["category_id"]),
+            "defaultLanguage": lang,
+            "defaultAudioLanguage": lang,
+        },
+    }).execute()
