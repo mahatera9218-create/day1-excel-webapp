@@ -8,50 +8,273 @@
   "thumbnail_framing": "face",
   "angle": "Not 'amazing canoe trips' — what if the greatest navigators in history turned the whole Pacific into one empire and met Europe's ships as a stronger sea power?",
   "disclaimer": "A what-if scenario: the real voyages and skill of the Polynesians up to about 1200, then bold imagination about an empire that never formed.",
-  "title": "What If One People Ruled a Third of the Planet? | The Empire Made of Ocean",
+  "title": "They Crossed the Pacific With No Maps or Compass | The Ocean Empire That Almost Was",
   "thumbnail_prompt": "dramatic close-up of a fearless Polynesian navigator's face at the prow of a great double-hulled voyaging canoe, eyes fixed on the horizon, sea spray and bright tropical sun, a huge fleet of sails behind him, vivid color, sharp cinematic focus",
   "thumbnail_text": "OCEAN EMPIRE",
   "thumbnail_scene": 1,
   "description": "A thousand years ago, the Polynesians crossed the largest ocean on Earth with no maps and no instruments, and may have touched South America before anyone in Europe. But what if they had never stopped, and turned the whole Pacific into a single empire? A bold what-if.\n\nA what-if scenario: real Polynesian history up to about 1200, then imagination. Sources: research on Polynesian voyaging and sweet-potato evidence of early Pacific contact.",
-  "tags": ["what if", "history", "Polynesia", "Oceania", "navigation", "alternate history", "Pacific", "voyaging"],
+  "tags": [
+    "what if",
+    "history",
+    "Polynesia",
+    "Oceania",
+    "navigation",
+    "alternate history",
+    "Pacific",
+    "voyaging"
+  ],
   "shorts": [
     {
       "title": "What if one people ruled the whole Pacific #shorts",
       "description": "The greatest navigators in history, and one giant what-if. Full story on the channel. #shorts #history",
       "narration": "What if a single people had ruled a third of the entire planet, not with land, but with ocean? A thousand years ago, the Polynesians crossed the biggest sea on Earth with no maps and no compass. Now imagine they never stopped. The map of the world could look nothing like it does today.",
-      "scenes": [1, 8, 12],
-      "highlight": ["ruled a third of the entire planet", "never stopped"],
+      "scenes": [
+        1,
+        8,
+        12
+      ],
+      "highlight": [
+        "ruled a third of the entire planet",
+        "never stopped"
+      ],
       "cta": "▶  FULL STORY — link in description"
     },
     {
       "title": "They crossed an ocean with no map or compass #shorts",
       "description": "No instruments. No charts. Just the stars and the waves. How? #shorts #history",
       "narration": "Imagine finding a tiny island, smaller than a town, hidden somewhere in an ocean so wide it covers half the planet, with no map, no compass, and no instruments of any kind. The Polynesians did this again and again, reading the stars, the waves, and the birds. And they may have gone further than anyone believed.",
-      "scenes": [5, 6, 7],
-      "highlight": ["no map, no compass", "further than anyone believed"],
+      "scenes": [
+        5,
+        6,
+        7
+      ],
+      "highlight": [
+        "no map, no compass",
+        "further than anyone believed"
+      ],
       "cta": "▶  Watch the full story"
     }
   ],
   "scenes": [
-    { "narration": "What if a single people had ruled a third of the entire planet, not with armies on land, but with the open ocean itself? This is a what-if. And it begins with the greatest explorers the world has ever known.", "highlight": ["ruled a third of the entire planet"], "image_prompt": "dramatic close-up of a fearless Polynesian navigator at the prow of a great double-hulled voyaging canoe, eyes locked on the horizon, bright sea spray and tropical sun, a vast fleet of sails behind, vivid sharp cinematic", "motion": "video", "role": "hook", "is_key": true, "sfx": "ocean wind, deep drum" },
-    { "narration": "Look at a map of the Pacific Ocean. It is almost unimaginably huge, covering nearly half the planet, mostly empty blue with tiny specks of land scattered across it. Crossing it should have been impossible. The Polynesians did it anyway.", "highlight": ["crossing it should have been impossible"], "image_prompt": "a stunning satellite-style view of the vast blue Pacific Ocean dotted with tiny green islands spread impossibly far apart, awe-inspiring scale, bright vivid color, sharp clarity", "motion": "kenburns_pan", "role": "setup", "is_key": false, "sfx": "soft vast ocean tone" },
-    { "narration": "Over many centuries, these island peoples spread out across thousands of miles of sea. They reached Hawaii in the north, New Zealand in the south, and a lonely dot called Easter Island far to the east. It is one of the boldest adventures in all of history.", "highlight": ["one of the boldest adventures in all of history"], "image_prompt": "a great double-hulled Polynesian voyaging canoe under full sail cutting through bright open ocean toward a distant green island, families aboard, hopeful and epic, vivid sunlight, sharp cinematic", "motion": "kenburns_in", "role": "setup", "is_key": false, "sfx": "waves, creaking canoe" },
-    { "narration": "And they did it with no maps. No compass. No instruments of any kind. So how on Earth did they find specks of land lost in a giant ocean? The answer is a kind of genius most people have never heard about.", "highlight": ["no compass. No instruments of any kind"], "image_prompt": "a Polynesian navigator studying the night sky from a canoe, hand raised to measure the stars, deep blue starry heavens above calm sea, focused and wise, sharp vivid detail", "motion": "kenburns_pan", "role": "loop_q", "is_key": false, "sfx": "gentle night sea" },
-    { "narration": "They read the whole ocean like a book. The exact path of the stars at night. The direction and feel of the waves against the hull. The flight of birds at dawn, and even the shapes of clouds that gather over hidden land.", "highlight": ["read the whole ocean like a book"], "image_prompt": "a vivid scene of a Polynesian wayfinder sensing ocean swells with his hand over the water while seabirds wheel overhead toward distant clouds, bright dawn light, rich color, sharp cinematic", "motion": "kenburns_in", "role": "loop_reveal", "is_key": true, "sfx": "birds, lapping waves" },
-    { "narration": "They trained for years to hold whole maps of the sea inside their heads. A master navigator could sail for weeks, out of sight of any land, and still arrive exactly at a tiny island he had never seen. It was breathtaking skill.", "highlight": ["maps of the sea inside their heads"], "image_prompt": "a wise elder Polynesian navigator teaching young students around a pattern of shells and sticks on the sand representing the ocean's currents, focused learning, warm bright light, sharp detail", "motion": "kenburns_pan", "role": "loop_problem", "is_key": false, "sfx": "soft teaching murmur" },
-    { "narration": "And here is a clue that hints at something astonishing. A humble vegetable, the sweet potato, grew in South America. Yet it was also being grown on Pacific islands centuries before any European crossed that ocean. How did it get there?", "highlight": ["centuries before any European"], "image_prompt": "a close-up of sweet potatoes held in weathered hands on a tropical shore with a voyaging canoe and the open ocean behind, a quiet mystery, bright natural light, vivid sharp focus", "motion": "kenburns_in", "role": "second_hook", "is_key": true, "sfx": "intriguing soft tone" },
-    { "narration": "Many researchers think the answer is simple and amazing. The Polynesians themselves sailed all the way to the Americas, met the people there, and carried the sweet potato home. If that is true, they crossed the entire Pacific, coast to coast.", "highlight": ["crossed the entire Pacific, coast to coast"], "image_prompt": "a Polynesian voyaging canoe arriving at a dramatic South American coastline with mountains beyond, two worlds meeting for the first time, bright epic light, vivid sharp cinematic", "motion": "kenburns_pan", "role": "loop_reveal", "is_key": false, "sfx": "awe-struck swell" },
-    { "narration": "So here is where real history pauses. In our world, the Polynesians reached these far corners, then largely settled down on their islands. The great age of voyaging slowed. But what if it had not? What if, instead, it had only just begun?", "highlight": ["what if it had only just begun"], "image_prompt": "a symbolic image of a Polynesian canoe at a glowing crossroads of ocean paths spreading in every direction across a bright map-like sea, a moment of possibility, vivid and dramatic, sharp cinematic", "motion": "kenburns_in", "role": "loop_q", "is_key": false, "sfx": "suspended hopeful note" },
-    { "narration": "From here on, everything is imagination. Picture the island peoples uniting, not fighting over scraps of land, but joining into one great sea-nation. Their roads are ocean currents. Their forts are islands. Their power is the water itself.", "highlight": ["one great sea-nation"], "image_prompt": "a breathtaking imagined Polynesian sea-empire, dozens of great canoes linking island to island with banners flying across a sparkling ocean, grand and unified, vivid bright color, sharp epic cinematic", "motion": "kenburns_pan", "role": "turn", "is_key": true, "sfx": "triumphant ocean horns" },
-    { "narration": "With navigators this good, their empire could grow faster than any land kingdom. No mountains or deserts slow them down, just open water they already rule. Island by island, they knit together a realm that stretches across a third of the globe.", "highlight": ["a third of the globe"], "image_prompt": "a vivid imagined map of a Pacific empire glowing with trade routes connecting countless islands across a huge ocean, impressive and sweeping, bright color against deep blue, sharp cinematic", "motion": "kenburns_in", "role": "loop_problem", "is_key": false, "sfx": "expanding map tones" },
-    { "narration": "Imagine their fleets reaching the shores of the Americas and Asia. They trade, they explore, they carry ideas and crops both ways. And all of it, long before Europe builds a single ocean ship worth the name. The Pacific becomes the busiest, richest highway on Earth.", "highlight": ["the busiest, richest highway on Earth"], "image_prompt": "huge Polynesian trade fleets crowding a bright harbor where island, American, and Asian goods are exchanged, bustling and prosperous, vivid tropical color, sharp cinematic detail", "motion": "kenburns_pan", "role": "loop_problem", "is_key": true, "sfx": "busy thriving port" },
-    { "narration": "Then, centuries later, the first European ships finally sail into this ocean, expecting scattered islands and easy pickings. Instead they meet a vast, united sea-empire with thousands of fast ships and navigators who know every wave for ten thousand miles.", "highlight": ["a vast, united sea-empire"], "image_prompt": "a lone European sailing ship dwarfed and surrounded by a massive disciplined fleet of great Polynesian voyaging canoes on the open sea, shock and awe, bright dramatic light, sharp epic cinematic", "motion": "kenburns_in", "role": "loop_reveal", "is_key": false, "sfx": "tense meeting of worlds" },
-    { "narration": "Think of how such an empire would run. Great stone harbors on a hundred islands. Schools that train wayfinders the way others train soldiers. Fast message-canoes carrying news across the water in relays, so an order given on one island reaches the next in days.", "highlight": ["train wayfinders the way others train soldiers"], "image_prompt": "a grand imagined island harbor with stone docks and dozens of sleek voyaging canoes, a navigation school where elders teach star-maps to rows of students, bustling and advanced, bright vivid color, sharp cinematic", "motion": "kenburns_pan", "role": "loop_problem", "is_key": false, "sfx": "busy harbor, teaching voices" },
-    { "narration": "And because they rule the water itself, the usual story simply never happens here. No small band of foreign ships can sail in and take over an ocean that is already one united, watchful nation. For once, the sea protects the islands instead of exposing them.", "highlight": ["the usual story simply never happens"], "image_prompt": "a disciplined ring of great Polynesian canoes calmly escorting a tiny foreign ship through bright open water, clearly in control, confident and unthreatened, vivid daylight, sharp cinematic", "motion": "kenburns_in", "role": "loop_reveal", "is_key": false, "sfx": "calm commanding tone" },
-    { "narration": "Now follow the ripples outward. Crops, gold, tools, and ideas all flow across the Pacific first, moving between Asia and the Americas through island hands. The whole planet starts trading through a middle it never had, and the islands sit right at its heart.", "highlight": ["the islands sit right at its heart"], "image_prompt": "a glowing world map where busy trade routes pulse across the Pacific linking Asia and the Americas through a web of islands at the center, sweeping and dramatic, bright color against deep blue, sharp cinematic", "motion": "kenburns_pan", "role": "loop_problem", "is_key": false, "sfx": "pulsing trade rhythm" },
-    { "narration": "Picture school maps in this world, drawn with the ocean in the middle and the islands at the center of everything. A whole planet remembering its story from the water looking out, instead of from the land looking in. It is a completely different history.", "highlight": ["from the water looking out"], "image_prompt": "an imagined antique-style world map centered on the Pacific with the islands grand and golden at its heart, beautiful and strange, warm vivid tones, sharp cinematic detail", "motion": "kenburns_in", "role": "context", "is_key": false, "sfx": "wondrous soft swell" },
-    { "narration": "In this world, the Pacific is not a place to be conquered. It is the center of power. Maps are drawn from its heart. The history of the whole planet might be told in the language of the islands, and the sea would belong to the people who understood it first.", "highlight": ["the center of power"], "image_prompt": "a grand imagined island capital city blending traditional Polynesian design with great harbors full of ships, confident and thriving at golden hour, vivid warm color, sharp cinematic", "motion": "kenburns_pan", "role": "payoff", "is_key": false, "sfx": "majestic calm swell" },
-    { "narration": "Now, this is a dream, not a record. We cannot know how such an empire would really have turned out. But it stands on something completely real. These were, without question, the finest navigators the world has ever produced.", "highlight": ["the finest navigators the world has ever produced"], "image_prompt": "a reverent image of a Polynesian voyaging canoe silhouetted against a brilliant star-filled sky over a calm sea, timeless and proud, deep vivid color, sharp cinematic", "motion": "kenburns_in", "role": "payoff", "is_key": false, "sfx": "soft reverent tone" },
-    { "narration": "So the next time someone talks about the great explorers of history, remember the island people who tamed the biggest ocean on Earth. They did it with their eyes, their memory, and their nerve. They did not need a map of the world. They carried it in their heads.", "highlight": ["They carried it in their heads"], "image_ref": 1, "motion": "kenburns_in", "role": "button", "is_key": true, "sfx": "single lingering note, fade" }
+    {
+      "narration": "What if a single people had ruled a third of the entire planet, not with armies on land, but with the open ocean itself? This is a what-if. And it begins with the greatest explorers the world has ever known.",
+      "highlight": [
+        "ruled a third of the entire planet"
+      ],
+      "image_prompt": "dramatic close-up of a fearless Polynesian navigator at the prow of a great double-hulled voyaging canoe, eyes locked on the horizon, bright sea spray and tropical sun, a vast fleet of sails behind, vivid sharp cinematic",
+      "motion": "video",
+      "role": "hook",
+      "is_key": true,
+      "sfx": "ocean wind, deep drum"
+    },
+    {
+      "narration": "Look at a map of the Pacific Ocean. It is almost unimaginably huge, covering nearly half the planet, mostly empty blue with tiny specks of land scattered across it. Crossing it should have been impossible. The Polynesians did it anyway.",
+      "highlight": [
+        "crossing it should have been impossible"
+      ],
+      "image_prompt": "a stunning satellite-style view of the vast blue Pacific Ocean dotted with tiny green islands spread impossibly far apart, awe-inspiring scale, bright vivid color, sharp clarity",
+      "motion": "kenburns_pan",
+      "role": "setup",
+      "is_key": false,
+      "sfx": "soft vast ocean tone"
+    },
+    {
+      "narration": "Over many centuries, these island peoples spread out across thousands of miles of sea. They reached Hawaii in the north, New Zealand in the south, and a lonely dot called Easter Island far to the east. It is one of the boldest adventures in all of history.",
+      "highlight": [
+        "one of the boldest adventures in all of history"
+      ],
+      "image_prompt": "a great double-hulled Polynesian voyaging canoe under full sail cutting through bright open ocean toward a distant green island, families aboard, hopeful and epic, vivid sunlight, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "setup",
+      "is_key": false,
+      "sfx": "waves, creaking canoe"
+    },
+    {
+      "narration": "And they did it with no maps. No compass. No instruments of any kind. So how on Earth did they find specks of land lost in a giant ocean? The answer is a kind of genius most people have never heard about.",
+      "highlight": [
+        "no compass. No instruments of any kind"
+      ],
+      "image_prompt": "a Polynesian navigator studying the night sky from a canoe, hand raised to measure the stars, deep blue starry heavens above calm sea, focused and wise, sharp vivid detail",
+      "motion": "kenburns_pan",
+      "role": "loop_q",
+      "is_key": false,
+      "sfx": "gentle night sea"
+    },
+    {
+      "narration": "They read the whole ocean like a book. The exact path of the stars at night. The direction and feel of the waves against the hull. The flight of birds at dawn, and even the shapes of clouds that gather over hidden land.",
+      "highlight": [
+        "read the whole ocean like a book"
+      ],
+      "image_prompt": "a vivid scene of a Polynesian wayfinder sensing ocean swells with his hand over the water while seabirds wheel overhead toward distant clouds, bright dawn light, rich color, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "loop_reveal",
+      "is_key": true,
+      "sfx": "birds, lapping waves"
+    },
+    {
+      "narration": "They trained for years to hold whole maps of the sea inside their heads. A master navigator could sail for weeks, out of sight of any land, and still arrive exactly at a tiny island he had never seen. It was breathtaking skill.",
+      "highlight": [
+        "maps of the sea inside their heads"
+      ],
+      "image_prompt": "a wise elder Polynesian navigator teaching young students around a pattern of shells and sticks on the sand representing the ocean's currents, focused learning, warm bright light, sharp detail",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "soft teaching murmur"
+    },
+    {
+      "narration": "And here is a clue that hints at something astonishing. A humble vegetable, the sweet potato, grew in South America. Yet it was also being grown on Pacific islands centuries before any European crossed that ocean. How did it get there?",
+      "highlight": [
+        "centuries before any European"
+      ],
+      "image_prompt": "a close-up of sweet potatoes held in weathered hands on a tropical shore with a voyaging canoe and the open ocean behind, a quiet mystery, bright natural light, vivid sharp focus",
+      "motion": "kenburns_in",
+      "role": "second_hook",
+      "is_key": true,
+      "sfx": "intriguing soft tone"
+    },
+    {
+      "narration": "Many researchers think the answer is simple and amazing. The Polynesians themselves sailed all the way to the Americas, met the people there, and carried the sweet potato home. If that is true, they crossed the entire Pacific, coast to coast.",
+      "highlight": [
+        "crossed the entire Pacific, coast to coast"
+      ],
+      "image_prompt": "a Polynesian voyaging canoe arriving at a dramatic South American coastline with mountains beyond, two worlds meeting for the first time, bright epic light, vivid sharp cinematic",
+      "motion": "kenburns_pan",
+      "role": "loop_reveal",
+      "is_key": false,
+      "sfx": "awe-struck swell"
+    },
+    {
+      "narration": "So here is where real history pauses. In our world, the Polynesians reached these far corners, then largely settled down on their islands. The great age of voyaging slowed. But what if it had not? What if, instead, it had only just begun?",
+      "highlight": [
+        "what if it had only just begun"
+      ],
+      "image_prompt": "a symbolic image of a Polynesian canoe at a glowing crossroads of ocean paths spreading in every direction across a bright map-like sea, a moment of possibility, vivid and dramatic, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "loop_q",
+      "is_key": false,
+      "sfx": "suspended hopeful note"
+    },
+    {
+      "narration": "From here on, everything is imagination. Picture the island peoples uniting, not fighting over scraps of land, but joining into one great sea-nation. Their roads are ocean currents. Their forts are islands. Their power is the water itself.",
+      "highlight": [
+        "one great sea-nation"
+      ],
+      "image_prompt": "a breathtaking imagined Polynesian sea-empire, dozens of great canoes linking island to island with banners flying across a sparkling ocean, grand and unified, vivid bright color, sharp epic cinematic",
+      "motion": "kenburns_pan",
+      "role": "turn",
+      "is_key": true,
+      "sfx": "triumphant ocean horns"
+    },
+    {
+      "narration": "With navigators this good, their empire could grow faster than any land kingdom. No mountains or deserts slow them down, just open water they already rule. Island by island, they knit together a realm that stretches across a third of the globe.",
+      "highlight": [
+        "a third of the globe"
+      ],
+      "image_prompt": "a vivid imagined map of a Pacific empire glowing with trade routes connecting countless islands across a huge ocean, impressive and sweeping, bright color against deep blue, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "expanding map tones"
+    },
+    {
+      "narration": "Imagine their fleets reaching the shores of the Americas and Asia. They trade, they explore, they carry ideas and crops both ways. And all of it, long before Europe builds a single ocean ship worth the name. The Pacific becomes the busiest, richest highway on Earth.",
+      "highlight": [
+        "the busiest, richest highway on Earth"
+      ],
+      "image_prompt": "huge Polynesian trade fleets crowding a bright harbor where island, American, and Asian goods are exchanged, bustling and prosperous, vivid tropical color, sharp cinematic detail",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": true,
+      "sfx": "busy thriving port"
+    },
+    {
+      "narration": "Then, centuries later, the first European ships finally sail into this ocean, expecting scattered islands and easy pickings. Instead they meet a vast, united sea-empire with thousands of fast ships and navigators who know every wave for ten thousand miles.",
+      "highlight": [
+        "a vast, united sea-empire"
+      ],
+      "image_prompt": "a lone European sailing ship dwarfed and surrounded by a massive disciplined fleet of great Polynesian voyaging canoes on the open sea, shock and awe, bright dramatic light, sharp epic cinematic",
+      "motion": "kenburns_in",
+      "role": "loop_reveal",
+      "is_key": false,
+      "sfx": "tense meeting of worlds"
+    },
+    {
+      "narration": "Think of how such an empire would run. Great stone harbors on a hundred islands. Schools that train wayfinders the way others train soldiers. Fast message-canoes carrying news across the water in relays, so an order given on one island reaches the next in days.",
+      "highlight": [
+        "train wayfinders the way others train soldiers"
+      ],
+      "image_prompt": "a grand imagined island harbor with stone docks and dozens of sleek voyaging canoes, a navigation school where elders teach star-maps to rows of students, bustling and advanced, bright vivid color, sharp cinematic",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "busy harbor, teaching voices"
+    },
+    {
+      "narration": "And because they rule the water itself, the usual story simply never happens here. No small band of foreign ships can sail in and take over an ocean that is already one united, watchful nation. For once, the sea protects the islands instead of exposing them.",
+      "highlight": [
+        "the usual story simply never happens"
+      ],
+      "image_prompt": "a disciplined ring of great Polynesian canoes calmly escorting a tiny foreign ship through bright open water, clearly in control, confident and unthreatened, vivid daylight, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "loop_reveal",
+      "is_key": false,
+      "sfx": "calm commanding tone"
+    },
+    {
+      "narration": "Now follow the ripples outward. Crops, gold, tools, and ideas all flow across the Pacific first, moving between Asia and the Americas through island hands. The whole planet starts trading through a middle it never had, and the islands sit right at its heart.",
+      "highlight": [
+        "the islands sit right at its heart"
+      ],
+      "image_prompt": "a glowing world map where busy trade routes pulse across the Pacific linking Asia and the Americas through a web of islands at the center, sweeping and dramatic, bright color against deep blue, sharp cinematic",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "pulsing trade rhythm"
+    },
+    {
+      "narration": "Picture school maps in this world, drawn with the ocean in the middle and the islands at the center of everything. A whole planet remembering its story from the water looking out, instead of from the land looking in. It is a completely different history.",
+      "highlight": [
+        "from the water looking out"
+      ],
+      "image_prompt": "an imagined antique-style world map centered on the Pacific with the islands grand and golden at its heart, beautiful and strange, warm vivid tones, sharp cinematic detail",
+      "motion": "kenburns_in",
+      "role": "context",
+      "is_key": false,
+      "sfx": "wondrous soft swell"
+    },
+    {
+      "narration": "In this world, the Pacific is not a place to be conquered. It is the center of power. Maps are drawn from its heart. The history of the whole planet might be told in the language of the islands, and the sea would belong to the people who understood it first.",
+      "highlight": [
+        "the center of power"
+      ],
+      "image_prompt": "a grand imagined island capital city blending traditional Polynesian design with great harbors full of ships, confident and thriving at golden hour, vivid warm color, sharp cinematic",
+      "motion": "kenburns_pan",
+      "role": "payoff",
+      "is_key": false,
+      "sfx": "majestic calm swell"
+    },
+    {
+      "narration": "Now, this is a dream, not a record. We cannot know how such an empire would really have turned out. But it stands on something completely real. These were, without question, the finest navigators the world has ever produced.",
+      "highlight": [
+        "the finest navigators the world has ever produced"
+      ],
+      "image_prompt": "a reverent image of a Polynesian voyaging canoe silhouetted against a brilliant star-filled sky over a calm sea, timeless and proud, deep vivid color, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "payoff",
+      "is_key": false,
+      "sfx": "soft reverent tone"
+    },
+    {
+      "narration": "So the next time someone talks about the great explorers of history, remember the island people who tamed the biggest ocean on Earth. They did it with their eyes, their memory, and their nerve. They did not need a map of the world. They carried it in their heads.",
+      "highlight": [
+        "They carried it in their heads"
+      ],
+      "image_ref": 1,
+      "motion": "kenburns_in",
+      "role": "button",
+      "is_key": true,
+      "sfx": "single lingering note, fade"
+    }
   ]
 }

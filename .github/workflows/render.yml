@@ -81,21 +81,24 @@ jobs:
           if [ "$UPLOAD" = "false" ]; then NOUP="--no-upload"; fi   # 기본은 자동 업로드(스케줄 포함); false면 렌더만
           EPISODE="$(printf '%s' "$EPISODE" | xargs)"   # 복붙 시 앞뒤 공백 제거(입력 실수 방지)
           # .render-queue 해석 (날짜/주석 줄은 폴더가 아니라 무시됨 — 하위호환):
-          #   'thumb: <폴더>'  -> 그 편 '썸네일만' 교체(재렌더 X, 거의 공짜)
-          #   '<폴더>'         -> 그 편 전체 재렌더+업로드(--episode = 중복검사 우회)
-          THUMB=""; RERUN=""
+          #   'thumb: <폴더>'    -> 그 편 '썸네일만' 교체(재렌더 X, 거의 공짜)
+          #   'retitle: <폴더>'  -> 그 편 '제목만' 교체(영상·썸네일 그대로, 공짜)
+          #   '<폴더>'           -> 그 편 전체 재렌더+업로드(--episode = 중복검사 우회)
+          THUMB=""; RETITLE=""; RERUN=""
           while IFS= read -r raw; do
             line="$(printf '%s' "$raw" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
             case "$line" in
               ''|\#*) ;;
               thumb:*) ep="$(printf '%s' "${line#thumb:}" | xargs)"; [ -d "episodes/$CHANNEL/$ep" ] && THUMB="$THUMB $ep" ;;
+              retitle:*) ep="$(printf '%s' "${line#retitle:}" | xargs)"; [ -d "episodes/$CHANNEL/$ep" ] && RETITLE="$RETITLE $ep" ;;
               *) ep="$(printf '%s' "$line" | awk '{print $1}')"; [ -d "episodes/$CHANNEL/$ep" ] && RERUN="$RERUN $ep" ;;
             esac
           done < .render-queue
           if [ -n "$EPISODE" ]; then
             python -m autotube render "$CHANNEL" --yes --episode "$EPISODE" $NOUP
-          elif [ -n "$THUMB$RERUN" ]; then
+          elif [ -n "$THUMB$RETITLE$RERUN" ]; then
             for ep in $THUMB; do echo "[thumb] $ep"; python -m autotube thumb "$CHANNEL" --episode "$ep"; done
+            for ep in $RETITLE; do echo "[retitle] $ep"; python -m autotube retitle "$CHANNEL" --episode "$ep"; done
             for ep in $RERUN; do echo "[rerender] $ep"; python -m autotube render "$CHANNEL" --yes --episode "$ep"; done
           else
             python -m autotube render "$CHANNEL" --yes --count 2 $NOUP
@@ -112,7 +115,7 @@ jobs:
           CLEARQ=""
           while IFS= read -r raw; do
             line="$(printf '%s' "$raw" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
-            case "$line" in ''|\#*) ep="" ;; thumb:*) ep="$(printf '%s' "${line#thumb:}" | xargs)" ;; *) ep="$(printf '%s' "$line" | awk '{print $1}')" ;; esac
+            case "$line" in ''|\#*) ep="" ;; thumb:*) ep="$(printf '%s' "${line#thumb:}" | xargs)" ;; retitle:*) ep="$(printf '%s' "${line#retitle:}" | xargs)" ;; *) ep="$(printf '%s' "$line" | awk '{print $1}')" ;; esac
             [ -n "$ep" ] && [ -d "episodes/$CHANNEL/$ep" ] && CLEARQ=1
           done < .render-queue
           if [ -n "$CLEARQ" ]; then

@@ -8,50 +8,273 @@
   "thumbnail_framing": "face",
   "angle": "Not 'the queen who lost and died' — what if her fleet won at Actium, Rome bowed to Egypt, and the whole world learned to pray to Egyptian gods?",
   "disclaimer": "A what-if scenario: the real history of Cleopatra and the Battle of Actium up to 31 BC, then bold imagination.",
-  "title": "What If the World Had Prayed to Egyptian Gods? | One Queen Almost Made It Happen",
+  "title": "One Queen Almost Made the West Worship Egyptian Gods | Cleopatra's Final Gamble",
   "thumbnail_prompt": "striking cinematic close-up of a regal ancient Egyptian queen's face, Cleopatra, Mediterranean features, dark lined eyes and a golden cobra crown, intense confident stare, candlelight and gold, shallow depth of field, alluring and commanding, sharp focus",
   "thumbnail_text": "SHE ALMOST WON",
   "thumbnail_scene": 1,
   "description": "In 31 BC, Cleopatra and Mark Antony bet everything on one sea battle against Rome, and lost. But what if they had won? What if Egypt, not Rome, had become the center of the world? A bold what-if about the last queen of Egypt.\n\nA what-if scenario: real history up to the Battle of Actium, then imagination. Sources: historical accounts of Cleopatra VII and the Battle of Actium, 31 BC.",
-  "tags": ["what if", "history", "Cleopatra", "Egypt", "Rome", "alternate history", "Battle of Actium", "ancient history"],
+  "tags": [
+    "what if",
+    "history",
+    "Cleopatra",
+    "Egypt",
+    "Rome",
+    "alternate history",
+    "Battle of Actium",
+    "ancient history"
+  ],
   "shorts": [
     {
       "title": "What if Rome had bowed to Egypt #shorts",
       "description": "One sea battle nearly flipped the whole ancient world. Full story on the channel. #shorts #history",
       "narration": "What if the entire world today prayed to Egyptian gods, and the greatest city on Earth was not Rome, but Alexandria? It almost happened. In one single sea battle, a brilliant Egyptian queen gambled everything to beat Rome. Imagine the day she wins.",
-      "scenes": [1, 8, 13],
-      "highlight": ["prayed to Egyptian gods", "the day she wins"],
+      "scenes": [
+        1,
+        8,
+        13
+      ],
+      "highlight": [
+        "prayed to Egyptian gods",
+        "the day she wins"
+      ],
       "cta": "▶  FULL STORY — link in description"
     },
     {
       "title": "The queen who outsmarted two Roman giants #shorts",
       "description": "She wasn't just a pretty face. She was the sharpest mind in the ancient world. #shorts #history",
       "narration": "Everyone thinks they know Cleopatra. But forget the makeup and the gossip. She spoke many languages, ran one of the richest kingdoms on Earth, and wrapped the two most powerful Romans alive around her finger. So what if her master plan had actually worked?",
-      "scenes": [4, 5, 7],
-      "highlight": ["sharpest mind in the ancient world", "actually worked"],
+      "scenes": [
+        4,
+        5,
+        7
+      ],
+      "highlight": [
+        "sharpest mind in the ancient world",
+        "actually worked"
+      ],
       "cta": "▶  Watch the full story"
     }
   ],
   "scenes": [
-    { "narration": "What if the whole world today prayed to Egyptian gods, and the center of everything was not Rome, but Egypt? It very nearly happened. And it all came down to one brilliant queen, and one single sea battle. This is a what-if.", "highlight": ["prayed to Egyptian gods"], "image_prompt": "striking cinematic close-up of a regal ancient Egyptian queen, Cleopatra, Mediterranean features with dark lined eyes and a golden cobra crown, confident commanding stare, candlelight and gold, shallow depth of field, sharp focus", "motion": "kenburns_in", "role": "hook", "is_key": true, "sfx": "deep regal drum, tension" },
-    { "narration": "Her name was Cleopatra, the last queen of ancient Egypt. Most people picture a pretty face and a tragic ending. But the real Cleopatra was far more dangerous. She was one of the smartest rulers the ancient world ever saw.", "highlight": ["one of the smartest rulers the ancient world ever saw"], "image_prompt": "a poised ancient Egyptian queen, Cleopatra, Mediterranean features, in fine royal linen and gold jewelry, seated on a throne reading a scroll with sharp intelligence, warm palace light, sharp regal portrait", "motion": "kenburns_in", "role": "setup", "is_key": false, "sfx": "soft palace ambience" },
-    { "narration": "She ruled Egypt, one of the richest lands on Earth, overflowing with gold and grain. But a giant shadow was growing across the sea. Rome. A hungry war machine that wanted to swallow every kingdom around it, including hers.", "highlight": ["a giant shadow was growing"], "image_prompt": "a vast golden Egyptian kingdom of temples and the Nile seen from above, with dark storm clouds shaped like Roman eagles gathering on the horizon, dramatic bright and ominous, sharp cinematic", "motion": "kenburns_pan", "role": "setup", "is_key": false, "sfx": "low ominous horns" },
-    { "narration": "So Cleopatra did something clever. She did not just fight Rome. She befriended its most powerful men. First the famous general Julius Caesar. Then the mighty Roman commander Mark Antony. Both fell completely under her spell.", "highlight": ["fell completely under her spell"], "image_prompt": "an elegant ancient Egyptian queen, Cleopatra, Mediterranean features in royal gold, in candlelit conversation with a powerful Roman general in armor, charged and clever atmosphere, warm dramatic light, sharp focus", "motion": "kenburns_in", "role": "loop_q", "is_key": false, "sfx": "intriguing strings" },
-    { "narration": "This was not just romance. It was strategy. With Mark Antony at her side, Cleopatra had Egypt's endless gold and half of Rome's armies. Together, they were strong enough to challenge the other master of Rome, a cold young man named Octavian.", "highlight": ["It was strategy"], "image_prompt": "an ancient Egyptian queen and a Roman general standing together like partners over a map of the Mediterranean, planning with ambition, torchlit war room, powerful and tense, sharp cinematic", "motion": "kenburns_pan", "role": "loop_problem", "is_key": false, "sfx": "tense planning tone" },
-    { "narration": "The whole ancient world split in two. On one side, Octavian and Rome. On the other, Cleopatra, Antony, and the wealth of Egypt. There was only one way to settle it. A huge battle at sea, near a place in Greece called Actium.", "highlight": ["a huge battle at sea"], "image_prompt": "two enormous ancient war fleets of wooden galleys facing each other across a bright blue sea at dawn, oars and sails everywhere, epic scale before battle, vivid sharp cinematic", "motion": "kenburns_in", "role": "setup", "is_key": false, "sfx": "distant war horns, waves" },
-    { "narration": "In the real world, this is where it all fell apart for her. Octavian's clever admiral trapped and outfought their fleet. Antony and Cleopatra barely escaped back to Egypt. Soon after, both were dead, and Rome swallowed Egypt whole.", "highlight": ["both were dead"], "image_prompt": "ancient war galleys burning and sinking in a chaotic sea battle at dusk, a royal Egyptian ship fleeing through the smoke, dramatic and tragic, no gore, vivid firelight, sharp cinematic", "motion": "kenburns_pan", "role": "loop_problem", "is_key": true, "sfx": "crashing battle, fire" },
-    { "narration": "Octavian became the first Roman emperor, and Rome ruled the world for centuries. Cleopatra became a sad legend. But now, let us change just one thing. What if, at Actium, her side had won instead?", "highlight": ["her side had won instead"], "image_prompt": "a symbolic image of two paths splitting on a stormy sea, one dark and one blazing gold, a royal Egyptian ship at the crossroads, dramatic turning point, bold vivid light, sharp cinematic", "motion": "kenburns_in", "role": "second_hook", "is_key": true, "sfx": "suspended breath, soft chime" },
-    { "narration": "From here on, everything is imagination. Picture Antony's fleet breaking through. Octavian's ships scattered and burning. The young Roman who would have been emperor, captured. In a single afternoon, the future of the world flips.", "highlight": ["the future of the world flips"], "image_prompt": "a triumphant ancient Egyptian and allied fleet smashing through a scattering enemy line, a royal purple-and-gold flagship leading the charge, sunrise breaking over victory, vivid bright, sharp epic cinematic", "motion": "video", "role": "turn", "is_key": true, "sfx": "triumphant roar, drums" },
-    { "narration": "Cleopatra now holds the whole known world in her hands. So what does a planet run from Egypt actually look like? Follow the ripples, and the changes get more staggering with every step.", "highlight": ["run from Egypt"], "image_prompt": "an imagined ancient Egyptian queen standing on a high balcony overlooking a vast golden capital at sunrise, arms open to a world now hers, triumphant and vivid, sharp cinematic", "motion": "kenburns_in", "role": "loop_q", "is_key": false, "sfx": "expectant rising tone" },
-    { "narration": "First, power moves south. Cleopatra and Antony are now the masters of Rome, not its victims. The richest queen alive controls the strongest army alive. Egypt, not Rome, becomes the beating heart of the whole known world.", "highlight": ["the beating heart of the whole known world"], "image_prompt": "an imagined glorious capital blending Egyptian temples and Roman grandeur under bright sun, crowds and gold everywhere, a queen's banner flying high, vivid and majestic, sharp cinematic", "motion": "kenburns_pan", "role": "loop_problem", "is_key": false, "sfx": "majestic city swell" },
-    { "narration": "Picture her city, Alexandria, instead of Rome, becoming the capital of everything. It already held the greatest library on Earth. Now all the world's gold and genius pour into it. A super-city of science and learning, centuries ahead of its time.", "highlight": ["a super-city of science"], "image_prompt": "a breathtaking imagined ancient Alexandria with a towering lighthouse, vast marble library, bustling golden harbor full of ships, grand and futuristic-ancient, vivid bright color, sharp cinematic", "motion": "kenburns_in", "role": "loop_reveal", "is_key": false, "sfx": "wondrous rising tone" },
-    { "narration": "And here is the wildest ripple of all. Religion. If Egypt rules, its gods rule too. Picture temples to the goddess Isis rising in every city, from Spain to the edge of Asia. The whole world might bow to Egyptian gods instead of the ones we know.", "highlight": ["bow to Egyptian gods"], "image_prompt": "grand imagined temples to Egyptian gods with towering statues of Isis standing in cities across the world, crowds worshipping under bright skies, sweeping and awe-inspiring, vivid sharp cinematic", "motion": "kenburns_pan", "role": "loop_problem", "is_key": true, "sfx": "echoing sacred chant" },
-    { "narration": "And picture the knowledge. Egyptian scholars, funded by a whole world's worth of gold, racing ahead. The great minds of Alexandria chasing real machines, real medicine, real maps of the stars. A golden age of science, perhaps a thousand years early.", "highlight": ["a golden age of science"], "image_prompt": "an imagined grand hall of ancient Alexandrian scholars with early machines, star charts, and glowing lamps, brilliant invention everywhere, warm golden light, vivid and wondrous, sharp cinematic", "motion": "kenburns_in", "role": "loop_reveal", "is_key": false, "sfx": "wondrous discovery tone" },
-    { "narration": "With Egypt ruling the seas, its ships could own every trade route from Asia to the far west. Gold, spices, and ideas would all flow through Egyptian hands first. The Nile, not the Tiber, becomes the river the whole world watches.", "highlight": ["the river the whole world watches"], "image_prompt": "a mighty imagined Egyptian fleet filling a sunlit Mediterranean harbor, loaded with treasure and goods from many lands, busy and powerful, vivid bright color, sharp cinematic", "motion": "kenburns_in", "role": "loop_problem", "is_key": false, "sfx": "busy grand harbor" },
-    { "narration": "Now imagine the deepest change of all. Egyptian writing taught in every school. Egyptian art, calendars, and styles shaping every city. A child of Cleopatra on the throne of the world. Thousands of years of history, pointed in a brand new direction.", "highlight": ["a brand new direction"], "image_prompt": "an imagined world where Egyptian hieroglyphs, golden art, and grand styles blend into distant future-looking cities, sweeping montage feel, bright vivid color, a civilization reshaped, sharp cinematic", "motion": "kenburns_pan", "role": "loop_reveal", "is_key": false, "sfx": "grand sweeping theme" },
-    { "narration": "Think about how close that world came. We still feel ancient Rome all around us today, in our words, our laws, our buildings. In Cleopatra's world, you would feel Egypt that strongly instead, every single day of your life.", "highlight": ["you would feel Egypt that strongly"], "image_prompt": "a split image of a familiar Roman-style modern city blending into an imagined Egyptian-style one, past and alternate present side by side, striking and thematic, vivid sharp cinematic", "motion": "kenburns_in", "role": "payoff", "is_key": false, "sfx": "reflective wonder" },
-    { "narration": "Now, this is a dream, not a record. One battle rarely reshapes everything so neatly, and Egypt had its own rivals and troubles too. But the gamble was real, and it was close. The ancient world genuinely teetered on a knife's edge that day.", "highlight": ["teetered on a knife's edge"], "image_prompt": "a quiet reflective image of a golden Egyptian statue half in shadow and half in bright light, past and possibility balanced, thoughtful mood, vivid warm tones, sharp cinematic", "motion": "kenburns_in", "role": "payoff", "is_key": false, "sfx": "soft reflective swell" },
-    { "narration": "A single afternoon of wind and water decided which way the world would lean. Rome won that roll of the dice. But it so easily might not have.", "highlight": ["a single afternoon of wind and water"], "image_prompt": "a dramatic wide image of an ancient sea at dusk with the silhouettes of war galleys, the sky split between gold and storm, a world hanging in the balance, vivid cinematic", "motion": "kenburns_pan", "role": "payoff", "is_key": false, "sfx": "wind over water" },
-    { "narration": "Cleopatra lost her battle, and still became one of the most famous people who ever lived. So imagine the queen who nearly beat Rome, if the sea had simply tilted her way. Sometimes the whole world turns on a single, desperate afternoon.", "highlight": ["turns on a single, desperate afternoon"], "image_ref": 1, "motion": "kenburns_in", "role": "button", "is_key": true, "sfx": "single lingering note, fade" }
+    {
+      "narration": "What if the whole world today prayed to Egyptian gods, and the center of everything was not Rome, but Egypt? It very nearly happened. And it all came down to one brilliant queen, and one single sea battle. This is a what-if.",
+      "highlight": [
+        "prayed to Egyptian gods"
+      ],
+      "image_prompt": "striking cinematic close-up of a regal ancient Egyptian queen, Cleopatra, Mediterranean features with dark lined eyes and a golden cobra crown, confident commanding stare, candlelight and gold, shallow depth of field, sharp focus",
+      "motion": "kenburns_in",
+      "role": "hook",
+      "is_key": true,
+      "sfx": "deep regal drum, tension"
+    },
+    {
+      "narration": "Her name was Cleopatra, the last queen of ancient Egypt. Most people picture a pretty face and a tragic ending. But the real Cleopatra was far more dangerous. She was one of the smartest rulers the ancient world ever saw.",
+      "highlight": [
+        "one of the smartest rulers the ancient world ever saw"
+      ],
+      "image_prompt": "a poised ancient Egyptian queen, Cleopatra, Mediterranean features, in fine royal linen and gold jewelry, seated on a throne reading a scroll with sharp intelligence, warm palace light, sharp regal portrait",
+      "motion": "kenburns_in",
+      "role": "setup",
+      "is_key": false,
+      "sfx": "soft palace ambience"
+    },
+    {
+      "narration": "She ruled Egypt, one of the richest lands on Earth, overflowing with gold and grain. But a giant shadow was growing across the sea. Rome. A hungry war machine that wanted to swallow every kingdom around it, including hers.",
+      "highlight": [
+        "a giant shadow was growing"
+      ],
+      "image_prompt": "a vast golden Egyptian kingdom of temples and the Nile seen from above, with dark storm clouds shaped like Roman eagles gathering on the horizon, dramatic bright and ominous, sharp cinematic",
+      "motion": "kenburns_pan",
+      "role": "setup",
+      "is_key": false,
+      "sfx": "low ominous horns"
+    },
+    {
+      "narration": "So Cleopatra did something clever. She did not just fight Rome. She befriended its most powerful men. First the famous general Julius Caesar. Then the mighty Roman commander Mark Antony. Both fell completely under her spell.",
+      "highlight": [
+        "fell completely under her spell"
+      ],
+      "image_prompt": "an elegant ancient Egyptian queen, Cleopatra, Mediterranean features in royal gold, in candlelit conversation with a powerful Roman general in armor, charged and clever atmosphere, warm dramatic light, sharp focus",
+      "motion": "kenburns_in",
+      "role": "loop_q",
+      "is_key": false,
+      "sfx": "intriguing strings"
+    },
+    {
+      "narration": "This was not just romance. It was strategy. With Mark Antony at her side, Cleopatra had Egypt's endless gold and half of Rome's armies. Together, they were strong enough to challenge the other master of Rome, a cold young man named Octavian.",
+      "highlight": [
+        "It was strategy"
+      ],
+      "image_prompt": "an ancient Egyptian queen and a Roman general standing together like partners over a map of the Mediterranean, planning with ambition, torchlit war room, powerful and tense, sharp cinematic",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "tense planning tone"
+    },
+    {
+      "narration": "The whole ancient world split in two. On one side, Octavian and Rome. On the other, Cleopatra, Antony, and the wealth of Egypt. There was only one way to settle it. A huge battle at sea, near a place in Greece called Actium.",
+      "highlight": [
+        "a huge battle at sea"
+      ],
+      "image_prompt": "two enormous ancient war fleets of wooden galleys facing each other across a bright blue sea at dawn, oars and sails everywhere, epic scale before battle, vivid sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "setup",
+      "is_key": false,
+      "sfx": "distant war horns, waves"
+    },
+    {
+      "narration": "In the real world, this is where it all fell apart for her. Octavian's clever admiral trapped and outfought their fleet. Antony and Cleopatra barely escaped back to Egypt. Soon after, both were dead, and Rome swallowed Egypt whole.",
+      "highlight": [
+        "both were dead"
+      ],
+      "image_prompt": "ancient war galleys burning and sinking in a chaotic sea battle at dusk, a royal Egyptian ship fleeing through the smoke, dramatic and tragic, no gore, vivid firelight, sharp cinematic",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": true,
+      "sfx": "crashing battle, fire"
+    },
+    {
+      "narration": "Octavian became the first Roman emperor, and Rome ruled the world for centuries. Cleopatra became a sad legend. But now, let us change just one thing. What if, at Actium, her side had won instead?",
+      "highlight": [
+        "her side had won instead"
+      ],
+      "image_prompt": "a symbolic image of two paths splitting on a stormy sea, one dark and one blazing gold, a royal Egyptian ship at the crossroads, dramatic turning point, bold vivid light, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "second_hook",
+      "is_key": true,
+      "sfx": "suspended breath, soft chime"
+    },
+    {
+      "narration": "From here on, everything is imagination. Picture Antony's fleet breaking through. Octavian's ships scattered and burning. The young Roman who would have been emperor, captured. In a single afternoon, the future of the world flips.",
+      "highlight": [
+        "the future of the world flips"
+      ],
+      "image_prompt": "a triumphant ancient Egyptian and allied fleet smashing through a scattering enemy line, a royal purple-and-gold flagship leading the charge, sunrise breaking over victory, vivid bright, sharp epic cinematic",
+      "motion": "video",
+      "role": "turn",
+      "is_key": true,
+      "sfx": "triumphant roar, drums"
+    },
+    {
+      "narration": "Cleopatra now holds the whole known world in her hands. So what does a planet run from Egypt actually look like? Follow the ripples, and the changes get more staggering with every step.",
+      "highlight": [
+        "run from Egypt"
+      ],
+      "image_prompt": "an imagined ancient Egyptian queen standing on a high balcony overlooking a vast golden capital at sunrise, arms open to a world now hers, triumphant and vivid, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "loop_q",
+      "is_key": false,
+      "sfx": "expectant rising tone"
+    },
+    {
+      "narration": "First, power moves south. Cleopatra and Antony are now the masters of Rome, not its victims. The richest queen alive controls the strongest army alive. Egypt, not Rome, becomes the beating heart of the whole known world.",
+      "highlight": [
+        "the beating heart of the whole known world"
+      ],
+      "image_prompt": "an imagined glorious capital blending Egyptian temples and Roman grandeur under bright sun, crowds and gold everywhere, a queen's banner flying high, vivid and majestic, sharp cinematic",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "majestic city swell"
+    },
+    {
+      "narration": "Picture her city, Alexandria, instead of Rome, becoming the capital of everything. It already held the greatest library on Earth. Now all the world's gold and genius pour into it. A super-city of science and learning, centuries ahead of its time.",
+      "highlight": [
+        "a super-city of science"
+      ],
+      "image_prompt": "a breathtaking imagined ancient Alexandria with a towering lighthouse, vast marble library, bustling golden harbor full of ships, grand and futuristic-ancient, vivid bright color, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "loop_reveal",
+      "is_key": false,
+      "sfx": "wondrous rising tone"
+    },
+    {
+      "narration": "And here is the wildest ripple of all. Religion. If Egypt rules, its gods rule too. Picture temples to the goddess Isis rising in every city, from Spain to the edge of Asia. The whole world might bow to Egyptian gods instead of the ones we know.",
+      "highlight": [
+        "bow to Egyptian gods"
+      ],
+      "image_prompt": "grand imagined temples to Egyptian gods with towering statues of Isis standing in cities across the world, crowds worshipping under bright skies, sweeping and awe-inspiring, vivid sharp cinematic",
+      "motion": "kenburns_pan",
+      "role": "loop_problem",
+      "is_key": true,
+      "sfx": "echoing sacred chant"
+    },
+    {
+      "narration": "And picture the knowledge. Egyptian scholars, funded by a whole world's worth of gold, racing ahead. The great minds of Alexandria chasing real machines, real medicine, real maps of the stars. A golden age of science, perhaps a thousand years early.",
+      "highlight": [
+        "a golden age of science"
+      ],
+      "image_prompt": "an imagined grand hall of ancient Alexandrian scholars with early machines, star charts, and glowing lamps, brilliant invention everywhere, warm golden light, vivid and wondrous, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "loop_reveal",
+      "is_key": false,
+      "sfx": "wondrous discovery tone"
+    },
+    {
+      "narration": "With Egypt ruling the seas, its ships could own every trade route from Asia to the far west. Gold, spices, and ideas would all flow through Egyptian hands first. The Nile, not the Tiber, becomes the river the whole world watches.",
+      "highlight": [
+        "the river the whole world watches"
+      ],
+      "image_prompt": "a mighty imagined Egyptian fleet filling a sunlit Mediterranean harbor, loaded with treasure and goods from many lands, busy and powerful, vivid bright color, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "loop_problem",
+      "is_key": false,
+      "sfx": "busy grand harbor"
+    },
+    {
+      "narration": "Now imagine the deepest change of all. Egyptian writing taught in every school. Egyptian art, calendars, and styles shaping every city. A child of Cleopatra on the throne of the world. Thousands of years of history, pointed in a brand new direction.",
+      "highlight": [
+        "a brand new direction"
+      ],
+      "image_prompt": "an imagined world where Egyptian hieroglyphs, golden art, and grand styles blend into distant future-looking cities, sweeping montage feel, bright vivid color, a civilization reshaped, sharp cinematic",
+      "motion": "kenburns_pan",
+      "role": "loop_reveal",
+      "is_key": false,
+      "sfx": "grand sweeping theme"
+    },
+    {
+      "narration": "Think about how close that world came. We still feel ancient Rome all around us today, in our words, our laws, our buildings. In Cleopatra's world, you would feel Egypt that strongly instead, every single day of your life.",
+      "highlight": [
+        "you would feel Egypt that strongly"
+      ],
+      "image_prompt": "a split image of a familiar Roman-style modern city blending into an imagined Egyptian-style one, past and alternate present side by side, striking and thematic, vivid sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "payoff",
+      "is_key": false,
+      "sfx": "reflective wonder"
+    },
+    {
+      "narration": "Now, this is a dream, not a record. One battle rarely reshapes everything so neatly, and Egypt had its own rivals and troubles too. But the gamble was real, and it was close. The ancient world genuinely teetered on a knife's edge that day.",
+      "highlight": [
+        "teetered on a knife's edge"
+      ],
+      "image_prompt": "a quiet reflective image of a golden Egyptian statue half in shadow and half in bright light, past and possibility balanced, thoughtful mood, vivid warm tones, sharp cinematic",
+      "motion": "kenburns_in",
+      "role": "payoff",
+      "is_key": false,
+      "sfx": "soft reflective swell"
+    },
+    {
+      "narration": "A single afternoon of wind and water decided which way the world would lean. Rome won that roll of the dice. But it so easily might not have.",
+      "highlight": [
+        "a single afternoon of wind and water"
+      ],
+      "image_prompt": "a dramatic wide image of an ancient sea at dusk with the silhouettes of war galleys, the sky split between gold and storm, a world hanging in the balance, vivid cinematic",
+      "motion": "kenburns_pan",
+      "role": "payoff",
+      "is_key": false,
+      "sfx": "wind over water"
+    },
+    {
+      "narration": "Cleopatra lost her battle, and still became one of the most famous people who ever lived. So imagine the queen who nearly beat Rome, if the sea had simply tilted her way. Sometimes the whole world turns on a single, desperate afternoon.",
+      "highlight": [
+        "turns on a single, desperate afternoon"
+      ],
+      "image_ref": 1,
+      "motion": "kenburns_in",
+      "role": "button",
+      "is_key": true,
+      "sfx": "single lingering note, fade"
+    }
   ]
 }
