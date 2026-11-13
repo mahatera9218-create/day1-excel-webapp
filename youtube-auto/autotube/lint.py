@@ -83,6 +83,10 @@ def lint_plan(plan: dict, run_dir=None) -> tuple[list[str], list[str]]:
         errors.append("title 이 비어 있습니다.")
     elif "|" not in title:
         errors.append("title 에 '제목 | 부제' 형식의 '|' 가 없습니다 (호기심 유발 헤드라인).")
+    # 내용은 what_if 여도 '제목'은 'What If'로 시작하면 안 된다 — 후킹 공식으로(충격 주장/숫자/'~한 사람').
+    if title.lstrip("\"'“‘ ").lower().startswith("what if"):
+        errors.append("제목이 'What If'로 시작합니다 — 후킹 공식으로 바꾸세요(충격 주장·숫자·'~한 사람'·금기 "
+                      "암시, 답은 숨김). 내용은 what_if여도 제목은 'What If' 시작 금지.")
 
     if not (plan.get("description") or "").strip():
         errors.append("description 이 비어 있습니다.")
