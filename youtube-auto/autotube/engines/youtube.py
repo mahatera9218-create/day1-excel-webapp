@@ -7,8 +7,9 @@
 import json
 from pathlib import Path
 
-SCOPES = ["https://www.googleapis.com/auth/youtube.upload",
-          "https://www.googleapis.com/auth/youtube.readonly"]
+# force-ssl = 업로드 + 썸네일 + 제목/설명 수정(videos.update) + 읽기 전부 포함.
+# (예전 upload+readonly 로는 videos.update 가 403. 토큰을 '재인증'해야 이 권한이 생긴다.)
+SCOPES = ["https://www.googleapis.com/auth/youtube.force-ssl"]
 AI_NOTICE = "※ 이 영상의 화면과 음성은 AI로 생성되었습니다."
 # 채널 언어 → 유튜브 언어 코드. '영상 언어'를 정확히 넣어야 그 언어권 시청자에게 노출된다.
 LANG_CODE = {"Korean": "ko", "English": "en", "Japanese": "ja", "Spanish": "es",
