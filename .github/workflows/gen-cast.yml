@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - "game/prompts.json"
+      - "game/npc_prompts.json"
       - "game/gen_cast.py"
 
 permissions:
@@ -29,7 +30,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f game/cast/*.png 2>/dev/null || true
+          git add -f game/cast/*.png game/npc/*.png 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "커밋할 이미지 없음"
           else
