@@ -63,9 +63,11 @@ def generate(sess, prompt, dest):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    prompts = json.loads((HERE / "prompts.json").read_text(encoding="utf-8"))
     sess = requests.Session()
     sess.headers.update({"X-API-Key": os.environ["PIKA_API_KEY"]})
+
+    # 1) 플레이어용 학생 캐릭터 → game/cast/NN_gender.png
+    prompts = json.loads((HERE / "prompts.json").read_text(encoding="utf-8"))
     for i, p in enumerate(prompts):
         dest = OUT / f"{i:02d}_{p['gender']}.png"
         if dest.exists():
@@ -76,7 +78,25 @@ def main():
             generate(sess, p["desc"], dest)
         except Exception as e:  # noqa: BLE001
             print(f"   [실패-건너뜀] {e}")
-    print("완료:", len(list(OUT.glob('*.png'))), "장")
+
+    # 2) 게임 등장인물(NPC) → game/npc/<role>.png
+    npc_file = HERE / "npc_prompts.json"
+    if npc_file.exists():
+        npc_out = HERE / "npc"
+        npc_out.mkdir(parents=True, exist_ok=True)
+        for role, desc in json.loads(npc_file.read_text(encoding="utf-8")).items():
+            dest = npc_out / f"{role}.png"
+            if dest.exists():
+                print(f"[skip] npc/{dest.name}")
+                continue
+            print(f"[gen ] npc/{dest.name}: {desc[:50]}")
+            try:
+                generate(sess, desc, dest)
+            except Exception as e:  # noqa: BLE001
+                print(f"   [실패-건너뜀] {e}")
+
+    print("완료 — 학생:", len(list(OUT.glob('*.png'))),
+          "/ NPC:", len(list((HERE / 'npc').glob('*.png'))) if (HERE / 'npc').exists() else 0)
 
 
 if __name__ == "__main__":
