@@ -20,17 +20,20 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install requests
+      - run: pip install requests "rembg[cpu]" pillow onnxruntime
       - name: 캐릭터 생성
         env:
           PIKA_API_KEY: ${{ secrets.PIKA_API_KEY }}
         run: python game/gen_cast.py
-      - name: 커밋 (생성 이미지)
+      - name: 배경 제거 (투명 컷아웃)
+        if: always()
+        run: python game/cut_bg.py
+      - name: 커밋 (생성 이미지 + 컷아웃)
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f game/cast/*.png game/npc/*.png 2>/dev/null || true
+          git add -f game/cast/*.png game/npc/*.png game/cut/*.png 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "커밋할 이미지 없음"
           else
