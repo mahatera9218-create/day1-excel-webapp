@@ -34,3 +34,7 @@ desktop.ini
 # 로그
 npm-debug.log*
 yarn-error.log*
+
+# Python 캐시
+__pycache__/
+*.pyc
