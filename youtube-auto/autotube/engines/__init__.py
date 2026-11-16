@@ -29,15 +29,19 @@ class Engines:
             else:
                 self._m = None
 
-            # 이미지 엔진. 클라우드(GitHub)는 channel.yaml 그대로 pika, 로컬 PC 는 환경변수로 전환.
-            #   pika  : 전부 Pika(유료, 고품질)
+            # 이미지 엔진.
+            #   fal   : fal.ai Flux (기본·추천, FAL_KEY 필요)
+            #   pika  : Pika/Seedream (PIKA_API_KEY)
             #   comfy : 전부 로컬 SDXL/ComfyUI(공짜)
-            #   mix   : 핵심 장면(is_key)·썸네일만 Pika, 나머진 로컬 → 품질은 필요한 데만, 비용 최소
+            #   mix   : 핵심 장면·썸네일만 Pika, 나머진 로컬
             img_engine = (os.environ.get("AUTOTUBE_IMAGE_ENGINE")
                           or cfg["engines"].get("image") or "pika").lower()
             self._mix = False
             self._i_pika = None
-            if img_engine in ("comfy", "local"):
+            if img_engine == "fal":
+                from .fal import FalEngine
+                self._i = FalEngine(cfg, os.environ["FAL_KEY"])
+            elif img_engine in ("comfy", "local"):
                 from .local import LocalComfyEngine
                 self._i = LocalComfyEngine(cfg)
             elif img_engine == "mix":
