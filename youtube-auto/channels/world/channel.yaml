@@ -53,11 +53,14 @@ engines:
   mode: real
   tts: edge                   # edge(무료 Microsoft) | elevenlabs(유료, voice_id 필요)
   edge_voice: en-US-ChristopherNeural   # 깊고 따뜻한 미국 남성. 목록은 `edge-tts --list-voices`
-  image_model: bytedance/seedream-5.0-pro/text-to-image
+  # image: fal                # fal.ai Flux 켜려면 이 줄 주석 해제 (FAL_KEY 필요). 지금은 pika(Seedream).
+  fal_image_model: fal-ai/flux/dev      # 초저가는 fal-ai/flux/schnell, 최고품질은 fal-ai/flux-pro/v1.1
+  fal_image_size: {width: 1344, height: 768}   # 16:9
+  image_model: bytedance/seedream-5.0-pro/text-to-image   # (image:fal 이면 미사용) Pika 폴백용
   video_model: minimax/h3/image-to-video
   image_resolution: "1024"
   video_resolution: 768P
-  price_per_image_usd: 0.04
+  price_per_image_usd: 0.025  # flux/dev ≈ $0.025 (schnell ≈ $0.003, flux-pro ≈ $0.04)
   price_per_video_second_usd: 0.02
   max_cost_usd: 8
 

@@ -64,11 +64,12 @@ jobs:
       - name: 비밀 키 준비
         env:
           PIKA_API_KEY: ${{ secrets.PIKA_API_KEY }}
+          FAL_KEY: ${{ secrets.FAL_KEY }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
           CLIENT_SECRET_JSON: ${{ secrets.CLIENT_SECRET_JSON }}
         run: |
-          printf 'PIKA_API_KEY=%s\nELEVENLABS_API_KEY=%s\n' "$PIKA_API_KEY" "$ELEVENLABS_API_KEY" > .env
+          printf 'PIKA_API_KEY=%s\nFAL_KEY=%s\nELEVENLABS_API_KEY=%s\n' "$PIKA_API_KEY" "$FAL_KEY" "$ELEVENLABS_API_KEY" > .env
           if [ -n "$YOUTUBE_TOKEN_JSON" ]; then printf '%s' "$YOUTUBE_TOKEN_JSON" > "channels/$CHANNEL/token.json"; fi
           if [ -n "$CLIENT_SECRET_JSON" ]; then printf '%s' "$CLIENT_SECRET_JSON" > "channels/$CHANNEL/client_secret.json"; fi
 
