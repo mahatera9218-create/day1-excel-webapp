@@ -1,0 +1,18 @@
+[
+  {"gender":"female","desc":"teenage girl with long straight black hair, neat school uniform, cheerful bright smile"},
+  {"gender":"female","desc":"young woman with wavy shoulder-length brown hair, mustard yellow hoodie, warm smile"},
+  {"gender":"female","desc":"girl with a high ponytail and round glasses, light blue cardigan, friendly expression"},
+  {"gender":"female","desc":"girl with short bob haircut, dark hair, soft pink sweater, gentle shy smile"},
+  {"gender":"female","desc":"girl with two braided pigtails and freckles, green t-shirt, playful grin"},
+  {"gender":"female","desc":"girl with curly hair and warm brown skin, orange top, big happy smile"},
+  {"gender":"female","desc":"young woman with sleek long hair dyed light purple, white blouse, confident look"},
+  {"gender":"female","desc":"girl with wavy auburn hair and a beanie hat, denim jacket, cool relaxed smile"},
+  {"gender":"male","desc":"teenage boy with short neat black hair, school uniform, confident friendly smile"},
+  {"gender":"male","desc":"boy with side-parted brown hair and round glasses, grey knit sweater, calm smile"},
+  {"gender":"male","desc":"boy with spiky dark hair, blue hoodie, big cheerful grin"},
+  {"gender":"male","desc":"boy with a buzz cut and warm brown skin, blue t-shirt, bright smile"},
+  {"gender":"male","desc":"boy with messy curly hair, denim jacket over a tee, easygoing smile"},
+  {"gender":"male","desc":"young man with tidy hair and rectangular glasses, olive green shirt, bookish gentle smile"},
+  {"gender":"male","desc":"boy with light brown wavy hair and a baseball cap worn backward, red hoodie, playful smirk"},
+  {"gender":"male","desc":"young man with a man bun, dark hair, mustard cardigan, warm relaxed smile"}
+]
